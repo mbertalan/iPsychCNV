@@ -5,11 +5,8 @@
 ##' @return LRR normalized
 ##' @author Marcelo Bertalan
 ##' @export
-NormalizeData <- function(CNV,ExpectedMean=0, DF=40, NormQspline=TRUE)
+NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE)
 {
-	source("NormalizeLRR.R")
-	source("MatrixOrList2df.R")
-
 	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
 	{
 		#cat(X,"\n")

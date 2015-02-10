@@ -9,7 +9,6 @@
 
 DefineCNVClass <- function(tmp2)
 {
-	source("GetCNVClass.R")
 	Type <- apply(tmp2, 1, function(X)
 	{
 		Class <- "Normal"

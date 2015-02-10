@@ -6,8 +6,6 @@ GetDataVeriables <- function(Data)
 	
 	# Score <- ((abs(AMP.df40.good$CNVmeanNorm)*10)*(BothDiff*10))/(AMP.df40.good$AB+1)
 	ANS <- 1; AGO <- 1; BOX <- 1; COX <- 1; 
-
-	source("SlidingWindowMean.R")	
 	
 	Window <- round(length(Data$CNV)/50)
 	if(Window < 3){ Window <- 3 }

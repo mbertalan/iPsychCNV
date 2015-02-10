@@ -8,17 +8,15 @@
 
 FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
-	source("GetDataVariables.R")	
-	source("ClassNumbers.R")
-	source("EvaluateMyBAF.R")
-	source("DefiningLogRRatio.R")
-	source("CleaningPeaks.R")
-	source("DefineBAFType.R")
-	source("DefineCNVType.R")	
-	source("DefineCNVClass.R")
-	source("AddInfo2res.R")
-	
-
+	#source("GetDataVariables.R")	
+	#source("ClassNumbers.R")
+	#source("EvaluateMyBAF.R")
+	#source("DefiningLogRRatio.R")
+	#source("CleaningPeaks.R")
+	#source("DefineBAFType.R")
+	#source("DefineCNVType.R")	
+	#source("DefineCNVClass.R")
+	#source("AddInfo2res.R")
  	#library(plyr)
 	#library(pastecs)
 	#library(mclust)

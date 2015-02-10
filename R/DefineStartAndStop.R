@@ -8,12 +8,8 @@
 
 DefineStartAndStop <- function(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
 {
-	source("MatrixOrList2df.R")
-	source("Plot.CNV.Info.R")
-
 	library(pastecs)
 	
-
 	Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
 	Info <- t(Info)
 	Df <- as.data.frame(Info)

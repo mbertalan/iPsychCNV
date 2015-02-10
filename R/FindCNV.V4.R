@@ -8,8 +8,6 @@
 
 FindCNV.V4 <- function(ID, MinNumSNPs, CNV)
 {
-	source("DefineStartAndStop.R")
-	source("FixCNVPosition_V3.R")
 	
 	library("changepoint")
 
