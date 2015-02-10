@@ -10,11 +10,11 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
-	source("./R/ReadCNV.R")
-	source("./R/NormalizeData.R")
-	source("./R/FindCNV.V4.R")
-	source("./R/FilterCNVs.V4.R")
-	source("./R/MatrixOrList2df.R")
+	#source("./R/ReadCNV.R")
+	#source("./R/NormalizeData.R")
+	#source("./R/FindCNV.V4.R")
+	#source("./R/FilterCNVs.V4.R")
+	#source("./R/MatrixOrList2df.R")
 
 	
 	library(parallel)
