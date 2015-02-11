@@ -3,7 +3,7 @@ Title: iPsychCNV
 Version: 0.0.1
 Authors@R: person("Marcelo", "Bertalan", , "mbertalan@gmail.com", role = c("aut", "cre"))
 Description: Find CNVs in GWAS data.
-Depends: R (>= 3.0.2),  
+Depends: R (>= 3.0.2) 
 License: What license is it under?
 LazyData: true
 Imports: ggplot2,plyr,parallel,pastecs,changepoint,randtests,moments,stats,GenomicRanges,biovizBase,Biostrings,scales,RColorBrewer,mclust,IRanges,data.table
