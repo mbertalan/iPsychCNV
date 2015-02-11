@@ -1,8 +1,9 @@
 Package: iPsychCNV
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph)
+Title: iPsychCNV
+Version: 0.0.1
+Authors@R: person("Marcelo", "Bertalan", , "mbertalan@gmail.com", role = c("aut", "cre"))
+Description: Find CNVs in GWAS data.
 Depends: R (>= 3.0.2)
 License: What license is it under?
 LazyData: true
+Imports: ggplot2,plyr,parallel,pastecs,changepoint,randtests,moments,stats,GenomicRanges,biovizBase,Biostrings,scales,RColorBrewer,mclust,GenomeGraphs,ggbio,IRanges,data.table
