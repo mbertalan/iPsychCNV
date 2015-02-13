@@ -31,16 +31,16 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(X) 
 	{
 		RawFile <- X
-		ID <- tail(unlist(strsplit(X, "/")),n=1)
-		# Read CNV file		
-		CNV <- ReadCNV(X)
-
 		write(X,file="Progress.txt",append=TRUE)
 		Count <- length(readLines("Progress.txt"))	
 		Percent <- round((Count/NumFiles)*100)
 		Percent <- paste(Percent, "%", sep="", collapse="")
 		cat("Running:\t", X, "\t\t", Percent, "\n")
+		ID <- tail(unlist(strsplit(X, "/")),n=1)
 	
+		# Read CNV file		
+		CNV <- ReadCNV(RawFile)
+		
 		# Normalize data
 		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=DFspline, NormQspline)
 		
