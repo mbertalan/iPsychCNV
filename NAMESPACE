@@ -24,3 +24,5 @@ export(iPsychCNV)
 ### Bioconductor packages
 import(ggbio)
 export(ggbio)
+import(biovizBase)
+export(biovizBase)
