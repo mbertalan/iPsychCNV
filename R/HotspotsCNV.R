@@ -1,6 +1,5 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' HotspotsCNV
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title CompressCNVsHighFreq
 ##' @return Hotspots
 ##' @author Marcelo Bertalan
