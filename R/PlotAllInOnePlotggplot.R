@@ -56,12 +56,12 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	b <- b + geom_segment(aes(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class))) 
 	b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[8]))
 	b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
-	b <- b + geom_vline(aes(xintercept = c(Start, Stop)), tmp2ROI, alpha=0.2) 
+	#b <- b + geom_vline(aes(xintercept = c(Start, Stop)), tmp2ROI, alpha=0.2) 
 	
 	#png(Name, width=1000, height=2000, dpi=300)
-	b
+	#b
 	#dev.off()
-	#ggsave(b, file=Name, width=width, height=height, dpi=300)
+	ggsave(b, file=Name, width=width, height=height, dpi=300)
 	#return(tmp2)
 }
 
