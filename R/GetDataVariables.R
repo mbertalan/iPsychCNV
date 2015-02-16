@@ -1,3 +1,10 @@
+##' GetDataVeriables
+##'
+##' @title CompressCNVsHighFreq
+##' @return Hotspots
+##' @author Marcelo Bertalan
+##' @export
+
 GetDataVeriables <- function(Data)
 {
 	library(randtests)
