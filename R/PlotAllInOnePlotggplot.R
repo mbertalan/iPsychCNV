@@ -12,6 +12,7 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	library(RColorBrewer)
 
 	if(length(tmp$CN) > 0){ tmp$Class <- tmp$CN }
+	if(length(tmp$Class) > 0){ tmp$Class <- tmp$CN }
 	if(length(tmp$File) > 0){ tmp$ID <- tmp$File }
 
 	tmp <- tmp[, c("Start","Stop","Chr","Length","ID", "Class")]
@@ -31,8 +32,7 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	tmp2$Indx[tmp2$ID %in% "q"] <- -1
 
 	for(i in 1:22){ tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0] <- 1:length(tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0]) }
-	save(tmp2, file="tmp2.RData")
-	#tmp3 <- subset(tmp2, !Class %in% "ROI")
+
 	tmp3 <- subset(tmp2, Indx > 0)
 
 	Info <- tapply(tmp3$ID, as.factor(tmp3$Chr), function(X){ c(length(unique(X)), length(X)) }) 
