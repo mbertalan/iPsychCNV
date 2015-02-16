@@ -58,9 +58,9 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
 	b <- b + geom_vline(aes(xintercept = c(Start, Stop)), tmp2ROI, alpha=0.2) 
 	
-	png(Name, width=1000, height=2000, dpi=300)
+	#png(Name, width=1000, height=2000, dpi=300)
 	b
-	dev.off()
+	#dev.off()
 	#ggsave(b, file=Name, width=width, height=height, dpi=300)
 	#return(tmp2)
 }
