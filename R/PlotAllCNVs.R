@@ -5,16 +5,16 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotAllCNVs <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, height=30) # TimesLength
+PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, roi=roi, width=16, height=30) # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
 	library(RColorBrewer)
 
-	if(length(tmp$Class) > 0){ tmp$CN <- tmp$Class }
-	if(length(tmp$File) > 0){ tmp$ID <- tmp$File }
+	if(length(df$CN) > 0){ df$Class <- df$CN }
+	if(length(df$File) > 0){ df$ID <- df$File }
 
-	tmp <- tmp[, c("Start","Stop","Chr","Length","ID", "Class")]
+	tmp <- df[, c("Start","Stop","Chr","Length","ID", "Class")]
 	tmp <- subset(tmp, Chr %in% c(1:22))
 	tmp3 <- sapply(unique(tmp$Chr), function(X)
 	{
