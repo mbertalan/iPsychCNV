@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=1, roi, width=16, height=30) # TimesLength
+PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, height=30) # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
