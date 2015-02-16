@@ -21,11 +21,9 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	tmp2 <- tmp[with(tmp, order(!Length, Start)), ]  # , -Length
 	tmp2 <- rbind(tmp2, CytoBands, roi)
 
-	
 	Samples <- 1:length(unique(tmp2$ID))
 	names(Samples) <- unique(tmp2$ID)
 
-	
 	tmp2$Indx <- sapply(tmp2$ID, function(X){ Samples[X] })
 	tmp2$Indx[tmp2$ID %in% "ROI"] <- -2
 	tmp2$Indx[tmp2$ID %in% "p"] <- -1
