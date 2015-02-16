@@ -59,8 +59,3 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
 	return(tmp2)
 }
-
-		 
-	
-
-	
