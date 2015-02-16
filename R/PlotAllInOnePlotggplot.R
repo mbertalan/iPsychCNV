@@ -16,6 +16,7 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	if(length(tmp$File) > 0){ tmp$ID <- tmp$File }
 
 	tmp <- tmp[, c("Start","Stop","Chr","Length","ID", "Class")]
+	tmp <- subset(tmp, Chr %in% c(1:22))
 	roi <- roi[,c("Start","Stop","Chr","Length","ID", "Class")]
 	
 	tmp2 <- tmp[with(tmp, order(!Length, Start)), ]  # , -Length
