@@ -11,7 +11,6 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	library(ggplot2)
 	library(RColorBrewer)
 
-	if(length(tmp$CN) > 0){ tmp$Class <- tmp$CN }
 	if(length(tmp$Class) > 0){ tmp$CN <- tmp$Class }
 	if(length(tmp$File) > 0){ tmp$ID <- tmp$File }
 
@@ -30,7 +29,7 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	
 	tmp2 <- rbind(tmp2, CytoBands, roi)
 	
-	for(i in 1:22){ tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0] <- 1:length(tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0]) }
+	#for(i in 1:22){ tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0] <- 1:length(tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0]) }
 
 	tmp3 <- subset(tmp2, Indx > 0)
 
@@ -52,10 +51,10 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	
 	Colors <- brewer.pal("Set1", n=8) # + scale_color_brewer(palette="Set1")
 	b <- ggplot(tmp2, aes(Start, Indx))
-	b <- b + geom_segment(aes(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class))) 
+	b <- b + geom_segment(aes_string(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class))) 
 	b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[8]))
 	b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
-	b <- b + geom_vline(aes(xintercept = c(Start, Stop)), data=tmp2ROI, alpha=0.2) 
+	b <- b + geom_vline(aes_string(xintercept = c(Start, Stop)), tmp2ROI, alpha=0.2) 
 	
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
 	return(tmp2)
