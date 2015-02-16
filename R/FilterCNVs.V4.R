@@ -49,7 +49,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 		if(length(Data$Low) > 20 & length(Data$CNV) > 20) { CNV2LowPvalue <- t.test(Data$Low, Data$CNV)$p.value }else{ CNV2LowPvalue <- 0 }
 
 		#cat("Get Variables", " ", proc.time(), "\n")
-		res2 <- GetDataVeriables(Data)
+		res2 <- GetDataVariables(Data)
 
 		# My BAF Classification	
 		res <- ClassNumbers(tmpRaw$B.Allele.Freq)
