@@ -1,6 +1,5 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' BAF drift: Calculate the drift in BAF.
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title BAF_drift
 ##' @return Data frame with QC variables.
 ##' @author Marcelo Bertalan
