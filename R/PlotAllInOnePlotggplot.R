@@ -12,24 +12,24 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	library(RColorBrewer)
 
 	if(length(tmp$CN) > 0){ tmp$Class <- tmp$CN }
-	if(length(tmp$Class) > 0){ tmp$Class <- tmp$CN }
+	if(length(tmp$Class) > 0){ tmp$CN <- tmp$Class }
 	if(length(tmp$File) > 0){ tmp$ID <- tmp$File }
 
 	tmp <- tmp[, c("Start","Stop","Chr","Length","ID", "Class")]
 	tmp <- subset(tmp, Chr %in% c(1:22))
 	roi <- roi[,c("Start","Stop","Chr","Length","ID", "Class")]
 	
-	tmp2 <- tmp[with(tmp, order(!Length, Start)), ]  # , -Length
-	tmp2 <- rbind(tmp2, CytoBands, roi)
+	tmp2 <- tmp[with(tmp, order(!Length, Start, Stop)), ]  # , -Length
 
 	Samples <- 1:length(unique(tmp2$ID))
 	names(Samples) <- unique(tmp2$ID)
 
 	tmp2$Indx <- sapply(tmp2$ID, function(X){ Samples[X] })
-	tmp2$Indx[tmp2$ID %in% "ROI"] <- -2
-	tmp2$Indx[tmp2$ID %in% "p"] <- -1
-	tmp2$Indx[tmp2$ID %in% "q"] <- -1
-
+	CytoBands$Indx <- rep(-1, nrow(CytoBands))
+	roi$Indx <- rep(-2, nrow(roi))
+	
+	tmp2 <- rbind(tmp2, CytoBands, roi)
+	
 	for(i in 1:22){ tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0] <- 1:length(tmp2$Indx[tmp2$Chr %in% i & tmp2$Indx > 0]) }
 
 	tmp3 <- subset(tmp2, Indx > 0)
@@ -50,7 +50,6 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 
 	tmp2ROI <- subset(tmp2, Class %in% "ROI")
 	
-
 	Colors <- brewer.pal("Set1", n=8) # + scale_color_brewer(palette="Set1")
 	b <- ggplot(tmp2, aes(Start, Indx))
 	b <- b + geom_segment(aes(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class))) 
@@ -59,6 +58,7 @@ PlotAllInOnePlotggplot <- function(tmp, Name="Test.png", NCOL=2, roi, width=16, 
 	b <- b + geom_vline(aes(xintercept = c(Start, Stop)), tmp2ROI, alpha=0.2) 
 	
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
+	return(tmp2)
 }
 
 		 
