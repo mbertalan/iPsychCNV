@@ -27,6 +27,7 @@ export(SlideWindowMean)
 export(iPsychCNV)
 export(PlotAllInOnePlotggplot)
 export(PeaksAndPits)
+export(PlotAllCNVs)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
