@@ -56,7 +56,7 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, roi=roi, wi
 	tmp2ROI <- subset(tmp2, Class %in% "ROI")
 	tmp2$Indx2 <- tmp2$Indx
 	Colors <- brewer.pal("Set1", n=9) # + scale_color_brewer(palette="Set1")
-	b <- ggplot(tmp2) + geom_segment(aes(x = Start, y = Indx, xend = Stop, yend = Indx2, colour=as.factor(Class)))# aes(x=Start, y=Indx)
+	b <- ggplot() + geom_segment(data=tmp2, aes(x = Start, y = Indx, xend = Stop, yend = Indx2, colour=as.factor(Class)))# aes(x=Start, y=Indx)
 	#b <- b + geom_point()
 	#b <- b + geom_segment(aes(x = Start, y = Indx, xend = Stop, yend = Indx2, colour=as.factor(Class))) # , 
 	#b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))
