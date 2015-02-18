@@ -54,10 +54,10 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, roi=roi, wi
 
 	tmp2ROI <- subset(tmp2, Class %in% "ROI")
 	
-	Colors <- brewer.pal("Set1", n=8) # + scale_color_brewer(palette="Set1")
+	Colors <- brewer.pal("Set1", n=9) # + scale_color_brewer(palette="Set1")
 	b <- ggplot(tmp2, aes(Start, Indx))
 	b <- b + geom_segment(aes(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class))) 
-	#b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[8]))
+	#b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))
 	#b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
 	#b <- b + geom_vline(aes(xintercept = c(Start, Stop)), data=tmp2ROI, alpha=0.2) 
 	return(b)
