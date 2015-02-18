@@ -25,7 +25,6 @@ export(Plot.CNV.Info)
 export(ReadCNV)
 export(SlideWindowMean)
 export(iPsychCNV)
-export(PlotAllInOnePlotggplot)
 export(PeaksAndPits)
 export(PlotAllCNVs)
 ### Bioconductor packages
