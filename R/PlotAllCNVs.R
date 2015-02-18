@@ -10,6 +10,7 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, roi=roi, wi
 	library(scales)
 	library(ggplot2)
 	library(RColorBrewer)
+	library(grid)
 
 	if(length(df$CN) > 0){ df$Class <- df$CN }
 	if(length(df$File) > 0){ df$ID <- df$File }
