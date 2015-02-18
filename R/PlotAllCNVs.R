@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, roi=roi, width=16, height=30) # TimesLength
+PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30) # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
@@ -30,7 +30,7 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, roi=roi, wi
 	tmp2 <- MatrixOrList2df(tmp3)
 	tmp2 <- tmp2[, c("Start","Stop","Chr","Length","ID", "Class", "Indx")]
 
-	roi <- roi[,c("Start","Stop","Chr","Length","ID", "Class")]
+	roi <- Roi[,c("Start","Stop","Chr","Length","ID", "Class")]
 
 	CytoBands$Indx <- rep(-1, nrow(CytoBands))
 	roi$Indx <- rep(-2, nrow(roi))
