@@ -2,8 +2,7 @@ MockData <- function(N=1)
 {
 	All <- sapply(1:N, function(SampleNum)
 	{
-		load("~/../share/data/PsychoChipInfo/Chip_Info.RData")
-		FileName <- paste("FakeSample_", SampleNum, ".tab", sep="", collapse="")
+		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
 		CNVsSize <- c(10, 30, 50, 100, 150, 300, 700)
 		Del <- seq(from=-0.15, to=-0.4, by=-0.05)
 		Dup <- seq(from=0.15, to=0.4, by=0.05)
