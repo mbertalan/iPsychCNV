@@ -24,23 +24,23 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV)
 
 
 		# Mergin CNVs #
-		Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
-		Info <- t(Info)
-		Df <- as.data.frame(Info)
-		CNVMean <- apply(Df, 1, function(X){ mean(CPT.Res@data.set[X[1]:X[2]]) } )
-		Df$CNVMean <- CNVMean
-		names(Df) <- c("Start", "Stop", "CNVMean")
-		tmp <- apply(Df, 1, function(X){ rep(X[3], (as.numeric(X[2])-as.numeric(X[1]))) })
-		tmp <- unlist(tmp)
-		tmp[tmp < -0.15] <- -0.5
-		tmp[tmp > 0.15] <- 0.5
-		tmp <- as.vector(tmp)
-		if(length(tmp) > 10)
-		{
-			CPT.Res.tmp <- cpt.mean(tmp, method='PELT', penalty="AIC")
-			indx <- cpts(CPT.Res.tmp)
-			indx <- c(1, indx, length(tmp))
-		}
+		#Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
+		#Info <- t(Info)
+		#Df <- as.data.frame(Info)
+		#CNVMean <- apply(Df, 1, function(X){ mean(CPT.Res@data.set[X[1]:X[2]]) } )
+		#Df$CNVMean <- CNVMean
+		#names(Df) <- c("Start", "Stop", "CNVMean")
+		#tmp <- apply(Df, 1, function(X){ rep(X[3], (as.numeric(X[2])-as.numeric(X[1]))) })
+		#tmp <- unlist(tmp)
+		#tmp[tmp < -0.15] <- -0.5
+		#tmp[tmp > 0.15] <- 0.5
+		#tmp <- as.vector(tmp)
+		#if(length(tmp) > 10)
+		#{
+		#	CPT.Res.tmp <- cpt.mean(tmp, method='PELT', penalty="AIC")
+		#	indx <- cpts(CPT.Res.tmp)
+		#	indx <- c(1, indx, length(tmp))
+		#}
 		###############
 
 		DF <- DefineStartAndStop(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
