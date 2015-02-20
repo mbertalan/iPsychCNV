@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-ReadCNV <- function(RawFile="Test.txt", skip=0, LCR=TRUE)
+ReadCNV <- function(RawFile="Test.txt", skip=0, LCR=FALSE)
 {
 	library(data.table)
 	CNV <- fread(RawFile, head=T, sep="\t", skip=skip)
