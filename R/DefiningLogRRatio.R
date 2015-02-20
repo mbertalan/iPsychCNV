@@ -13,7 +13,7 @@ DefiningLogRRatio <- function(res2)
 	LogRRatio <- "Undefined"
 	if(res2$SDCNV < 0.7)
 	{
-		if(res2$CNVmean < -0.15) # 1 or 0
+		if(res2$CNVmean < -0.1) # 1 or 0
 		{
 			LogRRatio <- "1"
 			if(res2$CNVmean < res2$HighMean &  res2$CNVmean < res2$LowMean)
@@ -29,7 +29,7 @@ DefiningLogRRatio <- function(res2)
 				}
 			}
 		}
-		else if(res2$CNVmean > 0.15)
+		else if(res2$CNVmean > 0.1)
 		{
 			LogRRatio <- "3"
 			if(res2$CNVmean > res2$HighMean &  res2$CNVmean > res2$LowMean)
