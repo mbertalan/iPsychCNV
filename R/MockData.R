@@ -92,5 +92,7 @@ MockData <- function(N=1)
 		return(DF)
 	})
 	CNVs <- MatrixOrList2df(All)
+	CNVs$Length <- CNVs$Stop -  CNVs$Start
+	CNVs$CNVID <- 1:nrow(CNVs)
 	return(CNVs)
 }	
