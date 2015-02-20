@@ -9,7 +9,7 @@
 FindCNV.V4 <- function(ID, MinNumSNPs, CNV)
 {
 	
-	library("changepoint")
+	suppressPackageStartupMessages(library("changepoint"))
 
 	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
 	{
