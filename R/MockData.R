@@ -58,7 +58,7 @@ MockData <- function(N=1)
 			#X <- round(X, digits=2)
 
 			# Adding CNVs		
-			NumCNVs <- ((round(length(X)/1000))-2)
+			NumCNVs <- ((round(length(X)/2000))-2)
 			DF <- sapply(1:NumCNVs, function(i)
 			{
 				CN <- sample(c(1,3), 1) # CNV Type
