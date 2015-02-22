@@ -28,6 +28,7 @@ export(iPsychCNV)
 export(PeaksAndPits)
 export(PlotAllCNVs)
 export(MockData)
+export(EvaluateMockResults)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
