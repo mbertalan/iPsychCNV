@@ -48,7 +48,6 @@ NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE)
 		return(subCNV)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
-	tmp2 <- tmp2[,-1]
 	return(tmp2)
 }
 		
