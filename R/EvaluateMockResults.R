@@ -35,7 +35,8 @@ EvaluateMockResults <- function(MockCNVs, df)
 		}
 
 		df2 <- data.frame(Found=Found, Overlap.Lengh=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID, stringsAsFactors=FALSE)
-		return(df2)
+		df3 <- cbind(df2, MockCNVs)
+		return(df3)
 	})
 	Eval <- MatrixOrList2df(Eval)
 	return(Eval)
