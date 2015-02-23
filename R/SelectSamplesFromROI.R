@@ -36,11 +36,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
 				return(Overlaplength)
 			})
 			tmp$Overlap <- Overlap
-			#Ratio <- tmp$Length/LengthRoi
-			#tmp$Overlap <- Ratio
 			tmp <- subset(tmp, Overlap > OverlapMin & Overlap < OverlapMax)
-			#save(tmp, file="tmp.RData")
-			#Samples <- unique(tmp$ID)
 			return(tmp)
 		}
 	})
