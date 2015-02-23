@@ -62,5 +62,5 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	b <- b + geom_vline(aes(xintercept = c(Start, Stop)), data=tmp2ROI, alpha=0.2) 
 	#return(b)
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
-	return(tmp2)
+	#return(tmp2)
 }
