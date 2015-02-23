@@ -29,6 +29,7 @@ export(PeaksAndPits)
 export(PlotAllCNVs)
 export(MockData)
 export(EvaluateMockResults)
+export(SelectSamplesFromROI)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
