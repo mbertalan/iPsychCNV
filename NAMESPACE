@@ -30,6 +30,7 @@ export(PlotAllCNVs)
 export(MockData)
 export(EvaluateMockResults)
 export(SelectSamplesFromROI)
+export(RunPennCNV)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
