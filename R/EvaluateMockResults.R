@@ -10,14 +10,16 @@ EvaluateMockResults <- function(MockCNVs, df)
 		LengthM <- as.numeric(X["Length"])
 		NumSNPsM <- as.numeric(X["NumSNPs"])
 		CNVID <- gsub(" ", "", X["CNVID"])
+		CNM <- as.numeric(X["CN"])
 
+		if(CNM == 2){ CNV.Present=0 }else{ CNV.Present=1 }
 		# From df predition
  		res <- subset(df, Chr %in% ChrM & Start < StopM & Stop > StartM & ID %in% IDM)
 		CNVID2 <- res$CNVID
 		CN2 <- res$CN
 		if(nrow(res) == 1)
 		{
-			Found <- TRUE
+			if(CN2 == CNM){ Found <- 1 }else{ Found <- 0}
 			StartO <- max(c(res$Start, StartM))
 			StopO <- min(c(res$Stop, StopM))
 			LengthO <- StopO - StartO
@@ -27,49 +29,25 @@ EvaluateMockResults <- function(MockCNVs, df)
 		}
 		if(nrow(res) == 0)
 		{
-			Found <- FALSE
+			Found <- 0
 			OverlapLenghM <- 0
 			OverlapSNP <-0
 			CNVID2 <- NA
-			CN2 <- NA
+			CN2 <- 2
 		}
 		if(nrow(res) > 1)
-		{		
-			Found <- TRUE
+		{
+			CN2 <- CN2[1]
+			if(CN2 == CNM){ Found <- 1 }else{ Found <- 0}	
 			OverlapLenghM <- 0
 			OverlapSNP <-0
-			CNVID2 <- NA
-			CN2 <- unique(res$CN)[1]
+			CNVID2 <- CNVID[1]
 		}
 
-		df2 <- data.frame(Found=Found, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, stringsAsFactors=FALSE)
+		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Found=Found, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, stringsAsFactors=FALSE)
 		return(df2)
 	})
 	Eval <- MatrixOrList2df(Eval)
 	df3 <- cbind(Eval, MockCNVs)
-	
-	# Generating final df
-	df3$Class <- df3$CN
-	df3$Class[!df3$Found] <- 2
-	
-	# CNVs predicted by the method but do not exist.
-	FalsePositiveDf <- df[!df$CNVID %in% unique(df3$CNVID.Pred[!is.na(df3$CNVID.Pred)]),]
-	if(nrow(FalsePositiveDf) > 0)
-	{
-		df4 <- apply(FalsePositiveDf, 1, function(Y)
-		{
-			CN <- -1
-			tmpDf <- data.frame(matrix(NA, nrow=1, ncol=ncol(df3)))
-			names(tmpDf) <- colnames(df3)
-			tmpDf["CNVID.Pred"] <- Y["CNVID"]
-			tmpDf["CNVID.Pred"] <- Y["CN"]
-			tmpDf["CN"] <- -1 	# Mock does not have CNV there.
-			tmpDf["Class"] <- Y["CN"]
-			return(tmpDf)
-		})
-		df4 <- MatrixOrList2df(df4)	
-		df3 <- rbind(df3, df4)	
-	}
-	df3$Class <- as.numeric(df3$Class)
 	return(df3)
 }
