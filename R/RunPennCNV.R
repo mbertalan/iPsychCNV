@@ -1,4 +1,4 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab", Cores=20, Skip=0, Normalization=TRUE, PFB="Mock.pfb")
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab", Cores=20, Skip=0, Normalization=FALSE, PFB="Mock.pfb")
 {
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=TRUE)
