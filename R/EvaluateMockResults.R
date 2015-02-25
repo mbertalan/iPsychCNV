@@ -48,8 +48,17 @@ EvaluateMockResults <- function(MockCNVs, df)
 
 			if(CNM == 2)
 			{
-				CNV.Predicted = 1
-				PredictedByOverlap <- 1		# It doesn't matter the overlap the prediction is in a non-CNV region.
+				res2 <- subset(df, Chr == ChrM & Start > StartM & Stop < StopM & ID %in% IDM) # If is a non-CNV region, than prediction need to be inside.
+				if(nrow(res2) > 0)
+				{
+					CNV.Predicted = 1
+					PredictedByOverlap <- 1		# It doesn't matter the overlap the prediction is in a non-CNV region.
+				}
+				else
+				{
+					CNV.Predicted = 0
+					PredictedByOverlap <- 0
+				}
 			}
 			else
 			{
