@@ -55,7 +55,6 @@ MockData <- function(N=1)
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*2), mean=NoiseSNP)
-			#X <- round(X, digits=2)
 
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/1000))-2)
@@ -94,5 +93,49 @@ MockData <- function(N=1)
 	CNVs <- MatrixOrList2df(All)
 	CNVs$Length <- CNVs$Stop -  CNVs$Start
 	CNVs$CNVID <- 1:nrow(CNVs)
-	return(CNVs)
+	CNVs$PositionID <- apply(CNVs, 1, function(X){ gsub(" ", "", paste(X["StartIndx"], X["StopIndx"], sep="_", collapse="")) })
+
+	# Adding No-CNVs
+	tmp3 <- sapply(unique(CNVs$ID), function(X)
+	{
+		tmp <- sapply(unique(CNVs$Chr), function(Y)
+		{
+			subCNVs <- subset(CNVs, ID %in% X & Chr %in% Y)
+			indx <- sort(c(1, subCNVs$StartIndx, subCNVs$StopIndx))
+			Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
+			Info <- t(Info)
+			Df <- as.data.frame(Info)
+			names(Df) <- c("StartIndx", "StopIndx")
+			PositionID <- apply(Df, 1, function(X){ gsub(" ", "", paste(X[1], X[2], sep="_", collapse="")) })
+			Df$PositionID <- PositionID
+			Df2 <- Df[!Df$PositionID %in% subCNVs$PositionID,] # Only the non-CNVs
+
+			subCNV <- subset(CNV, Chr %in% Y)
+			subCNV <- subCNV[order(subCNV$Position),]
+			Df2$Start <- subCNV$Position[Df2$StartIndx]
+			Df2$Stop <- subCNV$Position[Df2$StopIndx]
+			Df2$NumSNPs <- Df2$StopIndx - Df2$StartIndx
+			Df2$Chr <- rep(Y, nrow(Df2))
+			Df2$CNVmean <- rep(0, nrow(Df2))
+			Df2$CN <- rep(2, nrow(Df2))
+			Df2$sd <- rep(0.2, nrow(Df2))
+			Df2$ID <- rep(X, nrow(Df2))
+			Df2$NoiseSNP <- rep(unique(subCNVs$NoiseSNP), nrow(Df2))
+			Df2$BadSNPs <- rep(unique(subCNVs$BadSNPs), nrow(Df2))
+			Df2$NumCNVs <- rep(unique(subCNVs$NumCNVs), nrow(Df2))
+			Df2$Length <- Df2$Stop - Df2$Start
+			Df2$CNVID <- 1:nrow(Df2)    
+			Df2 <- Df2[, colnames(subCNVs)]
+			return(Df2)
+		})
+		tmp2 <- MatrixOrList2df(tmp)
+		tmp2 <- tmp2[, !colnames(tmp2) %in% ".id"]
+		return(tmp2)
+	})
+	tmp3 <- MatrixOrList2df(tmp3)
+	tmp3 <- tmp3[, !colnames(tmp3) %in% ".id"]
+
+	tmp4 <- rbind(tmp3, CNVs)
+	tmp4 <- tmp4[order(tmp4$ID, tmp4$Chr, tmp4$Start),]
+	return(tmp4)
 }	
