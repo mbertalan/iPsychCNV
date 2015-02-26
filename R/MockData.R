@@ -9,6 +9,8 @@ MockData <- function(N=1)
 		BAFs <- seq(from=0, to=1, by=0.05) # 21
 		BAF_Basic <- rep(0.02, 21)
 		names(BAF_Basic) <- BAFs
+		CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
+		names(CNVSizeFixed) = 1:50
 		
 		# BAF normal prob	
 		BAF_Normal <- BAF_Basic
@@ -62,7 +64,9 @@ MockData <- function(N=1)
 			{
 				CN <- sample(c(1,3), 1) # CNV Type
 				PositionIndx <- as.numeric(i) * 1000
-				Size <- sample(CNVsSize, 1) # CNV Size
+				#Size <- sample(CNVsSize, 1) # CNV Size
+				Size <- CNVSizeFixed[i]
+				
 				if(CN == 1)
 				{
 					Impact <- sample(Del, 1)
