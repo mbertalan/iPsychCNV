@@ -1,16 +1,18 @@
 MockData <- function(N=1)
 {
+	CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
+	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
+	names(CNVSizeFixed) = 1:50
 	All <- sapply(1:N, function(SampleNum)
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
-		CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
+		
 		Del <- seq(from=-0.15, to=-0.6, by=-0.05)
 		Dup <- seq(from=0.15, to=0.6, by=0.05)
 		BAFs <- seq(from=0, to=1, by=0.05) # 21
 		BAF_Basic <- rep(0.02, 21)
 		names(BAF_Basic) <- BAFs
-		CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
-		names(CNVSizeFixed) = 1:50
+	
 		
 		# BAF normal prob	
 		BAF_Normal <- BAF_Basic
