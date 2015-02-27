@@ -103,12 +103,17 @@ MockData <- function(N=1)
 			
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/1000))-2)
+			
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
 				CN <- sample(c(1,3), 1) # CNV Type
 				PositionIndx <- as.numeric(i) * 1000
 				#Size <- sample(CNVsSize, 1) # CNV Size
+				# Using fix size for chr position.
 				Size <- CNVSizeFixed[i]
+				
+				# CNV position
+				IndxV <- PositionIndx:(PositionIndx+Size)
 				
 				if(CN == 1)
 				{
@@ -121,17 +126,15 @@ MockData <- function(N=1)
 					BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
 				}
 				
-				# CNV position
-				IndxV <- PositionIndx:(PositionIndx+Size)
-				
 				## Changing GLOBAL VARIABLES ##
 				# LRR = X
 				X[IndxV] <<- X[IndxV] + Impact
 	
 				# BAF, Change BAF but keep SNPs with low heterozygosity.
+				names(BAFCNV) <- IndxV
 				NoChangeIndx <- c(which(BAF[IndxV] > 0.9), which(BAF[IndxV] < 0.1))
 				NewIndx <- IndxV[(NoChangeIndx*-1)]
-				BAF[NewIndx] <<- BAFCNV[NewIndx]
+				BAF[NewIndx] <<- BAFCNV[as.character(NewIndx)]
 				## Changing GLOBAL VARIABLES ##
 				BAF[BAF > 1] <<- 1
 				BAF[BAF < 0] <<- 0
