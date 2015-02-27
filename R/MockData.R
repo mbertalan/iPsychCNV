@@ -13,24 +13,32 @@ MockData <- function(N=1)
 	TelomereNoiseEffect <- seq(from=-0.1, to=-1, by=-0.1)
 	
 	# BAF
-	BAFs <- seq(from=0, to=1, by=0.05) # 21
-	BAF_Basic <- rep(0.05, 21)
+	BAFs <- seq(from=0, to=1, by=0.01) # 21
+	BAF_Basic <- rep(0.02, 101)
 	names(BAF_Basic) <- BAFs
+	BAF_Basic[10:80] <- seq(from=0.185, to=0.22, by=0.0005)
 	
 	# BAF normal prob	
 	BAF_Normal <- BAF_Basic
-	BAF_Normal[c(1,2,20,21)] <- BAF_Normal[c(1,2,20,21)] + 0.38
-	BAF_Normal[8:14] <- BAF_Normal[8:14] + 0.18
+	#BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
+	#BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
+	#BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
+	
+	#BAF_Normal[c(80:85)] <- BAF_Normal[c(80:85)] + 0.01
+	#BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.20
+	#BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.5	
+	#BAF_Normal[8:14] <- BAF_Normal[8:14] + 0.18
 	
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
-	BAF_Del[c(1,2,20,21)] <- BAF_Del[c(1,2,20,21)] + 0.38
+	BAF_Del[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
+	BAF_Del[c(98:99)] <- BAF_Del[c(98:99)] + 0.2
+	BAF_Del[c(100:101)] <- BAF_Del[c(100:101)] + 0.5
 	
 	# BAF Dup prob
 	BAF_Dup <-  BAF_Basic
-	BAF_Dup[c(1,2,20,21)] <- BAF_Dup[c(1,2,20,21)] + 0.38
-	BAF_Dup[6:8] <- BAF_Dup[6:8] + 0.18 # 0.25 0.30 0.35, 
-	BAF_Dup[15:17] <- BAF_Dup[15:17] + 0.18 # 0.7 0.75 0.8
+	BAF_Dup[25:35] <- BAF_Dup[25:35] + 0.18 # 0.25 0.30 0.35, 
+	BAF_Dup[70:80] <- BAF_Dup[70:80] + 0.18 # 0.7 0.75 0.8
 	
 	# BadSNPs
 	BadSNPs <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.09,0.08,0.01,0.15,0.05,0.05,0.10)
@@ -54,6 +62,14 @@ MockData <- function(N=1)
 			MEAN <- sample(CNVMean, 1)
 			X <- rnorm(ChrLength, sd=SD, mean=MEAN)
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
+			names(BAF) <- SNP.Name
+			
+			# Adding Psych Chip PFB to low freq SNPs. Using fix position
+			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
+			BAF[IndxBAF1] <- rnorm(length(IndxBAF1), mean=0.95, sd=0.02)
+			
+			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
+			BAF[IndxBAF0] <- rnorm(length(IndxBAF0), mean=0.1, sd=0.02)
 	
 			# Adding ramdom noise
 			t  <- 1:length(X)
@@ -69,8 +85,8 @@ MockData <- function(N=1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*2), mean=NoiseSNP)
 
 			# BAF noise
-			BAF[BadSNPsIndx] <- BAF[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
-			BAF[BAF > 1] <- 1
+			#BAF[BadSNPsIndx] <- BAF[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
+			#BAF[BAF > 1] <- 1
 
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
@@ -98,9 +114,15 @@ MockData <- function(N=1)
 					BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
 				}
 				## Changing GLOBAL VARIABLES ##
-				X[PositionIndx:(PositionIndx+Size)] <<- X[PositionIndx:(PositionIndx+Size)] + Impact
-				BAF[PositionIndx:(PositionIndx+Size)] <<- BAFCNV
+				IndxV <- PositionIndx:(PositionIndx+Size)
+				X[IndxV] <<- X[IndxV] + Impact
+	
+				# BAF, Change BAF but keep SNPs with low heterozygosity.
+				NoChangeIndx <- c(which(BAF[IndxV] > 0.9), which(BAF[IndxV] < 0.1))
+				NewIndx <- IndxV[(NoChangeIndx*-1)]
+				BAF[NewIndx] <<- BAFCNV[NewIndx]
 				## Changing GLOBAL VARIABLES ##
+				
 				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NoiseSNP=NoiseSNP, BadSNPs=TotalNumberofBadSNPs, NumCNVs=NumCNVs, stringsAsFactors=FALSE)
 				return(df)
 			})
