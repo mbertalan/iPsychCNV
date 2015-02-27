@@ -69,7 +69,7 @@ MockData <- function(N=1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*2), mean=NoiseSNP)
 
 			# BAF noise
-			BAF[BadSNPsIndx] <- [BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
+			BAF[BadSNPsIndx] <- BAF[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
 			BAF[BAF > 1] <- 1
 
 			# Add Telomere noise
