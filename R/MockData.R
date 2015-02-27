@@ -20,7 +20,7 @@ MockData <- function(N=1)
 	
 	# BAF normal prob	
 	BAF_Normal <- BAF_Basic
-	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
+	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.2
 	BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
 	BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
 	
@@ -32,7 +32,7 @@ MockData <- function(N=1)
 	BAF_Del <- BAF_Basic
 	BAF_Del[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
 	BAF_Del[c(98:99)] <- BAF_Del[c(98:99)] + 0.2
-	BAF_Del[c(100:101)] <- BAF_Del[c(100:101)] + 0.5
+	BAF_Del[c(100:101)] <- BAF_Del[c(100:101)] + 0.45
 	
 	# BAF Dup prob
 	BAF_Dup <-  BAF_Basic
