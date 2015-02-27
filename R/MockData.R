@@ -45,11 +45,11 @@ MockData <- function(N=1)
 	BadSNPIntensity <- seq(from=0.2, to=-4, by=-0.1)
 	BadSNPIntensityProb <- seq(from=0.53, to=0.11, by=-0.01)
 	
-	All <- sapply(1:N, function(SampleNum)
+	All <- sapply(1:N, function(SampleNum) # File loop
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
 	
-		tmp <- sapply(unique(CNV$Chr), function(CHR)
+		tmp <- sapply(unique(CNV$Chr), function(CHR) # Chromosome loop
 		{
 			subCNV <- subset(CNV, Chr %in% CHR)
 			subCNV <- subCNV[order(subCNV$Position),]
@@ -65,10 +65,16 @@ MockData <- function(N=1)
 			
 			# Adding Psych Chip PFB to low freq SNPs. Using fix position
 			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.95]
-			BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
-			
+			if(sum(IndxBAF1) > 1)
+			{
+				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
+			}
+		
 			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.05]
-			BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.05, sd=0.01)
+			if(sum(IndxBAF0) > 1)
+			{
+				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.05, sd=0.01)
+			}
 	
 			# Adding ramdom noise
 			t  <- 1:length(X)
@@ -94,7 +100,7 @@ MockData <- function(N=1)
 			
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/1000))-2)
-			DF <- sapply(1:NumCNVs, function(i)
+			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
 				CN <- sample(c(1,3), 1) # CNV Type
 				PositionIndx <- as.numeric(i) * 1000
@@ -111,8 +117,12 @@ MockData <- function(N=1)
 					Impact <- sample(Dup, 1)
 					BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
 				}
-				## Changing GLOBAL VARIABLES ##
+				
+				# CNV position
 				IndxV <- PositionIndx:(PositionIndx+Size)
+				
+				## Changing GLOBAL VARIABLES ##
+				# LRR = X
 				X[IndxV] <<- X[IndxV] + Impact
 	
 				# BAF, Change BAF but keep SNPs with low heterozygosity.
