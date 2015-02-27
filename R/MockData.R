@@ -20,14 +20,13 @@ MockData <- function(N=1)
 	
 	# BAF normal prob	
 	BAF_Normal <- BAF_Basic
-	#BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
-	#BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
-	#BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
+	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
+	BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
+	BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
 	
-	#BAF_Normal[c(80:85)] <- BAF_Normal[c(80:85)] + 0.01
-	#BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.20
-	#BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.5	
-	#BAF_Normal[8:14] <- BAF_Normal[8:14] + 0.18
+	BAF_Normal[c(80:85)] <- BAF_Normal[c(80:85)] + 0.01
+	BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.20
+	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.5	
 	
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
@@ -65,11 +64,11 @@ MockData <- function(N=1)
 			names(BAF) <- SNP.Name
 			
 			# Adding Psych Chip PFB to low freq SNPs. Using fix position
-			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
-			BAF[IndxBAF1] <- rnorm(length(IndxBAF1), mean=0.95, sd=0.02)
+			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.95]
+			BAF[IndxBAF1] <- rnorm(length(IndxBAF1), mean=0.97, sd=0.01)
 			
-			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
-			BAF[IndxBAF0] <- rnorm(length(IndxBAF0), mean=0.1, sd=0.02)
+			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.05]
+			BAF[IndxBAF0] <- rnorm(length(IndxBAF0), mean=0.05, sd=0.01)
 	
 			# Adding ramdom noise
 			t  <- 1:length(X)
