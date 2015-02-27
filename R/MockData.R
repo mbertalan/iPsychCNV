@@ -20,7 +20,7 @@ MockData <- function(N=1)
 	# BAF normal prob	
 	BAF_Normal <- BAF_Basic
 	BAF_Normal[c(1,2,20,21)] <- BAF_Normal[c(1,2,20,21)] + 0.38
-	BAF_Normal[10:12] <- BAF_Normal[10:12] + 0.18
+	BAF_Normal[8:14] <- BAF_Normal[8:14] + 0.18
 	
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
@@ -35,8 +35,8 @@ MockData <- function(N=1)
 	# BadSNPs
 	BadSNPs <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.09,0.08,0.01,0.15,0.05,0.05,0.10)
 	names(BadSNPs) <- 1:22
-	BadSNPIntensity <- seq(from=-0.1, to=-4, by=-0.1)
-	BadSNPIntensityProb <- seq(from=0.5, to=0.11, by=-0.01)
+	BadSNPIntensity <- seq(from=0.2, to=-4, by=-0.1)
+	BadSNPIntensityProb <- seq(from=0.53, to=0.11, by=-0.01)
 	
 	All <- sapply(1:N, function(SampleNum)
 	{
@@ -67,6 +67,10 @@ MockData <- function(N=1)
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*2), mean=NoiseSNP)
+
+			# BAF noise
+			BAF[BadSNPsIndx] <- [BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
+			BAF[BAF > 1] <- 1
 
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
