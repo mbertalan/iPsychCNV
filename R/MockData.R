@@ -120,9 +120,8 @@ MockData <- function(N=1)
 				NewIndx <- IndxV[(NoChangeIndx*-1)]
 				BAF[NewIndx] <<- BAFCNV[NewIndx]
 				## Changing GLOBAL VARIABLES ##
-				
-				BAF[BAF > 1] <- 1
-				BAF[BAF < 0] <- 0
+				BAF[BAF > 1] <<- 1
+				BAF[BAF < 0] <<- 0
 				
 				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NoiseSNP=NoiseSNP, BadSNPs=TotalNumberofBadSNPs, NumCNVs=NumCNVs, stringsAsFactors=FALSE)
 				return(df)
