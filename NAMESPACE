@@ -31,6 +31,7 @@ export(MockData)
 export(EvaluateMockResults)
 export(SelectSamplesFromROI)
 export(RunPennCNV)
+export(QualityControl)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
