@@ -10,7 +10,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
-	library(parallel)
+	suppressPackageStartupMessages(library(parallel))
 	
 	ptm <- proc.time()
 
