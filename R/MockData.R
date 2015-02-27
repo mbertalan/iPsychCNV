@@ -1,8 +1,14 @@
 MockData <- function(N=1)
 {
+	# CNV Size
 	CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
 	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	names(CNVSizeFixed) = 1:50
+	
+	# Telomere noise
+	TelomereNoiseSize <- seq(from=100, to=500, by=100)
+	TelomereNoiseEffect <- seq(from=-0.1, to=-1, by=-0.1)
+	
 	All <- sapply(1:N, function(SampleNum)
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
@@ -13,7 +19,6 @@ MockData <- function(N=1)
 		BAF_Basic <- rep(0.02, 21)
 		names(BAF_Basic) <- BAFs
 	
-		
 		# BAF normal prob	
 		BAF_Normal <- BAF_Basic
 		BAF_Normal[c(1,2,20,21)] <- BAF_Normal[c(1,2,20,21)] + 0.38
@@ -34,6 +39,7 @@ MockData <- function(N=1)
 		names(BadSNPs) <- 1:22
 		BadSNPIntensity <- seq(from=-0.1, to=-4, by=-0.1)
 		BadSNPIntensityProb <- seq(from=0.5, to=0.11, by=-0.01)
+		
 	
 		tmp <- sapply(unique(CNV$Chr), function(CHR)
 		{
@@ -43,7 +49,7 @@ MockData <- function(N=1)
 			SNP.Name <- subCNV$SNP.Name
 	
 			ChrLength <- nrow(subCNV)
-			SD=sample(seq(from=0.1, to=0.5, by=0.1), 1, prob=c(0.2,0.35,0.3,0.07,0.03)) # chr sd
+			SD=sample(seq(from=0.1, to=0.5, by=0.1), 1, prob=c(0.2,0.3,0.3,0.2,0.1)) # chr sd
 			X <- rnorm(ChrLength, sd=SD)
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
 	
@@ -52,7 +58,7 @@ MockData <- function(N=1)
 			ssp <- spectrum(X, plot=FALSE)  
 			per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
 			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
-			X <- X + (fitted(reslm)*10)
+			X <- X + (fitted(reslm)*50)
 	
 			# Adding bad SNPs (in general because of GC and LCR)
 			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
@@ -60,6 +66,12 @@ MockData <- function(N=1)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*2), mean=NoiseSNP)
 
+			# Add Telomere noise
+			NTelomereSize <- sample(TelomereNoiseSize, 1)
+			TeloEffect <- sample(TelomereNoiseEffect, 1) 
+			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
+			X[(Length(X) - NTelomereSize):length(X)] <- X[(Length(X) - NTelomereSize):length(X)] + TeloEffect
+			
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/1000))-2)
 			DF <- sapply(1:NumCNVs, function(i)
