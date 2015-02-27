@@ -8,7 +8,7 @@
 
 DefineStartAndStop <- function(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
 {
-	library(pastecs)
+	suppressPackageStartupMessages(library(pastecs))
 	
 	Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
 	Info <- t(Info)
