@@ -9,37 +9,39 @@ MockData <- function(N=1)
 	TelomereNoiseSize <- seq(from=100, to=500, by=100)
 	TelomereNoiseEffect <- seq(from=-0.1, to=-1, by=-0.1)
 	
+	# CNV effect
+	Del <- seq(from=-0.15, to=-0.45, by=-0.05)
+	Dup <- seq(from=0.15, to=0.45, by=0.05)
+	
+	# BAF
+	BAFs <- seq(from=0, to=1, by=0.05) # 21
+	BAF_Basic <- rep(0.02, 21)
+	names(BAF_Basic) <- BAFs
+	
+	# BAF normal prob	
+	BAF_Normal <- BAF_Basic
+	BAF_Normal[c(1,2,20,21)] <- BAF_Normal[c(1,2,20,21)] + 0.38
+	BAF_Normal[10:12] <- BAF_Normal[10:12] + 0.18
+	
+	# BAF Del prob
+	BAF_Del <- BAF_Basic
+	BAF_Del[c(1,2,20,21)] <- BAF_Del[c(1,2,20,21)] + 0.38
+	
+	# BAF Dup prob
+	BAF_Dup <-  BAF_Basic
+	BAF_Dup[c(1,2,20,21)] <- BAF_Dup[c(1,2,20,21)] + 0.38
+	BAF_Dup[6:8] <- BAF_Dup[6:8] + 0.18 # 0.25 0.30 0.35, 
+	BAF_Dup[15:17] <- BAF_Dup[15:17] + 0.18 # 0.7 0.75 0.8
+	
+	# BadSNPs
+	BadSNPs <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.09,0.08,0.01,0.15,0.05,0.05,0.10)
+	names(BadSNPs) <- 1:22
+	BadSNPIntensity <- seq(from=-0.1, to=-4, by=-0.1)
+	BadSNPIntensityProb <- seq(from=0.5, to=0.11, by=-0.01)
+	
 	All <- sapply(1:N, function(SampleNum)
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
-		
-		Del <- seq(from=-0.15, to=-0.6, by=-0.05)
-		Dup <- seq(from=0.15, to=0.6, by=0.05)
-		BAFs <- seq(from=0, to=1, by=0.05) # 21
-		BAF_Basic <- rep(0.02, 21)
-		names(BAF_Basic) <- BAFs
-	
-		# BAF normal prob	
-		BAF_Normal <- BAF_Basic
-		BAF_Normal[c(1,2,20,21)] <- BAF_Normal[c(1,2,20,21)] + 0.38
-		BAF_Normal[10:12] <- BAF_Normal[10:12] + 0.18
-	
-		# BAF Del prob
-		BAF_Del <- BAF_Basic
-		BAF_Del[c(1,2,20,21)] <- BAF_Del[c(1,2,20,21)] + 0.38
-	
-		# BAF Dup prob
-		BAF_Dup <-  BAF_Basic
-		BAF_Dup[c(1,2,20,21)] <- BAF_Dup[c(1,2,20,21)] + 0.38
-		BAF_Dup[6:8] <- BAF_Dup[6:8] + 0.18 # 0.25 0.30 0.35, 
-		BAF_Dup[15:17] <- BAF_Dup[15:17] + 0.18 # 0.7 0.75 0.8
-	
-		# BadSNPs
-		BadSNPs <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.09,0.08,0.01,0.15,0.05,0.05,0.10)
-		names(BadSNPs) <- 1:22
-		BadSNPIntensity <- seq(from=-0.1, to=-4, by=-0.1)
-		BadSNPIntensityProb <- seq(from=0.5, to=0.11, by=-0.01)
-		
 	
 		tmp <- sapply(unique(CNV$Chr), function(CHR)
 		{
