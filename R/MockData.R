@@ -70,7 +70,7 @@ MockData <- function(N=1)
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
 			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
-			X[(Length(X) - NTelomereSize):length(X)] <- X[(Length(X) - NTelomereSize):length(X)] + TeloEffect
+			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/1000))-2)
