@@ -51,7 +51,9 @@ MockData <- function(N=1)
 	
 		tmp <- sapply(unique(CNV$Chr), function(CHR) # Chromosome loop
 		{
-			subCNV <- subset(CNV, Chr %in% CHR)
+			# CNV is a RData from the package with the Psycho chip information. 
+			# It has SNP position and names. It is used to guide the mock data.
+			subCNV <- subset(CNV, Chr %in% CHR) 
 			subCNV <- subCNV[order(subCNV$Position),]
 			Position <- subCNV$Position
 			SNP.Name <- subCNV$SNP.Name
