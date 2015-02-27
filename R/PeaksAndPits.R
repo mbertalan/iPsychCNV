@@ -6,9 +6,9 @@
 
 PeaksAndPits <- function(DF, PlotName)
 {
-	library(pastecs)
-	library(plyr)
-	library(randtests)
+	suppressPackageStartupMessages(library(pastecs))
+	suppressPackageStartupMessages(library(plyr))
+	suppressPackageStartupMessages(library(randtests))
 	
 	DF <- subset(DF, !Chr %in% c("MT", "X", "Y", "XY", "0"))
 	tmp <- sapply(unique(DF$Chr), function(Z)
