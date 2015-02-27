@@ -17,7 +17,7 @@ NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE)
 		iUnder <- subCNV$Log.R.Ratio < -1
 		LRR_SD <- sd(subCNV$Log.R.Ratio)
 
-		if(sum(iUnder) > 5)
+		if(sum(iUnder) > 10 & sum(iNorm > 10))
 		{
 			Norm <- subCNV$Log.R.Ratio
 			if(LRR_SD > 0.25)
