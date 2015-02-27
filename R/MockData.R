@@ -66,6 +66,7 @@ MockData <- function(N=1)
 			names(BAF) <- SNP.Name
 			
 			# Adding Psych Chip PFB to low freq SNPs. Using fix position
+			# Wave1PFB: data from package. Pop frequency estimated by Wave1. 
 			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.95]
 			if(sum(IndxBAF1) > 1)
 			{
