@@ -16,7 +16,7 @@ MockData <- function(N=1)
 	BAFs <- seq(from=0, to=1, by=0.01) # 21
 	BAF_Basic <- rep(0.02, 101)
 	names(BAF_Basic) <- BAFs
-	BAF_Basic[10:80] <- seq(from=0.185, to=0.22, by=0.0005)
+	BAF_Basic[10:90] <- seq(from=0.18, to=0.22, by=0.0005)
 	
 	# BAF normal prob	
 	BAF_Normal <- BAF_Basic
@@ -65,10 +65,10 @@ MockData <- function(N=1)
 			
 			# Adding Psych Chip PFB to low freq SNPs. Using fix position
 			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.95]
-			BAF[IndxBAF1] <- rnorm(length(IndxBAF1), mean=0.97, sd=0.01)
+			BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
 			
 			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.05]
-			BAF[IndxBAF0] <- rnorm(length(IndxBAF0), mean=0.05, sd=0.01)
+			BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.05, sd=0.01)
 	
 			# Adding ramdom noise
 			t  <- 1:length(X)
