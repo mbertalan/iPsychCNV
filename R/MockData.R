@@ -1,17 +1,16 @@
 MockData <- function(N=1)
 {
-	# CNV Size
+	# CNV Info
 	CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
 	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	names(CNVSizeFixed) = 1:50
+	Del <- seq(from=-0.15, to=-0.45, by=-0.05)
+	Dup <- seq(from=0.15, to=0.45, by=0.05)
+	CNVMean <- seq(from=0.2, to=-0.4, by=-0.1)
 	
 	# Telomere noise
 	TelomereNoiseSize <- seq(from=100, to=500, by=100)
 	TelomereNoiseEffect <- seq(from=-0.1, to=-1, by=-0.1)
-	
-	# CNV effect
-	Del <- seq(from=-0.15, to=-0.45, by=-0.05)
-	Dup <- seq(from=0.15, to=0.45, by=0.05)
 	
 	# BAF
 	BAFs <- seq(from=0, to=1, by=0.05) # 21
@@ -52,7 +51,8 @@ MockData <- function(N=1)
 	
 			ChrLength <- nrow(subCNV)
 			SD=sample(seq(from=0.1, to=0.5, by=0.1), 1, prob=c(0.2,0.3,0.3,0.2,0.1)) # chr sd
-			X <- rnorm(ChrLength, sd=SD)
+			MEAN <- sample(CNVMean, 1)
+			X <- rnorm(ChrLength, sd=SD, mean=MEAN)
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
 	
 			# Adding ramdom noise
@@ -60,7 +60,7 @@ MockData <- function(N=1)
 			ssp <- spectrum(X, plot=FALSE)  
 			per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
 			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
-			X <- X + (fitted(reslm)*50)
+			X <- X + (fitted(reslm)*20)
 	
 			# Adding bad SNPs (in general because of GC and LCR)
 			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
