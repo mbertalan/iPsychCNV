@@ -15,7 +15,7 @@ MockData <- function(N=1)
 	
 	# BAF
 	BAFs <- seq(from=0, to=1, by=0.05) # 21
-	BAF_Basic <- rep(0.02, 21)
+	BAF_Basic <- rep(0.05, 21)
 	names(BAF_Basic) <- BAFs
 	
 	# BAF normal prob	
