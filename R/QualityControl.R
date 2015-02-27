@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Cores=10, Pattern="*_*assed_*", NumFiles="All", Skip=0) # Files2 OutputPath
+QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Cores=10, Pattern="*_*assed_*", NumFiles="All", Skip=0, Normalization=FALSE) # Files2 OutputPath
 {	
 	library(parallel)
 
@@ -23,7 +23,10 @@ QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH
 	
 		CNV <- ReadCNV(X, skip=Skip)
 		
-		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=NA, NormQspline=FALSE)
+		if(Normalization)
+		{
+			CNV <- NormalizeData(CNV, ExpectedMean=0, DF=NA, NormQspline=FALSE)
+		}
 
 		Res <- PeaksAndPits(CNV, ID)
 		return(Res)
