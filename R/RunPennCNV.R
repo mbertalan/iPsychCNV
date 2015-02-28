@@ -27,7 +27,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 		#write.table(CNV, sep="\t", quote=FALSE, row.names=FALSE, file=Input)
 		
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
-		Command <- paste("/media/NeoScreen/NeSc_home/share/Programs/penncnv/detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm /media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm -pfb /media/NeoScreen/NeSc_home/bertalan/CNVs/MockData/PKU/PennCNV/Mock.pfb", X, "-log logfile -out", Output, sep=" ", collapse="")
+		Command <- paste("/media/NeoScreen/NeSc_home/share/Programs/penncnv/detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm /media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm -pfb", PFB, X, "-log logfile -out", Output, sep=" ", collapse="")
 		cat(Command, "\n")
 		system(Command)
 
