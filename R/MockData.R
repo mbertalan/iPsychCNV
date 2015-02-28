@@ -1,4 +1,4 @@
-MockData <- function(N=1, Wave1=FALSE)
+MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE)
 {
 	# Use Wave1 PFB ?
 	if(!Wave1)
@@ -22,17 +22,28 @@ MockData <- function(N=1, Wave1=FALSE)
 	BAFs <- seq(from=0, to=1, by=0.01) # 21
 	BAF_Basic <- rep(0.02, 101)
 	names(BAF_Basic) <- BAFs
-	BAF_Basic[10:90] <- seq(from=0.18, to=0.22, by=0.0005)
 	
-	# BAF normal prob	
-	BAF_Normal <- BAF_Basic
-	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.2
-	BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
-	BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
+	if(BAF_LOH)
+	{
+		BAF_Basic[10:90] <- seq(from=0.18, to=0.22, by=0.0005)
 	
-	BAF_Normal[c(80:85)] <- BAF_Normal[c(80:85)] + 0.01
-	BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.20
-	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.5	
+		# BAF normal prob	
+		BAF_Normal <- BAF_Basic
+		BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.2
+		BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
+		BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
+	
+		BAF_Normal[c(80:85)] <- BAF_Normal[c(80:85)] + 0.01
+		BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.20
+		BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.5	
+	}
+	else
+	{
+		BAF_Normal <- BAF_Basic
+		BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.3
+		BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.3
+		BAF_Normal[c(45:55)] <- BAF_Normal[c(45:55)] + 0.15
+	}
 	
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
