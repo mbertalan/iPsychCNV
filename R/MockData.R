@@ -6,11 +6,11 @@ MockData <- function(N=1)
 	names(CNVSizeFixed) = 1:50
 	Del <- seq(from=-0.15, to=-0.45, by=-0.05)
 	Dup <- seq(from=0.15, to=0.45, by=0.05)
-	CNVMean <- seq(from=0.2, to=-0.4, by=-0.1)
+	CNVMean <- seq(from=0.2, to=-0.3, by=-0.1)
 	
 	# Telomere noise
 	TelomereNoiseSize <- seq(from=100, to=500, by=100)
-	TelomereNoiseEffect <- seq(from=-0.1, to=-1, by=-0.1)
+	TelomereNoiseEffect <- seq(from=0.2, to=-0.3, by=-0.1)
 	
 	# BAF
 	BAFs <- seq(from=0, to=1, by=0.01) # 21
@@ -59,7 +59,7 @@ MockData <- function(N=1)
 			SNP.Name <- subCNV$SNP.Name
 	
 			ChrLength <- nrow(subCNV)
-			SD=sample(seq(from=0.1, to=0.5, by=0.1), 1, prob=c(0.2,0.3,0.3,0.2,0.1)) # chr sd
+			SD=sample(seq(from=0.1, to=0.5, by=0.1), 1, prob=c(0.2,0.4,0.4,0.1,0.05)) # chr sd
 			MEAN <- sample(CNVMean, 1)
 			X <- rnorm(ChrLength, sd=SD, mean=MEAN)
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
