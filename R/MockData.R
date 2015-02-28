@@ -1,5 +1,11 @@
-MockData <- function(N=1)
+MockData <- function(N=1, Wave1=FALSE)
 {
+	# Use Wave1 PFB ?
+	if(!Wave1)
+	{
+		Wave1PFB <- rep(0.5, length(Wave1PFB))
+	}
+		
 	# CNV Info
 	CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
 	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
