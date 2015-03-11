@@ -18,7 +18,10 @@ EvaluateMockResults <- function(MockCNVs, df)
 		NumCNVs <- nrow(res)
 		if(NumCNVs > 1)
 		{
-			res <- subset(res, Length == max(res$Length))	
+			DifLength <- abs(res$Length - LengthM)
+			names(DifLength) <- res$Length
+			res <- subset(res, Length == as.numeric(names(sort(DifLength))[1]))
+			#res <- subset(res, Length == max(res$Length))	
 			if(nrow(res) > 1){ res <- res[1,]}			
 		}
 
