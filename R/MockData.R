@@ -1,66 +1,35 @@
-MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE)
+MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood") # Type: Blood or PKU (Perfect or noise)
 {
-	# Use Wave1 PFB ?
+	# Use Wave1 PFB ? Wave1PFB comes with the package.
 	if(!Wave1)
 	{
-		Wave1PFB <- rep(0.5, length(Wave1PFB))
+		WaveTmp <- rep(0.5, length(Wave1PFB))
+		names(WaveTmp) <- names(Wave1PFB)
+		Wave1PFB <- WaveTmp
 	}
 		
 	# CNV Info
 	CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
 	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	names(CNVSizeFixed) = 1:50
-	Del <- seq(from=-0.15, to=-0.45, by=-0.05)
-	Dup <- seq(from=0.15, to=0.45, by=0.05)
-	CNVMean <- seq(from=0.2, to=-0.3, by=-0.1)
+
+	List <- GetMockValues(Type=Type, BAF_LOH=BAF_LOH)
 	
-	# Telomere noise
-	TelomereNoiseSize <- seq(from=100, to=500, by=100)
-	TelomereNoiseEffect <- seq(from=0.2, to=-0.3, by=-0.1)
-	
-	# BAF
-	BAFs <- seq(from=0, to=1, by=0.01) # 21
-	BAF_Basic <- rep(0.02, 101)
-	names(BAF_Basic) <- BAFs
-	
-	if(BAF_LOH)
-	{
-		BAF_Basic[10:90] <- seq(from=0.18, to=0.22, by=0.0005)
-	
-		# BAF normal prob	
-		BAF_Normal <- BAF_Basic
-		BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.2
-		BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.1
-		BAF_Normal[c(8:9)] <- BAF_Normal[c(8:9)] - 0.02
-	
-		BAF_Normal[c(80:85)] <- BAF_Normal[c(80:85)] + 0.01
-		BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.20
-		BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.5	
-	}
-	else
-	{
-		BAF_Normal <- BAF_Basic
-		BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 0.3
-		BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 0.3
-		BAF_Normal[c(45:55)] <- BAF_Normal[c(45:55)] + 0.15
-	}
-	
-	# BAF Del prob
-	BAF_Del <- BAF_Basic
-	BAF_Del[c(1:2)] <- BAF_Normal[c(1:2)] + 0.23
-	BAF_Del[c(98:99)] <- BAF_Del[c(98:99)] + 0.2
-	BAF_Del[c(100:101)] <- BAF_Del[c(100:101)] + 0.45
-	
-	# BAF Dup prob
-	BAF_Dup <-  BAF_Basic
-	BAF_Dup[25:35] <- BAF_Dup[25:35] + 0.18 # 0.25 0.30 0.35, 
-	BAF_Dup[70:80] <- BAF_Dup[70:80] + 0.18 # 0.7 0.75 0.8
-	
-	# BadSNPs
-	BadSNPs <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.09,0.08,0.01,0.15,0.05,0.05,0.10)
-	names(BadSNPs) <- 1:22
-	BadSNPIntensity <- seq(from=0.2, to=-4, by=-0.1)
-	BadSNPIntensityProb <- seq(from=0.53, to=0.11, by=-0.01)
+	Del <- List[["Del"]]
+	Dup <- List[["Dup"]] 
+	ChrMean <- List[["ChrMean"]]
+	ChrSD <- List[["ChrSD"]]
+	ChrSDProb <- List[["ChrSDProb"]]
+	TelomereNoiseSize <- List[["TelomereNoiseSize"]]
+	TelomereNoiseEffect <- List[["TelomereNoiseEffect"]]
+	BAFs <- List[["BAFs"]]
+	BAF_Normal <- List[["BAF_Normal"]]
+	BAF_Del <- List[["BAF_Del"]]
+	BAF_Dup <- List[["BAF_Dup"]]
+	BadSNPs <- List[["BadSNPs"]]
+	BadSNPIntensity <- List[["BadSNPIntensity"]]
+	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
+	ChrMeanProb <- List[["ChrMeanProb"]]
 	
 	All <- sapply(1:N, function(SampleNum) # File loop
 	{
@@ -76,38 +45,40 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE)
 			SNP.Name <- subCNV$SNP.Name
 	
 			ChrLength <- nrow(subCNV)
-			SD=sample(seq(from=0.1, to=0.5, by=0.1), 1, prob=c(0.2,0.4,0.4,0.1,0.05)) # chr sd
-			MEAN <- sample(CNVMean, 1)
-			X <- rnorm(ChrLength, sd=SD, mean=MEAN)
+			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
+			ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
+			X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
 			names(BAF) <- SNP.Name
 			
 			# Adding Psych Chip PFB to low freq SNPs. Using fix position
 			# Wave1PFB: data from package. Pop frequency estimated by Wave1. 
-			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.95]
+			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
 			if(sum(IndxBAF1) > 1)
 			{
-				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
+				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.001)
 			}
-		
+			
 			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.05]
 			if(sum(IndxBAF0) > 1)
 			{
-				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.05, sd=0.01)
+				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.001)
 			}
-	
-			# Adding ramdom noise
+			
+			if(Type %in% "PKU")
+			# Adding random noise
 			t  <- 1:length(X)
 			ssp <- spectrum(X, plot=FALSE)  
 			per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
 			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
-			X <- X + (fitted(reslm)*20)
-	
-			# Adding bad SNPs (in general because of GC and LCR)
+			X <- X - (fitted(reslm))
+		
+
+			# Adding bad SNPs (generally because of GC and LCR)
 			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*2), mean=NoiseSNP)
+			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP)
 
 			# BAF noise
 			#BAF[BadSNPsIndx] <- BAF[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
@@ -119,12 +90,12 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE)
 			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
 			# Adding CNVs		
-			NumCNVs <- ((round(length(X)/1000))-2)
+			NumCNVs <- ((round(length(X)/2000))-2)
 			
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
 				CN <- sample(c(1,3), 1) # CNV Type
-				PositionIndx <- as.numeric(i) * 1000
+				PositionIndx <- as.numeric(i) * 2000
 				#Size <- sample(CNVsSize, 1) # CNV Size
 				# Using fix size for chr position.
 				Size <- CNVSizeFixed[i]
@@ -152,11 +123,12 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE)
 				NoChangeIndx <- c(which(BAF[IndxV] > 0.9), which(BAF[IndxV] < 0.1))
 				NewIndx <- IndxV[(NoChangeIndx*-1)]
 				BAF[NewIndx] <<- BAFCNV[as.character(NewIndx)]
+				
 				## Changing GLOBAL VARIABLES ##
 				BAF[BAF > 1] <<- 1
 				BAF[BAF < 0] <<- 0
 				
-				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NoiseSNP=NoiseSNP, BadSNPs=TotalNumberofBadSNPs, NumCNVs=NumCNVs, stringsAsFactors=FALSE)
+				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NoiseSNP=NoiseSNP, BadSNPs=TotalNumberofBadSNPs, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
 				return(df)
 			})
 			df <- MatrixOrList2df(DF)
@@ -202,6 +174,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE)
 			Df2$NoiseSNP <- rep(unique(subCNVs$NoiseSNP), nrow(Df2))
 			Df2$BadSNPs <- rep(unique(subCNVs$BadSNPs), nrow(Df2))
 			Df2$NumCNVs <- rep(unique(subCNVs$NumCNVs), nrow(Df2))
+			Df2$ChrMean <- rep(unique(subCNVs$ChrMean), nrow(Df2))
 			Df2$Length <- Df2$Stop - Df2$Start
 			Df2$CNVID <- 1:nrow(Df2)    
 			Df2 <- Df2[, colnames(subCNVs)]
