@@ -1,4 +1,4 @@
-MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood") # Type: Blood or PKU (Perfect or noise)
+MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Type: Blood or PKU (Perfect or noise)
 {
 	# Use Wave1 PFB ? Wave1PFB comes with the package.
 	if(!Wave1)
@@ -31,7 +31,10 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood") # Type: Blood
 	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
 	ChrMeanProb <- List[["ChrMeanProb"]]
 	
-	All <- sapply(1:N, function(SampleNum) # File loop
+	suppressPackageStartupMessages(library(parallel))
+
+	All <- mclapply(1:N, mc.cores=Cores, mc.preschedule = FALSE, function(SampleNum) 
+	#All <- sapply(1:N, function(SampleNum) # File loop
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
 	
@@ -48,7 +51,11 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood") # Type: Blood
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
 			ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
 			X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
-			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
+	
+			# Change BAF to simulate chromosome differences
+			Tmp_BAF_Prob <- BAF_Normal
+			Tmp_BAF_Prob[98:101] <- Tmp_BAF_Prob[98:101] + (Tmp_BAF_Prob[98:101] * BadSNPs[CHR])
+			BAF <- sample(BAFs, prob=Tmp_BAF_Prob, replace=TRUE, size=length(X))
 			names(BAF) <- SNP.Name
 			
 			# Adding Psych Chip PFB to low freq SNPs. Using fix position
@@ -66,12 +73,14 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood") # Type: Blood
 			}
 			
 			if(Type %in% "PKU")
-			# Adding random noise
-			t  <- 1:length(X)
-			ssp <- spectrum(X, plot=FALSE)  
-			per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
-			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
-			X <- X - (fitted(reslm))
+			{
+				# Adding random noise
+				t  <- 1:length(X)
+				ssp <- spectrum(X, plot=FALSE)  
+				per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
+				reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
+				X <- X - (fitted(reslm)*10)
+			}
 		
 
 			# Adding bad SNPs (generally because of GC and LCR)
@@ -80,12 +89,11 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood") # Type: Blood
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP)
 
-			# BAF noise
-			#BAF[BadSNPsIndx] <- BAF[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD), mean=0.1)
 			
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
+			if(Type %in% "PKU"){ TeloEffect <- TeloEffect * 2 } # If PKU the telomereNoise is double.
 			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
 			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
