@@ -33,9 +33,14 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 
 		return(Output)
 	})
-
+	# Creating Chip info file for PennCNV
+	ChipInfo <- ReadCNV(Files[1], skip=Skip, LCR=FALSE)
+	colnames(ChipInfo)[colnames(ChipInfo) %in% "SNP.Name"] <- "Name"   
+	ChipInfo <- ChipInfo[, c("Name", "Chr", "Position")]
+	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
+	
 	system("cat *.penncnv.out > All_Mock.penncnv.raw")
-	system("clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile /media/NeoScreen/NeSc_home/bertalan/CNVs/MockData/PKU/SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv")
+	system("clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv")
 	system(	"~/CNV/Scripts/Penn2Tab.pl < Merged.cnv > Merged.cnv.tab")
 
 	tmp <- read.table("Merged.cnv.tab", sep="\t", header=TRUE, stringsAsFactors=FALSE)
