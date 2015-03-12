@@ -44,8 +44,12 @@ EvaluateMockResults <- function(MockCNVs, df)
 		{	
 			StartO <- max(c(res$Start, StartM))
 			StopO <- min(c(res$Stop, StopM))
+			if(StartO == StartM & StopO == StopM)
+			{
+				StartO <- max(res$Start)
+				StopO <- min(res$Stop)
+			}
 			LengthO <- StopO - StartO
-
 			OverlapLenghM <- ((LengthO/LengthM)*100)
 			OverlapSNP <- ((res$NumSNPs/NumSNPsM)*100)
 
