@@ -93,7 +93,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
-			if(Type %in% "PKU"){ TeloEffect <- TeloEffect * 2 } # If PKU the telomereNoise is double.
+			if(Type %in% "PKU"){ TeloEffect <- (TeloEffect * 2) * BadSNPs[CHR] }else{ TeloEffect <- (TeloEffect / 2) * BadSNPs[CHR] }  # If PKU the telomereNoise is double.
 			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
 			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
