@@ -60,6 +60,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			#ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
 			#X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
 			X <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=ChrLength)
+			X <- as.numeric(X)
 			
 			# Change BAF to simulate chromosome differences
 			Tmp_BAF_Prob <- BAF_Normal
