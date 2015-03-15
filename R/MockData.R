@@ -31,10 +31,18 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
 	ChrMeanProb <- List[["ChrMeanProb"]]
 	
+	if(Type %in% "Blood")
+	{
+		BAF_Prob_By_Chr <- ((49*GC_MeanByChr)/40)/100	
+	}
+	else
+	{
+		BAF_Prob_By_Chr <- (((55*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
+	}
+	
 	suppressPackageStartupMessages(library(parallel))
 
 	All <- mclapply(1:N, mc.cores=Cores, mc.preschedule = FALSE, function(SampleNum) 
-	#All <- sapply(1:N, function(SampleNum) # File loop
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
 	
@@ -54,7 +62,13 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 	
 			# Change BAF to simulate chromosome differences
 			Tmp_BAF_Prob <- BAF_Normal
-			Tmp_BAF_Prob[98:101] <- Tmp_BAF_Prob[98:101] + (Tmp_BAF_Prob[98:101] * BadSNPs[CHR])
+			BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
+			BAF_Prob_Value_AAAA <- 1 - BAF_Prob_Value_BBBB
+			Tmp_BAF_Prob[100:101] <- BAF_Prob_Value_BBBB
+			Tmp_BAF_Prob[98:99] <- (BAF_Prob_Value_BBBB * 3/4)
+			Tmp_BAF_Prob[1:2] <- BAF_Prob_Value_AAAA
+			Tmp_BAF_Prob[3:4] <- (BAF_Prob_Value_AAAA * 3/4)
+			
 			BAF <- sample(BAFs, prob=Tmp_BAF_Prob, replace=TRUE, size=length(X))
 			names(BAF) <- SNP.Name
 			
