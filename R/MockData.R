@@ -33,11 +33,11 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 	
 	if(Type %in% "Blood")
 	{
-		BAF_Prob_By_Chr <- ((49*GC_MeanByChr)/40)/100	
+		BAF_Prob_By_Chr <- ((55*GC_MeanByChr)/40)/100	
 	}
 	else
 	{
-		BAF_Prob_By_Chr <- (((55*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
+		BAF_Prob_By_Chr <- (((60*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
 	}
 	
 	suppressPackageStartupMessages(library(parallel))
@@ -56,10 +56,11 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			SNP.Name <- subCNV$SNP.Name
 	
 			ChrLength <- nrow(subCNV)
-			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
-			ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
-			X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
-	
+			#SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
+			#ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
+			#X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
+			X <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=ChrLength)
+			
 			# Change BAF to simulate chromosome differences
 			Tmp_BAF_Prob <- BAF_Normal
 			BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
