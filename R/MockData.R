@@ -56,8 +56,8 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			SNP.Name <- subCNV$SNP.Name
 	
 			ChrLength <- nrow(subCNV)
-			#SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
-			#ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
+			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
+			ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
 			#X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
 			X <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=ChrLength)
 			X <- as.numeric(X)
