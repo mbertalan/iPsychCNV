@@ -61,10 +61,15 @@ GetMockValues <- function(Type="Blood", BAF_LOH=FALSE)
 		# CNV Info
 		Del <- seq(from=-0.3, to=-0.5, by=-0.05)
 		Dup <- seq(from=0.3, to=0.5, by=0.05)
-		ChrMean <- seq(from=0.1, to=-0.1, by=-0.01)
-		ChrMeanProb <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.1,0.3,0.3,0.15,0.1,0.02,0.2,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01)
-		ChrSD <- seq(from=0.1, to=0.5, by=0.025)
-		ChrSDProb <- c(0.4, 0.9, 0.8, 0.4, 0.4, 0.2, 0.1, 0.01,0.01, 0.01,0.01,0.01, 0.01, 0.01, 0.01, 0.01, 0.01)
+		#ChrMean <- seq(from=0.1, to=-0.1, by=-0.01)
+		#ChrMeanProb <- c(0.01, 0.01,0.01,0.01,0.01,0.01,0.1,0.3,0.3,0.15,0.1,0.02,0.2,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01)
+		#ChrSD <- seq(from=0.1, to=0.5, by=0.025)
+		#ChrSDProb <- c(0.4, 0.9, 0.8, 0.4, 0.4, 0.2, 0.1, 0.01,0.01, 0.01,0.01,0.01, 0.01, 0.01, 0.01, 0.01, 0.01)
+		ChrMean <- QC_800_Real_Blood_Density$LRR.Mean.x
+		ChrMeanProb <- QC_800_Real_Blood_Density$LRR.Mean.y
+		ChrSD <- QC_800_Real_Blood_Density$LRR.SD.x
+		ChrSDProb <- QC_800_Real_Blood_Density$LRR.SD.y
+	
 	
 		# BAF Del prob
 		BAF_Del <- BAF_Basic
@@ -83,13 +88,14 @@ GetMockValues <- function(Type="Blood", BAF_LOH=FALSE)
 		# CNV Info
 		Del <- seq(from=-0.15, to=-0.5, by=-0.05)
 		Dup <- seq(from=0.15, to=0.5, by=0.05)
-		ChrMean <- seq(from=-0.4, to=0.2, by=0.025)
-		#				                                                                 0  .25 .05 .075 .1  .125 .15  .175 0.2	
-		ChrMeanProb <- c(0.01, 0.01,0.01,0.01,0.01, 0.01,0.01,0.01,0.02,0.02,0.1,0.15,0.2,0.1,0.2,0.4,0.9,0.4,0.2,0.1,0.02,0.01,0.01,0.01,0.01)
-
-		ChrSD <- seq(from=0.1, to=0.5, by=0.025)
-		#	       0.1 .125  .15 .175  0.2  .225 .25  .275  .3 .325 .35 .375 .4 .425 .45 .475 .5 	
-		ChrSDProb <- c(0.2, 0.6, 0.9, 0.6, 0.4,  0.2, 0.25, 0.2, 0.15, 0.2, 0.1, 0.05, 0.01, 0.01, 0.01, 0.01, 0.01)
+		#ChrMean <- seq(from=-0.4, to=0.2, by=0.025)
+		#ChrMeanProb <- c(0.01, 0.01,0.01,0.01,0.01, 0.01,0.01,0.01,0.02,0.02,0.1,0.15,0.2,0.1,0.2,0.4,0.9,0.4,0.2,0.1,0.02,0.01,0.01,0.01,0.01)
+		#ChrSD <- seq(from=0.1, to=0.5, by=0.025)
+		#ChrSDProb <- c(0.2, 0.6, 0.9, 0.6, 0.4,  0.2, 0.25, 0.2, 0.15, 0.2, 0.1, 0.05, 0.01, 0.01, 0.01, 0.01, 0.01)
+		ChrMean <- QC_800_Wave10_PKU_Density$LRR.Mean.x
+		ChrMeanProb <- QC_800_Wave10_PKU_Density$LRR.Mean.y
+		ChrSD <- QC_800_Wave10_PKU_Density$LRR.SD.x
+		ChrSDProb <- QC_800_Wave10_PKU_Density$LRR.SD.y
 	
 		# BAF Del prob
 		BAF_Del <- BAF_Basic + 0.02
