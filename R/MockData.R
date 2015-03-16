@@ -95,7 +95,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.001)
 			}
 			
-			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.05]
+			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
 			if(sum(IndxBAF0) > 1)
 			{
 				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.001)
@@ -108,7 +108,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 				ssp <- spectrum(X, plot=FALSE)  
 				per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
 				reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
-				X <- X - (fitted(reslm)*20)
+				X <- X - abs((fitted(reslm)*20))
 			}
 		
 
@@ -116,8 +116,9 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] + rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP)
+			X[BadSNPsIndx] <- X[BadSNPsIndx] - rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP)
 
+			
 			
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
