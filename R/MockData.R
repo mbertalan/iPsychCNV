@@ -39,6 +39,8 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 	{
 		BAF_Prob_By_Chr <- (((65*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
 	}
+	GC_ByChr <- GC_MeanByChr + ((GC_MeanByChr-median(GC_MeanByChr))*4)
+	GC_Effect <- (GC_ByChr/median(GC_ByChr))^2
 	
 	suppressPackageStartupMessages(library(parallel))
 
@@ -109,7 +111,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
-			if(Type %in% "PKU"){ TeloEffect <- (TeloEffect * 4) * BadSNPs[CHR] }else{ TeloEffect <- TeloEffect * BadSNPs[CHR] }  # If PKU the telomereNoise is double.
+			if(Type %in% "PKU"){ TeloEffect <- TeloEffect * GC_Effect[CHR] }else{ TeloEffect <- (TeloEffect/2) * GC_Effect[CHR] }  # If PKU the telomereNoise is double.
 			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
 			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
