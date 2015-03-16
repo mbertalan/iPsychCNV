@@ -1,9 +1,9 @@
-MakeAndEvalMockData <- function(N=100, Wave1=FALSE, BAF_LOH=FALSE, Type="PKU", Cores=20)
+MakeAndEvalMockData <- function(N=100, Wave1=FALSE, Type="PKU", Cores=20)
 {
 	library(iPsychCNV)
 	# Creating Mock Data
 	MockFileName <- paste(Type, "_Mock_CNVs", ".RData", sep="", collapse="")
-	Mock_CNVs <- MockData(N, Wave1, BAF_LOH, Type, Cores)
+	Mock_CNVs <- MockData(N, Wave1, Type, Cores)
 	save(Mock_CNVs, file=MockFileName)
 
 	# Creating Roi from Mock Data
