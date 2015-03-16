@@ -66,8 +66,19 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			
 			# Change BAF to simulate chromosome differences
 			Tmp_BAF_Prob <- BAF_Normal
-			BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
-			BAF_Prob_Value_AAAA <- 1 - BAF_Prob_Value_BBBB
+			
+			#Change BAF frequency (High on 0 or High on 1). It seems High on 1 give dupliations on penncnv.
+			BAF_Change <- sample(c(1,2), 1)
+			if(BAF_Change == 1)
+			{ 
+				BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
+				BAF_Prob_Value_AAAA <- 1 - BAF_Prob_Value_BBBB
+			}
+			else
+			{
+				BAF_Prob_Value_AAAA <- BAF_Prob_By_Chr[CHR]
+				BAF_Prob_Value_BBBB <- 1 - BAF_Prob_Value_AAAA
+			}
 			Tmp_BAF_Prob[100:101] <- BAF_Prob_Value_BBBB
 			Tmp_BAF_Prob[98:99] <- (BAF_Prob_Value_BBBB * 3/4)
 			Tmp_BAF_Prob[1:2] <- BAF_Prob_Value_AAAA
