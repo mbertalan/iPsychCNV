@@ -32,6 +32,15 @@ QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH
 		return(Res)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
-	tmp3 <- tmp2[,-1]
+	tmp3 <- tmp2[,!colnames(tmp2) %in% ".id"]
+	indx <- which(is.na(as.numeric(tmp3$Log.R.Ratio.Mean)))
+	if(length(indx) > 0)
+	{
+		tmp3 <- tmp3[indx*-1,]
+		tmp <- sapply(tmp3[,!colnames(tmp3) %in% "ID"], as.numeric)
+		tmp <- as.data.frame(tmp)
+		tmp$ID <- tmp3$ID
+		tmp3 <- tmp
+	}
 	return(tmp3)
 }
