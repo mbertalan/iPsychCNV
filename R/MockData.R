@@ -125,7 +125,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 
 			# Adding bad SNPs (generally because of GC and LCR)
 			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
-			TotalNumberofBadSNP <- round(TotalNumberofBadSNP/100) + 1
+			TotalNumberofBadSNPs <- round(TotalNumberofBadSNPs/100) + 1
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			BadSNPsIndx <- as.vector(sapply(BadSNPsIndx, function(I){ c((I-40):(I+40)) }))
 			BadSNPsIndx[BadSNPsIndx < 0] <- 1
