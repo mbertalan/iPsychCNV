@@ -101,22 +101,25 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.001)
 			}
 			
+			# Adding random noise
+			t  <- 1:length(X)
+			ssp <- spectrum(X, plot=FALSE)  
+			per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
+			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))
 			if(Type %in% "PKU")
 			{
-				# Adding random noise
-				t  <- 1:length(X)
-				ssp <- spectrum(X, plot=FALSE)  
-				per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
-				reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
 				X <- X - abs((fitted(reslm)*20))
 			}
-		
+			else
+			{
+				X <- X - abs((fitted(reslm)*2))
+			}
 
 			# Adding bad SNPs (generally because of GC and LCR)
 			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] - rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP)
+			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP))
 
 			
 			
