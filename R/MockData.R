@@ -129,7 +129,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
 			BadSNPsIndx <- as.vector(sapply(BadSNPsIndx, function(I){ c((I-20):(I+20)) }))
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP))
+			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(length(BadSNPsIndx), sd=(SD*1.5), mean=NoiseSNP))
 
 			
 			
