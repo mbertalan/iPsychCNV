@@ -92,13 +92,13 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
 			if(sum(IndxBAF1) > 1)
 			{
-				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.001)
+				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
 			}
 			
 			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
 			if(sum(IndxBAF0) > 1)
 			{
-				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.001)
+				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.01)
 			}
 			
 			# Adding random noise
@@ -115,14 +115,6 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				X <- X - abs((fitted(reslm)*2))
 			}
 
-			# Adding bad SNPs (generally because of GC and LCR)
-			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
-			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
-			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP))
-
-			
-			
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
@@ -130,6 +122,18 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
 			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
+
+			# Adding bad SNPs (generally because of GC and LCR)
+			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
+			TotalNumberofBadSNP <- round(TotalNumberofBadSNP/100) + 1
+			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
+			BadSNPsIndx <- as.vector(sapply(BadSNPsIndx, function(I){ c((I-20):(I+20)) }))
+			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
+			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(TotalNumberofBadSNPs, sd=(SD*1.5), mean=NoiseSNP))
+
+			
+			
+		
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/2000))-2)
 			
