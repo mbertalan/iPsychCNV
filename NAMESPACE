@@ -34,6 +34,7 @@ export(RunPennCNV)
 export(QualityControl)
 export(QC_Plots)
 export(GetMockValues)
+export(MakeAndEvalMockData)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
