@@ -37,7 +37,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 	}
 	else
 	{
-		BAF_Prob_By_Chr <- (((60*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
+		BAF_Prob_By_Chr <- (((65*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
 	}
 	
 	suppressPackageStartupMessages(library(parallel))
@@ -95,7 +95,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 				ssp <- spectrum(X, plot=FALSE)  
 				per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
 				reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))		
-				X <- X - (fitted(reslm)*10)
+				X <- X - (fitted(reslm)*20)
 			}
 		
 
@@ -109,7 +109,7 @@ MockData <- function(N=1, Wave1=FALSE, BAF_LOH=TRUE, Type="Blood", Cores=1) # Ty
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
-			if(Type %in% "PKU"){ TeloEffect <- (TeloEffect * 2) * BadSNPs[CHR] }else{ TeloEffect <- (TeloEffect / 2) * BadSNPs[CHR] }  # If PKU the telomereNoise is double.
+			if(Type %in% "PKU"){ TeloEffect <- (TeloEffect * 4) * BadSNPs[CHR] }else{ TeloEffect <- TeloEffect * BadSNPs[CHR] }  # If PKU the telomereNoise is double.
 			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
 			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
 			
