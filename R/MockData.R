@@ -13,7 +13,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	#CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	#names(CNVSizeFixed) = 1:50
 
-	List <- GetMockValues(Type=Type, BAF_LOH=BAF_LOH)
+	List <- GetMockValues(Type=Type)
 	
 	Del <- List[["Del"]]
 	Dup <- List[["Dup"]] 
