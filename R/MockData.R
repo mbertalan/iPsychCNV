@@ -8,10 +8,10 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 		Wave1PFB <- WaveTmp
 	}
 		
-	# CNV Info
-	CNVsSize <- c(30, 50, 100, 150, 200, 300, 400, 500)
-	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
-	names(CNVSizeFixed) = 1:50
+	# CNV Info: Using always the same position. Rdata from the package.
+	CNVsSize <- c(10, 30, 50, 100, 150, 200, 300, 400)
+	#CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
+	#names(CNVSizeFixed) = 1:50
 
 	List <- GetMockValues(Type=Type, BAF_LOH=BAF_LOH)
 	
