@@ -198,8 +198,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	{
 		tmp <- sapply(unique(CNVs$Chr), function(Y)
 		{
+			# selecting the CNVs
 			subCNVs <- subset(CNVs, ID %in% X & Chr %in% Y)
-			indx <- sort(c(1, subCNVs$StartIndx, subCNVs$StopIndx, nrow(subCNVs)))
+			# Selecting data info from chip
+			subCNV <- subset(CNV, Chr %in% Y)
+			
+			indx <- sort(c(1, subCNVs$StartIndx, subCNVs$StopIndx, nrow(subCNV)))
 			Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
 			Info <- t(Info)
 			Df <- as.data.frame(Info)
