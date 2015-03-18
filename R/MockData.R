@@ -9,7 +9,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	}
 		
 	# CNV Info: Using always the same position. Rdata from the package.
-	CNVsSize <- c(10, 30, 50, 100, 150, 200, 300, 400)
+	CNVsSize <- c(10, 1000, 30, 800, 50, 600, 100, 400, 150, 200)
 	#CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	#names(CNVSizeFixed) = 1:50
 
@@ -137,7 +137,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			
 		
 			# Adding CNVs		
-			NumCNVs <- ((round(length(X)/2000))-2)
+			NumCNVs <- ((round(length(X)/2000))-1)
 			
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
