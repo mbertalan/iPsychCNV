@@ -18,6 +18,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	Del <- List[["Del"]]
 	Dup <- List[["Dup"]] 
 	ChrMean <- List[["ChrMean"]]
+	ChrMeanProb <- List[["ChrMeanProb"]]
 	ChrSD <- List[["ChrSD"]]
 	ChrSDProb <- List[["ChrSDProb"]]
 	TelomereNoiseSize <- List[["TelomereNoiseSize"]]
@@ -29,7 +30,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	BadSNPs <- List[["BadSNPs"]]
 	BadSNPIntensity <- List[["BadSNPIntensity"]]
 	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
-	ChrMeanProb <- List[["ChrMeanProb"]]
+	
 	
 	if(Type %in% "Blood")
 	{
@@ -59,10 +60,9 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	
 			ChrLength <- nrow(subCNV)
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
-			ChrMEAN <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=1)
+			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
 			#X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
-			X <- sample(ChrMean, prob=ChrMeanProb, replace=TRUE, size=ChrLength)
-			X <- as.numeric(X)
+			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
 			
 			# Change BAF to simulate chromosome differences
 			Tmp_BAF_Prob <- BAF_Normal
