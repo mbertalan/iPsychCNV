@@ -52,7 +52,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0) # Path f
 		# Reading sample file
 		RawFile <- paste(PathRawData, ID, sep="", collapse="")
 		cat(RawFile,"\n")
-		sample <- ReadCNV(RawFile, skip=Skip)
+		sample <- ReadSample(RawFile, skip=Skip)
 		red<-subset(sample,Chr==chr)	
 		red <-subset(red, Position > Start & Position < Stop)	
 		red2 <- red[with(red, order(Position)),]
