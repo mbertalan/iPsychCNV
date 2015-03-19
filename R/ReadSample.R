@@ -1,12 +1,12 @@
-##' ReadCNV: read data. 
+##' ReadSample: read data. 
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title ReadCNV
+##' @title ReadSample
 ##' @return return data in data frame
 ##' @author Marcelo Bertalan
 ##' @export
 
-ReadCNV <- function(RawFile="Test.txt", skip=0, LCR=FALSE)
+ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE)
 {
 	library(data.table)
 	CNV <- fread(RawFile, head=T, sep="\t", skip=skip)
