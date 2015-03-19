@@ -34,7 +34,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 		return(Output)
 	})
 	# Creating Chip info file for PennCNV
-	ChipInfo <- ReadCNV(Files[1], skip=Skip, LCR=FALSE)
+	ChipInfo <- ReadSamples(Files[1], skip=Skip, LCR=FALSE)
 	colnames(ChipInfo)[colnames(ChipInfo) %in% "SNP.Name"] <- "Name"   
 	ChipInfo <- ChipInfo[, c("Name", "Chr", "Position")]
 	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
