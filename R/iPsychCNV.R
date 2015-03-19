@@ -46,7 +46,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		
 		### FIND CNVs ###
 		CNVs <- FindCNV.V4(ID, MINNumSNPs, CNV)
-		CNVs <- subset(CNVs, NumSNPs < 2000) # Also Max number of SNPs
+		# CNVs <- subset(CNVs, NumSNPs < 2000) # Also Max number of SNPs
 		CNVs <- subset(CNVs, Length > MinLength)
 		if(nrow(CNVs) > 0)
 		{
