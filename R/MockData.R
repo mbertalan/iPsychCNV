@@ -108,7 +108,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))
 			if(Type %in% "PKU")
 			{
-				X <- X - abs((fitted(reslm)*4))
+				X <- X - abs((fitted(reslm)*2))
 			}
 			else
 			{
