@@ -21,7 +21,7 @@ QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 		cat(ID,"\n")
 	
-		CNV <- ReadCNV(X, skip=Skip)
+		CNV <- ReadSample(X, skip=Skip)
 		
 		if(Normalization)
 		{
