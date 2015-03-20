@@ -71,6 +71,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	df$CN[df$CN %in% "Dup"] <- "3"
 	df$CN[df$CN %in% "DoubleDel"] <- "0"
 	df$CN[df$CN %in% "DoubleDup"] <- "4"
+	df$CN <- as.numeric(df$CN)
 		
 
 	TimeRes <- proc.time() - ptm
