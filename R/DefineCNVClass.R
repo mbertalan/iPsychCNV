@@ -25,6 +25,17 @@ DefineCNVClass <- function(tmp2)
 		{	
 			Class <- GetCNVClass(X["LogRRatio"])
 		}
+		else
+		{
+			if(X["LogRRatio"] == 1 & X["BAlleleFreq"] == 0 || X["MyBAF"] == 0)
+			{
+				Class <- 0
+			}
+			else if(X["LogRRatio"] == 2 & X["BAlleleFreq"] == 4 || X["MyBAF"] == 4)
+			{
+				Class <- 4
+			}
+		}
 		return(Class)
 	})
 	return(Type)
