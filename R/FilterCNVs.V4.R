@@ -64,7 +64,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 
 		# Class by turnpoint: BAlleleFreq by density # Step detection
 		#cat("Turn points", " ", proc.time(), " \n")
-		BAFDes <- density(tmpRaw$B.Allele.Freq,adjust=0.5)
+		BAFDes <- density(tmpRaw$B.Allele.Freq)
 		tp <- turnpoints(BAFDes$y)
 		
 		# Cleaning Peaks
