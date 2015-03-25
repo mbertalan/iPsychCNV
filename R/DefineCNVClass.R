@@ -21,10 +21,6 @@ DefineCNVClass <- function(tmp2)
 				
 			Class <- GetCNVClass(X["LogRRatio"])
 		}
-		else if(X["LogRRatio"] %in% X["BAlleleFreq"] & !X["LogRRatio"] %in% "Undefined")
-		{	
-			Class <- GetCNVClass(X["LogRRatio"])
-		}
 		else
 		{
 			if(X["LogRRatio"] == 1 & X["BAlleleFreq"] == 0 || X["MyBAF"] == 0)
@@ -36,6 +32,11 @@ DefineCNVClass <- function(tmp2)
 				Class <- 4
 			}
 		}
+		# turnpoints needs some adjustments 
+		#else if(X["LogRRatio"] %in% X["BAlleleFreq"] & !X["LogRRatio"] %in% "Undefined")
+		#{	
+		#	Class <- GetCNVClass(X["LogRRatio"])
+		#}
 		return(Class)
 	})
 	return(Type)
