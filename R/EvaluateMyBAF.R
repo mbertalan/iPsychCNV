@@ -11,7 +11,7 @@ EvaluateMyBAF <- function(res, CNVmean)
 	#Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
 	#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	
-	if(CNVmean < -0.15)
+	if(CNVmean < -0.1)
 	{
 		if(res$AAAA > 15  & res$AB < 8 & res$BBBB > 15 & res$ABB < 9 & res$AAB < 6)  # Del
 		{
@@ -26,7 +26,7 @@ EvaluateMyBAF <- function(res, CNVmean)
 			BAlleleFreq <- "Undefined"
 		}
 	}
-	else if(CNVmean > 0.15)
+	else if(CNVmean > 0.1)
 	{
 		if(res$AAB > 3 & res$AB < 6 & res$ABB > 3) # Dup
 		{
