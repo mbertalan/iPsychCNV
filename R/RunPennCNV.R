@@ -1,4 +1,4 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab", Cores=20, Skip=0, Normalization=FALSE, PFB="Mock.pfb")
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab", Cores=20, Skip=0, Normalization=FALSE, PFB="Mock.pfb", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm")
 {
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=TRUE)
@@ -6,7 +6,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 		
 	if(!file.exists(PFB))
 	{
-		Command <- "/media/NeoScreen/NeSc_home/share/Programs/penncnv/compile_pfb.pl -listfile ./Mock.List.Files.txt -output Mock.pfb"
+		Command <- "compile_pfb.pl -listfile ./Mock.List.Files.txt -output Mock.pfb"
 		system(Command)
 		PFB <- "Mock.pfb"
 	}
@@ -18,16 +18,16 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 		#CNV <- ReadCNV(X, skip=Skip, LCR=FALSE)
 		
-		#if(Normalization)
-		#{
-		#	CNV <- NormalizeData(CNV, ExpectedMean=0, DF=NA, FALSE)
-		#}
+		if(Normalization)
+		{
+			CNV <- NormalizeData(CNV, ExpectedMean=0, DF=NA, FALSE)
+		}
 		
 		#Input <- paste(PathRawData, "/", ID, ".penncnv.in", sep="", collapse="")
 		#write.table(CNV, sep="\t", quote=FALSE, row.names=FALSE, file=Input)
 		
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
-		Command <- paste("/media/NeoScreen/NeSc_home/share/Programs/penncnv/detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm /media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm -pfb", PFB, X, "-log logfile -out", Output, sep=" ", collapse="")
+		Command <- paste("detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm", HMM, "-pfb", PFB, X, "-log logfile -out", Output, sep=" ", collapse="")
 		cat(Command, "\n")
 		system(Command)
 
