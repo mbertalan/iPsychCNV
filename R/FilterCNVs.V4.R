@@ -70,7 +70,6 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 		# Cleaning Peaks
 		tp <- CleaningPeaks(tp)
 		SumPeaks <- sum(tp$peaks == TRUE)
-		pit.tp = extract(tp, peak = TRUE, pit = FALSE)
 
 		# Defining BAlleleFreq
 		dfTmp <- DefineBAFType(SumPeaks)
