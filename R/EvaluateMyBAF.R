@@ -13,7 +13,7 @@ EvaluateMyBAF <- function(res, CNVmean)
 	
 	if(CNVmean < -0.1)
 	{
-		if(res$AAAA > 15  & res$AB < 8 & res$BBBB > 15 & res$ABB < 9 & res$AAB < 6)  # Del
+		if(res$AAAA > 6  & res$AB < 8 & res$BBBB > 6 & res$ABB < 9 & res$AAB < 6)  # Del
 		{
 			BAlleleFreq <- "1"
 		}
