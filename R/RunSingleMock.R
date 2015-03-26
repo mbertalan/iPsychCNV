@@ -3,7 +3,7 @@ RunSingleMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
 	tmp <- MakeOneMockSample(Noise=Noise, CNVMean=CNVMean)
 	if(Method %in% "PennCNV")
 	{
-		PredictedCNV <- RunPennCNV(PathRawData=".", Pattern="MockSample_1.tab$", Cores=1, Skip=0, Normalization=FALSE)
+		PredictedCNV <- RunPennCNV(PathRawData=".", Pattern="MockSample_1.tab$", Cores=1, Skip=0, Normalization=FALSE, PFB="")
 	}
 	else if(Method %in% "iPsychCNV")
 	{
