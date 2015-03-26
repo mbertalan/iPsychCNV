@@ -8,7 +8,7 @@
 
 ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE)
 {
-	library(data.table)
+	suppressPackageStartupMessages(library(data.table))
 	CNV <- fread(RawFile, head=T, sep="\t", skip=skip)
 	CNV <- as.data.frame(CNV)
 	colnames(CNV) <- gsub(" ", ".", colnames(CNV))
