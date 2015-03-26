@@ -26,7 +26,7 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png")
 	p1 <- ggplot(tmp, aes(Position, Log.R.Ratio))
 	p1 <- p1 + geom_point(alpha=0.05, size=1) 
 	p1 <- p1 + geom_rect(data=Roi, aes(xmin =StartPos, xmax=StopPos, ymin=(CNVmean-0.1), ymax=(CNVmean+0.1)), colour=Colors2[3], fill=NA, alpha=0.3, inherit.aes = FALSE, size=0.5) + theme(legend.title=element_blank())
-	p1 <- p1 +  geom_segment(data=PennCNV, aes(x = Start, y = CNVmean, xend = Stop, yend = CNVmean, colour=as.factor(CN)), size=4) + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))	
+	p1 <- p1 +  geom_segment(data=PennCNV, aes(x = Start, y = CNVmean, xend = Stop, yend = CNVmean, colour=as.factor(CN)), size=4) + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))	
 	p1 <- p1 + geom_line(data=tmp, aes(x=Position, y = Mean), size = 0.1, alpha=0.4) 
 	
 	# BAF
@@ -41,7 +41,7 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png")
 		p2 <- p2 + geom_rect(data=retPennCNV, aes(xmin=Start, xmax=Stop, ymin=ymin, ymax=ymax, col="CNV predicted"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	}
 
-	p2 <- p2 + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))		
+	p2 <- p2 + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))		
 
 	Plot <- tracks(p1, p2, heights=c(4,4))
 	ggsave(Plot, file=Name, width=16, height=6, dpi=300)
