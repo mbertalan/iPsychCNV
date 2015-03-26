@@ -6,6 +6,7 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png")
 	Roi <- RoiSingleMock
 	Roi$CNVmean <- rep(CNVMean, 24)
 	Roi$CNVmean[Roi$CN == 1] <- Roi$CNVmean[Roi$CN == 1] * -1
+	Roi$CNVmean[Roi$CN == 0] <- Roi$CNVmean[Roi$CN == 0] * -1
 
 	if(!length(PennCNV$CNVmean) > 0)
 	{
