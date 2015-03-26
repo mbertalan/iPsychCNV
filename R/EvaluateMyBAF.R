@@ -32,7 +32,7 @@ EvaluateMyBAF <- function(res, CNVmean)
 		{
 			BAlleleFreq <- "3"
 		}
-		else if(res$AAAB > 4 & res$ABBB > 4 & res$AB > 4 & res$AAAA > 8 & res$BBBB > 8 & res$AAB < 8 & res$ABB < 8) # Double Dup AB = AABB
+		else if(res$AAAB < 6 & res$ABBB < 6 & res$AB > 4 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 7 & res$ABB > 7) # Double Dup AB = AABB
 		{
 			BAlleleFreq <- "4"
 		}
