@@ -6,7 +6,8 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	Roi$CNVmean <- rep(CNVMean, 24)
 	Roi$CNVmean[Roi$CN == 1] <- Roi$CNVmean[Roi$CN == 1] * -1
 	Roi$CNVmean[Roi$CN == 0] <- Roi$CNVmean[Roi$CN == 0] * -1
-	RoiSize <- nrow(Roi)
+	Roi$YMin <- rep(0, length(Roi$CNVmean))
+	Roi$YMax <- rep(1, length(Roi$CNVmean))
 	
 	if(!length(PennCNV$CNVmean) > 0)
 	{
@@ -32,7 +33,7 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	# BAF
 	p2 <- ggplot(tmp, aes(Position, y = B.Allele.Freq)) 
 	p2 <- p2 + geom_point(aes(col="B.Allele.Freq"), alpha=0.6, size=1)  
-	p2 <- p2 + geom_rect(data=Roi, aes(xmin=StartPos, xmax=StopPos, ymin=rep(0,RoiSize), ymax=rep(1, RoiSize), col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
+	p2 <- p2 + geom_rect(data=Roi, aes(xmin=StartPos, xmax=StopPos, ymin=YMin, ymax=YMax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	
 	PennCNV <- subset(PennCNV, CN != 2)
 	if(nrow(PennCNV) > 0)
