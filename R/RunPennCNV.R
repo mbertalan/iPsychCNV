@@ -8,6 +8,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 	if(!file.exists(PFB))
 	{
 		Command <- paste(Path2PennCNV, "compile_pfb.pl -listfile ./Mock.List.Files.txt -output Mock.pfb", sep="", collapse="")
+		cat(Command, "\n")
 		system(Command)
 		PFB <- "Mock.pfb"
 	}
