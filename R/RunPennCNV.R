@@ -1,4 +1,5 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab", Cores=20, Skip=0, Normalization=FALSE, PFB="Mock.pfb", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm")
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="Mock.pfb", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
+
 {
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=TRUE)
@@ -6,7 +7,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 		
 	if(!file.exists(PFB))
 	{
-		Command <- "compile_pfb.pl -listfile ./Mock.List.Files.txt -output Mock.pfb"
+		Command <- paste(Path2PennCNV, "compile_pfb.pl -listfile ./Mock.List.Files.txt -output Mock.pfb", sep="", collapse="")
 		system(Command)
 		PFB <- "Mock.pfb"
 	}
@@ -27,7 +28,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 		#write.table(CNV, sep="\t", quote=FALSE, row.names=FALSE, file=Input)
 		
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
-		Command <- paste("/media/NeoScreen/NeSc_home/share/Programs/penncnv/detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm", HMM, "-pfb", PFB, X, "-log logfile -out", Output, sep=" ", collapse="")
+		Command <- paste(Path2PennCNV, "detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm ", HMM, " -pfb ", PFB, " ", X, " -log logfile -out ", Output, sep="", collapse="")
 		cat(Command, "\n")
 		system(Command)
 
@@ -40,7 +41,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab"
 	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
 	
 	system("cat *.penncnv.out > All_Mock.penncnv.raw")
-	system("clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv")
+		Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv")
+	system(Command)
 	system(	"~/CNV/Scripts/Penn2Tab.pl < Merged.cnv > Merged.cnv.tab")
 
 	tmp <- read.table("Merged.cnv.tab", sep="\t", header=TRUE, stringsAsFactors=FALSE)
