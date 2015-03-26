@@ -1,9 +1,8 @@
-PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png")
+PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiSingleMock)
 {
 	library(ggplot2)
 	library(ggbio)
 
-	Roi <- RoiSingleMock
 	Roi$CNVmean <- rep(CNVMean, 24)
 	Roi$CNVmean[Roi$CN == 1] <- Roi$CNVmean[Roi$CN == 1] * -1
 	Roi$CNVmean[Roi$CN == 0] <- Roi$CNVmean[Roi$CN == 0] * -1
