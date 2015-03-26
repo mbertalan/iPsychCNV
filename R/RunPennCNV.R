@@ -42,7 +42,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
 	
 	system("cat *.penncnv.out > All_Mock.penncnv.raw")
-		Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv")
+	Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv", sep="", collapse="")
+	cat(Command, "\n")
 	system(Command)
 	system(	"~/CNV/Scripts/Penn2Tab.pl < Merged.cnv > Merged.cnv.tab")
 
