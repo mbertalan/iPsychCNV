@@ -1,7 +1,5 @@
 RunSingleMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
 {
-	source("ImpactOfBafOnPennCNV.R")
-	source("PlotLRRAndCNVs.R")
 	tmp <- MakeOneMockSample(Noise=Noise, CNVMean=CNVMean)
 	if(Method %in% "PennCNV")
 	{
