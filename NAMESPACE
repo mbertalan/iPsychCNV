@@ -37,7 +37,7 @@ export(GetMockValues)
 export(MakeAndEvalMockData)
 export(RunSingleMock)
 export(MakeOneMockSample)
-export(PlotLRRAndCNVs)
+#export(PlotLRRAndCNVs)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
