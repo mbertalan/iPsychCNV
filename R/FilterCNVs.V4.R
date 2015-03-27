@@ -53,7 +53,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 
 		# My BAF Classification	
 		res <- ClassNumbers(tmpRaw$B.Allele.Freq)
-		MyBAF <- EvaluateMyBAF(res, res2$CNVmean)
+		MyBAF <- EvaluateMyBAF(res, res2)
 	
 		# Defining LogRRatio
 		if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
