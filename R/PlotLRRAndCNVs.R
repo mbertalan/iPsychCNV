@@ -1,3 +1,11 @@
+##' PlotLRRAndCNVs: Plot  whole mock sample   
+##'
+##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title PlotLRRAndCNVs
+##' @return Classification for LRR.
+##' @author Marcelo Bertalan
+##' @export
+
 PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiSingleMock)
 {
 	library(ggplot2)
