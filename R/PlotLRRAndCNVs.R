@@ -6,6 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
+
 PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiSingleMock)
 {
 	library(ggplot2)
