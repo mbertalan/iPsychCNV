@@ -1,3 +1,11 @@
+##' MakeOneMockSample: Run a single mock sample   
+##'
+##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title MakeOneMockSample
+##' @return Classification for LRR.
+##' @author Marcelo Bertalan
+##' @export
+
 MakeOneMockSample <- function(Noise=0.5, CNVMean=0.2)
 {
 	library(RColorBrewer)
