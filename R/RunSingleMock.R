@@ -1,3 +1,11 @@
+##' RunSingleMock: Run a single mock sample   
+##'
+##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title RunSingleMock
+##' @return Classification for LRR.
+##' @author Marcelo Bertalan
+##' @export
+
 RunSingleMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
 {
 	tmp <- MakeOneMockSample(Noise=Noise, CNVMean=CNVMean)
