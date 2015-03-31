@@ -12,7 +12,8 @@ MatrixOrList2df <- function(tmp)
 	if(class(tmp) %in% "matrix")
 	{
 		df <- apply(tmp, 2, function(X){ as.data.frame(X,  stringsAsFactors=F) })
-		df <- ldply (df, data.frame)
+		#df <- ldply (df, data.frame)
+		df <- do.call(rbind.data.frame, df)
 	}
 	if(class(tmp) %in% "list")
 	{	
