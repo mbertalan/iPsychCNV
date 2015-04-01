@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
+FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID, PFB) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
 	CNVID <- rownames(CNVs)
 	CNVs$CNVID <- CNVID
@@ -52,7 +52,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 		res2 <- GetDataVariables(Data)
 
 		# My BAF Classification	
-		res <- ClassNumbers(tmpRaw$B.Allele.Freq)
+		res <- ClassNumbers(tmpRaw)
 		MyBAF <- EvaluateMyBAF(res, res2)
 	
 		# Defining LogRRatio
