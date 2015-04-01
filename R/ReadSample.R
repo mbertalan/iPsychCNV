@@ -9,7 +9,7 @@
 ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB)
 {
 	suppressPackageStartupMessages(library(data.table))
-	CNV <- fread(RawFile, head=T, sep="\t", skip=skip)
+	CNV <- fread(RawFile, head=T, sep="\t", skip=skip, showProgress=FALSE, verbose=FALSE)
 	CNV <- as.data.frame(CNV)
 	colnames(CNV) <- gsub(" ", ".", colnames(CNV))
 	colnames(CNV)[colnames(CNV) %in% "Name"] <- "SNP.Name"
