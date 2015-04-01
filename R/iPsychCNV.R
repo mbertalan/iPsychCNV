@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=100, Cores=10, NumFiles="All", Pattern="22q11_*", MinLength=100000, SelectedFiles=NA, NormQspline=FALSE, DFspline=NA, Skip=10, LCR=TRUE) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=100, Cores=10, NumFiles="All", Pattern="22q11_*", MinLength=100000, SelectedFiles=NA, NormQspline=FALSE, DFspline=NA, Skip=10, LCR=TRUE, PFB="NULL") # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -50,7 +50,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		CNVs <- subset(CNVs, Length > MinLength)
 		if(nrow(CNVs) > 0)
 		{
-			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV, ID) # PathRawData = PathRawData,
+			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV, ID, PFB) # PathRawData = PathRawData,
 			return(CNVsRes)
 		}
 	})
