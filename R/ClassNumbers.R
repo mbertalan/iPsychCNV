@@ -7,12 +7,13 @@
 ##' @export
 
 
-ClassNumbers <- function(BAF)
+ClassNumbers <- function(tmpRaw)
 {
 	#Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
 	#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	# Classes
 	# A == 0; B == 0.25, C == 0.5, D == 0.75, E == 1
+	BAF <- subset(tmpRaw, PFB > 0 & PFB < 1)
 
 	Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
 	names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
