@@ -39,7 +39,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 	
 		# Read CNV file		
-		CNV <- ReadSample(RawFile, skip=Skip, LCR=TRUE, PFB)
+		CNV <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB)
 		
 		# Normalize data
 		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=DFspline, NormQspline)
