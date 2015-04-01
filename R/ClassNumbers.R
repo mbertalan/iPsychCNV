@@ -18,7 +18,7 @@ ClassNumbers <- function(tmpRaw)
 	Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
 	names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	df <- data.frame(AAAA=0, AAAB=0, AAB=0, AB=0, ABB=0, ABBB=0, BBBB=0)
-	if(UsedBAF > 10)
+	if(UsedBAF > 9)
 	{
 		BAF <- tmp2$B.Allele.Freq
 		tmp <- sapply(Centers, function(X){ abs(BAF - X) })
