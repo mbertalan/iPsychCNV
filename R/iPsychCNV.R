@@ -39,7 +39,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 	
 		# Read CNV file		
-		CNV <- ReadSample(RawFile, skip=Skip, LCR=TRUE)
+		CNV <- ReadSample(RawFile, skip=Skip, LCR=TRUE, PFB)
 		
 		# Normalize data
 		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=DFspline, NormQspline)
@@ -50,7 +50,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		CNVs <- subset(CNVs, Length > MinLength)
 		if(nrow(CNVs) > 0)
 		{
-			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV, ID, PFB) # PathRawData = PathRawData,
+			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV, ID) # PathRawData = PathRawData,
 			return(CNVsRes)
 		}
 	})
