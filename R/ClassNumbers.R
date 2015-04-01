@@ -13,8 +13,10 @@ ClassNumbers <- function(tmpRaw)
 	#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	# Classes
 	# A == 0; B == 0.25, C == 0.5, D == 0.75, E == 1
-	BAF <- subset(tmpRaw, PFB > 0 & PFB < 1)
-
+	tmp2 <- subset(tmpRaw, PFB > 0 & PFB < 1)
+	UsedBAF <- round((nrow(tmp2)/nrow(tmpRaw))*100, 1)
+	BAF <- tmp2$B.Allele.Freq
+	
 	Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
 	names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	
@@ -26,6 +28,7 @@ ClassNumbers <- function(tmpRaw)
 	df <- data.frame(AAAA=0, AAAB=0, AAB=0, AB=0, ABB=0, ABBB=0, BBBB=0)
 	res <- round((table(tmp3$Class)/sum(table(tmp3$Class)))*100, 1)
 	df[names(res)] <- res
+	df$UsedBAF <- UsedBAF
 
 	return(df)
 }
