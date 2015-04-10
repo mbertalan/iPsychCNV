@@ -42,6 +42,6 @@ export(MergeCNVs)
 export(FindHighFreqCNVs)
 ### Bioconductor packages
 import(ggbio)
-#export(ggbio)
 import(biovizBase)
-#export(biovizBase)
+import(GenomicRanges)
+import(BiocGenerics)
