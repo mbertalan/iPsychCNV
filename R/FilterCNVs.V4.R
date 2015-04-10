@@ -49,11 +49,17 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 		if(length(Data$Low) > 20 & length(Data$CNV) > 20) { CNV2LowPvalue <- t.test(Data$Low, Data$CNV)$p.value }else{ CNV2LowPvalue <- 0 }
 
 		#cat("Get Variables", " ", proc.time(), "\n")
+		ptm.tmp <- proc.time()
 		res2 <- GetDataVariables(Data)
+		Res.tmp <- proc.time() - ptm.tmp
+		cat("GetDataVariables time: ", Res.tmp["elapsed"], "\n")
 
 		# My BAF Classification	
+		ptm.tmp <- proc.time()
 		res <- ClassNumbers(tmpRaw)
 		MyBAF <- EvaluateMyBAF(res, res2)
+		Res.tmp <- proc.time() - ptm.tmp
+		cat("ClassNumbers time: ", Res.tmp["elapsed"], "\n")
 	
 		# Defining LogRRatio
 		if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
