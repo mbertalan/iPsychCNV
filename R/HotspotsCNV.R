@@ -63,7 +63,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 			cat("Re-running CompressCNVs", nrow(tmp5), NumOfCNVs,  "\n")
 		}
 	}
-
+	save(tmp5, file="tmp5.RData")
 	# Count CNVs in compressed CNV regions	
 	cat("Counting CNVs\n")
 	CNV_Count <- apply(tmp5, 1, function(X)
@@ -77,6 +77,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 		Counts[names(tmp3)] <- tmp3
 		return(Counts)
 	})
+	save(CNV_Count, file="CNV_Count.RData")
 	CNV_Count2 <- MatrixOrList2df(CNV_Count)
 	tmp5 <- GetLocus(tmp5)	
 	tmp5$ID <- rep("ROI", nrow(tmp5))	
