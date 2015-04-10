@@ -35,26 +35,26 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Count <- length(readLines("Progress.txt"))	
 		Percent <- round((Count/NumFiles)*100)
 		Percent <- paste(Percent, "%", sep="", collapse="")
-		cat("Running:\t", X, "\t\t", Percent, "\n")
+		#cat("Running:\t", X, "\t\t", Percent, "\n")
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 	
 		# Read sample file		
 		ptm.tmp <- proc.time()
 		CNV <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB)
 		Res.tmp <- proc.time() - ptm.tmp
-		cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
+		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
 		
 		# Normalize data
 		ptm.tmp <- proc.time()
 		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=DFspline, NormQspline)
 		Res.tmp <- proc.time() - ptm.tmp
-		cat("Normalization time: ", Res.tmp["elapsed"], "\n")
+		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
 		CNVs <- FindCNV.V4(ID, MINNumSNPs, CNV)
 		Res.tmp <- proc.time() - ptm.tmp
-		cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
+		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 	
 		CNVs <- subset(CNVs, Length > MinLength)
 		if(nrow(CNVs) > 0)
