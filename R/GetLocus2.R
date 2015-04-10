@@ -11,6 +11,7 @@ GetLocus <- function(df) # df with CHR=chr12, CNV_Start=numeric, CNV_Stop=numeri
 	library(GenomicRanges)
 	library(biovizBase)
 	library(Biostrings)
+	library(BiocGenerics)
 	data(hg19IdeogramCyto)
 	tmp <- as.data.frame(hg19IdeogramCyto)
 	df$CHR <- sapply(df$Chr, function(X){ paste("chr", X, sep="", collapse="") })
