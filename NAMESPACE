@@ -39,6 +39,7 @@ export(RunSingleMock)
 export(MakeOneMockSample)
 export(PlotLRRAndCNVs)
 export(MergeCNVs)
+export(FindHighFreqCNVs)
 ### Bioconductor packages
 import(ggbio)
 #export(ggbio)
