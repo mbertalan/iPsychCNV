@@ -13,7 +13,7 @@ GetLocus <- function(df) # df with CHR=chr12, CNV_Start=numeric, CNV_Stop=numeri
 	library(Biostrings)
 	library(BiocGenerics)
 	data(hg19IdeogramCyto)
-	tmp <- as.data.frame(hg19IdeogramCyto)
+	tmp <- BiocGenerics::as.data.frame(hg19IdeogramCyto)
 	df$CHR <- sapply(df$Chr, function(X){ paste("chr", X, sep="", collapse="") })
 	if(length(df$CNV_Start) == 0){ 	df$CNV_Start <- df$Start }
 	if(length(df$CNV_Stop) == 0){ 	df$CNV_Stop <- df$Stop }
