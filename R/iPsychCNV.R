@@ -35,7 +35,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Count <- length(readLines("Progress.txt"))	
 		Percent <- round((Count/NumFiles)*100)
 		Percent <- paste(Percent, "%", sep="", collapse="")
-		#cat("Running:\t", X, "\t\t", Percent, "\n")
+		cat("Running:\t", X, "\t\t", Percent, "\n")
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 	
 		# Read sample file		
