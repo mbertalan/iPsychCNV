@@ -7,7 +7,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 		subCNVs <- subset(CNVs, ID %in% IDs)
 		#RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
 		RawFile <- IDs
-		CNV <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
+		Sample <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
 		Res <- apply(subCNVs, 1, function(X)
 		{
@@ -15,10 +15,10 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 			StopM <- as.numeric(X["Stop"])
 			ChrM <- X["Chr"]
 
-			subCNV <- subset(CNV, Chr %in% ChrM)
-			subCNV <- subCNV[with(subCNV, order(Position)),]
-			StartIndx <- which(subCNV$Position == StartM)[1] 
-			StopIndx <- which(subCNV$Position == StopM)[1]
+			subSample <- subset(Sample, Chr %in% ChrM)
+			subSample <- subSample[with(subSample, order(Position)),]
+			StartIndx <- which(subSample$Position == StartM)[1] 
+			StopIndx <- which(subSample$Position == StopM)[1]
 			Vector <- c(StartIndx, StopIndx, X)
 			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\n")
 			names(Vector)[1:2] <- c("StartIndx", "StopIndx")
@@ -26,7 +26,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 		})
 		tmp <- as.data.frame(t(Res), stringsAsFactors=F)
 
-		tmp2 <- FilterCNVs.V4(tmp, MinNumSNPs=MinNumSNPs, CNV=CNV, ID=IDs)
+		tmp2 <- FilterCNVs.V4(tmp, MinNumSNPs=MinNumSNPs, CNV=Sample, ID=IDs)
 		return(tmp2)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
