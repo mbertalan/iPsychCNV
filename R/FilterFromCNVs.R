@@ -5,7 +5,8 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	tmp <- mclapply(unique(CNVs$ID), mc.cores=Cores, mc.preschedule = FALSE, function(IDs) 
 	{
 		subCNVs <- subset(CNVs, ID %in% IDs)
-		RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
+		#RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
+		RawFile <- IDs
 		CNV <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
 		Res <- apply(subCNVs, 1, function(X)
