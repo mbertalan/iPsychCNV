@@ -20,7 +20,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 			StartIndx <- which(subCNV$Position == StartM)[1] 
 			StopIndx <- which(subCNV$Position == StopM)[1]
 			Vector <- c(StartIndx, StopIndx, X)
-			cat(ChrM, StartM, StopM, StartIndx, StopIndx, "\n")
+			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\n")
 			names(Vector)[1:2] <- c("StartIndx", "StopIndx")
 			return(Vector)
 		})
