@@ -18,6 +18,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 			ChrM <- X["Chr"]
 
 			subSample <- subset(Sample, Chr %in% ChrM)
+			cat(nrow(subSample), "\n")
 			subSample <- subSample[with(subSample, order(Position)),]
 			save(subSample, file="subSample.RData")
 			StartIndx <- which(subSample$Position == StartM)[1] 
