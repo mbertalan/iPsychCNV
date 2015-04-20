@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB)
+ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL)
 {
 	suppressPackageStartupMessages(library(data.table))
 	CNV <- fread(RawFile, head=T, sep="\t", skip=skip, showProgress=FALSE, verbose=FALSE)
