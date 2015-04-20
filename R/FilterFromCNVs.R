@@ -1,5 +1,7 @@
 FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=10, Cores)
 {
+	suppressPackageStartupMessages(library(parallel))
+	
 	tmp <- mclapply(unique(CNVs$ID), mc.cores=Cores, mc.preschedule = FALSE, function(IDs) 
 	{
 		subCNVs <- subset(CNVs, ID %in% IDs)
