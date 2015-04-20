@@ -12,7 +12,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 
 		Res <- apply(subCNVs, 1, function(X)
 		{
-			cat(X, "\n")
+			#cat(X, "\n")
 			StartM <- as.numeric(X["Start"])
 			StopM <- as.numeric(X["Stop"])
 			ChrM <- X["Chr"]
