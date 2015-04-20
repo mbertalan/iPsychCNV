@@ -19,13 +19,12 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 			ChrM <- gsub(" ","", ChrM)
 
 			subSample <- subset(Sample, Chr %in% ChrM)
-			cat(nrow(subSample), "\n")
+			#cat(nrow(subSample), "\n")
 			subSample <- subSample[with(subSample, order(Position)),]
 			#NewName <- paste("Test", ChrM, StartM, StopM, ".RData", sep="", collapse="")
 			#save(subSample, Sample, file=NewName)
 			StartIndx <- which(subSample$Position == StartM)[1] 
 			StopIndx <- which(subSample$Position == StopM)[1]
-			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\n")
 			Vector <- c(StartIndx, StopIndx, X)
 			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\n")
 			names(Vector)[1:2] <- c("StartIndx", "StopIndx")
