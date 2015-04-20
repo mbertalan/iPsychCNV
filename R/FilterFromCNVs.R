@@ -7,10 +7,12 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 		subCNVs <- subset(CNVs, ID %in% IDs)
 		#RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
 		RawFile <- IDs
+		cat(IDs, "\n")
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
 		Res <- apply(subCNVs, 1, function(X)
 		{
+			cat(X, "\n")
 			StartM <- as.numeric(X["Start"])
 			StopM <- as.numeric(X["Stop"])
 			ChrM <- X["Chr"]
