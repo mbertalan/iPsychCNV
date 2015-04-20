@@ -10,7 +10,7 @@ GetDataVariables <- function(Data)
 	library(randtests)
 	library(moments)
 	library(stats)
-	library(pastecs)
+	suppressPackageStartupMessages(library(pastecs))
 	
 	# Score <- ((abs(AMP.df40.good$CNVmeanNorm)*10)*(BothDiff*10))/(AMP.df40.good$AB+1)
 	ANS <- 1; AGO <- 1; BOX <- 1; COX <- 1; 
