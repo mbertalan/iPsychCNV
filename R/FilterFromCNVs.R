@@ -1,10 +1,10 @@
-FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV")
+FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=10)
 {
 	tmp <- sapply(unique(CNVs$ID), function(IDs)
 	{
 		subCNVs <- subset(CNVs, ID %in% IDs)
 		RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
-		CNV <- ReadSample(RawFile, skip=0, LCR=FALSE)
+		CNV <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
 		Res <- apply(subCNVs, 1, function(X)
 		{
