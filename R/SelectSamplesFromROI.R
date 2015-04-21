@@ -17,19 +17,19 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
 				Start <- as.numeric(Y["Start"])
 				Stop <- as.numeric(Y["Stop"])
 				#cat(Start, Stop, StartRoi, StopRoi, "\n")
-				if(Start >= StartRoi & Stop >= StopRoi) 
+				if(Start >= StartRoi & Stop >= StopRoi) # |-->--|---<
 				{				     
-					   Overlaplength <- (Length/(StopRoi - Start))
+					   Overlaplength <- ((StopRoi - Start)/LengthRoi)
 				}
-				if(Start <= StartRoi & Stop <= StopRoi)
+				if(Start <= StartRoi & Stop <= StopRoi) # >---|----<----|
 				{					
-					Overlaplength <- (Length/(StartRoi - Stop))
+					Overlaplength <- ((Stop - StartRoi)/LengthRoi)
 				}
-				if(Start >= StartRoi & Stop <= StopRoi)
+				if(Start >= StartRoi & Stop <= StopRoi) # |--->-----<---|
 				{
-					Overlaplength <- (Length/Length)
+					Overlaplength <- (Length/LengthRoi)
 				}
-				if(Start <= StartRoi & Stop >= StopRoi)
+				if(Start <= StartRoi & Stop >= StopRoi) # >---|-------|---<
 				{
 					Overlaplength <- (Length/LengthRoi)
 				}
