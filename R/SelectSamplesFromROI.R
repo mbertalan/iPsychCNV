@@ -44,7 +44,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
 			Overlap <- MatrixOrList2df(Overlap)
 			tmp2 <- cbind(tmp, Overlap)
 			tmp2$Locus <- rep(Locus, nrow(tmp2))
-			tmp <- subset(tmp2, OverlapAll > OverlapMin & OverlapAll < OverlapMax)
+			tmp <- subset(tmp2, OverlapAll > OverlapMin & OverlapAll < OverlapMax & Overlaplength > OverlapMin)
 			return(tmp)
 		}
 	})
