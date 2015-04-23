@@ -65,7 +65,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 		if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
 		{
 			LogRRatio <- DefiningLogRRatio(res2)
-		}else{ LogRRatio <- "Undefined" }
+		}else{ LogRRatio <- 2 }
 		
 
 		# Class by turnpoint: BAlleleFreq by density # Step detection
