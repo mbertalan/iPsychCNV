@@ -12,11 +12,11 @@ DefineCNVClass <- function(tmp2)
 	Type <- apply(tmp2, 1, function(X)
 	{
 		Class <- "Normal"
-		if(X["LogRRatio"] %in% X["BAlleleFreq"] & X["BAlleleFreq"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "Undefined" )
+		if(X["LogRRatio"] %in% X["BAlleleFreq"] & X["BAlleleFreq"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" )
 		{
 			Class <- GetCNVClass(X["LogRRatio"])
 		}
-		else if(X["LogRRatio"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "Undefined" ) # Just to avoid 2 Undefined being good.
+		else if(X["LogRRatio"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" ) # Just to avoid 2 Undefined being good.
 		{	
 				
 			Class <- GetCNVClass(X["LogRRatio"])
