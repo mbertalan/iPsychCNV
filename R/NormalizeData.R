@@ -5,7 +5,8 @@
 ##' @return LRR normalized
 ##' @author Marcelo Bertalan
 ##' @export
-NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE)
+
+NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile=TRUE)
 {
 	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
 	{
