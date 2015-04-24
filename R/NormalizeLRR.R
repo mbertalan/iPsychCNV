@@ -14,12 +14,15 @@ NormalizeLRR <- function(X, ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile=T
 	{
 		if(is.na(DF)){ LRR <- smooth.spline(X)$y }
 		else{  LRR <- smooth.spline(X, df=DF)$y }
-	}else if(Quantile){
+	}
+	else if(Quantile)
+	{
 		# Creating perfect data
 		M <- sapply(1:50, function(N){ rnorm(n=length(X), mean=0, sd=0.2) })
 		M2 <- cbind(M, X)
 		M3 <- normalize.quantiles(M2)
 		LRR <- M3[, 51]
+	}
 	else
 	{
 		LRR <- X
