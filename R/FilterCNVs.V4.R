@@ -82,8 +82,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/
 		BAlleleFreq <- dfTmp$BAlleleFreq
 		Class <- dfTmp$Class
 
+		# Get genotype Info
+		Genotype <- GetGenotypeInfo(tmpRaw)
+
 		# Add info to res
-		res3 <- cbind(res,res2)
+		res3 <- cbind(res,res2, Genotype)
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		return(res4)
 	})
