@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=100, Cores=10, NumFiles="All", Pattern="22q11_*", MinLength=100000, SelectedFiles=NA, NormQspline=FALSE, DFspline=NA, Skip=10, LCR=TRUE, PFB=NULL) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=100, Cores=10, NumFiles="All", Pattern="22q11_*", MinLength=100000, SelectedFiles=NA, NormQspline=FALSE, DFspline=NA, Skip=10, LCR=TRUE, PFB=NULL, Quantile=TRUE) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -46,7 +46,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		
 		# Normalize data
 		ptm.tmp <- proc.time()
-		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=DFspline, NormQspline)
+		CNV <- NormalizeData(CNV, ExpectedMean=0, DF=DFspline, NormQspline=NormQspline, Quantile=Quantile)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
 		
