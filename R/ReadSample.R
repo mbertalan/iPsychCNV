@@ -13,7 +13,9 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL)
 	CNV <- as.data.frame(CNV)
 	colnames(CNV) <- gsub(" ", ".", colnames(CNV))
 	colnames(CNV)[colnames(CNV) %in% "Name"] <- "SNP.Name"
-	CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq")] # SNP.Name
+	colnames(CNV)[colnames(CNV) %in% "Allele1.-.Top"] <- "Allele1"
+	colnames(CNV)[colnames(CNV) %in% "Allele2.-.Top"] <- "Allele2"
+	CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq", "Allele1", "Allele2")] # SNP.Name
 	
 	if(is.null(PFB)){ CNV$PFB <- rep(0.5, nrow(CNV)) }else{ CNV$PFB <- PFB }
 	
