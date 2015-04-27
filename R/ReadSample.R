@@ -26,7 +26,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	CNV <- subset(CNV, !is.na(CNV$Log.R.Ratio))
 	
 	# chr specific. Example chr="22"
-	if(!is.na(chr)){ CNV <- subset(CNV, Chr %in% chr) })
+	if(!is.na(chr)){ CNV <- subset(CNV, Chr %in% chr) }
 	
 	if(LCR == TRUE)
 	{
