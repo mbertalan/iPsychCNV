@@ -42,6 +42,7 @@ export(MergeCNVs)
 export(FindHighFreqCNVs)
 export(FilterFromCNVs)
 export(GetGenotypeInfo)
+export(ReSearchCNVs)
 ### Bioconductor packages
 import(ggbio)
 import(biovizBase)
