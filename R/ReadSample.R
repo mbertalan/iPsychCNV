@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL)
+ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 {
 	suppressPackageStartupMessages(library(data.table))
 	CNV <- fread(RawFile, head=T, sep="\t", skip=skip, showProgress=FALSE, verbose=FALSE)
@@ -17,11 +17,17 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL)
 	colnames(CNV)[colnames(CNV) %in% "Allele2.-.Top"] <- "Allele2"
 	CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq", "Allele1", "Allele2")] # SNP.Name
 	
+	# PFB
 	if(is.null(PFB)){ CNV$PFB <- rep(0.5, nrow(CNV)) }else{ CNV$PFB <- PFB }
 	
+	# Subseting 
 	CNV <- subset(CNV, !Chr %in% c("MT", "X", "Y", "XY", "0"))
 	CNV <- subset(CNV, !is.na(CNV$B.Allele.Freq))
 	CNV <- subset(CNV, !is.na(CNV$Log.R.Ratio))
+	
+	# chr specific. Example chr="22"
+	if(!is.na(chr)){ CNV <- subset(CNV, Chr %in% chr) })
+	
 	if(LCR == TRUE)
 	{
 		CNV <- subset(CNV, !SNP.Name %in% LCR.SNPs) 
