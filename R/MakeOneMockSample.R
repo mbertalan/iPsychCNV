@@ -89,15 +89,15 @@ MakeOneMockSample <- function(Noise=0.5, CNVMean=0.2)
 	Chr <- CNV.chr1$Chr[1:50000]
 	Position <- CNV.chr1$Position[1:50000]
 
-	if(Noise == 1) # Random BAF.
+	if(Noise == 1) # Random BAF. CN = 4
 	{
 		BAF <- sample(BAFs, prob=BAF_Basic, replace=TRUE, size=50000)
 	}
-	if(Noise == 2) # Random BAF.
+	if(Noise == 2) # No heterozygosity. CN = 1
 	{
 		BAF <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=50000)
 	}
-	if(Noise == 3) # Random BAF.
+	if(Noise == 3) #Only heterozygosity. CN = 2
 	{
 		BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=50000)
 	}
