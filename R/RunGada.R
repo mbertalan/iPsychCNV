@@ -1,5 +1,6 @@
-RunGada <- function(MockData=tmp, 
+RunGada <- function(MockData=tmp)
 {
+	library(gada)
 	# Creating gen.info for Gada
 	gen.info <- MockData[,1:3]
 	colnames(gen.info) <- c("Name", "chr", "pos")
