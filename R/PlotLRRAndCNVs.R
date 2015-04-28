@@ -11,9 +11,12 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	library(ggplot2)
 	library(ggbio)
 
-	Roi$CNVmean <- rep(CNVMean, 24)
-	Roi$CNVmean[Roi$CN == 1] <- Roi$CNVmean[Roi$CN == 1] * -1
-	Roi$CNVmean[Roi$CN == 0] <- Roi$CNVmean[Roi$CN == 0] * -1
+	if(length(Roi$CNVmean) == 0)
+	{
+		Roi$CNVmean <- rep(CNVMean, nrow(Roi))
+		Roi$CNVmean[Roi$CN == 1] <- Roi$CNVmean[Roi$CN == 1] * -1
+		Roi$CNVmean[Roi$CN == 0] <- Roi$CNVmean[Roi$CN == 0] * -1
+	}
 	Roi$YMin <- rep(0, length(Roi$CNVmean))
 	Roi$YMax <- rep(1, length(Roi$CNVmean))
 	
