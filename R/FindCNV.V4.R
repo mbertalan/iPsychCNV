@@ -18,8 +18,9 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV)
 		subCNV <- subCNV[with(subCNV, order(Position)),]
 		
 		# Using changepoint package	
-		CPT.Res <- cpt.mean(subCNV$Log.R.Ratio, method='PELT', penalty="AIC", class=FALSE) 
-		indx <- c(1, CPT.Res, length(subCNV$Log.R.Ratio))
+		CPT.Res <- cpt.mean(subCNV$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE) 
+		indx <- cpts(CPT.Res)
+		indx <- c(1, indx, length(subCNV$Log.R.Ratio))
 
 
 		# Mergin CNVs #
