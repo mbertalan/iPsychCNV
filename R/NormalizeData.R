@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile=TRUE)
+NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile=TRUE, NormMean=TRUE)
 {
 	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
 	{
@@ -18,30 +18,33 @@ NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile
 		iUnder <- subCNV$Log.R.Ratio < -1
 		LRR_SD <- sd(subCNV$Log.R.Ratio)
 
-		if(sum(iUnder) > 10 & sum(iNorm > 10))
+		if(NormMean)
 		{
-			Norm <- subCNV$Log.R.Ratio
-			if(LRR_SD > 0.2)
+			if(sum(iUnder) > 10 & sum(iNorm > 10))
 			{
-				Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))/(sd(subCNV$Log.R.Ratio[iNorm])/0.2)
-				Norm[iUnder] <-  (subCNV$Log.R.Ratio[iUnder] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iUnder])))/(sd(subCNV$Log.R.Ratio[iUnder])/0.2)
+				Norm <- subCNV$Log.R.Ratio
+				if(LRR_SD > 0.2)
+				{
+					Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))/(sd(subCNV$Log.R.Ratio[iNorm])/0.2)
+					Norm[iUnder] <-  (subCNV$Log.R.Ratio[iUnder] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iUnder])))/(sd(subCNV$Log.R.Ratio[iUnder])/0.2)
+				}
+				else
+				{
+					Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))
+					Norm[iUnder] <-  (subCNV$Log.R.Ratio[iUnder] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iUnder])))
+				}
 			}
 			else
 			{
-				Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))
-				Norm[iUnder] <-  (subCNV$Log.R.Ratio[iUnder] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iUnder])))
+				if(LRR_SD > 0.20)
+				{
+					Norm <-  (subCNV$Log.R.Ratio + (ExpectedMean - mean(subCNV$Log.R.Ratio)))/(sd(subCNV$Log.R.Ratio)/0.2)
+				}
+				else
+				{
+					Norm <-  (subCNV$Log.R.Ratio + (ExpectedMean - mean(subCNV$Log.R.Ratio)))
+				}		
 			}
-		}
-		else
-		{
-			if(LRR_SD > 0.20)
-			{
-				Norm <-  (subCNV$Log.R.Ratio + (ExpectedMean - mean(subCNV$Log.R.Ratio)))/(sd(subCNV$Log.R.Ratio)/0.2)
-			}
-			else
-			{
-				Norm <-  (subCNV$Log.R.Ratio + (ExpectedMean - mean(subCNV$Log.R.Ratio)))
-			}		
 		}
 		
 		subCNV$Log.R.Ratio <- Norm	
