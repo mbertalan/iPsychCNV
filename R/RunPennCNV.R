@@ -45,7 +45,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 	Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv", sep="", collapse="")
 	cat(Command, "\n")
 	system(Command)
-	system(	"~/CNV/Scripts/Penn2Tab.pl < Merged.cnv > Merged.cnv.tab")
+	Penn2Tab <- system.file("exec/Penn2Tab.pl",package="iPsychCNV")
+	system(Penn2Tab " < Merged.cnv > Merged.cnv.tab")
 
 	tmp <- read.table("Merged.cnv.tab", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 	ID <- sapply(tmp$File, function(X){ ID <- tail(unlist(strsplit(X, "/")),n=1)  })
