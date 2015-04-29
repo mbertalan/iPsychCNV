@@ -18,11 +18,11 @@ NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile
 		iUnder <- subCNV$Log.R.Ratio < -1
 		LRR_SD <- sd(subCNV$Log.R.Ratio)
 
+		Norm <- subCNV$Log.R.Ratio
 		if(NormMean)
 		{
 			if(sum(iUnder) > 10 & sum(iNorm > 10))
 			{
-				Norm <- subCNV$Log.R.Ratio
 				if(LRR_SD > 0.2)
 				{
 					Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))/(sd(subCNV$Log.R.Ratio[iNorm])/0.2)
@@ -48,7 +48,7 @@ NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile
 		}
 		
 		subCNV$Log.R.Ratio <- Norm	
-		subCNV$Log.R.Ratio <- NormalizeLRR(subCNV$Log.R.Ratio, ExpectedMean=0, DF, NormQspline)
+		subCNV$Log.R.Ratio <- NormalizeLRR(subCNV$Log.R.Ratio, ExpectedMean=0, DF=DF, NormQspline=NormQspline, Quantile=Quantile)
 		return(subCNV)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
