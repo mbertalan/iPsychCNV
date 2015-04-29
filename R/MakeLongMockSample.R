@@ -1,0 +1,154 @@
+MakeLongMockSample <- function(Size=500)
+{
+	library(RColorBrewer)
+	library(ggplot2)
+	library(ggbio)
+
+	Type <- c(0,1,3,4)
+	Mean <- c(0.3, 0.6)
+	BAF <- c(0, 1, 2, 3, 4, 5)
+	Size <- c(500)
+
+	df <- sapply(Type, function(Ty)
+	{
+		df <- sapply(Mean, function(M)
+		{
+			df <- sapply(BAF, function(B)
+			{
+				df <- sapply(Size, function(S)
+				{
+					df <- data.frame("Type"=Ty,"Mean"=M,"BAF"=B,"Size"=S, stringsAsFactors=FALSE)			
+					return(df)
+				})
+				df <- MatrixOrList2df(df)
+				return(df)
+			})
+			df <- MatrixOrList2df(df)
+			return(df)
+		})
+		df <- MatrixOrList2df(df)
+		return(df)
+	})
+	df2 <- MatrixOrList2df(df)
+	df2$Mean[df2$Type == 0] <- df2$Mean[df2$Type == 0] * -1
+	df2$Mean[df2$Type == 1] <- df2$Mean[df2$Type == 1] * -1
+
+	DataSize <- (nrow(df2)*1000)+1000
+	
+	LongRoi <- df2
+	LongRoi$Start <- 1:nrow(df2) * 1000
+	LongRoi$Stop <- (1:nrow(df2) * 1000) + 500
+	LongRoi$StartPos <- LongRoi$Start
+	LongRoi$StopPos <- LongRoi$Stop
+	LongRoi$Chr <- "1"
+	colnames(LongRoi)[colnames(LongRoi) %in% "Type"] <- "CN"
+	colnames(LongRoi)[colnames(LongRoi) %in% "Mean"] <- "CNVmean"
+		
+
+
+	# BAFs
+	BAFs <- seq(from=0, to=1, by=0.01) # 101
+	BAF_Basic <- rep(0.00001, 101)
+	names(BAF_Basic) <- BAFs
+
+	BAF_Normal <- BAF_Basic
+	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 1
+	BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.05
+	
+	BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.05
+	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 1
+	
+	BAF_Normal[c(47:53)] <- BAF_Normal[c(47:53)] + 0.05
+	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + 0.1
+
+	# BAF Del prob
+	BAF_Del <- BAF_Basic
+	BAF_Del[1:2] <- BAF_Del[1:2] + 1
+	BAF_Del[100:101] <- BAF_Del[100:101] + 1
+
+	# BAF CN=0
+	BAF_CN0 <- BAF_Basic
+	
+	# BAF Dup prob
+	BAF_Dup <-  BAF_Basic
+	BAF_Dup[1:2] <- BAF_Dup[1:2] + 1
+	BAF_Dup[100:101] <- BAF_Dup[100:101] + 1
+	BAF_Dup[30:35] <- BAF_Dup[30:35] + 0.05 
+	BAF_Dup[32:33] <- BAF_Dup[32:33] + 0.1 
+	BAF_Dup[65:70] <- BAF_Dup[65:70] + 0.05
+	BAF_Dup[67:68] <- BAF_Dup[67:68] + 0.1 	
+
+	# BAF CN=4
+	BAF_CN4 <- BAF_Dup
+	BAF_CN4[c(47:53)] <- BAF_CN4[c(47:53)] + 0.05
+	BAF_CN4[c(50:51)] <- BAF_CN4[c(50:51)] + 0.1
+
+	BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=DataSize)
+	LRR <- rnorm(DataSize, mean=0, sd=0.2)
+
+	sapply(1:nrow(df2), function(i)
+	{
+		Type <- df2[i,1]
+		CNVmean <- df2[i,2]
+		Noise <- df2[i,3]
+		Size <- df2[i,4]
+
+		Start <- i * 1000
+		Stop <- Start+Size
+		
+		LRR[Start:Stop] <<- LRR[Start:Stop] + CNVmean
+		if(Noise == 0) # LRR matchs BAF
+		{ 
+			
+			if(Type == 3)
+			{
+				BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
+			}
+			else if(Type == 1)
+			{	
+				BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1))
+			}
+			else if(Type == 0)
+			{
+				BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1))
+			}
+			else if(Type == 4)
+			{
+				BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1))
+				
+			}
+		}
+		else if(Noise == 1) # CN = 0
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_Basic, replace=TRUE, size=(Size+1))
+		}
+		else if(Noise == 2) # CN = 1
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1))
+		}
+		else if(Noise == 3) # CN = 2
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=(Size+1))
+		}
+		else if(Noise == 4) # CN = 3
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
+		}
+		else if(Noise == 5) # CN = 4
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1))
+		}
+		
+		BAF[Start:Stop] <<- BAFCNV	
+	})		
+
+	Chr <- rep("1", DataSize)
+	SNP.Name <- as.character(1:DataSize)
+	Position <- 1:DataSize
+
+	df <- data.frame(Name=SNP.Name, Chr=Chr, Position=Position, Log.R.Ratio=LRR, B.Allele.Freq=BAF, stringsAsFactors=F)
+	#df$CNVmean <- CNVMean
+	#df$CNVmean[df$CN == 1] <- df$CNVmean[df$CN == 1] * -1
+	write.table(df, sep="\t", quote=FALSE, row.names=FALSE, file="LongMockSample.tab") 
+	return(LongRoi)
+}
