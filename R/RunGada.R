@@ -8,7 +8,7 @@ RunGada <- function(MockData=tmp, MinSegLen=50, Tgada=4.5)
 	# Gada can not run just one chromosome.
 	NotUsed <- gen.info
 	NotUsed$chr <- 2
-	gen.info <- rbind(gen.info, NotUse)
+	gen.info <- rbind(gen.info, NotUsed)
 	
 	dataMock<-setupGADAgeneral(c(MockData$Log.R.Ratio,MockData$Log.R.Ratio) ,gen.info=gen.info)
 	step1<-SBL(dataMock,  estim.sigma2=TRUE)
