@@ -45,6 +45,7 @@ export(GetGenotypeInfo)
 export(ReSearchCNVs)
 export(RunGada)
 export(MakeLongMockSample)
+export(RunLongMock)
 ### Bioconductor packages
 import(ggbio)
 import(biovizBase)
