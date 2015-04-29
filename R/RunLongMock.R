@@ -8,20 +8,22 @@
 
 RunLongMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
 {
-	tmp <- MakeOneMockSample(Noise=Noise, CNVMean=CNVMean)
+	LongRoi <- MakeLongMockSample(Size=500)
+	Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)
+	
 	if(Method %in% "PennCNV")
 	{
-		PredictedCNV <- RunPennCNV(PathRawData=".", Pattern="MockSample_1.tab$", Cores=1, Skip=0, Normalization=FALSE, PFB="")
+		PredictedCNV <- RunPennCNV(PathRawData=".", Pattern="LongMockSample.tab$", Cores=1, Skip=0, Normalization=FALSE, PFB="")
 	}
 	else if(Method %in% "iPsychCNV")
 	{
-		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="MockSample_1.tab$", MinLength=10, Skip=0, LCR=FALSE)
+		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE)
 	}
 	else if(Method %in% "Gada")
 	{
-		PredictedCNV <- RunGada(tmp)
+		PredictedCNV <- RunGada(Sample)
 	}	
 
 	Name <- paste(Name, "_Noise", Noise, "_CNVmean", CNVMean, ".png", sep="", collapse="")
-	PlotLRRAndCNVs(PredictedCNV, tmp, CNVMean, Name=Name, Roi=RoiSingleMock)
+	PlotLRRAndCNVs(PredictedCNV, Sample, CNVMean, Name=Name, Roi=LongRoi)
 }
