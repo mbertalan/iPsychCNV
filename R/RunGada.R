@@ -4,7 +4,8 @@ RunGada <- function(MockData=tmp)
 	# Creating gen.info for Gada
 	gen.info <- MockData[,1:3]
 	colnames(gen.info) <- c("Name", "chr", "pos")
-	gen.info$chr[30000:50000] <- "2"
+	Start <- round(nrow(MockData)/2) # Gada can not run just one chromosome.
+	gen.info$chr[Start:nrow(MockData)] <- "2"
 	dataMock<-setupGADAgeneral(MockData$Log.R.Ratio,gen.info=gen.info)
 	step1<-SBL(dataMock,  estim.sigma2=TRUE)
 	step2<-BackwardElimination(step1,T=4.5,MinSegLen=3)
