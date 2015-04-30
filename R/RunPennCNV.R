@@ -1,4 +1,4 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 
 {
 	library(parallel)
@@ -15,7 +15,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
 		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
 	})
-	Files <- list.files(path=PathRawData, pattern="*tab.pennCNV$", full.names=TRUE, recursive=TRUE)
+	Files <- list.files(path=PathRawData, pattern=".*Mock.*\\.tab\\.pennCNV$", full.names=TRUE, recursive=TRUE)
 	
 	# Creating Chip info file for PennCNV
 	ChipInfo <- ReadSample(Files[1], skip=Skip, LCR=FALSE)
