@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=100, Cores=10, NumFiles="All", Pattern="22q11_*", MinLength=100000, SelectedFiles=NA, NormQspline=FALSE, DFspline=NA, Skip=10, LCR=TRUE, PFB=NULL, Quantile=TRUE, chr=NA, NormMean=TRUE) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=100, Cores=10, NumFiles="All", Pattern="22q11_*", MinLength=100000, SelectedFiles=NA, NormQspline=FALSE, DFspline=NA, Skip=10, LCR=TRUE, PFB=NULL, Quantile=TRUE, chr=NA, NormMean=TRUE, recursive=FALSE) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -14,7 +14,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	
 	ptm <- proc.time()
 
-	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=TRUE)
+	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 	
 	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
 	{
