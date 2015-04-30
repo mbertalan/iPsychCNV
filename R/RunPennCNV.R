@@ -9,8 +9,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 		# for some odd reason penncnv needs a name before LRR and BAF.
 		cat(file, "\n")
 		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
-		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B.Allele.Freq"
-		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log.R.Ratio"
+		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B Allele Freq"
+		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
 		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
 		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
 	})
