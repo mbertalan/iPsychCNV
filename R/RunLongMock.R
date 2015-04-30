@@ -13,11 +13,11 @@ RunLongMock <- function(Name="Test", Method="PennCNV", HMM="/media/NeoScreen/NeS
 	
 	if(Method %in% "PennCNV")
 	{
-		PredictedCNV <- RunPennCNV(PathRawData=".", Pattern="LongMockSample.tab$", Cores=1, Skip=0, Normalization=FALSE, PFB=NA, HMM=HMM, Path2PennCNV=Path2PennCNV )
+		PredictedCNV <- RunPennCNV(PathRawData=".", Pattern="^LongMockSample.tab$", Cores=1, Skip=0, Normalization=FALSE, PFB=NA, HMM=HMM, Path2PennCNV=Path2PennCNV )
 	}
 	else if(Method %in% "iPsychCNV")
 	{
-		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE)
+		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="^LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE)
 	}
 	else if(Method %in% "Gada")
 	{
