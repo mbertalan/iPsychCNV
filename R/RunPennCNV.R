@@ -11,10 +11,16 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
 		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B Allele Freq"
 		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
+		colnames(tmp)[colnames(tmp) %in% "SNP.Name"] <- "Name"
 		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
 		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
 	})
 	Files <- list.files(path=PathRawData, pattern="*tab.pennCNV$", full.names=TRUE, recursive=TRUE)
+	
+	# Creating Chip info file for PennCNV
+	ChipInfo <- ReadSample(Files[1], skip=Skip, LCR=FALSE)
+	ChipInfo <- ChipInfo[, c("Name", "Chr", "Position")]
+	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
 
 	write.table(Files, "Mock.List.Files.txt", sep="\t", quote=FALSE, row.names=FALSE, col.names=FALSE)
 		
@@ -45,11 +51,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 
 		return(Output)
 	})
-	# Creating Chip info file for PennCNV
-	ChipInfo <- ReadSample(Files[1], skip=Skip, LCR=FALSE)
-	colnames(ChipInfo)[colnames(ChipInfo) %in% "SNP.Name"] <- "Name"   
-	ChipInfo <- ChipInfo[, c("Name", "Chr", "Position")]
-	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
+
 	
 	system("cat *.penncnv.out > All_Mock.penncnv.raw")
 	Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv", sep="", collapse="")
