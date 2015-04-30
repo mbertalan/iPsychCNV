@@ -24,6 +24,6 @@ RunLongMock <- function(Name="Test", Method="PennCNV", HMM="/media/NeoScreen/NeS
 		PredictedCNV <- RunGada(Sample)
 	}	
 
-	Name <- paste(Name, "_Noise", Noise, "_CNVmean", CNVMean, ".png", sep="", collapse="")
+	Name <- paste(Name,"_",Method, "_LongMockResult.png", sep="", collapse="")
 	PlotLRRAndCNVs(PredictedCNV, Sample, CNVMean, Name=Name, Roi=LongRoi)
 }
