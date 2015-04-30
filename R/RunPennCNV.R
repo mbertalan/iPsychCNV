@@ -18,15 +18,12 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 	{
 		cat(X, "\n")
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
-		#CNV <- ReadCNV(X, skip=Skip, LCR=FALSE)
 		
 		if(Normalization)
 		{
 			CNV <- NormalizeData(CNV, ExpectedMean=0, DF=NA, FALSE)
 		}
 		
-		#Input <- paste(PathRawData, "/", ID, ".penncnv.in", sep="", collapse="")
-		#write.table(CNV, sep="\t", quote=FALSE, row.names=FALSE, file=Input)
 		
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
 		Command <- paste(Path2PennCNV, "detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm ", HMM, " -pfb ", PFB, " ", X, " -log logfile -out ", Output, sep="", collapse="")
