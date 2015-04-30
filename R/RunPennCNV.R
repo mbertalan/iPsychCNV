@@ -18,7 +18,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 	Files <- list.files(path=PathRawData, pattern=".*Mock.*\\.tab\\.pennCNV$", full.names=TRUE, recursive=TRUE)
 	
 	# Creating Chip info file for PennCNV
-	ChipInfo <- ReadSample(Files[1], skip=Skip, LCR=FALSE)
+	cat(Files[1], "\n")
+	ChipInfo <- read.table(Files[1], sep="\t", header=TRUE, stringsAsFactors=F)
 	ChipInfo <- ChipInfo[, c("Name", "Chr", "Position")]
 	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
 
