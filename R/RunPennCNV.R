@@ -1,11 +1,23 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 
 {
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=TRUE)
+	# Re-writing file.
+	sapply(Files, function(file)
+	{
+		# for some odd reason penncnv needs a name before LRR and BAF.
+		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
+		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B.Allele.Freq"
+		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log.R.Ratio"
+		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
+		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
+	})
+	Files <- list.files(path=PathRawData, pattern="*tab.pennCNV$", full.names=TRUE, recursive=TRUE)
+
 	write.table(Files, "Mock.List.Files.txt", sep="\t", quote=FALSE, row.names=FALSE, col.names=FALSE)
 		
-	if(!file.exists(PFB))
+	if(is.na(PFB))
 	{
 		Command <- paste(Path2PennCNV, "compile_pfb.pl -listfile ./Mock.List.Files.txt -output Mock.pfb", sep="", collapse="")
 		cat(Command, "\n")
