@@ -15,7 +15,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
 		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
 	})
-	Files <- list.files(path=PathRawData, pattern=".*Mock.*\\.tab\\.pennCNV$", full.names=TRUE, recursive=TRUE)
+	Files <- list.files(path=PathRawData, pattern=".*Mock.*\\.tab\\.pennCNV$", full.names=TRUE, recursive=FALSE)
 	
 	# Creating Chip info file for PennCNV
 	cat(Files[1], "\n")
