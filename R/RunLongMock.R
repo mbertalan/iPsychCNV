@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-RunLongMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
+RunLongMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
 {
 	LongRoi <- MakeLongMockSample(Size=500)
 	Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)
@@ -17,7 +17,7 @@ RunLongMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
 	}
 	else if(Method %in% "iPsychCNV")
 	{
-		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE)
+		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE, Path2PennCNV=Path2PennCNV, HMM=HMM )
 	}
 	else if(Method %in% "Gada")
 	{
