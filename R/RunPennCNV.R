@@ -59,7 +59,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 	cat(Command, "\n")
 	system(Command)
 	Penn2Tab <- system.file("exec/Penn2Tab.pl",package="iPsychCNV")
-	system(Penn2Tab, " < Merged.cnv > Merged.cnv.tab")
+	Command <- paste(Penn2Tab, " < Merged.cnv > Merged.cnv.tab", sep="", collapse="")
+	system(Command)
 
 	tmp <- read.table("Merged.cnv.tab", sep="\t", header=TRUE, stringsAsFactors=FALSE)
 	ID <- sapply(tmp$File, function(X){ ID <- tail(unlist(strsplit(X, "/")),n=1)  })
