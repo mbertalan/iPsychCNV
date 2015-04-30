@@ -7,6 +7,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern="*.tab$
 	sapply(Files, function(file)
 	{
 		# for some odd reason penncnv needs a name before LRR and BAF.
+		cat(file, "\n")
 		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
 		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B.Allele.Freq"
 		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log.R.Ratio"
