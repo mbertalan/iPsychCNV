@@ -67,5 +67,23 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 	ID2 <- sapply(ID, function(X){ unlist(strsplit(X, ".penncnv."))[1]  })
 	tmp$ID <- ID2 
 	tmp$CNVID <- 1:nrow(tmp)
-	return(tmp)
+	df <- tmp
+	# Collecting CNV mean from LRR
+	CNVmean <- sapply(unique(tmp$File), function(file)
+	{
+		 Sample <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
+		 CNVmean <- apply(tmp[,1:3], 1, function(X)
+		 {
+		 	Start <- X["Start"]
+		 	Stop <- X["Stop"]
+		 	CHR <- X["Chr"]
+		 	subSample <- subset(Sample, Chr %in% CHR) 
+		 	LRR <- subSample[,grep("Log.R.Ratio", colnames(subSample))]
+		 	CNVmean <- mean(LRR[Start:Stop])
+		 	return(CNVmean)
+		 })
+	})
+	CNVmean <- as.vector(CNVmean)
+	df$CNVmean <- CNVmean
+	return(df)
 }
