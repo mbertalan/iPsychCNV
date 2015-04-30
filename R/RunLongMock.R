@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-RunLongMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
+RunLongMock <- function(Name="Test", Method="PennCNV", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
 {
 	LongRoi <- MakeLongMockSample(Size=500)
 	Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)
