@@ -5,14 +5,14 @@ MakeLongMockSample <- function(Size=500)
 	library(ggbio)
 
 	Type <- c(0,1,2,3,4) # BAF types
-	Mean <- c(-0.3, -0.6, 0.3, 0.6)
+	Mean <- c(0.2, 0.4, 0.6)
 	Size <- c(200, 400, 600)
 
-	df <- sapply(Mean, function(M)
+	df <- sapply(Type, function(Ty)
 	{
-		df <- sapply(Size, function(S)
+		df <- sapply(Mean, function(M)
 		{
-			df <- sapply(Type, function(Ty)
+			df <- sapply(Size, function(S)
 			{
 				df <- data.frame("Type"=Ty,"Mean"=M,"Size"=S, stringsAsFactors=FALSE)			
 				return(df)
@@ -24,21 +24,15 @@ MakeLongMockSample <- function(Size=500)
 		return(df)
 	})
 	df2 <- MatrixOrList2df(df)
-	df2$Mean[df2$Type == 0] <- df2$Mean[df2$Type == 0] * -1
-	df2$Mean[df2$Type == 1] <- df2$Mean[df2$Type == 1] * -1
 
 	DataSize <- (nrow(df2)*1000)+1000
-	
-	LongRoi <- df2
-	LongRoi$Start <- 1:nrow(df2) * 1000
-	LongRoi$Stop <- (1:nrow(df2) * 1000) + 500
-	LongRoi$StartPos <- LongRoi$Start
-	LongRoi$StopPos <- LongRoi$Stop
+	tmp <- sapply(1:nrow(df2), function(i){ Start <- i * 1000; Stop <- Start + df2$Size[i]; data.frame(Start=Start, Stop=Stop, StartPos=Start, StopPos=Stop) })
+	tmp2 <- MatrixOrList2df(tmp)
+	LongRoi <- cbind(df2,tmp2)
 	LongRoi$Chr <- "1"
 	colnames(LongRoi)[colnames(LongRoi) %in% "Type"] <- "CN"
 	colnames(LongRoi)[colnames(LongRoi) %in% "Mean"] <- "CNVmean"
 		
-
 
 	# BAFs
 	BAFs <- seq(from=0, to=1, by=0.01) # 101
