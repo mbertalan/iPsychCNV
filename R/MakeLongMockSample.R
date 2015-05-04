@@ -6,7 +6,7 @@ MakeLongMockSample <- function(Size=500)
 
 	Type <- c(0,1,2,3,4) # BAF types
 	Mean <- c(-0.3, -0.6, 0.3, 0.6)
-	Size <- c(200, 400, 600)
+	Size <- c(300, 600)
 
 	df <- sapply(Mean, function(M)
 	{
