@@ -5,7 +5,7 @@ MakeLongMockSample <- function(Size=500)
 	library(ggbio)
 
 	Type <- c(0,1,2,3,4) # BAF types
-	Mean <- c(0.2, 0.4, 0.6)
+	Mean <- c(-0.3, -0.6, 0.3, 0.6)
 	Size <- c(200, 400, 600)
 
 	df <- sapply(Type, function(Ty)
