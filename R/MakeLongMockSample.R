@@ -4,23 +4,17 @@ MakeLongMockSample <- function(Size=500)
 	library(ggplot2)
 	library(ggbio)
 
-	Type <- c(0,1,3,4)
-	Mean <- c(0.3, 0.6)
-	BAF <- c(0, 1, 2, 3, 4, 5)
-	Size <- c(500)
+	Type <- c(0,1,2,3,4) # BAF types
+	Mean <- c(0.2, 0.4, 0.6)
+	Size <- c(200, 400, 600)
 
 	df <- sapply(Type, function(Ty)
 	{
 		df <- sapply(Mean, function(M)
 		{
-			df <- sapply(BAF, function(B)
+			df <- sapply(Size, function(S)
 			{
-				df <- sapply(Size, function(S)
-				{
-					df <- data.frame("Type"=Ty,"Mean"=M,"BAF"=B,"Size"=S, stringsAsFactors=FALSE)			
-					return(df)
-				})
-				df <- MatrixOrList2df(df)
+				df <- data.frame("Type"=Ty,"Mean"=M,"Size"=S, stringsAsFactors=FALSE)			
 				return(df)
 			})
 			df <- MatrixOrList2df(df)
@@ -88,55 +82,33 @@ MakeLongMockSample <- function(Size=500)
 
 	sapply(1:nrow(df2), function(i)
 	{
-		Type <- df2[i,1]
-		CNVmean <- df2[i,2]
-		Noise <- df2[i,3]
-		Size <- df2[i,4]
+		Type <- df2$Type[i]
+		CNVmean <- df2$Mean[i]
+		Size <- df2$Size[i]
 
 		Start <- i * 1000
 		Stop <- Start+Size
 		
 		LRR[Start:Stop] <<- LRR[Start:Stop] + CNVmean
-		if(Noise == 0) # LRR matchs BAF
-		{ 
-			
-			if(Type == 3)
-			{
-				BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
-			}
-			else if(Type == 1)
-			{	
-				BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1))
-			}
-			else if(Type == 0)
-			{
-				BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1))
-			}
-			else if(Type == 4)
-			{
-				BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1))
-				
-			}
-		}
-		else if(Noise == 1) # CN = 0
-		{
-			BAFCNV <- sample(BAFs, prob=BAF_Basic, replace=TRUE, size=(Size+1))
-		}
-		else if(Noise == 2) # CN = 1
-		{
-			BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1))
-		}
-		else if(Noise == 3) # CN = 2
-		{
-			BAFCNV <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=(Size+1))
-		}
-		else if(Noise == 4) # CN = 3
+		if(Type == 3)
 		{
 			BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
 		}
-		else if(Noise == 5) # CN = 4
+		else if(Type == 1)
+		{	
+			BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1))
+		}
+		else if(Type == 0)
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1))
+		}
+		else if(Type == 4)
 		{
 			BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1))
+		}
+		else if(Type == 2)
+		{
+			BAFCNV <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=(Size+1))
 		}
 		
 		BAF[Start:Stop] <<- BAFCNV	
@@ -147,8 +119,6 @@ MakeLongMockSample <- function(Size=500)
 	Position <- 1:DataSize
 
 	df <- data.frame(Name=SNP.Name, Chr=Chr, Position=Position, Log.R.Ratio=LRR, B.Allele.Freq=BAF, stringsAsFactors=F)
-	#df$CNVmean <- CNVMean
-	#df$CNVmean[df$CN == 1] <- df$CNVmean[df$CN == 1] * -1
 	write.table(df, sep="\t", quote=FALSE, row.names=FALSE, file="LongMockSample.tab") 
 	return(LongRoi)
 }
