@@ -8,11 +8,11 @@ MakeLongMockSample <- function(Size=500)
 	Mean <- c(-0.3, -0.6, 0.3, 0.6)
 	Size <- c(200, 400, 600)
 
-	df <- sapply(Type, function(Ty)
+	df <- sapply(Mean, function(M)
 	{
-		df <- sapply(Mean, function(M)
+		df <- sapply(Size, function(S)
 		{
-			df <- sapply(Size, function(S)
+			df <- sapply(Type, function(Ty)
 			{
 				df <- data.frame("Type"=Ty,"Mean"=M,"Size"=S, stringsAsFactors=FALSE)			
 				return(df)
