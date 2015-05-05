@@ -45,46 +45,49 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 			CNV <- NormalizeData(CNV, ExpectedMean=0, DF=NA, FALSE)
 		}
 		
-		
+		# Find CNVs
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
 		Command <- paste(Path2PennCNV, "detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm ", HMM, " -pfb ", PFB, " ", X, " -log logfile -out ", Output, sep="", collapse="")
 		cat(Command, "\n")
 		system(Command)
-
-		return(Output)
-	})
-
-	
-	system("cat *.penncnv.out > All_Mock.penncnv.raw")
-	Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg All_Mock.penncnv.raw --signalfile SNP.Position.tab --fraction 0.2 --bp --output Merged.cnv", sep="", collapse="")
-	cat(Command, "\n")
-	system(Command)
-	Penn2Tab <- system.file("exec/Penn2Tab.pl",package="iPsychCNV")
-	Command <- paste(Penn2Tab, " < Merged.cnv > Merged.cnv.tab", sep="", collapse="")
-	system(Command)
-
-	tmp <- read.table("Merged.cnv.tab", sep="\t", header=TRUE, stringsAsFactors=FALSE)
-	ID <- sapply(tmp$File, function(X){ ID <- tail(unlist(strsplit(X, "/")),n=1)  })
-	ID2 <- sapply(ID, function(X){ unlist(strsplit(X, ".penncnv."))[1]  })
-	tmp$ID <- ID2 
-	tmp$CNVID <- 1:nrow(tmp)
-	df <- tmp
-	# Collecting CNV mean from LRR
-	CNVmean <- sapply(unique(tmp$File), function(file)
-	{
-		 Sample <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
-		 CNVmean <- apply(tmp[,1:3], 1, function(X)
-		 {
+		
+		# Merge CNVs
+		OutputMerged <- paste(ID, ".penncnv.out.merged", sep="", collapse="")
+		Command <- paste(Path2PennCNV, "clean_cnv.pl combineseg ", Output, " --signalfile SNP.Position.tab --fraction 0.2 --bp --output ", OutputMerged, sep="", collapse="")
+		cat(Command, "\n")
+		system(Command)
+		Penn2Tab <- system.file("exec/Penn2Tab.pl",package="iPsychCNV")
+		
+		# Change format
+		OutputMergedTab <- paste(ID, ".penncnv.out.merged.tab", sep="", collapse="")
+		Command <- paste(Penn2Tab, " < ", OutputMerged, " > ", OutputMergedTab, sep="", collapse="")
+		cat(Command, "\n")
+		system(Command)
+		
+		# Reading the result and adding ID.
+		tmp <- read.table(OutputMergedTab, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+		ID <- sapply(tmp$File, function(X){ ID <- tail(unlist(strsplit(X, "/")),n=1)  })
+		ID2 <- sapply(ID, function(X){ unlist(strsplit(X, ".penncnv."))[1]  })
+		tmp$ID <- ID2 
+		tmp$CNVID <- 1:nrow(tmp)
+		df <- tmp
+		
+		# Getting CNV mean from sample.
+		Sample <- read.table(Output, sep="\t", header=TRUE, stringsAsFactors=F)
+		CNVmean <- apply(df[,c("Start", "Stop", "Chr")], 1, function(X)
+		{
 		 	Start <- X["Start"]
 		 	Stop <- X["Stop"]
 		 	CHR <- X["Chr"]
 		 	subSample <- subset(Sample, Chr %in% CHR) 
-		 	LRR <- subSample[,grep("Log.R.Ratio", colnames(subSample))]
+		 	LRR <- subSample[,grep("Log R Ratio", colnames(subSample))]
 		 	CNVmean <- mean(LRR[Start:Stop])
 		 	return(CNVmean)
-		 })
+		})
+		df$CNVmean <- CNVmean
+		
+		return(df)
 	})
-	CNVmean <- as.vector(CNVmean)
-	df$CNVmean <- CNVmean
+	df <- MatrixOrList2df(Res)
 	return(df)
 }
