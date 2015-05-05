@@ -80,7 +80,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		 	Stop <- X["Stop"]
 		 	CHR <- X["Chr"]
 		 	subSample <- subset(Sample, Chr %in% CHR) 
-		 	LRR <- subSample[,grep("Log R Ratio", colnames(subSample))]
+		 	LRR <- subSample[,grep("Log.R.Ratio", colnames(subSample))]
 		 	CNVmean <- mean(LRR[Start:Stop])
 		 	return(CNVmean)
 		})
