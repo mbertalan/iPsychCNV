@@ -70,7 +70,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		# Reading the result and adding ID.
 		tmp <- read.table(OutputMergedTab, sep="\t", header=TRUE, stringsAsFactors=FALSE)
 		ID <- sapply(tmp$File, function(X){ ID <- tail(unlist(strsplit(X, "/")),n=1)  })
-		ID2 <- sapply(ID, function(X){ unlist(strsplit(X, ".penncnv."))[1]  })
+		ID2 <- sapply(ID, function(X){ unlist(strsplit(X, ".penncnv"))[1]  })
 		tmp$ID <- ID2 
 		tmp$CNVID <- 1:nrow(tmp)
 		df <- tmp
