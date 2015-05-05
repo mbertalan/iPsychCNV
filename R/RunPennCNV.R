@@ -13,7 +13,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
 		colnames(tmp)[colnames(tmp) %in% "SNP.Name"] <- "Name"
 		tmp <- tmp[, c("Name", "Position", "Chr", "C B Allele Freq", "C Log R Ratio")]
-		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
+		Newfile <- paste(file, ".penncnv", sep="", collapse="")
 		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
 	})
 	Files <- list.files(path=PathRawData, pattern=".*\\.pennCNV$", full.names=TRUE, recursive=FALSE)
