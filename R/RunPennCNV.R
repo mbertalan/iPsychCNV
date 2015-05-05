@@ -4,7 +4,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=FALSE)
 	# Re-writing file.
-	sapply(Files, function(file)
+	mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(file) 
 	{
 		# for some odd reason penncnv needs a name before LRR and BAF.
 		cat(file, "\n")
@@ -12,6 +12,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B Allele Freq"
 		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
 		colnames(tmp)[colnames(tmp) %in% "SNP.Name"] <- "Name"
+		tmp <- tmp[, c("Name", "Chr", "C B Allele Freq", "C Log R Ratio")]
 		Newfile <- paste(file, ".pennCNV", sep="", collapse="")
 		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
 	})
