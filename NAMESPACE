@@ -48,6 +48,7 @@ export(MakeLongMockSample)
 export(RunLongMock)
 export(Multiplot)
 export(MultiPlotsManySamples)
+export(PlotCNVsFromDataFrame)
 ### Bioconductor packages
 import(ggbio)
 import(biovizBase)
