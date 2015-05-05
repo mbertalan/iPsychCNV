@@ -73,7 +73,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		df <- tmp
 		
 		# Getting CNV mean from sample.
-		Sample <- read.table(Output, sep="\t", header=TRUE, stringsAsFactors=F)
+		Sample <- read.table(X, sep="\t", header=TRUE, stringsAsFactors=F)
 		CNVmean <- apply(df[,c("Start", "Stop", "Chr")], 1, function(X)
 		{
 		 	Start <- X["Start"]
