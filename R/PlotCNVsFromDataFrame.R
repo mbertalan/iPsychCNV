@@ -20,28 +20,22 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0) # Path f
 	DF$UniqueID <- 1:nrow(DF)
 	#matrixList <- lapply(1:NROW(as.matrix(DF)), function(i) DF[i,,drop=FALSE]) 
 	#mclapply(matrixList, mc.cores=Cores, function(X) 
-	mclapply(unique(DF$ID), mc.cores=Cores, function(X) 
+	mclapply(DF$UniqueID, mc.cores=Cores, function(UID) 
 	{
-		
-		NAMES <- names(X)
-		X2 <- unlist(X)
-		names(X2) <- NAMES
-		X <- X2
-		tmpSize <- nrow(X)
-		tmpLength <- length(X)
-		
-		chr <- as.numeric(X["Chr"])
-		ID <- X["ID"]
-		UniqueID <- X["UniqueID"]
+		X <- subset(DF, UniqueID %in% UID)
+	
+		chr <- X$Chr
+		ID <- X$ID
+		UniqueID <- X$UniqueID
 
 		cat(ID, "\n")
 	
-		CNVstart <- as.numeric(X["Start"])
-		CNVstop <- as.numeric(X["Stop"])
-		Size <- as.numeric(X["Length"])
-		CN <- X["CN"]
-		SDCNV <- round(as.numeric(X["SDCNV"]), digits=2)
-		NumSNP <- as.numeric(X["NumSNPs"])
+		CNVstart <- as.numeric(X$Start)
+		CNVstop <- as.numeric(X$Stop)
+		Size <- as.numeric(X$Length)
+		CN <- X$CN
+		SDCNV <- round(as.numeric(X$SDCNV), digits=2)
+		NumSNP <- as.numeric(X$NumSNPs)
 
 		Start <- CNVstart - Size*(3/log10(NumSNP))^3
 		Stop <-  CNVstop + Size*(3/log10(NumSNP))^3
