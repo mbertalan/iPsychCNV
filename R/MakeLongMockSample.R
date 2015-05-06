@@ -80,7 +80,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.3,
 		CNVmean <- df2$Mean[i]
 		Size <- df2$Size[i]
 
-		Start <- i * 1000
+		Start <- i * CNVDistance
 		Stop <- Start+Size
 		
 		LRR[Start:Stop] <<- LRR[Start:Stop] + CNVmean
