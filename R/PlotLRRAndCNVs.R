@@ -39,11 +39,11 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	p1 <- p1 + geom_point(alpha=0.05, size=1) 
 	p1 <- p1 + geom_rect(data=Roi, aes(xmin =StartPos, xmax=StopPos, ymin=(CNVmean-0.1), ymax=(CNVmean+0.1)), colour=Colors2[3], fill=NA, alpha=0.3, inherit.aes = FALSE, size=0.5) + theme(legend.title=element_blank())
 	p1 <- p1 +  geom_segment(data=PennCNV, aes(x = Start, y = CNVmean, xend = Stop, yend = CNVmean, colour=as.factor(CN)), size=4) + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))	
-	p1 <- p1 + geom_line(data=tmp, aes(x=Position, y = Mean), size = 0.1, alpha=0.4) 
+	p1 <- p1 + geom_line(data=tmp, aes(x=Position, y = Mean), size = 0.1, alpha=0.2) 
 	
 	# BAF
 	p2 <- ggplot(tmp, aes(Position, y = B.Allele.Freq)) 
-	p2 <- p2 + geom_point(aes(col="B.Allele.Freq"), alpha=0.6, size=1)  
+	p2 <- p2 + geom_point(aes(col="B.Allele.Freq"), alpha=0.3, size=1)  
 	p2 <- p2 + geom_rect(data=Roi, aes(xmin=StartPos, xmax=StopPos, ymin=YMin, ymax=YMax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	
 	PennCNV <- subset(PennCNV, CN != 2)
