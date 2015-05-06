@@ -27,4 +27,5 @@ RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(
 	Name <- paste(Name,"_",Method, "_LongMockResult.png", sep="", collapse="")
 	CNVMean=0.3
 	PlotLRRAndCNVs(PredictedCNV, Sample, CNVMean, Name=Name, Roi=LongRoi)
+	return(PredictedCNV)
 }
