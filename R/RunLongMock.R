@@ -6,9 +6,9 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-RunLongMock <- function(Name="Test", Method="PennCNV", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
+RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.3, -0.6, 0.3, 0.6), Size=c(300, 600), HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
 {
-	LongRoi <- MakeLongMockSample(Size=500)
+	LongRoi <- MakeLongMockSample(CNVDistance, Type, Mean, Size)
 	Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)
 	
 	if(Method %in% "PennCNV")
