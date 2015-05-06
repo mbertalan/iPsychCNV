@@ -1,12 +1,12 @@
-MakeLongMockSample <- function(Size=500)
+MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.3, -0.6, 0.3, 0.6), Size=c(300, 600))
 {
 	library(RColorBrewer)
 	library(ggplot2)
 	library(ggbio)
 
-	Type <- c(0,1,2,3,4) # BAF types
-	Mean <- c(-0.3, -0.6, 0.3, 0.6)
-	Size <- c(300, 600)
+	#Type <- c(0,1,2,3,4) # BAF types
+	#Mean <- c(-0.3, -0.6, 0.3, 0.6)
+	#Size <- c(300, 600)
 
 	df <- sapply(Mean, function(M)
 	{
@@ -25,8 +25,8 @@ MakeLongMockSample <- function(Size=500)
 	})
 	df2 <- MatrixOrList2df(df)
 
-	DataSize <- (nrow(df2)*1000)+1000
-	tmp <- sapply(1:nrow(df2), function(i){ Start <- i * 1000; Stop <- Start + df2$Size[i]; data.frame(Start=Start, Stop=Stop, StartPos=Start, StopPos=Stop) })
+	DataSize <- (nrow(df2)*CNVDistance)+CNVDistance
+	tmp <- sapply(1:nrow(df2), function(i){ Start <- i * CNVDistance; Stop <- Start + df2$Size[i]; data.frame(Start=Start, Stop=Stop, StartPos=Start, StopPos=Stop) })
 	tmp2 <- MatrixOrList2df(tmp)
 	LongRoi <- cbind(df2,tmp2)
 	LongRoi$Chr <- "1"
