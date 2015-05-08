@@ -30,7 +30,8 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.19)
 		indx <- c(1, indx, length(subCNV$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
-		Df <- FixCNVPosition(DF, subCNV, MinNumSNPs, ID) # Fix the position of the CNV by distance of the SNPs
+		DF <- Plot.CNV.Info(MinNumSNPs, DF, subCNV, ID)
+		#Df <- FixCNVPosition(DF, subCNV, MinNumSNPs, ID) # Fix the position of the CNV by distance of the SNPs
 		Df <- subset(Df, abs(CNVMean) > CNVSignal)
 		return(Df)
 	})
