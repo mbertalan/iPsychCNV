@@ -66,7 +66,8 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 							NewLength <-  NewStop - NewStart
 							NewNumSNPs <- NewStopIndx - NewStartIndx
 							df <- data.frame(Start=NewStart, Stop=NewStop, StartIndx=NewStartIndx, StopIndx=NewStopIndx, Length=NewLength, NumSNPs=NewNumSNPs)
-							df2 <- tmp4[Indx[1],7:ncol(tmp4)]
+							# Original DF
+							df2 <- tmp4[Indx[1], !colnames(tmp4) %in% colnames(df)] # Original data without the modified merged info.
 							df3 <- cbind(df, df2)
 							return(df3)
 						}
