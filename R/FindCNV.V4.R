@@ -39,7 +39,7 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.19)
 		
 		if(nrow(DF) > 1)
 		{
-			DF <- MergeCNVs(DF)
+			DF <- MergeCNVs(DF, MaxNumSNPs=MinNumSNPs)
 		}
 		return(DF)
 	})
