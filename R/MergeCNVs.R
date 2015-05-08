@@ -3,7 +3,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 	tmp2 <- subset(df, CN != 2)
 	Test2 <- sapply(unique(tmp2$ID), function(IDs) # Sample Loop	
 	{
-		cat("Sample: ", IDs, "\n")
+		#cat("Sample: ", IDs, "\n")
 		tmp3 <- subset(tmp2, ID %in% IDs) 	 
 		Test <- sapply(unique(tmp3$Chr), function(CHRs) # Chr loop
 		{
