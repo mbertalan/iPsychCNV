@@ -16,6 +16,8 @@ NormalizeData <- function(CNV,ExpectedMean=0, penalty=20, Quantile=TRUE, QSpline
 		subCNV$LRR <- subCNV$Log.R.Ratio
 		LRR <- subCNV$Log.R.Ratio
 		
+		# add later data that LRR with 2 peaks.
+		
 		if(QSpline) # detrend the data
 		{
 			Spline <- smooth.spline(LRR, penalty=penalty)
