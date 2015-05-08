@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0) # Path from cluster  
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1) # Path from cluster  
 {
 	library(mclust)
 	library(parallel)
@@ -37,8 +37,8 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0) # Path f
 		SDCNV <- round(as.numeric(X$SDCNV), digits=2)
 		NumSNP <- as.numeric(X$NumSNPs)
 
-		Start <- CNVstart - Size*(3/log10(NumSNP))^3
-		Stop <-  CNVstop + Size*(3/log10(NumSNP))^3
+		Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
+		Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
 	
 		NewName <- paste(UniqueID, CNVstart, CNVstop, chr, ID, sep="_", collapse="")
 		OutPlotfile <- paste(NewName, "plot.png", sep=".", collapse="")
