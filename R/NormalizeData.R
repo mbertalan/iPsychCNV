@@ -29,7 +29,7 @@ NormalizeData <- function(CNV,ExpectedMean=0, penalty=20, Quantile=TRUE, QSpline
 		{
 			# Creating perfect data
 			M <- sapply(1:50, function(N){ rnorm(n=length(LRR), mean=0, sd=sd) })
-			M2 <- cbind(M, LRR2)
+			M2 <- cbind(M, LRR)
 			M3 <- normalize.quantiles(M2)
 			LRR <- M3[, 51]
 		}
