@@ -40,19 +40,19 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	
 		# Read sample file		
 		ptm.tmp <- proc.time()
-		CNV <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr)
+		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
 		
 		# Normalize data
 		ptm.tmp <- proc.time()
-		CNV <- NormalizeData(CNV, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
+		Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
-		CNVs <- FindCNV.V4(ID, MINNumSNPs, CNV, CPTmethod=CPTmethod, CNVSignal=CNVSignal)
+		CNVs <- FindCNV.V4(ID, MINNumSNPs, Sample, CPTmethod=CPTmethod, CNVSignal=CNVSignal)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 	
@@ -60,7 +60,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		if(nrow(CNVs) > 0)
 		{
 			ptm.tmp <- proc.time()
-			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV, ID) # PathRawData = PathRawData,
+			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
 			return(CNVsRes)
