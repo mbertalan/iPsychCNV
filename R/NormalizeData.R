@@ -22,13 +22,13 @@ NormalizeData <- function(CNV,ExpectedMean=0, penalty=20, Quantile=TRUE, QSpline
 		{
 			Spline <- smooth.spline(LRR, penalty=penalty)
 			Mean <- Spline$y
-			LRR2 <- LRR - Mean
+			LRR <- LRR - Mean
 		}
 	
 		if(Quantile) # Same distribution, fixed sd and mean
 		{
 			# Creating perfect data
-			M <- sapply(1:50, function(N){ rnorm(n=length(LRR2), mean=0, sd=sd) })
+			M <- sapply(1:50, function(N){ rnorm(n=length(LRR), mean=0, sd=sd) })
 			M2 <- cbind(M, LRR2)
 			M3 <- normalize.quantiles(M2)
 			LRR <- M3[, 51]
