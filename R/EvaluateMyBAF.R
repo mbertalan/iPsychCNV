@@ -28,7 +28,7 @@ EvaluateMyBAF <- function(res, res2)
 	}
 	else if(res2$CNVmeanOrig > 0.1)
 	{
-		if(res$AAB > 3 & res$AB < 6 & res$ABB > 3) # Dup
+		if(res$AAB > 3 & res$AB < 10 & res$ABB > 3) # Dup
 		{
 			BAlleleFreq <- 3
 		}
