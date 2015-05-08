@@ -30,9 +30,16 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.19)
 		indx <- c(1, indx, length(subCNV$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
+		
+		# Using meanvar it breaks CNVs, I am trying to merge it again.
+		DF <- subset(DF, abs(CNVMean) > 0.1)
+		DF$CN <- DF$CNVMean
+		DF$CN[DF$CN > 0] <- 3
+		DF$CN[DF$CN < 0] <- 1
+		DF2 <- MergeCNVs(DF)
+		
 		#Df <- FixCNVPosition(DF, subCNV, MinNumSNPs, ID) # Fix the position of the CNV by distance of the SNPs
-		DF <- subset(DF, abs(CNVMean) > CNVSignal)
-		return(DF)
+		return(DF2)
 	})
 
 	df <- MatrixOrList2df(tmp)
