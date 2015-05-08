@@ -52,7 +52,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
-		CNVs <- FindCNV.V4(ID, MINNumSNPs, CNV)
+		CNVs <- FindCNV.V4(ID, MINNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.19)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 	
