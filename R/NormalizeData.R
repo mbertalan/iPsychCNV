@@ -6,54 +6,34 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-NormalizeData <- function(CNV,ExpectedMean=0, DF=NA, NormQspline=FALSE, Quantile=TRUE, NormMean=TRUE)
+NormalizeData <- function(CNV,ExpectedMean=0, penalty=20, Quantile=TRUE, QSpline=TRUE, sd=0.2)
 {
+	library(preprocessCore)
 	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
 	{
-		#cat(X,"\n")
 		subCNV <- CNV[CNV$Chr %in% X,]
 		subCNV <- subCNV[with(subCNV, order(Position)),]
-
-		iNorm <- subCNV$Log.R.Ratio >= -1	
-		iUnder <- subCNV$Log.R.Ratio < -1
-		LRR_SD <- sd(subCNV$Log.R.Ratio)
-
-		Norm <- subCNV$Log.R.Ratio
-		if(NormMean)
-		{
-			if(sum(iUnder) > 10 & sum(iNorm > 10))
-			{
-				if(LRR_SD > 0.2)
-				{
-					Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))/(sd(subCNV$Log.R.Ratio[iNorm])/0.2)
-					Norm[iUnder] <-  (subCNV$Log.R.Ratio[iUnder] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iUnder])))/(sd(subCNV$Log.R.Ratio[iUnder])/0.2)
-				}
-				else
-				{
-					Norm[iNorm] <-  (subCNV$Log.R.Ratio[iNorm] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iNorm])))
-					Norm[iUnder] <-  (subCNV$Log.R.Ratio[iUnder] + (ExpectedMean - mean(subCNV$Log.R.Ratio[iUnder])))
-				}
-			}
-			else
-			{
-				if(LRR_SD > 0.20)
-				{
-					Norm <-  (subCNV$Log.R.Ratio + (ExpectedMean - mean(subCNV$Log.R.Ratio)))/(sd(subCNV$Log.R.Ratio)/0.2)
-				}
-				else
-				{
-					Norm <-  (subCNV$Log.R.Ratio + (ExpectedMean - mean(subCNV$Log.R.Ratio)))
-				}		
-			}
-		}
+		subCNV$LRR <- subCNV$Log.R.Ratio
+		LRR <- subCNV$Log.R.Ratio
 		
-		subCNV$Log.R.Ratio <- Norm	
-		subCNV$Log.R.Ratio <- NormalizeLRR(subCNV$Log.R.Ratio, ExpectedMean=0, DF=DF, NormQspline=NormQspline, Quantile=Quantile)
+		if(QSpline) # detrend the data
+		{
+			Spline <- smooth.spline(LRR, penalty=penalty)
+			Mean <- Spline$y
+			LRR2 <- LRR - Mean
+		}
+	
+		if(Quantile) # Same distribution, fixed sd and mean
+		{
+			# Creating perfect data
+			M <- sapply(1:50, function(N){ rnorm(n=length(LRR2), mean=0, sd=sd) })
+			M2 <- cbind(M, LRR2)
+			M3 <- normalize.quantiles(M2)
+			LRR <- M3[, 51]
+		}
+		subCNV$Log.R.Ratio <- LRR
 		return(subCNV)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
 	return(tmp2)
 }
-		
-
-		
