@@ -1,4 +1,4 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 
 {
 	library(parallel)
@@ -50,7 +50,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", Pattern=".*Mock
 		
 		# Find CNVs
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
-		Command <- paste(Path2PennCNV, "detect_cnv.pl -test -minsnp 28 --minlength 10 --confidence -hmm ", HMM, " -pfb ", PFB, " ", X, " -log logfile -out ", Output, sep="", collapse="")
+		Command <- paste(Path2PennCNV, "detect_cnv.pl -test -minsnp ", MINNumSNPs, " --minlength 10 --confidence -hmm ", HMM, " -pfb ", PFB, " ", X, " -log logfile -out ", Output, sep="", collapse="")
 		cat(Command, "\n")
 		system(Command)
 		
