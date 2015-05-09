@@ -20,7 +20,7 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.19)
 		# Using changepoint package	
 		if(CPTmethod %in% "meanvar")
 		{
-			CPT.Res <- cpt.meanvar(subCNV$Log.R.Ratio, method='PELT', class=TRUE)
+			CPT.Res <- cpt.meanvar(subCNV$Log.R.Ratio, method='PELT', class=TRUE, pen.value=30, penalty="Manual")
 		}
 		else if(CPTmethod %in% "mean")
 		{
