@@ -37,7 +37,7 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.1, 
 		DF$CN[DF$CN > 0] <- 3
 		DF$CN[DF$CN < 0] <- 1
 		
-		if(nrow(DF) > 1) Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
+		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
 			DF <- MergeCNVs(DF, MaxNumSNPs=MinNumSNPs)
 		}
