@@ -6,11 +6,16 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	# Re-writing file.
 	mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(file) 
 	{
-		# for some odd reason penncnv needs a name before LRR and BAF.
+		# penncnv needs a name before LRR and BAF.
 		cat(file, "\n")
 		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
 		tmp <- subset(tmp, !is.na(tmp$B.Allele.Freq))
 		tmp <- subset(tmp, !is.na(tmp$Log.R.Ratio))
+		
+		if(Normalization)
+		{
+			tmp <- NormalizeData(tmp,ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
+		}
 		
 		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B Allele Freq"
 		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
@@ -42,11 +47,6 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	{
 		cat(X, "\n")
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
-		
-		if(Normalization)
-		{
-			CNV <- NormalizeData(CNV,ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
-		}
 		
 		# Find CNVs
 		Output <- paste(ID, ".penncnv.out", sep="", collapse="")
