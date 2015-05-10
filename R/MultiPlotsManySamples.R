@@ -31,7 +31,7 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png")
 		
 	   	plots[[i]] <- p1  # add each plot into plot list
 	}
-	png(Name, height=1600, width=2200, res=80)
+	png(Name, height=1800, width=2200, res=100)
 	Multiplot(plotlist = plots, cols = 1)
 	dev.off()
 }
