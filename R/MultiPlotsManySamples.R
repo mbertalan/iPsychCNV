@@ -5,7 +5,13 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png")
 	df <- df[,c("Start", "Stop", "Chr", "ID", "CN", "Source")]
 	Cyto <- CytoBands
 	Cyto$CN <- Cyto$Class
-	Cyto <- Cyto[,c("Start", "Stop", "Chr", "ID", "CN")]
+	
+	#Including source on Cyto
+	Cyto2 <- Cyto; Cyto3 <- Cyto; Cyto4 <- Cyto
+	Cyto2$Source <- "iPsychCNV"; Cyto3$Source <- "PennCNV"; Cyto4$Source <- "iPattern"
+	Cyto <- rbind(Cyto2, Cyto3, Cyto4)
+	
+	Cyto <- Cyto[,c("Start", "Stop", "Chr", "ID", "CN", "Source")]
 	Cyto$Chr2 <- factor(Cyto$Chr, levels=1:22)
 	df$Chr2 <- factor(df$Chr, levels=1:22)
 
