@@ -26,7 +26,7 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png")
 		tmp <- subset(df, ID %in% IDs[i])
 		#p1 <- ggplot() + geom_segment(data=Cyto, aes(x = Start, y = 0, xend = Stop, yend = 0, colour = as.factor(CN))) + facet_wrap(Chr2~Source, nrow=1, scales = "free") + theme(axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), legend.position="none") + ylim(0,1) + ylab(IDs[i]) + xlab("")  + scale_colour_manual(values = c("q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))  #+ ggtitle(IDs[i])
 		#p1 <- p1 + geom_vline(aes(xintercept = c(Start), colour=factor(CN)), data=tmp)
-		p1 <- ggplot() + geom_segment(data=Cyto, aes(x = Start, y = 0, xend = Stop, yend = 0, colour = as.factor(CN))) + theme(axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), legend.position="none") + ylim(0,1) + ylab(IDs[i]) + xlab("")  + scale_colour_manual(values = c("q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))  #+ ggtitle(IDs[i])
+		p1 <- ggplot() + geom_segment(data=Cyto, aes(x = Start, y = 0, xend = Stop, yend = 0, colour = as.factor(CN))) + theme(axis.ticks = element_blank(), axis.text.x = element_blank(), axis.text.y = element_blank(), legend.position="none") + ylim(0,0.3) + ylab(IDs[i]) + xlab("")  + scale_colour_manual(values = c("q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))  #+ ggtitle(IDs[i])
 		p1 <- p1 + geom_vline(aes(xintercept = c(Start), colour=factor(CN)), data=tmp) + facet_grid(Source~Chr2, scales="free")
 		
 	   	plots[[i]] <- p1  # add each plot into plot list
