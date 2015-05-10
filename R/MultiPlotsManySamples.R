@@ -2,7 +2,7 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png")
 {
 	library(ggplot2)
 	library(RColorBrewer)
-	df <- df[,c("Start", "Stop", "Chr", "ID", "CN")]
+	df <- df[,c("Start", "Stop", "Chr", "ID", "CN", "Source")]
 	Cyto <- CytoBands
 	Cyto$CN <- Cyto$Class
 	Cyto <- Cyto[,c("Start", "Stop", "Chr", "ID", "CN")]
