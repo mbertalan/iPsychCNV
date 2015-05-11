@@ -1,4 +1,4 @@
-MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png")
+MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png", height=1800, width=2000, res=120)
 {
 	library(ggplot2)
 	library(RColorBrewer)
@@ -31,7 +31,7 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png")
 		
 	   	plots[[i]] <- p1  # add each plot into plot list
 	}
-	png(Name, height=1800, width=2000, res=80)
+	png(Name, height=height, width=width, res=res)
 	Multiplot(plotlist = plots, cols = 1)
 	dev.off()
 }
