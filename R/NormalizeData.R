@@ -18,7 +18,7 @@ NormalizeData <- function(CNV,ExpectedMean=0, penalty=60, Quantile=TRUE, QSpline
 		
 		# add later data that LRR with 2 peaks.
 		
-		if(QSpline & sd(LRR) > 0.18) # detrend the data, only when sd is high & sd(LRR) > 0.2
+		if(QSpline) # detrend the data, only when sd is high & sd(LRR) > 0.2
 		{
 			Spline <- smooth.spline(LRR, penalty=penalty)
 			Mean <- Spline$y
