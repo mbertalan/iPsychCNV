@@ -10,9 +10,9 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png", hei
 	Cyto$CN <- Cyto$Class
 	
 	#Including source on Cyto
-	Cyto2 <- Cyto; Cyto3 <- Cyto; Cyto4 <- Cyto
-	Cyto2$Source <- "iPsychCNV"; Cyto3$Source <- "PennCNV"; Cyto4$Source <- "iPattern"
-	Cyto <- rbind(Cyto2, Cyto3, Cyto4)
+	CytoAll <- sapply(unique(df$Source), function(X){ CytoBands$Source <- X; return(CytoBands) })
+	Cyto <- MatrixOrList2df(CytoAll)
+
 	Cyto <- Cyto[,c("Start", "Stop", "Chr", "ID", "CN", "Source")]
 	Cyto$Chr2 <- factor(Cyto$Chr, levels=1:22)
 	Cyto <- subset(Cyto, Source %in% unique(df$Source))
