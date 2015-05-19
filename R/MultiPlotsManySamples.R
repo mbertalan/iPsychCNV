@@ -10,7 +10,7 @@ MultiPlotsManySamples <- function(df=iPsych_8_Samples_Good, Name="Test.png", hei
 	Cyto$CN <- Cyto$Class
 	
 	#Including source on Cyto
-	CytoAll <- sapply(unique(df$Source), function(X){ CytoBands$Source <- X; return(CytoBands) })
+	CytoAll <- sapply(unique(df$Source), function(X){ Cyto$Source <- X; return(Cyto) })
 	Cyto <- MatrixOrList2df(CytoAll)
 
 	Cyto <- Cyto[,c("Start", "Stop", "Chr", "ID", "CN", "Source")]
