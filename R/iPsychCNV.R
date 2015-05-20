@@ -59,9 +59,9 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		# Remove centromere
 		CNVs <- RemoveCentromere(df=CNVs)
 	
-		CNVs <- subset(CNVs, Length > MinLength)
 		if(nrow(CNVs) > 0)
 		{
+			CNVs <- subset(CNVs, Length > MinLength)
 			ptm.tmp <- proc.time()
 			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
