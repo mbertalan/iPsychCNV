@@ -47,6 +47,7 @@ export(RunGada)
 export(ReSearchCNVs)
 export(SlideWindowMean)
 export(SelectSamplesFromROI)
+export(RemoveCentromere)
 ### Bioconductor packages
 import(ggbio)
 import(biovizBase)
