@@ -7,7 +7,7 @@ RemoveCentromere <- function(df)
 		StopC <- Cent.tmp$Stop
 		
 		# selecting the chr
-		df.tmp <- subset(iPsychCNV_Wave9_V2.good, Chr %in% X)
+		df.tmp <- subset(df, Chr %in% X)
 		
 		# removing CNVs that overlap centromere
 		df.tmp <- subset(df.tmp, Stop < StartC | Start > StopC)
