@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1) # Path from cluster  
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE) # Path from cluster  
 {
 	library(mclust)
 	library(parallel)
@@ -17,6 +17,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	library(GenomicRanges)
 	library(RColorBrewer)
 
+	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 	DF$UniqueID <- 1:nrow(DF)
 	#matrixList <- lapply(1:NROW(as.matrix(DF)), function(i) DF[i,,drop=FALSE]) 
 	#mclapply(matrixList, mc.cores=Cores, function(X) 
@@ -44,7 +45,8 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 		OutPlotfile <- paste(NewName, "plot.png", sep=".", collapse="")
 
 		# Reading sample file
-		RawFile <- paste(PathRawData, ID, sep="", collapse="")
+		#RawFile <- paste(PathRawData, ID, sep="", collapse="")
+		RawFile <- Files[grep(ID, Files)]
 		cat(RawFile,"\n")
 		sample <- ReadSample(RawFile, skip=Skip)
 		red<-subset(sample,Chr==chr)	
