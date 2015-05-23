@@ -32,7 +32,7 @@ EvaluateMyBAF <- function(res, res2)
 		{
 			BAlleleFreq <- 3
 		}
-		else if(rres$AB > 6 & res$AAB > 6 & res$ABB > 6) # Double Dup AB = AABB, res$AAAB < 6 & res$ABBB < 6 & res$AB > 5 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 6 & res$ABB > 6
+		else if(res$AB > 6 & res$AAB > 6 & res$ABB > 6) # Double Dup AB = AABB, res$AAAB < 6 & res$ABBB < 6 & res$AB > 5 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 6 & res$ABB > 6
 		{
 			BAlleleFreq <- 4
 		}
