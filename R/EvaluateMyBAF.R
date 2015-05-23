@@ -28,11 +28,11 @@ EvaluateMyBAF <- function(res, res2)
 	}
 	else if(res2$CNVmeanOrig > 0.1)
 	{
-		if(res$AAB > 3 & res$AB < 10 & res$ABB > 3) # Dup
+		if(res$AAB > 5 & res$AB < 5 & res$ABB > 5) # Dup 3, 10, 3
 		{
 			BAlleleFreq <- 3
 		}
-		else if(res$AAAB < 6 & res$ABBB < 6 & res$AB > 4 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 7 & res$ABB > 7) # Double Dup AB = AABB
+		else if(rres$AB > 6 & res$AAB > 6 & res$ABB > 6) # Double Dup AB = AABB, res$AAAB < 6 & res$ABBB < 6 & res$AB > 5 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 6 & res$ABB > 6
 		{
 			BAlleleFreq <- 4
 		}
