@@ -11,7 +11,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
 		tmp <- subset(DF, Chr %in% ChrRoi & Start < StopRoi & Stop > StartRoi)  # & ((Length/LengthRoi) >  Overlap)
 		if(nrow(tmp) > 0)
 		{
-			cat(nrow(tmp), "\n")
+			#cat(nrow(tmp), "\n")
 			#Overlap
 			Overlap <- apply(tmp, 1, function(Y)
 			{
@@ -46,7 +46,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
 			tmp2 <- cbind(tmp, Overlap)
 			tmp2$Locus <- rep(Locus, nrow(tmp2))
 			tmp <- subset(tmp2, OverlapAll > OverlapMin & OverlapAll < OverlapMax & Overlaplength > OverlapMin)
-			cat(nrow(tmp), "\n")
+			#cat(nrow(tmp), "\n")
 			return(tmp)
 		}
 	})
