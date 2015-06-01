@@ -83,5 +83,6 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 	tmp5$ID <- rep("ROI", nrow(tmp5))	
 	tmp5$Class <- rep("ROI", nrow(tmp5))		
 	tmp6 <- cbind(tmp5, CNV_Count2)
+	tmp6$CNTotal <- tmp6$CN0 + tmp6$CN1 + tmp6$CN3 + tmp6$CN4
 	return(tmp6)
 }
