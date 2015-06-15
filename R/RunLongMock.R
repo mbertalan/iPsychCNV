@@ -36,7 +36,7 @@ RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(
 		#PlotLRRAndCNVs(iPsychCNV.Pred, Sample, CNVMean, Name=Name, Roi=LongRoi)
 		Gada.Pred <- RunGada(Sample)
 		#PlotLRRAndCNVs(PennCNV.Pred, Sample, CNVMean, Name=Name, Roi=LongRoi)
-		ColNames <- intersect(colnames(iPsychCNV.Pred), colnames(PennCNV.Pred), colnames(Gada.Pred))
+		ColNames <- intersect(intersect(colnames(iPsychCNV.Pred), colnames(PennCNV.Pred)), colnames(Gada.Pred))
 		All.Pred <- cbind(PennCNV.Pred[,ColNames], iPsychCNV.Pred[,ColNames], Gada.Pred[,ColNames])
 		save(All.Pred, file="All.Pred.RData")
 	}
