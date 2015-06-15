@@ -17,7 +17,7 @@ RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(
 	}
 	else if(Method %in% "iPsychCNV")
 	{
-		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="^LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE, NormMean=FALSE)
+		PredictedCNV <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="^LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
 	}
 	else if(Method %in% "Gada")
 	{
