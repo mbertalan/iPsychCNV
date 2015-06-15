@@ -2,7 +2,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 {
 	library(pROC)
 	if(length(MockCNVs$CNVID) == 0){ MockCNVs$CNVID <- 1:nrow(MockCNVs) } # if no CNVID is provide
-	if(length(dfs$CNVID) == 0){ df$CNVID <- 1:nrow(df) } # if no CNVID is provide
+	if(length(df$CNVID) == 0){ df$CNVID <- 1:nrow(df) } # if no CNVID is provide
 	
 	Eval <- apply(MockCNVs, 1, function(X)
 	{
