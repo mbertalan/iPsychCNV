@@ -33,7 +33,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 
 		CNVID2 <- res$CNVID
 		CN2 <- as.numeric(res$CN)
-		cat(nrow(res), " ", CN2, CNVID2, "\n") 
+		cat(nrow(res), " ", CN, CN2, CNVID2, "\r") 
 
 
 		if(NumCNVs == 0)
