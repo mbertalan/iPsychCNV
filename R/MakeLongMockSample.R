@@ -38,6 +38,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	LongRoi$CN[LongRoi$Type == 1 & LongRoi$CNVmean > 0] <- 2
 	LongRoi$ID <- "LongMockSample.tab"
 	LongRoi$CNVID <- 1:nrow(LongRoi)
+	LongRoi$Length <- LongRoi$Size
 
 	# BAFs
 	BAFs <- seq(from=0, to=1, by=0.01) # 101
