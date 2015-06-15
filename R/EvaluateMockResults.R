@@ -12,7 +12,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 		ChrM <- as.numeric(X["Chr"])
 		LengthM <- as.numeric(X["Length"])
 		NumSNPsM <- as.numeric(X["NumSNPs"])
-		CNVID <- gsub(" ", "", X["CNVID"])
+		CNVID <- as.numeric(X["CNVID"])
 		CNM <- as.numeric(X["CN"])
 
 		if(CNM == 2){ CNV.Present=0 }else{ CNV.Present=1 }
