@@ -49,7 +49,7 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	PennCNV <- subset(PennCNV, CN != 2)
 	if(nrow(PennCNV) > 0)
 	{
-		retPennCNV <- data.frame(Start=PennCNV$Start, Stop=PennCNV$Stop, ymin=rep(0.4, length(PennCNV$Stop)), ymax=rep(0.6, length(PennCNV$Stop)))
+		retPennCNV <- data.frame(Source=PennCNV$Source, Start=PennCNV$Start, Stop=PennCNV$Stop, ymin=rep(0.4, length(PennCNV$Stop)), ymax=rep(0.6, length(PennCNV$Stop)))
 		p2 <- p2 + geom_rect(data=retPennCNV, aes(xmin=Start, xmax=Stop, ymin=ymin, ymax=ymax, col=as.factor(Source)), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	}
 
