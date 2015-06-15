@@ -1,6 +1,9 @@
 EvaluateMockResults <- function(MockCNVs, df)
 {
 	library(pROC)
+	if(length(MockCNVs$CNVID) == 0){ MockCNVs$CNVID <- 1:nrow(MockCNVs) } # if no CNVID is provide
+	if(length(dfs$CNVID) == 0){ df$CNVID <- 1:nrow(df) } # if no CNVID is provide
+	
 	Eval <- apply(MockCNVs, 1, function(X)
 	{
 		StartM <- as.numeric(X["Start"])
@@ -16,7 +19,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 		# From df predition
  		res <- subset(df, Chr == ChrM & Start <= StopM & Stop >= StartM & ID %in% IDM)
 		NumCNVs <- nrow(res)
-		if(NumCNVs > 1)
+		if(NumCNVs > 1) # Selecting only one CNV
 		{
 			DifLength <- abs(res$Length - LengthM)
 			names(DifLength) <- res$Length
@@ -27,7 +30,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 
 		CNVID2 <- res$CNVID
 		CN2 <- as.numeric(res$CN)
-		cat(nrow(res), " ", CN2, "\r") 
+		cat(nrow(res), " ", CN2, CNVID2, "\n") 
 
 
 		if(NumCNVs == 0)
