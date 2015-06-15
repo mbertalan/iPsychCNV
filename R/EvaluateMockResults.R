@@ -1,4 +1,4 @@
-EvaluateMockResults <- function(MockCNVs, df)
+EvaluateMockResults <- function(MockCNVs, df, OverlapLenghM=80, OverlapLenghM=120)
 {
 	library(pROC)
 	if(length(MockCNVs$CNVID) == 0){ MockCNVs$CNVID <- 1:nrow(MockCNVs) } # if no CNVID is provide
