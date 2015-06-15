@@ -13,7 +13,7 @@ EvaluateMyBAF <- function(res, res2)
 	
 	if(res2$CNVmeanOrig < -0.1) # It might be the whole chromosome a CNV
 	{
-		if(res$AAAA > 8  & res$AB < 5 & res$BBBB > 8 & res$ABB < 9 & res$AAB < 9)  # Del
+		if(res$AAAA > 15  & res$AB < 5 & res$BBBB > 15 & res$ABB < 5 & res$AAB < 5)  # Del
 		{
 			BAlleleFreq <- 1
 		}
