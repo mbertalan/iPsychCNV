@@ -21,7 +21,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	if(is.null(PFB)){ CNV$PFB <- rep(0.5, nrow(CNV)) }else{ CNV$PFB <- PFB }
 	
 	# Subseting 
-	CNV <- subset(CNV, !Chr %in% c("MT", "X", "Y", "XY", "0"))
+	CNV <- subset(CNV, !Chr %in% c("XY", "0")) # "MT", "X", "Y",
 	CNV <- subset(CNV, !is.na(CNV$B.Allele.Freq))
 	CNV <- subset(CNV, !is.na(CNV$Log.R.Ratio))
 	
