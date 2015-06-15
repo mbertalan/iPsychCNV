@@ -36,6 +36,8 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	LongRoi$CN[LongRoi$Type == 3 & LongRoi$CNVmean < 0] <- 2
 	LongRoi$CN[LongRoi$Type == 0 & LongRoi$CNVmean > 0] <- 2
 	LongRoi$CN[LongRoi$Type == 1 & LongRoi$CNVmean > 0] <- 2
+	df$ID <- "LongMockSample.tab"
+	df$CNVID <- 1:nrow(df)
 
 	# BAFs
 	BAFs <- seq(from=0, to=1, by=0.01) # 101
@@ -116,8 +118,6 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	Position <- 1:DataSize
 
 	df <- data.frame(Name=SNP.Name, Chr=Chr, Position=Position, Log.R.Ratio=LRR, B.Allele.Freq=BAF, stringsAsFactors=F)
-	df$ID <- "LongMockSample.tab"
-	df$CNVID <- 1:nrow(df)
 	write.table(df, sep="\t", quote=FALSE, row.names=FALSE, file="LongMockSample.tab") 
 	return(LongRoi)
 }
