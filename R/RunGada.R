@@ -23,6 +23,7 @@ RunGada <- function(MockData=tmp, MinSegLen=50, Tgada=4.5)
 	tmp$ID <- rep("Mock", nrow(tmp)) 
 	tmp$Source <- "Gada"
 	tmp$Length <- tmp$Stop - tmp$Start
+	tmp$CNVID <- 1:nrow(tmp)
 	PredictedCNV <- tmp
 	return(PredictedCNV)
 }
