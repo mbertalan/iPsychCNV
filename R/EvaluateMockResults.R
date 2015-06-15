@@ -18,7 +18,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 		if(CNM == 2){ CNV.Present=0 }else{ CNV.Present=1 }
 		# From df predition
  		res <- subset(df, Chr == ChrM & Start <= StopM & Stop >= StartM & ID %in% IDM)
- 		cat(res, "\n")
+ 	
 		NumCNVs <- nrow(res)
 		if(NumCNVs > 1) # Selecting only one CNV
 		{
@@ -97,7 +97,6 @@ EvaluateMockResults <- function(MockCNVs, df)
 		return(df2)
 	})
 	Eval <- MatrixOrList2df(Eval)
-	return(Eval)
-	#df3 <- cbind(Eval, MockCNVs)
-	#return(df3)
+	df3 <- cbind(Eval, MockCNVs)
+	return(df3)
 }
