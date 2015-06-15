@@ -1,4 +1,4 @@
-EvaluateMockResults <- function(MockCNVs, df, OverlapLenghM=80, OverlapLenghM=120)
+EvaluateMockResults <- function(MockCNVs, df)
 {
 	library(pROC)
 	if(length(MockCNVs$CNVID) == 0){ MockCNVs$CNVID <- 1:nrow(MockCNVs) } # if no CNVID is provide
@@ -94,7 +94,6 @@ EvaluateMockResults <- function(MockCNVs, df, OverlapLenghM=80, OverlapLenghM=12
 				} 
 			}
 		}
-		cat(CNV.Present, CNV.Predicted, OverlapLenghM, OverlapSNP, CNVID, CNVID2, CN2, NumCNVs, PredictedByOverlap, "\n")
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
 		return(df2)
 	})
