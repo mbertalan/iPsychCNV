@@ -36,11 +36,11 @@ RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(
 		
 		iPsychCNV.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=28, Cores=1, Pattern="^LongMockSample.tab$", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
 		PlotLRRAndCNVs(iPsychCNV.Pred, Sample, CNVMean, Name="iPsychCNV.Pred.png", Roi=LongRoi)
-		iPsychCNV.Eval <­ EvaluateMockResults(LongRoi, iPsychCNV.Pred)
+		iPsychCNV.Eval <- EvaluateMockResults(LongRoi, iPsychCNV.Pred)
 		
 		Gada.Pred <- RunGada(Sample)
 		PlotLRRAndCNVs(Gada.Pred, Sample, CNVMean, Name="Gada.Pred.png", Roi=LongRoi)
-		Gada.Eval <­ EvaluateMockResults(LongRoi, Gada.Pred)
+		Gada.Eval <- EvaluateMockResults(LongRoi, Gada.Pred)
 		
 		ColNames <- intersect(intersect(colnames(iPsychCNV.Pred), colnames(PennCNV.Pred)), colnames(Gada.Pred))
 		PredictedCNV <- rbind(PennCNV.Pred[,ColNames], iPsychCNV.Pred[,ColNames], Gada.Pred[,ColNames])
