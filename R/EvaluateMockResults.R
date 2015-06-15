@@ -88,7 +88,7 @@ EvaluateMockResults <- function(MockCNVs, df)
 				} 
 			}
 		}
-		cat(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, "\n")
+		cat(CNV.Present, CNV.Predicted, OverlapLenghM, OverlapSNP, CNVID, CNVID2, CN2, NumCNVs, PredictedByOverlap, "\n")
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
 		return(df2)
 	})
