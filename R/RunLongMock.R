@@ -39,6 +39,7 @@ RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(
 		iPsychCNV.Eval <- EvaluateMockResults(LongRoi, iPsychCNV.Pred)
 		
 		Gada.Pred <- RunGada(Sample)
+		Gada.Pred$ID <- "LongMockSample.tab"
 		PlotLRRAndCNVs(Gada.Pred, Sample, CNVMean, Name="Gada.Pred.png", Roi=LongRoi)
 		Gada.Eval <- EvaluateMockResults(LongRoi, Gada.Pred)
 		
