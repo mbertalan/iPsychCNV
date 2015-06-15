@@ -50,7 +50,7 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	if(nrow(PennCNV) > 0)
 	{
 		retPennCNV <- data.frame(Source=PennCNV$Source, Start=PennCNV$Start, Stop=PennCNV$Stop, ymin=rep(0.4, length(PennCNV$Stop)), ymax=rep(0.6, length(PennCNV$Stop)))
-		p2 <- p2 + geom_rect(data=retPennCNV, aes(xmin=Start, xmax=Stop, ymin=ymin, ymax=ymax, col=as.factor(Source)), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
+		p2 <- p2 + geom_rect(data=retPennCNV, aes(xmin=Start, xmax=Stop, ymin=ymin, ymax=ymax, col="CNV predicted"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	}
 
 	p2 <- p2 + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))		
