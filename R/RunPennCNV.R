@@ -92,5 +92,6 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		return(df)
 	})
 	df <- MatrixOrList2df(Res)
+	df$Source <- "PennCNV"
 	return(df)
 }
