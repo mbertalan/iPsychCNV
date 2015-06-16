@@ -27,6 +27,8 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	BAF_Normal <- List[["BAF_Normal"]]
 	BAF_Del <- List[["BAF_Del"]]
 	BAF_Dup <- List[["BAF_Dup"]]
+	BAF_CN4 <- List[["BAF_CN4"]]
+	BAF_CN0 <- List[["BAF_CN0"]]
 	BadSNPs <- List[["BadSNPs"]]
 	BadSNPIntensity <- List[["BadSNPIntensity"]]
 	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
@@ -59,7 +61,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
-				CN <- sample(c(1,3), 1) # CNV Type
+				CN <- sample(c(0,1,3,4), 1) # CNV Type
 				PositionIndx <- as.numeric(i) * 2000
 
 				# Using fix size for chr position.
