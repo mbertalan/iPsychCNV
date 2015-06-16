@@ -84,8 +84,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				X[IndxV] <<- X[IndxV] + Impact
 				
 				## Changing GLOBAL VARIABLES ##
-				BAF[BAF > 1] <<- 1
-				BAF[BAF < 0] <<- 0
+				BAF[IndxV] <<- BAFCNV
 				
 				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
 				return(df)
