@@ -44,7 +44,7 @@ PlotLRRAndCNVs <- function(CNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiS
 	# BAF
 	p2 <- ggplot(tmp, aes(Position, y = B.Allele.Freq)) 
 	p2 <- p2 + geom_point(aes(col="B.Allele.Freq"), alpha=0.3, size=1)  
-	p2 <- p2 + geom_rect(data=Roi, aes(xmin=StartPos, xmax=StopPos, ymin=YMin, ymax=YMax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
+	p2 <- p2 + geom_rect(data=Roi, aes(xmin=Start, xmax=Stop, ymin=YMin, ymax=YMax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	
 	CNV <- subset(CNV, CN != 2)
 	if(nrow(CNV) > 0)
