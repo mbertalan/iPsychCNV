@@ -40,7 +40,8 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 	{
 		BAF_Prob_By_Chr <- (((65*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
 	}
-	GC_ByChr <- GC_MeanByChr + ((GC_MeanByChr-median(GC_MeanByChr))*4)
+	
+	GC_ByChr <- GC_MeanByChr + ((GC_MeanByChr-median(GC_MeanByChr)))
 	GC_Effect <- (GC_ByChr/median(GC_ByChr))^2
 	
 	suppressPackageStartupMessages(library(parallel))
@@ -63,58 +64,54 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
 			#X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
 			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
-			
-			# Change BAF to simulate chromosome differences
-			Tmp_BAF_Prob <- BAF_Normal
-			
-			#Change BAF frequency (High on 0 or High on 1). It seems High on 1 give dupliations on penncnv.
-			BAF_Change <- sample(c(1,2), 1)
-			if(BAF_Change == 1)
-			{ 
-				BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
-				BAF_Prob_Value_AAAA <- 1 - BAF_Prob_Value_BBBB
-			}
-			else
-			{
-				BAF_Prob_Value_AAAA <- BAF_Prob_By_Chr[CHR]
-				BAF_Prob_Value_BBBB <- 1 - BAF_Prob_Value_AAAA
-			}
-			Tmp_BAF_Prob[100:101] <- BAF_Prob_Value_BBBB
-			Tmp_BAF_Prob[98:99] <- (BAF_Prob_Value_BBBB * 3/4)
-			Tmp_BAF_Prob[1:2] <- BAF_Prob_Value_AAAA
-			Tmp_BAF_Prob[3:4] <- (BAF_Prob_Value_AAAA * 3/4)
-			
-			BAF <- sample(BAFs, prob=Tmp_BAF_Prob, replace=TRUE, size=length(X))
-			names(BAF) <- SNP.Name
-			
-			# Adding Psych Chip PFB to low freq SNPs. Using fix position
-			# Wave1PFB: data from package. Pop frequency estimated by Wave1. 
-			IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
-			if(sum(IndxBAF1) > 1)
-			{
-				BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
-			}
-			
-			IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
-			if(sum(IndxBAF0) > 1)
-			{
-				BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.01)
-			}
-			
-			# Adding random noise
-			t  <- 1:length(X)
-			ssp <- spectrum(X, plot=FALSE)  
-			per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
-			reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))
+		
 			if(Type %in% "PKU")
 			{
+				# Change BAF to simulate chromosome differences
+				Tmp_BAF_Prob <- BAF_Normal
+			
+				#Change BAF frequency (High on 0 or High on 1). It seems High on 1 give dupliations on penncnv.
+				BAF_Change <- sample(c(1,2), 1)
+				if(BAF_Change == 1)
+				{ 
+					BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
+					BAF_Prob_Value_AAAA <- 1 - BAF_Prob_Value_BBBB
+				}
+				else
+				{
+					BAF_Prob_Value_AAAA <- BAF_Prob_By_Chr[CHR]
+					BAF_Prob_Value_BBBB <- 1 - BAF_Prob_Value_AAAA
+				}
+				Tmp_BAF_Prob[100:101] <- BAF_Prob_Value_BBBB
+				Tmp_BAF_Prob[98:99] <- (BAF_Prob_Value_BBBB * 3/4)
+				Tmp_BAF_Prob[1:2] <- BAF_Prob_Value_AAAA
+				Tmp_BAF_Prob[3:4] <- (BAF_Prob_Value_AAAA * 3/4)
+			
+				BAF <- sample(BAFs, prob=Tmp_BAF_Prob, replace=TRUE, size=length(X))
+				names(BAF) <- SNP.Name
+			
+				# Adding Psych Chip PFB to low freq SNPs. Using fix position
+				# Wave1PFB: data from package. Pop frequency estimated by Wave1. 
+				IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
+				if(sum(IndxBAF1) > 1)
+				{
+					BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
+				}
+			
+				IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
+				if(sum(IndxBAF0) > 1)
+				{
+					BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.01)
+				}
+			
+				# Adding random noise
+				t  <- 1:length(X)
+				ssp <- spectrum(X, plot=FALSE)  
+				per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
+				reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))
+				
 				X <- X - abs((fitted(reslm)*2))
 			}
-			else
-			{
-				#X <- X - abs((fitted(reslm)*2))
-			}
-
 			# Add Telomere noise
 			NTelomereSize <- sample(TelomereNoiseSize, 1)
 			TeloEffect <- sample(TelomereNoiseEffect, 1) 
@@ -133,8 +130,6 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
 			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(length(BadSNPsIndx), sd=(SD*1.5), mean=NoiseSNP))
 
-			
-			
 		
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/2000))-1)
