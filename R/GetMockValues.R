@@ -67,6 +67,6 @@ GetMockValues <- function(Type="Blood")
 		ChrMean <- ChrMean_PKU_Wave10_Density
 		ChrMeanProb <- ChrMeanProb_PKU_Wave10_Density
 	}
-	tmp <- list(Del=Del, Dup=Dup, BAF_CN0=BAF_CN0, BAF_CN4=BAF_CN4 ChrMean=ChrMean, ChrSD=ChrSD, ChrSDProb=ChrSDProb, TelomereNoiseSize=TelomereNoiseSize, TelomereNoiseEffect=TelomereNoiseEffect, BAF_Normal=BAF_Normal, BAF_Del=BAF_Del, BAF_Dup=BAF_Dup, BadSNPs=BadSNPs, BadSNPIntensity=BadSNPIntensity, BadSNPIntensityProb=BadSNPIntensityProb, BAFs=BAFs, ChrMeanProb=ChrMeanProb)
+	tmp <- list(Del=Del, Dup=Dup, BAF_CN0=BAF_CN0, BAF_CN4=BAF_CN4, ChrMean=ChrMean, ChrSD=ChrSD, ChrSDProb=ChrSDProb, TelomereNoiseSize=TelomereNoiseSize, TelomereNoiseEffect=TelomereNoiseEffect, BAF_Normal=BAF_Normal, BAF_Del=BAF_Del, BAF_Dup=BAF_Dup, BadSNPs=BadSNPs, BadSNPIntensity=BadSNPIntensity, BadSNPIntensityProb=BadSNPIntensityProb, BAFs=BAFs, ChrMeanProb=ChrMeanProb)
 	return(tmp)
 }
