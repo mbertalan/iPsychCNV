@@ -80,6 +80,16 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 					Impact <- sample(Dup, 1)
 					BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1))
 				}
+				if(CN == 0)
+				{
+					Impact <- sample(Del, 1)
+					BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1))
+				}
+				if(CN == 4)
+				{
+					Impact <- sample(Dup, 1)
+					BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1))
+				}
 				
 				## Changing GLOBAL VARIABLES ##
 				# LRR = X
