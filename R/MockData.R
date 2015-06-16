@@ -1,4 +1,4 @@
-MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(50, 100, 200, 400, 600)) # Type: Blood or PKU (Perfect or noise)
+MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(50, 100, 200, 400, 600, 1000)) # Type: Blood or PKU (Perfect or noise)
 {
 	# Use Wave1 PFB ? Wave1PFB comes with the package.
 	if(!Wave1)
