@@ -1,4 +1,4 @@
-MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(50, 100, 200, 400, 600, 1000)) # Type: Blood or PKU (Perfect or noise)
+MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 200, 400, 600, 1000)) # Type: Blood or PKU (Perfect or noise)
 {
 	# Use Wave1 PFB ? Wave1PFB comes with the package.
 	if(!Wave1)
@@ -9,7 +9,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(50, 1
 	}
 		
 	# CNV Info: Using always the same position. Rdata from the package.
-	CNVsSize <- c(10, 1000, 30, 800, 50, 600, 100, 400, 150, 200)
+	#CNVsSize <- c(10, 1000, 30, 800, 50, 600, 100, 400, 150, 200)
 	#CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	#names(CNVSizeFixed) = 1:50
 
@@ -112,7 +112,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(50, 1
 			}
 			else
 			{
-				X <- X - abs((fitted(reslm)*2))
+				#X <- X - abs((fitted(reslm)*2))
 			}
 
 			# Add Telomere noise
