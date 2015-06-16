@@ -1,4 +1,4 @@
-MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 200, 400, 600, 1000)) # Type: Blood or PKU (Perfect or noise)
+MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or PKU (Perfect or noise)
 {
 	# Use Wave1 PFB ? Wave1PFB comes with the package.
 	if(!Wave1)
@@ -9,9 +9,9 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 	}
 		
 	# CNV Info: Using always the same position. Rdata from the package.
-	#CNVsSize <- c(10, 1000, 30, 800, 50, 600, 100, 400, 150, 200)
-	#CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
-	#names(CNVSizeFixed) = 1:50
+	CNVsSize <- c(1000, 800, 600, 100, 400, 150, 200)
+	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
+	names(CNVSizeFixed) = 1:50
 
 	List <- GetMockValues(Type=Type)
 	
@@ -32,21 +32,9 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
 	
 	
-	if(Type %in% "Blood")
-	{
-		BAF_Prob_By_Chr <- ((55*GC_MeanByChr)/50)/100	
-	}
-	else
-	{
-		BAF_Prob_By_Chr <- (((65*GC_MeanByChr)/40)+(GC_MeanByChr-45))/100
-	}
-	
-	GC_ByChr <- GC_MeanByChr + ((GC_MeanByChr-median(GC_MeanByChr)))
-	GC_Effect <- (GC_ByChr/median(GC_ByChr))^2
-	
 	suppressPackageStartupMessages(library(parallel))
 
-	All <- mclapply(1:N, mc.cores=Cores, mc.preschedule = FALSE, function(SampleNum) 
+	All <- sapply(1:N, function(SampleNum) 
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
 	
@@ -63,72 +51,8 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
 			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
 			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
-		
-			if(Type %in% "PKU")
-			{
-				# Change BAF to simulate chromosome differences
-				Tmp_BAF_Prob <- BAF_Normal
-			
-				#Change BAF frequency (High on 0 or High on 1). It seems High on 1 give dupliations on penncnv.
-				BAF_Change <- sample(c(1,2), 1)
-				if(BAF_Change == 1)
-				{ 
-					BAF_Prob_Value_BBBB <- BAF_Prob_By_Chr[CHR]
-					BAF_Prob_Value_AAAA <- 1 - BAF_Prob_Value_BBBB
-				}
-				else
-				{
-					BAF_Prob_Value_AAAA <- BAF_Prob_By_Chr[CHR]
-					BAF_Prob_Value_BBBB <- 1 - BAF_Prob_Value_AAAA
-				}
-				Tmp_BAF_Prob[100:101] <- BAF_Prob_Value_BBBB
-				Tmp_BAF_Prob[98:99] <- (BAF_Prob_Value_BBBB * 3/4)
-				Tmp_BAF_Prob[1:2] <- BAF_Prob_Value_AAAA
-				Tmp_BAF_Prob[3:4] <- (BAF_Prob_Value_AAAA * 3/4)
-			
-				BAF <- sample(BAFs, prob=Tmp_BAF_Prob, replace=TRUE, size=length(X))
-				names(BAF) <- SNP.Name
-			
-				# Adding Psych Chip PFB to low freq SNPs. Using fix position
-				# Wave1PFB: data from package. Pop frequency estimated by Wave1. 
-				IndxBAF1 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB > 0.9]
-				if(sum(IndxBAF1) > 1)
-				{
-					BAF[IndxBAF1] <- rnorm(sum(IndxBAF1), mean=0.97, sd=0.01)
-				}
-			
-				IndxBAF0 <- names(BAF) %in% names(Wave1PFB)[Wave1PFB < 0.1]
-				if(sum(IndxBAF0) > 1)
-				{
-					BAF[IndxBAF0] <- rnorm(sum(IndxBAF0), mean=0.01, sd=0.01)
-				}
-			
-				# Adding random noise
-				t  <- 1:length(X)
-				ssp <- spectrum(X, plot=FALSE)  
-				per <- 1/ssp$freq[ssp$spec==max(ssp$spec)]
-				reslm <- lm(X ~ sin(2*pi/per*t)+cos(2*pi/per*t))
-				
-				X <- X - abs((fitted(reslm)*2))
-			}
-			# Add Telomere noise
-			NTelomereSize <- sample(TelomereNoiseSize, 1)
-			TeloEffect <- sample(TelomereNoiseEffect, 1) 
-			if(Type %in% "PKU"){ TeloEffect <- TeloEffect * GC_Effect[CHR] }else{ TeloEffect <- (TeloEffect/2) * GC_Effect[CHR] }  # If PKU the telomereNoise is double.
-			X[1:NTelomereSize] <- X[1:NTelomereSize] + TeloEffect
-			X[(length(X) - NTelomereSize):length(X)] <- X[(length(X) - NTelomereSize):length(X)] + TeloEffect
-			
-
-			# Adding bad SNPs (generally because of GC and LCR)
-			TotalNumberofBadSNPs <- round(length(X)*BadSNPs[CHR])
-			TotalNumberofBadSNPs <- round(TotalNumberofBadSNPs/100) + 1
-			BadSNPsIndx <- sample(1:length(X), TotalNumberofBadSNPs)
-			BadSNPsIndx <- as.vector(sapply(BadSNPsIndx, function(I){ c((I-40):(I+40)) }))
-			BadSNPsIndx[BadSNPsIndx < 0] <- 1
-			BadSNPsIndx[BadSNPsIndx > length(X)] <- length(X)
-			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(length(BadSNPsIndx), sd=SD, mean=NoiseSNP))
-
+			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
+			names(BAF) <- SNP.Name
 		
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/2000))-1)
@@ -137,7 +61,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 			{
 				CN <- sample(c(1,3), 1) # CNV Type
 				PositionIndx <- as.numeric(i) * 2000
-				#Size <- sample(CNVsSize, 1) # CNV Size
+
 				# Using fix size for chr position.
 				Size <- CNVSizeFixed[i]
 				
@@ -158,21 +82,16 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 				## Changing GLOBAL VARIABLES ##
 				# LRR = X
 				X[IndxV] <<- X[IndxV] + Impact
-	
-				# BAF, Change BAF but keep SNPs with low heterozygosity.
-				names(BAFCNV) <- IndxV
-				NoChangeIndx <- c(which(BAF[IndxV] > 0.9), which(BAF[IndxV] < 0.1))
-				NewIndx <- IndxV[(NoChangeIndx*-1)]
-				BAF[NewIndx] <<- BAFCNV[as.character(NewIndx)]
 				
 				## Changing GLOBAL VARIABLES ##
 				BAF[BAF > 1] <<- 1
 				BAF[BAF < 0] <<- 0
 				
-				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NoiseSNP=NoiseSNP, BadSNPs=TotalNumberofBadSNPs, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
+				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
 				return(df)
 			})
 			df <- MatrixOrList2df(DF)
+			save(df, file="df.RData")
 			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF, stringsAsFactors=FALSE)
 			return(list(LRR=df2, CNVs=df))
 		})
@@ -183,6 +102,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 		return(DF)
 	})
 	CNVs <- MatrixOrList2df(All)
+	save(CNVs, file="CNVs.RData")
 	CNVs$Length <- CNVs$Stop -  CNVs$Start
 	CNVs$CNVID <- 1:nrow(CNVs)
 	CNVs$PositionID <- apply(CNVs, 1, function(X){ gsub(" ", "", paste(X["StartIndx"], X["StopIndx"], sep="_", collapse="")) })
