@@ -34,7 +34,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 	
 	if(Type %in% "Blood")
 	{
-		BAF_Prob_By_Chr <- ((55*GC_MeanByChr)/40)/100	
+		BAF_Prob_By_Chr <- ((55*GC_MeanByChr)/50)/100	
 	}
 	else
 	{
@@ -62,7 +62,6 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 			ChrLength <- nrow(subCNV)
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
 			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
-			#X <- rnorm(ChrLength, sd=SD, mean=ChrMEAN)
 			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
 		
 			if(Type %in% "PKU")
@@ -128,7 +127,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1, CNVsSize = c(100, 
 			BadSNPsIndx[BadSNPsIndx < 0] <- 1
 			BadSNPsIndx[BadSNPsIndx > length(X)] <- length(X)
 			NoiseSNP <- sample(BadSNPIntensity, prob=BadSNPIntensityProb, 1)
-			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(length(BadSNPsIndx), sd=(SD*1.5), mean=NoiseSNP))
+			X[BadSNPsIndx] <- X[BadSNPsIndx] - abs(rnorm(length(BadSNPsIndx), sd=SD, mean=NoiseSNP))
 
 		
 			# Adding CNVs		
