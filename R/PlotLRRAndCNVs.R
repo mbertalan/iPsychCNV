@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiSingleMock)
+PlotLRRAndCNVs <- function(CNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiSingleMock)
 {
 	library(ggplot2)
 	library(ggbio)
@@ -20,11 +20,11 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	Roi$YMin <- rep(0, length(Roi$CNVmean))
 	Roi$YMax <- rep(1, length(Roi$CNVmean))
 	
-	if(!length(PennCNV$CNVmean) > 0)
+	if(!length(CNV$CNVmean) > 0)
 	{
-		PennCNV$CNVmean <- rep(CNVMean, nrow(PennCNV))
-		PennCNV$CNVmean[PennCNV$CN == 1] <- PennCNV$CNVmean[PennCNV$CN == 1] * -1
-		PennCNV$CNVmean[PennCNV$CN == 0] <- PennCNV$CNVmean[PennCNV$CN == 0] * -1
+		CNV$CNVmean <- rep(CNVMean, nrow(CNV))
+		CNV$CNVmean[CNV$CN == 1] <- CNV$CNVmean[CNV$CN == 1] * -1
+		CNV$CNVmean[CNV$CN == 0] <- CNV$CNVmean[CNV$CN == 0] * -1
 	}
 	
 	Mean <- SlideWindowMean(tmp$Log.R.Ratio, 35)
@@ -37,8 +37,8 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	# LRR
 	p1 <- ggplot(tmp, aes(Position, Log.R.Ratio))
 	p1 <- p1 + geom_point(alpha=0.05, size=1) 
-	p1 <- p1 + geom_rect(data=Roi, aes(xmin =StartPos, xmax=StopPos, ymin=(CNVmean-0.1), ymax=(CNVmean+0.1)), colour=Colors2[3], fill=NA, alpha=0.3, inherit.aes = FALSE, size=0.5) + theme(legend.title=element_blank())
-	p1 <- p1 +  geom_segment(data=PennCNV, aes(x = Start, y = CNVmean, xend = Stop, yend = CNVmean, colour=as.factor(CN)), size=4) + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))	
+	p1 <- p1 + geom_rect(data=Roi, aes(xmin =Start, xmax=Stop, ymin=(CNVmean-0.1), ymax=(CNVmean+0.1)), colour=Colors2[3], fill=NA, alpha=0.3, inherit.aes = FALSE, size=0.5) + theme(legend.title=element_blank())
+	p1 <- p1 +  geom_segment(data=CNV, aes(x = Start, y = CNVmean, xend = Stop, yend = CNVmean, colour=as.factor(CN)), size=4) + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))	
 	p1 <- p1 + geom_line(data=tmp, aes(x=Position, y = Mean), size = 0.1, alpha=0.2) 
 	
 	# BAF
@@ -46,11 +46,11 @@ PlotLRRAndCNVs <- function(PennCNV, tmp=MockData, CNVMean, Name="Test.png", Roi=
 	p2 <- p2 + geom_point(aes(col="B.Allele.Freq"), alpha=0.3, size=1)  
 	p2 <- p2 + geom_rect(data=Roi, aes(xmin=StartPos, xmax=StopPos, ymin=YMin, ymax=YMax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	
-	PennCNV <- subset(PennCNV, CN != 2)
-	if(nrow(PennCNV) > 0)
+	CNV <- subset(CNV, CN != 2)
+	if(nrow(CNV) > 0)
 	{
-		retPennCNV <- data.frame(Source=PennCNV$Source, Start=PennCNV$Start, Stop=PennCNV$Stop, ymin=rep(0.4, length(PennCNV$Stop)), ymax=rep(0.6, length(PennCNV$Stop)))
-		p2 <- p2 + geom_rect(data=retPennCNV, aes(xmin=Start, xmax=Stop, ymin=ymin, ymax=ymax, col="CNV predicted"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
+		retCNV <- data.frame(Source=CNV$Source, Start=CNV$Start, Stop=CNV$Stop, ymin=rep(0.4, length(CNV$Stop)), ymax=rep(0.6, length(CNV$Stop)))
+		p2 <- p2 + geom_rect(data=retCNV, aes(xmin=Start, xmax=Stop, ymin=ymin, ymax=ymax, col="CNV predicted"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	}
 
 	p2 <- p2 + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))		
