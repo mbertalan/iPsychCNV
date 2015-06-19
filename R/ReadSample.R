@@ -32,7 +32,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	}
 	
 	# PFB
-	if(is.null(PFB)){ Sample$PFB <- rep(0.5, nrow(CNV)) }else{ Sample$PFB <- PFB }
+	if(is.null(PFB)){ Sample$PFB <- rep(0.5, nrow(Sample)) }else{ Sample$PFB <- PFB }
 	
 	# Subseting 
 	Sample <- subset(Sample, !Chr %in% c("XY", "0")) # "MT", "X", "Y",
