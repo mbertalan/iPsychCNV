@@ -70,7 +70,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		}
 	})
 	cat("Done all !\n")
-	
+	save(tmp, file="tmp.RData")
 	
 	df <- MatrixOrList2df(tmp)
 	return(df)
