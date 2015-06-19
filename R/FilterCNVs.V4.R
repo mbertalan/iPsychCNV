@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs, CNV, ID) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
+FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, CNV, ID="Test") #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
 	CNVID <- rownames(CNVs)
 	CNVs$CNVID <- CNVID
