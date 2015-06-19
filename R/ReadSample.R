@@ -9,43 +9,44 @@
 ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 {
 	suppressPackageStartupMessages(library(data.table))
-	CNV <- fread(RawFile, head=T, sep="\t", skip=skip, showProgress=FALSE, verbose=FALSE)
-	CNV <- as.data.frame(CNV)
-	colnames(CNV) <- gsub(" ", ".", colnames(CNV))
-	colnames(CNV)[colnames(CNV) %in% "Name"] <- "SNP.Name"
-	colnames(CNV)[colnames(CNV) %in% "Chromosome"] <- "Chr"
-	colnames(CNV)[colnames(CNV) %in% "Allele1.-.Top"] <- "Allele1"
-	colnames(CNV)[colnames(CNV) %in% "Allele2.-.Top"] <- "Allele2"
-	colnames(CNV)[colnames(CNV) %in% "BAF"] <- "B.Allele.Freq"
-	colnames(CNV)[colnames(CNV) %in% "LRR"] <- "Log.R.Ratio"
+	Sample <- fread(RawFile, head=T, sep="\t", skip=skip, showProgress=FALSE, verbose=FALSE)
+	Sample <- as.data.frame(Sample)
+	colnames(Sample) <- gsub(" ", ".", colnames(Sample))
+	colnames(Sample)[colnames(Sample) %in% "Name"] <- "SNP.Name"
+	colnames(Sample)[colnames(Sample) %in% "Chromosome"] <- "Chr"
+	colnames(Sample)[colnames(Sample) %in% "Allele1.-.Top"] <- "Allele1"
+	colnames(Sample)[colnames(Sample) %in% "Allele2.-.Top"] <- "Allele2"
+	colnames(Sample)[colnames(Sample) %in% "BAF"] <- "B.Allele.Freq"
+	colnames(Sample)[colnames(Sample) %in% "LRR"] <- "Log.R.Ratio"
 	#CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq", "Allele1", "Allele2")] # SNP.Name
 	
 	# removing chr from chromosome name (deCODE)
-	CNV$Chr <- gsub("chr", "", CNV$Chr)
+	Sample$Chr <- gsub("chr", "", Sample$Chr)
 	
 	# Genotype together (deCODE)
-	if(!is.null(CNV$Genotype))
+	if(!is.null(Sample$Genotype))
 	{
-		Allele <- sapply(CNV$Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F) })
-		CNV$Allele1 <- Allele$Allele1
-		CNV$Allele2 <- Allele$Allele2
+		Allele <- sapply(Sample$Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F) })
+		Sample$Allele1 <- Allele$Allele1
+		Sample$Allele2 <- Allele$Allele2
 	}
 	
 	# PFB
-	if(is.null(PFB)){ CNV$PFB <- rep(0.5, nrow(CNV)) }else{ CNV$PFB <- PFB }
+	if(is.null(PFB)){ Sample$PFB <- rep(0.5, nrow(CNV)) }else{ Sample$PFB <- PFB }
 	
 	# Subseting 
-	CNV <- subset(CNV, !Chr %in% c("XY", "0")) # "MT", "X", "Y",
-	CNV <- subset(CNV, !is.na(CNV$B.Allele.Freq))
-	CNV <- subset(CNV, !is.na(CNV$Log.R.Ratio))
+	Sample <- subset(Sample, !Chr %in% c("XY", "0")) # "MT", "X", "Y",
+	Sample <- subset(Sample, !is.na(CNV$B.Allele.Freq))
+	Sample <- subset(Sample, !is.na(CNV$Log.R.Ratio))
 	
 	# chr specific. Example chr="22"
-	if(!is.na(chr)){ CNV <- subset(CNV, Chr %in% chr) }
+	if(!is.na(chr)){ Sample <- subset(Sample, Chr %in% chr) }
 	
 	if(LCR == TRUE)
 	{
-		CNV <- subset(CNV, !SNP.Name %in% LCR.SNPs) 
+		Sample <- subset(Sample, !SNP.Name %in% LCR.SNPs) 
 	}
-	CNV$LRR <- CNV$Log.R.Ratio # CNV$LRR is the
-	return(CNV)
+	
+	Sample$LRR <- Sample$Log.R.Ratio # CNV$LRR is the
+	return(Sample)
 }
