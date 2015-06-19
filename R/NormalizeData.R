@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.18)
+NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
 {
 	library(preprocessCore)
 	tmp <- sapply(unique(Sample$Chr), function(X) # X is chr. Loop over Chr.
