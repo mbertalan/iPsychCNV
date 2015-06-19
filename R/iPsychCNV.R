@@ -44,11 +44,15 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
 		
+		save(Sample, file="Sample.RData")
+		
 		# Normalize data
 		ptm.tmp <- proc.time()
 		Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
+		
+		save(Sample, file="Sample.Norm.RData")
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
@@ -56,8 +60,12 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 	
+		save(CNVs, file="CNVs.RData")
+	
 		# Remove centromere
 		CNVs <- RemoveCentromere(df=CNVs)
+	
+		save(CNVs, file="CNVs2.RData")
 	
 		if(nrow(CNVs) > 0)
 		{
@@ -66,6 +74,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
+			save(CNVRes, file="CNVRes.RData")
 			return(CNVsRes)
 		}
 	})
