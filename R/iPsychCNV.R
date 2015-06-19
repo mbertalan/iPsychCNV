@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, NumFiles="All", Pattern="22q11_*", MinLength=1000, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=30) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=30) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -44,15 +44,11 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
 		
-		save(Sample, file="Sample.RData")
-		
 		# Normalize data
 		ptm.tmp <- proc.time()
 		Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
-		
-		save(Sample, file="Sample.Norm.RData")
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
@@ -60,12 +56,8 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 	
-		save(CNVs, file="CNVs.RData")
-	
 		# Remove centromere
 		CNVs <- RemoveCentromere(df=CNVs)
-	
-		save(CNVs, file="CNVs2.RData")
 	
 		if(nrow(CNVs) > 0)
 		{
@@ -79,10 +71,8 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		}
 	})
 	cat("Done all !\n")
-	save(tmp, file="tmp.RData")
+	
 	df <- MatrixOrList2df(tmp)
-	save(df, file="df.RData")
-
 
 	### Re-Searching CNVs ###
 	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
@@ -98,7 +88,6 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	df$CN[df$CN %in% "DoubleDup"] <- "4"
 	df$CN <- as.numeric(df$CN)
 		
-
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
 	return(df)
