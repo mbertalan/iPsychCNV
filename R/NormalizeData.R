@@ -6,15 +6,15 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-NormalizeData <- function(CNV,ExpectedMean=0, penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.18)
+NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.18)
 {
 	library(preprocessCore)
-	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
+	tmp <- sapply(unique(Sample$Chr), function(X) # X is chr. Loop over Chr.
 	{
-		subCNV <- CNV[CNV$Chr %in% X,]
-		subCNV <- subCNV[with(subCNV, order(Position)),]
-		subCNV$LRR <- subCNV$Log.R.Ratio
-		LRR <- subCNV$Log.R.Ratio
+		subSample <- Sample[Sample$Chr %in% X,]
+		subSample <- subSample[with(subSample, order(Position)),]
+		subSample$LRR <- subSample$Log.R.Ratio
+		LRR <- subSample$Log.R.Ratio
 		
 		# add later data that LRR with 2 peaks.
 		
@@ -33,8 +33,8 @@ NormalizeData <- function(CNV,ExpectedMean=0, penalty=60, Quantile=TRUE, QSpline
 			M3 <- normalize.quantiles(M2)
 			LRR <- M3[, 51]
 		}
-		subCNV$Log.R.Ratio <- LRR
-		return(subCNV)
+		subSample$Log.R.Ratio <- LRR
+		return(subSample)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
 	return(tmp2)
