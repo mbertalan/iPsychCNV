@@ -52,7 +52,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
 		
-		cat("Samplen:", nrow(Sample), "\n")
+		cat("Sample:", nrow(Sample), "\n")
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
@@ -75,14 +75,14 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
 			cat("CNVsRes:", nrow(CNVsRes), "\n")
-			save(CNVRes, file="CNVRes.RData")
+			save(CNVsRes, file="CNVsRes.RData")
 			return(CNVsRes)
 		}
 	})
 	cat("Done all !\n")
-	
+	save(tmp, file="tmp.RData")
 	df <- MatrixOrList2df(tmp)
-
+	save(df, file="df.Rdata")
 	### Re-Searching CNVs ###
 	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
 	# df2$Steps <- rep("Second", nrow(df2))
