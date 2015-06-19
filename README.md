@@ -32,4 +32,4 @@
     CNVs.Eval <- EvaluateMockResults(MockCNVs, CNVs.Good)
 
 ### Ploting evaluation using ROC curve.  
-rocobj <- plot.roc(CNVs.Eval$, CNVs.Eval$, percent=TRUE,  print.auc=TRUE)  
+    rocobj <- plot.roc(CNVs.Eval$, CNVs.Eval$, percent=TRUE,  print.auc=TRUE)  
