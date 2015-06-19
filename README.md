@@ -4,7 +4,8 @@
 
 ###In R:
 ### To install
-    setRepositories(ind=1:2)
+    setRepositories(ind=1:8)
+    # 1 = CRAN , 2 = BioCsoft, 8 = http://R-Forge.R-project.org. See setRepositories(ind=1:10), getOption("repos")
     library(devtools)
     install_github("mbertalan/iPsychCNV")
 ### Load the package
