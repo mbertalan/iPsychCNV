@@ -20,8 +20,16 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	colnames(CNV)[colnames(CNV) %in% "LRR"] <- "Log.R.Ratio"
 	#CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq", "Allele1", "Allele2")] # SNP.Name
 	
-	# removing chr from chromosome name
+	# removing chr from chromosome name (deCODE)
 	CNV$Chr <- gsub("chr", "", CNV$Chr)
+	
+	# Genotype together (deCODE)
+	if(!is.null(CNV$Genotype))
+	{
+		Allele <- sapply(Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F)
+		CNV$Allele1 <- Allele$Allele1
+		CNV$Allele2 <- Allele$Allele2
+	}
 	
 	# PFB
 	if(is.null(PFB)){ CNV$PFB <- rep(0.5, nrow(CNV)) }else{ CNV$PFB <- PFB }
