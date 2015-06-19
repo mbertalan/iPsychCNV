@@ -11,8 +11,27 @@
 ### Load the package
     library(iPsychCNV)
 
-## Testing the program 
+## Testing iPsychCNV
+    # Creating a long mock file (one chromosome).
+    LongRoi <- MakeLongMockSample(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.6, -0.3, 0.3, 0.6), Size=c(300, 600))
+    
+    # Running iPsychCNV on long mock data.
+    CNVs <- iPsychCNV(PathRawData=".", Pattern="^LongMockSample.tab$", Skip=0)
+
+    # Reading long mock to an object in R.
+    Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)
+    
+    # Plotting LRR and BAF from 
+    PlotLRRAndCNVs(CNVs, Sample, CNVMean=0.3, Name="MyPlotTest.png", Roi=LongRoi)
+
+    # Evaluating CNVs
+    CNVs.Eval <- EvaluateMockResults(LongRoi, PredictedCNV)
+
+    # Print ROC curve.
+    LongRoc <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE, print.auc=TRUE)
+
 #### Creating a mock data.
+    # Simulates PsychChip array from Illumina.
     #  Creates a Mockfile on local folder and returns the CNV position on the mock sample.
     MockCNVs <­ MockData(N=1, Type="Blood", Cores=1)
 
@@ -35,4 +54,4 @@
     CNVs.Eval <- EvaluateMockResults(MockCNVs, CNVs.Good)
 
 #### Ploting evaluation using ROC curve.  
-    rocobj <- plot.roc(CNVs.Eval$, CNVs.Eval$, percent=TRUE,  print.auc=TRUE)  
+    rocobj <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE,  print.auc=TRUE)  
