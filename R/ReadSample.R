@@ -36,8 +36,8 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	
 	# Subseting 
 	Sample <- subset(Sample, !Chr %in% c("XY", "0")) # "MT", "X", "Y",
-	Sample <- subset(Sample, !is.na(CNV$B.Allele.Freq))
-	Sample <- subset(Sample, !is.na(CNV$Log.R.Ratio))
+	Sample <- subset(Sample, !is.na(Sample$B.Allele.Freq))
+	Sample <- subset(Sample, !is.na(Sample$Log.R.Ratio))
 	
 	# chr specific. Example chr="22"
 	if(!is.na(chr)){ Sample <- subset(Sample, Chr %in% chr) }
