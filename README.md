@@ -26,7 +26,7 @@
     CNVs.Eval <- EvaluateMockResults(LongRoi, CNVs)
 
     # Print ROC curve.
-    LongRoc <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE, print.auc=TRUE)
+    LongROC <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE, print.auc=TRUE)
 
 #### Creating mock data.
     # Simulates Infinium PsychArray BeadChip (Illumina).
