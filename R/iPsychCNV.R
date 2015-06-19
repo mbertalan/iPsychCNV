@@ -44,7 +44,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
 		
-		cat(nrow(Sample), "\n")
+		#cat(nrow(Sample), "\n")
 		
 		# Normalize data
 		ptm.tmp <- proc.time()
@@ -52,7 +52,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
 		
-		cat("Sample:", nrow(Sample), "\n")
+		#cat("Sample:", nrow(Sample), "\n")
 		
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
@@ -60,12 +60,12 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 	
-		cat("CNVs:", nrow(CNVs), "\n")
+		#cat("CNVs:", nrow(CNVs), "\n")
 		
 		# Remove centromere
 		CNVs <- RemoveCentromere(df=CNVs)
 	
-		cat("CNVs:", nrow(CNVs), "\n")
+		#cat("CNVs:", nrow(CNVs), "\n")
 	
 		if(nrow(CNVs) > 0)
 		{
@@ -74,15 +74,15 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV=Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
-			cat("CNVsRes:", nrow(CNVsRes), "\n")
-			save(CNVsRes, file="CNVsRes.RData")
+			#cat("CNVsRes:", nrow(CNVsRes), "\n")
+			#save(CNVsRes, file="CNVsRes.RData")
 			return(CNVsRes)
 		}
 	})
 	cat("Done all !\n")
-	save(tmp, file="tmp.RData")
+	#save(tmp, file="tmp.RData")
 	df <- MatrixOrList2df(tmp)
-	save(df, file="df.Rdata")
+	#save(df, file="df.Rdata")
 	### Re-Searching CNVs ###
 	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
 	# df2$Steps <- rep("Second", nrow(df2))
