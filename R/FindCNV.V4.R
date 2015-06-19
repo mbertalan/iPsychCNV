@@ -27,7 +27,7 @@ FindCNV.V4 <- function(ID="Test", MinNumSNPs=20, Sample=Sample, CPTmethod="meanv
 			CPT.Res <- cpt.mean(subSample$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE)
 		}
 		indx <- cpts(CPT.Res)
-		indx <- c(1, indx, length(subCNV$Log.R.Ratio))
+		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subSample, MinNumSNPs, CHR, ID, CPT.Res)
 		
