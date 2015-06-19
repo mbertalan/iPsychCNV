@@ -13,9 +13,15 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	CNV <- as.data.frame(CNV)
 	colnames(CNV) <- gsub(" ", ".", colnames(CNV))
 	colnames(CNV)[colnames(CNV) %in% "Name"] <- "SNP.Name"
+	colnames(CNV)[colnames(CNV) %in% "Chromosome"] <- "Chr"
 	colnames(CNV)[colnames(CNV) %in% "Allele1.-.Top"] <- "Allele1"
 	colnames(CNV)[colnames(CNV) %in% "Allele2.-.Top"] <- "Allele2"
+	colnames(CNV)[colnames(CNV) %in% "BAF"] <- "B.Allele.Freq"
+	colnames(CNV)[colnames(CNV) %in% "LRR"] <- "Log.R.Ratio"
 	#CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq", "Allele1", "Allele2")] # SNP.Name
+	
+	# removing chr from chromosome name
+	CNV$Chr <- gsub("chr", "", CNV$Chr)
 	
 	# PFB
 	if(is.null(PFB)){ CNV$PFB <- rep(0.5, nrow(CNV)) }else{ CNV$PFB <- PFB }
