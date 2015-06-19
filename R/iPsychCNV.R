@@ -70,10 +70,9 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		}
 	})
 	cat("Done all !\n")
-	save(tmp, file="tmp.RData")
 	
 	df <- MatrixOrList2df(tmp)
-	return(df)
+
 
 	### Re-Searching CNVs ###
 	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
@@ -87,10 +86,10 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	df$CN[df$CN %in% "Dup"] <- "3"
 	df$CN[df$CN %in% "DoubleDel"] <- "0"
 	df$CN[df$CN %in% "DoubleDup"] <- "4"
-	# df$CN <- as.numeric(df$CN)
+	df$CN <- as.numeric(df$CN)
 		
 
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
-	#return(df)
+	return(df)
 }
