@@ -26,7 +26,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	# Genotype together (deCODE)
 	if(!is.null(CNV$Genotype))
 	{
-		Allele <- sapply(Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F) })
+		Allele <- sapply(CNV$Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F) })
 		CNV$Allele1 <- Allele$Allele1
 		CNV$Allele2 <- Allele$Allele2
 	}
