@@ -1,8 +1,6 @@
 # iPsychCNV
 
-## How to install and test iPsychCNV. 
-
-###In R:
+##In R:
 ### To install
     setRepositories(ind=1:8)
     # 1 = CRAN , 2 = BioCsoft, 8 = http://R-Forge.R-project.org.
