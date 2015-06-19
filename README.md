@@ -12,7 +12,8 @@
     library(iPsychCNV)
 
 ## Testing the program 
-#### Creating a mock data: Creates a Mockfile on local folder and returns the CNV position on the mock sample.
+#### Creating a mock data.
+    #  Creates a Mockfile on local folder and returns the CNV position on the mock sample.
     MockCNVs <­ MockData(N=1, Type="Blood", Cores=1)
 
 #### Predicting CNVs
@@ -21,11 +22,13 @@
 #### Subset all CNVs with copy number (CN) different from 2.
     CNVs.Good <- subset(CNVs, CN != 2)
     
-#### Creating ROI for Mock Data. ROI: Regions of interest (CNV position on the sample). 
+#### Creating ROI for Mock Data.
+    # ROI: Regions of interest (CNV position on the sample). 
     MockCNVs.Roi <- subset(MockCNVs, CN != 2)
     MockCNVs.Roi$Class <- rep("ROI", nrow(MockCNVs.Roi))
 
-#### Ploting CNVs. It will create a plot called test.png on your local folder.
+#### Ploting CNVs. 
+    # It create a file (test.png) on your local folder.
     PlotAllCNVs(CNVs.Good, Name="test.png", Roi=MockCNVs.Roi)
     
 #### Evaluating CNVs
