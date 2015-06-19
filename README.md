@@ -30,28 +30,28 @@
     # Print ROC curve.
     LongRoc <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE, print.auc=TRUE)
 
-#### Creating a mock data.
-    # Simulates PsychChip array from Illumina.
+#### Creating mock data.
+    # Simulates Infinium PsychArray BeadChip (Illumina).
     #  Creates a Mockfile on local folder and returns the CNV position on the mock sample.
-    MockCNVs <­ MockData(N=1, Type="Blood", Cores=1)
+    MockCNVs <- MockData(N=1, Type="Blood", Cores=1)
 
-#### Predicting CNVs
-    CNVs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="*.tab", MINNumSNPs=20, LCR=FALSE, MinLength=10, Skip=0)
+    # Predicting CNVs
+    CNVs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="*.tab", MINNumSNPs=20, LCR=FALSE, MinLength=10, Skip=0)
 
-#### Subset all CNVs with copy number (CN) different from 2.
+    # Subset all CNVs with copy number (CN) different from 2.
     CNVs.Good <- subset(CNVs, CN != 2)
     
-#### Creating ROI for Mock Data.
+    # Creating ROI for Mock Data.
     # ROI: Regions of interest (CNV position on the sample). 
     MockCNVs.Roi <- subset(MockCNVs, CN != 2)
     MockCNVs.Roi$Class <- rep("ROI", nrow(MockCNVs.Roi))
 
-#### Ploting CNVs. 
+    # Ploting CNVs. 
     # It create a file (test.png) on your local folder.
     PlotAllCNVs(CNVs.Good, Name="test.png", Roi=MockCNVs.Roi)
     
 #### Evaluating CNVs
     CNVs.Eval <- EvaluateMockResults(MockCNVs, CNVs.Good)
 
-#### Ploting evaluation using ROC curve.  
+    # Ploting evaluation using ROC curve.  
     rocobj <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE,  print.auc=TRUE)  
