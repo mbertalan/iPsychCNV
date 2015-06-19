@@ -20,10 +20,10 @@
     Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)
     
     # Plotting LRR and BAF from 
-    PlotLRRAndCNVs(CNVs, Sample, CNVMean=0.3, Name="MyPlotTest.png", Roi=LongRoi)
+    PlotLRRAndCNVs(CNVs, Sample, CNVMean=0.3, Name="LRR_BAF_Test_Plot.png", Roi=LongRoi)
 
     # Evaluating CNVs
-    CNVs.Eval <- EvaluateMockResults(LongRoi, PredictedCNV)
+    CNVs.Eval <- EvaluateMockResults(LongRoi, CNVs)
 
     # Print ROC curve.
     LongRoc <- plot.roc(CNVs.Eval$CNV.Predicted, CNVs.Eval$CNV.Present, percent=TRUE, print.auc=TRUE)
