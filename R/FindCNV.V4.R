@@ -6,30 +6,30 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.1, penvalue=19)
+FindCNV.V4 <- function(ID="Test", MinNumSNPs=20, Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=19)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
 
-	tmp <- sapply(unique(CNV$Chr), function(X) # X is chr. Loop over Chr.
+	tmp <- sapply(unique(Sample$Chr), function(X) # X is chr. Loop over Chr.
 	{
 		CHR <- as.character(X)
-		subCNV <- subset(CNV, Chr %in% CHR)
-		subCNV <- subCNV[with(subCNV, order(Position)),]
+		subSample <- subset(Sample, Chr %in% CHR)
+		subSample <- subSample[with(subSample, order(Position)),]
 		
 		# Using changepoint package	
 		if(CPTmethod %in% "meanvar")
 		{
-			CPT.Res <- cpt.meanvar(subCNV$Log.R.Ratio, method='PELT', class=TRUE, pen.value=penvalue, penalty="Manual")
+			CPT.Res <- cpt.meanvar(subSample$Log.R.Ratio, method='PELT', class=TRUE, pen.value=penvalue, penalty="Manual")
 		}
 		else if(CPTmethod %in% "mean")
 		{
-			CPT.Res <- cpt.mean(subCNV$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE)
+			CPT.Res <- cpt.mean(subSample$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE)
 		}
 		indx <- cpts(CPT.Res)
 		indx <- c(1, indx, length(subCNV$Log.R.Ratio))
 
-		DF <- DefineStartAndStop(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
+		DF <- DefineStartAndStop(indx, subSample, MinNumSNPs, CHR, ID, CPT.Res)
 		
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
 		DF <- subset(DF, abs(CNVMean) > 0.1)
@@ -53,4 +53,3 @@ FindCNV.V4 <- function(ID, MinNumSNPs, CNV, CPTmethod="meanvar", CNVSignal=0.1, 
 		return(df)
 	}
 }
-
