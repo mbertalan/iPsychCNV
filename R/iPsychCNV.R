@@ -73,6 +73,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	
 	
 	df <- MatrixOrList2df(tmp)
+	return(df)
 
 	### Re-Searching CNVs ###
 	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
@@ -91,5 +92,5 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
-	return(df)
+	#return(df)
 }
