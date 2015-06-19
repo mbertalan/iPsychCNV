@@ -61,9 +61,9 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	
 		if(nrow(CNVs) > 0)
 		{
-			CNVs <- subset(CNVs, Length > MinLength)
+			# CNVs <- subset(CNVs, Length > MinLength)
 			ptm.tmp <- proc.time()
-			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample, ID) # PathRawData = PathRawData,
+			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV=Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
 			save(CNVRes, file="CNVRes.RData")
