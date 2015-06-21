@@ -9,7 +9,7 @@
 ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 {
 	suppressPackageStartupMessages(library(data.table))
-	Sample <- fread(RawFile, head=T, sep="\t", skip=skip, showProgress=FALSE, verbose=FALSE)
+	Sample <- fread(RawFile, head=T, sep="\t", skip=skip, verbose=FALSE)
 	Sample <- as.data.frame(Sample)
 	colnames(Sample) <- gsub(" ", ".", colnames(Sample))
 	colnames(Sample)[colnames(Sample) %in% "Name"] <- "SNP.Name"
