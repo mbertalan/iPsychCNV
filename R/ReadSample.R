@@ -24,13 +24,13 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA)
 	Sample$Chr <- gsub("chr", "", Sample$Chr)
 	
 	# Genotype together (deCODE)
-	if(!is.null(Sample$Genotype))
-	{
-		Allele <- sapply(Sample$Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F) })
-		Allele <- MatrixOrList2df(Allele)
-		Sample$Allele1 <- Allele$Allele1
-		Sample$Allele2 <- Allele$Allele2
-	}
+	#if(!is.null(Sample$Genotype))
+	#{
+	#	Allele <- sapply(Sample$Genotype, function(X){ data.frame(Allele1= unlist(strsplit(X, ""))[1], Allele2=unlist(strsplit(X, ""))[2], stringsAsFactors=F) })
+	#	Allele <- MatrixOrList2df(Allele)
+	#	Sample$Allele1 <- Allele$Allele1
+	#	Sample$Allele2 <- Allele$Allele2
+	#}
 	
 	# PFB
 	if(is.null(PFB)){ Sample$PFB <- rep(0.5, nrow(Sample)) }else{ Sample$PFB <- PFB }
