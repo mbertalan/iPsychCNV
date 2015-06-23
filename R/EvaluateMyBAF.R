@@ -17,7 +17,7 @@ EvaluateMyBAF <- function(res, res2)
 		{
 			BAlleleFreq <- 1
 		}
-		else if(res$AAAA > 5 & res$BBBB > 5 & res$AB > 8 & res$AAB > 8 & res$ABB > 8 & res$AAAB > 8 & res$ABBB > 8) # Double del
+		else if(res$AAAA < 25 & res$BBBB < 25 & res$AB > 8 & res$AAB > 8 & res$ABB > 8 & res$AAAB > 8 & res$ABBB > 8) # Double del
 		{
 			BAlleleFreq <- 0
 		}
