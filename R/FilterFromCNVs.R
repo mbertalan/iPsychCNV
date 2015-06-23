@@ -23,9 +23,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 			StartIndx <- which(subSample$Position == StartM)[1] 
 			StopIndx <- which(subSample$Position == StopM)[1]
 			df <- data.frame(StartIndx=StartIndx, StopIndx=StopIndx)
-			#Vector <- c(StartIndx, StopIndx, X)
 			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\n")
-			#names(Vector)[1:2] <- c("StartIndx", "StopIndx")
 			return(df)
 		})
 		df <- MatrixOrList2df(tmp=Res)
