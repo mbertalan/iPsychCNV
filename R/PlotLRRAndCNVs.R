@@ -6,11 +6,13 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotLRRAndCNVs <- function(CNV, tmp=MockData, CNVMean, Name="Test.png", Roi=RoiSingleMock)
+PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock)
 {
 	library(ggplot2)
 	library(ggbio)
-
+	
+	tmp <- Sample
+	
 	if(length(Roi$CNVmean) == 0)
 	{
 		Roi$CNVmean <- rep(CNVMean, nrow(Roi))
