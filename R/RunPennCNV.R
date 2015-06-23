@@ -1,4 +1,4 @@
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15)
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15)
 
 {
 	library(parallel)
@@ -41,7 +41,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		system(Command)
 		PFB <- "Mock.pfb"
 	}
-	else if(PFB == 0.5)
+	else if(PFB %in% "NO")
 	{
 		ChipInfo$PFB <- 0.5
 		write.table(ChipInfo, file="Mock.pfb", quote=FALSE, row.names=FALSE, sep="\t")
