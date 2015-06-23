@@ -45,6 +45,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	{
 		ChipInfo$PFB <- 0.5
 		write.table(ChipInfo, file="Mock.pfb", quote=FALSE, row.names=FALSE, sep="\t")
+		PFB <- "Mock.pfb"
 	}
 		
 		
