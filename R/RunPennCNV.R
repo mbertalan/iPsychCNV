@@ -41,6 +41,13 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		system(Command)
 		PFB <- "Mock.pfb"
 	}
+	else if(PFB == 0.5)
+	{
+		ChipInfo$PFB <- 0.5
+		write.table(ChipInfo, file="Mock.pfb", quote=FALSE, row.names=FALSE, sep="\t")
+	}
+		
+		
 	
 
 	Res <- mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(X) 
