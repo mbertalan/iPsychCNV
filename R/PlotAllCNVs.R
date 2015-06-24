@@ -13,14 +13,14 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	library(grid)
 	
 	# Select which human build it will plot
-	CytoBands <- subset(CytoBands2, Human %in% hg)	
+	CytoBands <- subset(CytoBands2, Human %in% hg & Chr %in% c(1:22))	
 
 
 	if(length(df$CN) > 0){ df$Class <- df$CN }
 	if(length(df$File) > 0){ df$ID <- df$File }
 
 	tmp <- df[, c("Start","Stop","Chr","Length","ID", "Class", "CN")]
-	#tmp <- subset(tmp, Chr %in% c(1:22))
+	tmp <- subset(tmp, Chr %in% c(1:22))
 	tmp3 <- sapply(unique(tmp$Chr), function(X)
 	{
 		tmp2 <- subset(tmp, Chr %in% X)
