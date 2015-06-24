@@ -1,5 +1,6 @@
-RemoveCentromere <- function(df)
+RemoveCentromere <- function(df, HG="hg18")
 {
+	Cent <- subset(Cent, hg %in% HG)
 	tmp <- sapply(unique(df$Chr), function(X)
 	{
 		Cent.tmp <- subset(Cent, Chr %in% X)
