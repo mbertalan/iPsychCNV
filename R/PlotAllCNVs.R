@@ -32,9 +32,11 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 		return(tmp2)
 	})	
 	tmp2 <- MatrixOrList2df(tmp3)
+	
+	# Join df + roi + cytobands 
 	tmp2 <- tmp2[, c("Start","Stop","Chr","Length","ID", "Class", "Indx")]
-
 	roi <- Roi[,c("Start","Stop","Chr","Length","ID", "Class")]
+	CytoBands <- CytoBands[,c("Start","Stop","Chr","Length","ID", "Class")]
 
 	CytoBands$Indx <- rep(-1, nrow(CytoBands))
 	roi$Indx <- rep(-2, nrow(roi))
