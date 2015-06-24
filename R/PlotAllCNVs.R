@@ -5,12 +5,16 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30) # TimesLength
+PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg18") # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
 	library(RColorBrewer)
 	library(grid)
+	
+	# Select which human build it will plot
+	CytoBands <- subset(CytoBands2, Human %in% hg)	
+
 
 	if(length(df$CN) > 0){ df$Class <- df$CN }
 	if(length(df$File) > 0){ df$ID <- df$File }
