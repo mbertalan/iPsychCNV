@@ -99,7 +99,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	})
 	cat("Done all !\n")
 	
-	if(is.na(OutputPath)
+	if(is.na(OutputPath))
 	{
 		df <- MatrixOrList2df(tmp)
 	}
