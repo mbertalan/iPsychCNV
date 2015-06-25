@@ -71,12 +71,22 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		{
 			# CNVs <- subset(CNVs, Length > MinLength)
 			ptm.tmp <- proc.time()
-			CNVsRes <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV=Sample, ID) # PathRawData = PathRawData,
+			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV=Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
 			#cat("CNVsRes:", nrow(CNVsRes), "\n")
 			#save(CNVsRes, file="CNVsRes.RData")
-			return(CNVsRes)
+			df$Source <- rep("iPsychCNV", nrow(df))
+			df$CN <- df$Class
+			df$CN[df$CN %in% "Del"] <- "1"
+			df$CN[df$CN %in% "Normal"] <- "2"
+			df$CN[df$CN %in% "Dup"] <- "3"
+			df$CN[df$CN %in% "DoubleDel"] <- "0"
+			df$CN[df$CN %in% "DoubleDup"] <- "4"
+			df$CN <- as.numeric(df$CN)
+			OutputFile <- paste(ID, ".CNVs", sep="", collapse="")
+			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+			return(df)
 		}
 	})
 	cat("Done all !\n")
@@ -87,15 +97,6 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
 	# df2$Steps <- rep("Second", nrow(df2))
 	# save(df2, file="Df2.RData")
-
-	df$Source <- rep("iPsychCNV", nrow(df))
-	df$CN <- df$Class
-	df$CN[df$CN %in% "Del"] <- "1"
-	df$CN[df$CN %in% "Normal"] <- "2"
-	df$CN[df$CN %in% "Dup"] <- "3"
-	df$CN[df$CN %in% "DoubleDel"] <- "0"
-	df$CN[df$CN %in% "DoubleDup"] <- "4"
-	df$CN <- as.numeric(df$CN)
 		
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
