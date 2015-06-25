@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=30) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=30, OutputPath=NA) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -84,19 +84,25 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			df$CN[df$CN %in% "DoubleDel"] <- "0"
 			df$CN[df$CN %in% "DoubleDup"] <- "4"
 			df$CN <- as.numeric(df$CN)
-			OutputFile <- paste(ID, ".CNVs", sep="", collapse="")
-			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
-			return(df)
+			
+			# Print results or return as an object ?
+			if(!is.na(OutputPath))
+			{
+				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+				write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+			}
+			else
+			{
+				return(df)
+			}
 		}
 	})
 	cat("Done all !\n")
-	#save(tmp, file="tmp.RData")
-	df <- MatrixOrList2df(tmp)
-	#save(df, file="df.Rdata")
-	### Re-Searching CNVs ###
-	# df2 <- ReSearching(Files[1:NumFiles], PathRawData, Cores, df, MINNumSNPs)
-	# df2$Steps <- rep("Second", nrow(df2))
-	# save(df2, file="Df2.RData")
+	
+	if(is.na(OutputPath)
+	{
+		df <- MatrixOrList2df(tmp)
+	}
 		
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
