@@ -1,6 +1,6 @@
 MergeCNVs <- function(df, MaxNumSNPs=4)
 {
-	MaxNumSNPs <- 4 # Have to fix this
+	MaxNumSNPs <- 2 # Have to fix this
 	tmp2 <- subset(df, CN != 2)
 	Test2 <- sapply(unique(tmp2$ID), function(IDs) # Sample Loop	
 	{
