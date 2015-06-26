@@ -34,7 +34,14 @@ EvaluateMyBAF <- function(res, res2)
 		}
 		else if(res$AAAA > 15 & res$AB > 4 & res$AAB > 5 & res$ABB > 4 & res$BBBB > 15) # Double Dup AB = AABB, res$AAAB < 6 & res$ABBB < 6 & res$AB > 5 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 6 & res$ABB > 6
 		{
-			BAlleleFreq <- 4
+			if(res2$CNVmeanOrig > 0.45)
+			{
+				BAlleleFreq <- 4
+			}
+			else
+			{
+				BAlleleFreq <- 3 # Small CNVs can be miss classified. 
+			}
 		}
 		else
 		{
