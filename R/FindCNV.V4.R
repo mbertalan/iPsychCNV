@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FindCNV.V4 <- function(ID="Test", MinNumSNPs=20, Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=19)
+FindCNV.V4 <- function(ID="Test", MinNumSNPs=2, Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
@@ -32,7 +32,7 @@ FindCNV.V4 <- function(ID="Test", MinNumSNPs=20, Sample=Sample, CPTmethod="meanv
 		DF <- DefineStartAndStop(indx, subSample, MinNumSNPs, CHR, ID, CPT.Res)
 		
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
-		DF <- subset(DF, abs(CNVMean) > 0.1)
+		DF <- subset(DF, abs(CNVMean) > 0.14)
 		DF$CN <- DF$CNVMean
 		DF$CN[DF$CN > 0] <- 3
 		DF$CN[DF$CN < 0] <- 1
