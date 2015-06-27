@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-DefineStartAndStop <- function(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
+DefineStartAndStop <- function(indx, subCNV, CHR, ID, CPT.Res)
 {
 	suppressPackageStartupMessages(library(pastecs))
 	
@@ -18,7 +18,18 @@ DefineStartAndStop <- function(indx, subCNV, MinNumSNPs, CHR, ID, CPT.Res)
 	names(Df) <- c("Start", "Stop", "CNVMean")
 	# removed many of the controls (normalization should take care of it).
 
-	DF3 <- Plot.CNV.Info(MinNumSNPs, Df, subCNV, ID) # Min number of SNPs for CNV
-	
-	return(DF3)
+	# Adding index SNP chip position.
+	DF <- df
+	if(sum(DF$Start < 1) > 0){ DF$Start[DF$Start < 1] <- 1 }
+	if(sum(DF$Stop > nrow(subCNV)) > 0){ DF$Stop[DF$Stop > nrow(subCNV)] <- nrow(subCNV)}
+
+	DF$StartIndx <- DF$Start
+	DF$StopIndx <- DF$Stop
+	DF$Start <- subCNV$Position[DF$Start]
+	DF$Stop <- subCNV$Position[DF$Stop]
+	DF$Length <- DF$Stop - DF$Start
+	DF$NumSNPs <- DF$StopIndx - DF$StartIndx
+	DF$Chr <- rep(unique(subCNV$Chr), nrow(DF))
+	DF$ID <- rep(ID, nrow(DF))
+	return(DF)
 }
