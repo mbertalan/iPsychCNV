@@ -56,6 +56,11 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 				Indx <- as.numeric(unlist(Indx))
 				df <- tmp4[Indx*-1,]
 				Merged <- rbind(Merged, df)
+				# If there was nothing to merge (all CNVs are too far way from each other.
+				if(nrow(Merged) == 0)
+				{
+					Merged <- tmp4
+				}
 			}
 			else
 			{ 
