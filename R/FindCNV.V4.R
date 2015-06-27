@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FindCNV.V4 <- function(ID="Test", MinNumSNPs=2, Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10)
+FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
@@ -29,7 +29,7 @@ FindCNV.V4 <- function(ID="Test", MinNumSNPs=2, Sample=Sample, CPTmethod="meanva
 		indx <- cpts(CPT.Res)
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
-		DF <- DefineStartAndStop(indx, subSample, MinNumSNPs=1, CHR, ID, CPT.Res)
+		DF <- DefineStartAndStop(indx, subSample, CHR, ID, CPT.Res)
 		
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
 		DF <- subset(DF, abs(CNVMean) > 0.14)
@@ -39,7 +39,7 @@ FindCNV.V4 <- function(ID="Test", MinNumSNPs=2, Sample=Sample, CPTmethod="meanva
 		
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
-			DF2 <- MergeCNVs(DF, MaxNumSNPs=MinNumSNPs)
+			DF2 <- MergeCNVs(DF, MaxNumSNPs=50)
 			DF <- DF2[,colnames(DF)] # returning to same colname order as if you do not go in MergeCNVs
 		}
 		return(DF)
@@ -48,7 +48,6 @@ FindCNV.V4 <- function(ID="Test", MinNumSNPs=2, Sample=Sample, CPTmethod="meanva
 	df <- MatrixOrList2df(tmp)
 	if(nrow(df) > 0)
 	{
-		df <- subset(df, NumSNPs > MinNumSNPs)
 		df <- df[,!colnames(df) %in% ".id"]
 		return(df)
 	}
