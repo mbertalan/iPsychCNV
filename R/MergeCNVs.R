@@ -39,7 +39,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 					{
 						# CN 1 and 3 should not be merged. If more than 1 CN, select the most common.
 						tmp <- subset(tmp4[indx,], CN == as.numeric(names(sort(table(tmp4[indx,"CN"]), decreasing=T)[1])))
-						indx <- as.numeric(row.names(tmp))
+						Indx <- as.numeric(row.names(tmp))
 						
 						#cat("4-) Great ! Join ", Indx, "\n")
 						NewStart <- sort(tmp4[Indx,"Start"])[1]
