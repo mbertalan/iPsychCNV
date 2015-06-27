@@ -68,5 +68,6 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 		return(Test2)
 	})
 	Test2 <- MatrixOrList2df(Test2)
+	Test2 <- Test2[order(Test2$StartIndx),]
 	return(Test2)
 }
