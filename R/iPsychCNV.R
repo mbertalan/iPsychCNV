@@ -71,7 +71,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		{
 			# CNVs <- subset(CNVs, Length > MinLength)
 			ptm.tmp <- proc.time()
-			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, CNV=Sample, ID) # PathRawData = PathRawData,
+			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
 			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
 			#cat("CNVsRes:", nrow(CNVsRes), "\n")
