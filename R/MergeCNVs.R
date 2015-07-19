@@ -16,7 +16,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 				M2 <- sapply(1:(nrow(tmp4[,c("StartIndx","StopIndx")])-1), function(X){ if((as.numeric(tmp4[(X+1),1]) - as.numeric(tmp4[(X),2])) < MaxNumSNPs){ c(X, (X+1)) } })
 				if(length(unlist(M2)) > 0)
 				{
-					library(igraph)
+					suppressPackageStartupMessages(library(igraph))
 					g2 <- graph(unlist(M2), directed=FALSE)
 					k <- clusters(g2)
 					Groups <- k$membership
