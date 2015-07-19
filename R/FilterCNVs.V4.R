@@ -14,7 +14,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
-		CHR <- as.numeric(Y["Chr"])
+		CHR <- Y["Chr"]
 		CNVStart <- as.numeric(Y["Start"]) 
 		CNVStop <- as.numeric(Y["Stop"]) 
 		NumSNPs <- as.numeric(Y["NumSNPs"])
