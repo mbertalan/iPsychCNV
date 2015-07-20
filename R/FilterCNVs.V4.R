@@ -84,10 +84,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		Class <- dfTmp$Class
 
 		# Get genotype Info
-		Genotype <- GetGenotypeInfo(tmpRaw)
+		#Genotype <- GetGenotypeInfo(tmpRaw)
 
 		# Add info to res
-		res3 <- cbind(res,res2, Genotype)
+		#res3 <- cbind(res,res2, Genotype)
+		res3 <- cbind(res,res2)
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		return(res4)
 	})
