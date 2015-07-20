@@ -85,23 +85,18 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			df$CN[df$CN %in% "DoubleDup"] <- "4"
 			df$CN <- as.numeric(df$CN)
 			
-			# Print results or return as an object ?
-			if(!is.na(OutputPath))
-			{
-				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
-				write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
-			}
-			else
-			{
-				return(df)
-			}
+			return(df)
 		}
 	})
 	cat("Done all !\n")
+	df <- MatrixOrList2df(tmp)
+	df <- subset(df, CN != 2) # removing non-CNV results to save memory
 	
-	if(is.na(OutputPath))
+	if(!is.na(OutputPath))
 	{
-		df <- MatrixOrList2df(tmp)
+		# Print results or return as an object ?
+		OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+		write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
 	}
 		
 	TimeRes <- proc.time() - ptm
