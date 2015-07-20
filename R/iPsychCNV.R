@@ -91,6 +91,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	cat("Done all !\n")
 	df <- MatrixOrList2df(tmp)
 	df <- subset(df, CN != 2) # removing non-CNV results to save memory
+	df <- df[, !colnames(df) %in% "Class"]
 	
 	if(!is.na(OutputPath))
 	{
