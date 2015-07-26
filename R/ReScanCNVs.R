@@ -1,7 +1,7 @@
-##' Re-Scan.iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' ReScanCNVs: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title Re-Scan.iPsychCNV
+##' @title ReScanCNVs
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
 ##' @export
