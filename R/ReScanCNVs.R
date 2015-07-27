@@ -50,23 +50,6 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		ptm.tmp <- proc.time()
 		Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 		Res.tmp <- proc.time() - ptm.tmp
-		#cat("Normalization time: ", Res.tmp["elapsed"], "\n")
-		
-		#cat("Sample:", nrow(Sample), "\n")
-		
-		# The CNVs are given by hotspots
-		### FIND CNVs ###
-		#ptm.tmp <- proc.time()
-		#CNVs <- FindCNV.V4(ID=ID, Sample=Sample, CPTmethod=CPTmethod, CNVSignal=CNVSignal, penvalue=penvalue)
-		#Res.tmp <- proc.time() - ptm.tmp
-		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
-	
-		#cat("CNVs:", nrow(CNVs), "\n")
-		
-		# Remove centromere
-		#CNVs <- RemoveCentromere(df=CNVs, HG=hg)
-	
-		#cat("CNVs:", nrow(CNVs), "\n")
 	
 		if(nrow(CNVs) > 0)
 		{
@@ -74,9 +57,6 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 			ptm.tmp <- proc.time()
 			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
-			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
-			#cat("CNVsRes:", nrow(CNVsRes), "\n")
-			#save(CNVsRes, file="CNVsRes.RData")
 			df$Source <- rep("iPsychCNV", nrow(df))
 			df$CN <- df$Class
 			df$CN[df$CN %in% "Del"] <- "1"
@@ -85,7 +65,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 			df$CN[df$CN %in% "DoubleDel"] <- "0"
 			df$CN[df$CN %in% "DoubleDup"] <- "4"
 			df$CN <- as.numeric(df$CN)
-			
+			df$SampleID <- ID
 			return(df)
 		}
 	})
