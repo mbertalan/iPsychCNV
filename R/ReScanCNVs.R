@@ -9,54 +9,38 @@
 ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, hg="hg18", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
-
 	suppressPackageStartupMessages(library(parallel))
-	
 	ptm <- proc.time()
-
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 	
 	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
 	{
 		Files <- sapply(SelectedFiles, function(X){ Files[grep(X, Files)] })
 	}
-	
 
-	if(NumFiles %in% "All")
-	{
-		NumFiles <- length(Files)
-	}
+	if(NumFiles %in% "All"){ NumFiles <- length(Files) }
 
 	cat("Running ", NumFiles, "files\n")
-	tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(X) 
+	tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(RawFile) 
 	{
-		RawFile <- X
-		write(X,file="Progress.txt",append=TRUE)
+		write(RawFile,file="Progress.txt",append=TRUE)
 		Count <- length(readLines("Progress.txt"))	
 		Percent <- round((Count/NumFiles)*100)
 		Percent <- paste(Percent, "%", sep="", collapse="")
-		cat("Running:\t", X, "\t\t", Percent, "\n")
-		ID <- tail(unlist(strsplit(X, "/")),n=1)
+		cat("Running:\t", RawFile, "\t\t", Percent, "\n")
+		ID <- tail(unlist(strsplit(RawFile, "/")),n=1)
 	
 		# Read sample file		
 		ptm.tmp <- proc.time()
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr)
-		Res.tmp <- proc.time() - ptm.tmp
-		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
+
+		# The CNVs are given by hotspots, Position might change if multiple chips are used.
+		CNVs <- GetIndxPositionFromChips(CNVs, Sample)
 		
-		#cat(nrow(Sample), "\n")
-		
-		# Normalize data
-		ptm.tmp <- proc.time()
-		Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
-		Res.tmp <- proc.time() - ptm.tmp
-	
 		if(nrow(CNVs) > 0)
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
-			ptm.tmp <- proc.time()
 			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
-			Res.tmp <- proc.time() - ptm.tmp
 			df$Source <- rep("iPsychCNV", nrow(df))
 			df$CN <- df$Class
 			df$CN[df$CN %in% "Del"] <- "1"
@@ -67,7 +51,8 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 			df$CN <- as.numeric(df$CN)
 			df$SampleID <- ID
 			return(df)
-		}
+		}	
+		Res.tmp <- proc.time() - ptm.tmp
 	})
 	cat("Done all !\n")
 	df <- MatrixOrList2df(tmp)
