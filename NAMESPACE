@@ -2,6 +2,7 @@
 
 export(AddInfo2res)
 export(BAF_drift)
+export(CheckAbnChr)
 export(ClassNumbers)
 export(CleaningPeaks)
 export(CompressCNVs)
