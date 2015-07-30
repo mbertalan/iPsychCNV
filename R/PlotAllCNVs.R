@@ -24,7 +24,7 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	tmp3 <- sapply(unique(tmp$Chr), function(X)
 	{
 		tmp2 <- subset(tmp, Chr %in% X)
-		tmp2 <- tmp2[with(tmp2, order(!Length, CN)), ]  # , -Length
+		tmp2 <- tmp2[with(tmp2, order(Start, !Length, CN)), ]  # , -Length
 		Samples <- 1:length(unique(tmp2$ID))
 		names(Samples) <- unique(tmp2$ID)
 		Indx <- sapply(tmp2$ID, function(Y){ Samples[as.character(Y)] })
