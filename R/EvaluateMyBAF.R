@@ -11,7 +11,7 @@ EvaluateMyBAF <- function(res, res2)
 	#Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
 	#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	
-	if(res2$CNVmeanOrig < -0.3) # It might be the whole chromosome a CNV
+	if(res2$CNVmeanOrig < -0.2) # It might be the whole chromosome a CNV
 	{
 		if(res$AAAA > 15  & res$AB < 5 & res$BBBB > 15 & res$ABB < 5 & res$AAB < 5)  # Del
 		{
