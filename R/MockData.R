@@ -53,6 +53,15 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
 			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
 			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
+			
+			# Telomere noise
+			TelSize1 <- sample(TelomereNoiseSize, 1)
+			TelEffect1 <- sample(TelomereNoiseEffect, 1)
+			TelSize2 <- sample(TelomereNoiseSize, 1)
+			TelEffect2 <- sample(TelomereNoiseEffect, 1)
+			X[(length(X) - TelSize2):length(X)] <- X[(length(X) - TelSize2):length(X)] + TelEffect2
+			X[(length(X) - TelSize2):length(X)] <- X[(length(X) - TelSize2):length(X)] + TelEffect2
+			
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
 			names(BAF) <- SNP.Name
 		
