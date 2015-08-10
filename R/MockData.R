@@ -94,12 +94,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				{
 					NoiseLRR <- sample(c(1,3), 1)
 					NoiseBAF <- sample(c(0,1,3,4), 1)
-					if(NoiseLRR == 1){ Impact <- sample(Del, 1) })
-					if(NoiseLRR == 3){ Impact <- sample(Dup, 1) })
-					if(NoiseBAF == 0){ BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1)) })
-					if(NoiseBAF == 1){ BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1)) })
-					if(NoiseBAF == 3){ BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1)) })
-					if(NoiseBAF == 4){ BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1)) })
+					if(NoiseLRR == 1){ Impact <- sample(Del, 1) }
+					if(NoiseLRR == 3){ Impact <- sample(Dup, 1) }
+					if(NoiseBAF == 0){ BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1)) }
+					if(NoiseBAF == 1){ BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1)) }
+					if(NoiseBAF == 3){ BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1)) }
+					if(NoiseBAF == 4){ BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1)) }
 				}
 				
 				## Changing GLOBAL VARIABLES ##
