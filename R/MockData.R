@@ -12,6 +12,10 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	CNVsSize <- c(50, 100, 150, 300, 450, 600, 750, 900)
 	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	names(CNVSizeFixed) = 1:50
+	
+	# Always the same CN
+	CNFixed <- sample(c(0,1,2,2,2,2,3,4), 50, replace=TRUE) # CNV Type
+	names(CNFixed) = 1:50
 
 	List <- GetMockValues(Type=Type)
 	
@@ -59,7 +63,9 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			TelEffect1 <- sample(TelomereNoiseEffect, 1)
 			TelSize2 <- sample(TelomereNoiseSize, 1)
 			TelEffect2 <- sample(TelomereNoiseEffect, 1)
-			X[(length(X) - TelSize2):length(X)] <- X[(length(X) - TelSize2):length(X)] + TelEffect2
+			# Begining of chromosome
+			X[1:TelSize1] <- X[1:TelSize1)] + TelEffect1  	
+			# End of chrosmoome
 			X[(length(X) - TelSize2):length(X)] <- X[(length(X) - TelSize2):length(X)] + TelEffect2
 			
 			BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=length(X))
@@ -70,11 +76,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
-				CN <- sample(c(0,1,2,2,2,2,3,4), 1) # CNV Type
+			
 				PositionIndx <- as.numeric(i) * 2000
 
 				# Using fix size for chr position.
 				Size <- CNVSizeFixed[i]
+				CN <- CNFixed[i]
 				
 				# CNV position
 				IndxV <- PositionIndx:(PositionIndx+Size)
