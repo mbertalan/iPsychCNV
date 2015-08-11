@@ -70,7 +70,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
-				CN <- sample(c(0,1,2,3,4), 1) # CNV Type
+				CN <- sample(c(0,1,2,2,2,2,3,4), 1) # CNV Type
 				PositionIndx <- as.numeric(i) * 2000
 
 				# Using fix size for chr position.
