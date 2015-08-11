@@ -64,7 +64,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			TelSize2 <- sample(TelomereNoiseSize, 1)
 			TelEffect2 <- sample(TelomereNoiseEffect, 1)
 			# Begining of chromosome
-			X[1:TelSize1] <- X[1:TelSize1)] + TelEffect1  	
+			X[1:TelSize1] <- X[1:TelSize1] + TelEffect1  	
 			# End of chrosmoome
 			X[(length(X) - TelSize2):length(X)] <- X[(length(X) - TelSize2):length(X)] + TelEffect2
 			
