@@ -53,6 +53,7 @@ export(ReSearchCNVs)
 export(SlideWindowMean)
 export(SelectSamplesFromROI)
 export(RemoveCentromere)
+export(HotspotsPrediction)
 ### Bioconductor packages
 import(ggbio)
 import(biovizBase)
