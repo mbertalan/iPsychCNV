@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles)
+PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10)
 {
 	library(iPsychCNV)
 	library(mclust)
@@ -19,7 +19,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles)
 	library(RColorBrewer)
 
 	# loop over hotspots
-	sapply(1:nrow(Hotspots), function(i)
+	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=0.9,  OverlapMax=1.1)
 
@@ -45,7 +45,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles)
 				cat(ID, "\n")
 				# Reading file
 				File <- AllHeadFiles[grep(ID, AllHeadFiles)]
-				Sample <- ReadSample(RawFile=File, skip=0, chr=Chr)
+				Sample <- ReadSample(RawFile=File, skip=Skip, chr=Chr)
 	
 				# CNV region
 				tmp <- subset(Sample, Position > Start & Position < Stop)
