@@ -26,7 +26,8 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10)
 		# Selecting only the best samples for hotspots plot
 		if(nrow(df) > 10)
 		{
-			df <- df[order(df$SDChr),]
+			#df <- df[order(df$SDChr),]
+			df <- df[with(df, order(SDChr, !CN)), ] 
 			df <- df[1:10,]
 		}
 
