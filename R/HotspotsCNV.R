@@ -40,11 +40,6 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 		return(df2)
 	})
 	tmp4 <- as.data.frame(t(tmp), stringsAsFactors=F)
-	#tmp2 <- apply(tmp, 2, as.numeric)
-	#rownames(tmp2) <- rownames(tmp)
-	#tmp3 <- as.data.frame(t(tmp2), stringsAsFactors=F)
-	#tmp4 <- tmp3
-	
 	tmp4$Source <- rep(Source, nrow(tmp4))
 	
 	cat("Running CompressCNVs", nrow(tmp4), "\n")
@@ -64,15 +59,14 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 			cat("Re-running CompressCNVs", nrow(tmp5), NumOfCNVs,  "\n")
 		}
 	}
-	save(tmp5, file="tmp5.RData")
+	#save(tmp5, file="tmp5.RData")
 	# Count CNVs in compressed CNV regions	
 	cat("Counting CNVs\n")
 
-	CNV_Count <- apply(tmp5, 1, function(X)
+	CNV_Count <- sapply(1:nrow(tmp5), function(X)
 	{
-		tmp <- SelectSamplesFromROI(DF=OriginalDF, roi=X, OverlapMin=0.9,  OverlapMax=1.1)
+		tmp <- SelectSamplesFromROI(DF=OriginalDF, roi=tmp5[X,], OverlapMin=0.9,  OverlapMax=1.1)
 		Counts <- data.frame("CN0"=0, "CN1"=0, "CN3"=0, "CN4"=0)
-		#tmp <- subset(OriginalDF, Chr == as.numeric(X["Chr"]) & Start >= as.numeric(X["Start"]) & Stop <= as.numeric(X["Stop"]))
 		tmp2 <- as.data.frame(table(tmp$CN), stringsAsFactors=F)
 		tmp3 <- tmp2$Freq
 		names(tmp3) <- tmp2$Var1
