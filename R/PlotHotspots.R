@@ -22,6 +22,13 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10)
 	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=0.9,  OverlapMax=1.1)
+		
+		# Selecting only the best samples for hotspots plot
+		if(nrow(df) > 10)
+		{
+			df <- df[order(df$SDChr),]
+			df <- df[1:10,]
+		}
 
 		if(nrow(df) > 0)
 		{
