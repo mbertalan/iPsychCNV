@@ -39,11 +39,12 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 		names(df2) <- c("Chr", "Start", "Stop", "Length", "Count")
 		return(df2)
 	})
-	tmp2 <- apply(tmp, 2, as.numeric)
-	rownames(tmp2) <- rownames(tmp)
-	tmp3 <- as.data.frame(t(tmp2), stringsAsFactors=F)
+	tmp4 <- as.data.frame(t(tmp), stringsAsFactors=F)
+	#tmp2 <- apply(tmp, 2, as.numeric)
+	#rownames(tmp2) <- rownames(tmp)
+	#tmp3 <- as.data.frame(t(tmp2), stringsAsFactors=F)
+	#tmp4 <- tmp3
 	
-	tmp4 <- tmp3
 	tmp4$Source <- rep(Source, nrow(tmp4))
 	
 	cat("Running CompressCNVs", nrow(tmp4), "\n")
