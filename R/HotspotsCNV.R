@@ -17,7 +17,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 	{
 		Start1 <- as.numeric(X["Start"])
 		Stop1 <- as.numeric(X["Stop"])
-		Chr1 <- as.numeric(X["Chr"])
+		Chr1 <- X["Chr"]
 		Length1 <- as.numeric(X["Length"])
 		CNV_Pos <- paste(Chr1, Start1, Stop1, Length1, sep="_", collapse="") 
 		return(CNV_Pos)
