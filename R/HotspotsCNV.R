@@ -73,7 +73,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 		tmp <- SelectSamplesFromROI(DF=OriginalDF, roi=X, OverlapMin=0.9,  OverlapMax=1.1)
 		Counts <- data.frame("CN0"=0, "CN1"=0, "CN3"=0, "CN4"=0)
 		#tmp <- subset(OriginalDF, Chr == as.numeric(X["Chr"]) & Start >= as.numeric(X["Start"]) & Stop <= as.numeric(X["Stop"]))
-		tmp2 <- as.data.frame(table(tmp$CN))
+		tmp2 <- as.data.frame(table(tmp$CN), stringsAsFactors=F)
 		tmp3 <- tmp2$Freq
 		names(tmp3) <- tmp2$Var1
 		names(tmp3) <- sapply(names(tmp3), function(X){ paste("CN", X, sep="", collapse="") })
