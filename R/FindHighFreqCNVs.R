@@ -5,14 +5,14 @@ FindHighFreqCNVs <- function(df, OverlapCutoff=0.8)
 	{
 		Start1 <- as.numeric(X["Start"])
 		Stop1 <- as.numeric(X["Stop"])
-		Chr1 <- as.numeric(X["Chr"])
+		Chr1 <- gsub(" ", "", X["Chr"])
 		Length1 <- as.numeric(X["Length"])
 		
 		apply(df, 1, function(Y)
 		{
 			Start2 <- as.numeric(Y["Start"])
 			Stop2 <- as.numeric(Y["Stop"])
-			Chr2 <- as.numeric(Y["Chr"])
+			Chr2 <- gsub(" ", "",Y["Chr"])
 			Length2 <- as.numeric(Y["Length"])
 	
 			if(Chr1 == Chr2)
