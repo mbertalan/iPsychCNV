@@ -64,7 +64,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 			cat("Re-running CompressCNVs", nrow(tmp5), NumOfCNVs,  "\n")
 		}
 	}
-	#save(tmp5, file="tmp5.RData")
+	save(tmp5, file="tmp5.RData")
 	# Count CNVs in compressed CNV regions	
 	cat("Counting CNVs\n")
 
