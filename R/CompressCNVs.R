@@ -16,7 +16,7 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 	{
 		
 		tmp <- subset(tmp4, Chr %in%  X) 
-		rownames(tmp) <- tmp$ID
+		rownames(tmp) <- tmp$NewName
 		cat("Chr\t",X, "\t", nrow(tmp), "\r")
 		if(nrow(tmp) > 1)
 		{
