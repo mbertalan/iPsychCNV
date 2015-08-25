@@ -30,7 +30,7 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 				#NewStop <- as.integer(quantile(tmp[L,]$Stop, , probs=1:100/100)[80]) # 85%
 				NewChr <- X
 				NewLength <- NewStop - NewStart
-				NewCount <- sum(tmp[L,]$Count)
+				NewCount <- sum(as.numeric(tmp[L,]$Count))
 				NewSource <- unique(tmp$Source)
 				NewName <- paste(NewChr, NewStart, NewStop, NewLength, sep="_", collapse="")
 				Newdf <- data.frame("Chr"=NewChr,"Start"=NewStart, "Stop"=NewStop, "Length"=NewLength, "Count"=NewCount, Source=NewSource, "NewName"=NewName, stringsAsFactors=F)
