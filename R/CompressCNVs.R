@@ -15,7 +15,7 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 	tmp5 <- mclapply(CHRs, mc.cores=Cores, mc.preschedule = FALSE, function(X) #tmp5 <- sapply(CHRs, function(X)
 	{
 		
-		tmp <- subset(tmp4, Chr == as.numeric(X)) 
+		tmp <- subset(tmp4, Chr %in%  X) 
 		cat("Chr\t",X, "\t", nrow(tmp), "\r")
 		if(nrow(tmp) > 1)
 		{
