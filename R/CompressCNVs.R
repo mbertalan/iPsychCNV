@@ -24,8 +24,8 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 			tmp3 <- apply(tmp2, 1, function(Z) { names(Z[Z]) })
 			tmp5 <- lapply(tmp3, function(L)
 			{ 
-				NewStart <- sort(tmp[L,]$Start)[1]
-				NewStop <- sort(tmp[L,]$Stop, decreasing=T)[1]
+				NewStart <- sort(as.numeric(tmp[L,]$Start))[1]
+				NewStop <- sort(as.numeric(tmp[L,]$Stop), decreasing=T)[1]
 				#NewStart <- as.integer(quantile(tmp[L,]$Start, probs=1:100/100)[20]) # 20%
 				#NewStop <- as.integer(quantile(tmp[L,]$Stop, , probs=1:100/100)[80]) # 85%
 				NewChr <- X
