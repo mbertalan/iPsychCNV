@@ -87,8 +87,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		Sample <- read.table(X, sep="\t", header=TRUE, stringsAsFactors=F)
 		CNVmean <- apply(df[,c("Start", "Stop", "Chr")], 1, function(X)
 		{
-		 	Start <- X["Start"]
-		 	Stop <- X["Stop"]
+		 	Start <- as.numeric(X["Start"])
+		 	Stop <- as.numeric(X["Stop"])
 		 	CHR <- X["Chr"]
 		 	subSample <- subset(Sample, Chr %in% CHR & Position >= Start & Position <= Stop) 
 		 	LRR <- subSample[,grep("Log.R.Ratio", colnames(subSample))]
