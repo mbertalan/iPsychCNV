@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10)
+PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
 {
 	library(iPsychCNV)
 	library(mclust)
@@ -55,6 +55,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10)
 				# Reading file
 				File <- AllHeadFiles[grep(ID, AllHeadFiles)]
 				Sample <- ReadSample(RawFile=File, skip=Skip, chr=Chr)
+				Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 	
 				# CNV region
 				tmp <- subset(Sample, Position > Start & Position < Stop)
