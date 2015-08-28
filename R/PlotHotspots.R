@@ -46,10 +46,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penal
 				ID <- X["ID"]
 				NumSNP <- as.numeric(X["NumSNPs"])
 				Size <- as.numeric(X["Length"])
-				if(Size < 50000){ Size <- Size * 2 }
+				if(Size < 100000){ Size <- Size * 2 }
 	
-				Start <- CNVstart - (Size)*(3/log10(NumSNP))^3
-				Stop <-  CNVstop + (Size)*(3/log10(NumSNP))^3
+				Start <- CNVstart - (Size)*(3/log10(NumSNP))^4
+				Stop <-  CNVstop + (Size)*(3/log10(NumSNP))^4
 		
 				cat(ID, "\n")
 				# Reading file
@@ -63,6 +63,9 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penal
 			})
 			red <- MatrixOrList2df(Data)
 			red2 <- red[with(red, order(Position)),]	
+			WindowSize <- round(nrow(red2)/100)
+			if(WindowSize < 5){ WindowSize <- 5 }
+			if(WindowSize > 35){ WindowSize <- 35 }
 			Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
 			red2$Mean <- Mean	
 			chr <- unique(red2$Chr)[1]
