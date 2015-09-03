@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE) # Path from cluster  
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=100) # Path from cluster  
 {
 	library(mclust)
 	library(parallel)
@@ -76,6 +76,6 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 
 		Title <- paste("CN: ", CN, ", SDCNV: ", SDCNV, ", NumSNPs: ", NumSNP, ", Sample: ", ID, sep="", collapse="")
 		Plot <- tracks(p3,p1, p2, main=Title, heights=c(3,5,5))
-		ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=100) 
+		ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=dpi) 
 	})
 }
