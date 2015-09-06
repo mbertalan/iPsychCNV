@@ -10,6 +10,7 @@ PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", R
 {
 	library(ggplot2)
 	library(ggbio)
+	library(RColorBrewer)
 	
 	tmp <- Sample
 	
