@@ -139,7 +139,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				return(df)
 			})
 			df <- MatrixOrList2df(DF)
-			save(df, file="df.RData")
+			#save(df, file="df.RData")
 			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF, stringsAsFactors=FALSE)
 			return(list(LRR=df2, CNVs=df))
 		})
@@ -150,7 +150,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 		return(DF)
 	})
 	CNVs <- MatrixOrList2df(All)
-	save(CNVs, file="CNVs.RData")
+	#save(CNVs, file="CNVs.RData")
 	CNVs$Length <- CNVs$Stop -  CNVs$Start
 	CNVs$CNVID <- 1:nrow(CNVs)
 	CNVs$PositionID <- apply(CNVs, 1, function(X){ gsub(" ", "", paste(X["StartIndx"], X["StopIndx"], sep="_", collapse="")) })
