@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30)
+MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 {
 	Res <- sapply(1:NLoops, function(Loops)
 	{
@@ -17,7 +17,7 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30)
 		iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=Cores, Pattern="^MockSample", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
 
 		# PennCNV
-		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="^MockSample_*", Cores=Cores, Skip=0, Normalization=FALSE, PFB=NA, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
+		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="^MockSample_*", Cores=Cores, Skip=0, Normalization=FALSE, PFB=NA, HMM=HMM, Path2PennCNV=Path2PennCNV)
 
 		# Evaluating methods
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred)
