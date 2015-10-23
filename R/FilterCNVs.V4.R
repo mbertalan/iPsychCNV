@@ -14,8 +14,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
-		
-		cat(Y, "\n")
+		#cat(Y, "\n")
 		CHR <- Y["Chr"]
 		CHR <- gsub(" ", "", CHR)
 		CNVStart <- as.numeric(Y["Start"]) 
@@ -23,7 +22,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		NumSNPs <- as.numeric(Y["NumSNPs"])
 		Size <- CNVStop - CNVStart
 		ID <- ID
-		cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n")
+		# cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n")
 
 		# Subselection of Data
 		tmp <- subset(CNV, Chr %in% CHR) # Whole Chr
@@ -34,13 +33,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 
 		tmpRaw <- subset(tmp, Position >= CNVStart & Position <= CNVStop)	# Only the CNV region
 			
-		
 		# Before and after CNV
 		IndxStart <- tmpRaw$PosIndx[1] - NumSNPs
 		if(IndxStart < 0){ IndxStart <- 1; LowMean <- 0 }
 		IndxStop <- tmpRaw$PosIndx[length(tmpRaw$PosIndx)] + NumSNPs
 		if(IndxStop > nrow(tmp)){  IndxStop <- nrow(tmp); HighMean <- 0 }
-
 
 		CNVStartIndx <- tmpRaw$PosIndx[1]
 		CNVStopIndx <- tmpRaw$PosIndx[length(tmpRaw$PosIndx)]
@@ -99,7 +96,6 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 	df <- do.call(rbind, AllRes)
 	tmp2 <- cbind(CNVs, df) # Combining position variables with filter ones.
 
-	
 	# Define if the CNV is Good or Bad
 	Type <- DefineCNVType(tmp2)
 	Class <- DefineCNVClass(tmp2)
