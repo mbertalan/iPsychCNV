@@ -6,7 +6,6 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	{
 		subCNVs <- subset(CNVs, ID %in% IDs)
 		RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
-		#RawFile <- IDs
 		cat(IDs, "\r")
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
@@ -26,12 +25,12 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\r")
 			return(df)
 		})
-		save(Res, file="Res.RData")
+		#save(Res, file="Res.RData")
 		df <- MatrixOrList2df(tmp=Res)
 		tmp <- cbind(subCNVs, df)
-		save(tmp, file="tmp.RData")
-		tmp2 <- FilterCNVs.V4(tmp, MinNumSNPs=MinNumSNPs, CNV=Sample, ID=IDs)
-		save(tmp2, file="tmp2.RData")
+		#save(tmp, file="tmp.RData")
+		tmp2 <- FilterCNVs.V4(CNVs=tmp, MinNumSNPs=MinNumSNPs, Sample=Sample, ID=IDs)
+		#save(tmp2, file="tmp2.RData")
 		return(tmp2)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
