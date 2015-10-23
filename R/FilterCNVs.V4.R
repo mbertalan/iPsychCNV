@@ -14,7 +14,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
-		cat(CNVs[1,],"\n")
+		
 		cat(Y, "\n")
 		CHR <- Y["Chr"]
 		CHR <- gsub(" ", "", CHR)
@@ -23,6 +23,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		NumSNPs <- as.numeric(Y["NumSNPs"])
 		Size <- CNVStop - CNVStart
 		ID <- ID
+		cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n")
 
 		# Subselection of Data
 		tmp <- subset(CNV, Chr %in% CHR) # Whole Chr
