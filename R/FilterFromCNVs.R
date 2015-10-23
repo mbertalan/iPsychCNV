@@ -34,7 +34,7 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	})
 	tmp2 <- MatrixOrList2df(tmp)
 	df <- tmp2[, !colnames(tmp2) %in% ".id"]
-	df$Source <- rep(Source, nrow(df))
+	df$Source <- Source
 	df$CN <- df$Class
 	df$CN[df$CN %in% "Del"] <- "1"
 	df$CN[df$CN %in% "Normal"] <- "2"
