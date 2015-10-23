@@ -26,14 +26,14 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		tmp <- subset(CNV, Chr %in% CHR) # Whole Chr
 		SDChr <- sd(tmp$LRR)
 		MeanChr <- mean(tmp$LRR)
-		tmp <- tmp[with(tmp, order(Position)), ] 
+		tmp <- tmp[with(tmp, order(Position)), ]
 		tmp$PosIndx <- 1:nrow(tmp)
 
 		tmpRaw <- subset(tmp, Position >= CNVStart & Position <= CNVStop)	# Only the CNV region
 			
 		
 		# Before and after CNV
-		IndxStart <- tmpRaw$PosIndx[1] - NumSNPs		 	
+		IndxStart <- tmpRaw$PosIndx[1] - NumSNPs
 		if(IndxStart < 0){ IndxStart <- 1; LowMean <- 0 }
 		IndxStop <- tmpRaw$PosIndx[length(tmpRaw$PosIndx)] + NumSNPs
 		if(IndxStop > nrow(tmp)){  IndxStop <- nrow(tmp); HighMean <- 0 }
