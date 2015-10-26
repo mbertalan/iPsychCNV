@@ -40,7 +40,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	
 	suppressPackageStartupMessages(library(parallel))
 
-	All <- sapply(1:N, function(SampleNum) 
+	All <- mclapply(1:N, mc.cores=Cores, mc.preschedule = FALSE, function(SampleNum)
 	{
 		FileName <- paste("MockSample_", SampleNum, ".tab", sep="", collapse="")
 	
