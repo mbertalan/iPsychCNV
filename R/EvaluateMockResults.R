@@ -6,8 +6,10 @@ EvaluateMockResults <- function(MockCNVs, df)
 	#if(length(MockCNVs$ID) == 0){ MockCNVs$ID <- "Sample" } # if no CNVID is provide
 	#if(length(df$ID) == 0){ df$ID <- "Sample" } # if no CNVID is provide
 	
-	Eval <- apply(MockCNVs, 1, function(X)
+	Eval <- mclapply(1:nrow(MockCNVs), mc.cores=Cores, mc.preschedule = FALSE, function(i)
+	#Eval <- apply(MockCNVs, 1, function(X)
 	{
+		X <- MockCNVs[i,]
 		StartM <- as.numeric(X["Start"])
 		StopM <- as.numeric(X["Stop"])
 		IDM <- as.character(X["ID"])
