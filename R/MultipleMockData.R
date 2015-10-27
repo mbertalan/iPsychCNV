@@ -23,9 +23,9 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
 
 		# Evaluating methods
-		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred)
-		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred)
-		Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter)
+		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
+		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred, Cores=Cores)
+		Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
 
 		# When prediction fail.
 		## PennCNV
