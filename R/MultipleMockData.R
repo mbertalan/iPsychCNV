@@ -23,8 +23,9 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
 
 		# Filter + Hotspots + ReScanCNVs
-		CNVs.Hotspots <- HotspotsCNV(df=PennCNV.filter, Freq=3, OverlapCutoff=0.8, Cores=28)
-		PennCNV.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=28, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData="/home/people/bertala/iPsychCNV/Test")
+		tmp <- subset(PennCNV.filter, CN != 2)
+		CNVs.Hotspots <- HotspotsCNV(df=tmp[,1:20], Freq=3, OverlapCutoff=0.8, Cores=Cores)
+		PennCNV.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".")
 
 		# Evaluating methods
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
