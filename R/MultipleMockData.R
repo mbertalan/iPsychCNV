@@ -22,10 +22,15 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		# PennCNV Filter
 		PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
 
+		# Filter + Hotspots + ReScanCNVs
+		CNVs.Hotspots <- HotspotsCNV(df=PennCNV.filter, Freq=5, OverlapCutoff=0.8, Cores=28)
+		PennCNV.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=28, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData="/home/people/bertala/iPsychCNV/Test")
+
 		# Evaluating methods
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
 		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred, Cores=Cores)
 		Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
+		Rescan.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.rescan, Cores=Cores)
 
 		# When prediction fail.
 		## PennCNV
@@ -55,9 +60,18 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
 		df3 <- data.frame(True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="Filter", Loop=Loops, stringsAsFactors=F)
 		
-		df4 <- rbind(df, df2, df3)
+		## PennCNV + Filter + Hotspots + ReScan
+		tmp <- subset(ReScan.Eval, CN != 2)
+		tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
+		tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
+		tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
+		tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
+		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
+		df4 <- data.frame(True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="Filter", Loop=Loops, stringsAsFactors=F)
+		
+		df5 <- rbind(df, df2, df3, df4)
 		system("rm -f MockSample_*")
-		return(df4)
+		return(df5)
 	})
 	Res <- MatrixOrList2df(Res)
 	Res$Values <- as.numeric(Res$Values)
