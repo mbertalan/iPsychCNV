@@ -37,13 +37,12 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 			names(DifLength) <- res$Length
 			res <- subset(res, Length == as.numeric(names(sort(DifLength))[1]))
 			#res <- subset(res, Length == max(res$Length))	
-			if(nrow(res) > 1){ res <- res[1,]}			
+			if(nrow(res) > 1){ res <- res[1,]}		
+			CNVID2 <- res$CNVID
+			CN2 <- as.numeric(res$CN)
 		}
-
-		CNVID2 <- res$CNVID
-		CN2 <- as.numeric(res$CN)
+		
 		cat("Test: ", ChrM,":", nrow(res), " ", CNM, CN2, CNVID2, "\n") 
-
 
 		if(NumCNVs == 0)
 		{
