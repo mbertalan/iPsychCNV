@@ -42,7 +42,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 
 		CNVID2 <- res$CNVID
 		CN2 <- as.numeric(res$CN)
-		cat(ChrM,":", nrow(res), " ", CNM, CN2, CNVID2, "\r") 
+		cat("Test: ", ChrM,":", nrow(res), " ", CNM, CN2, CNVID2, "\n") 
 
 
 		if(NumCNVs == 0)
@@ -105,7 +105,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 		}
 		if(CNV.Present != 1 || CNV.Present !=0)
 		{
-			cat(i, "\n")
+			cat("Test2: ", i, "\n")
 		}
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
 		return(df2)
