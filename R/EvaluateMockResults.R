@@ -6,15 +6,15 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 	#if(length(MockCNVs$ID) == 0){ MockCNVs$ID <- "Sample" } # if no CNVID is provide
 	#if(length(df$ID) == 0){ df$ID <- "Sample" } # if no CNVID is provide
 	
-	df <- df[, c("CN", "Start", "Stop", "CNVID", "ID", "Length", "Chr")]
+	df <- df[, c("CN", "Start", "Stop", "CNVID", "ID", "Length", "Chr", "NumSNPs")]
 	df$Start <- as.numeric(df$Start)
 	df$Stop <- as.numeric(df$Stop)
 	df$Chr <- as.numeric(df$Chr)
 	df$CN <- as.numeric(df$CN)
 	df$Length <- as.numeric(df$Length)
+	df$NumSNPs <- as.numeric(df$NumSNPs)
 	
 	Eval <- mclapply(1:nrow(MockCNVs), mc.cores=Cores, mc.preschedule = FALSE, function(i)
-	#Eval <- apply(MockCNVs, 1, function(X)
 	{
 		X <- MockCNVs[i,]
 		StartM <- as.numeric(X["Start"])
@@ -100,7 +100,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 				} 
 			}
 		}
-		cat("ChrM:",ChrM, "CNM", CNM, "CN2", CN2, "CNVID2", CNVID2, "CNV.Predicted", CNV.Predicted, "OverlapLenghM", OverlapLenghM, "OverlapSNP", OverlapSNP, "CNVID",CNVID, "CNVID2",CNVID2, "CN2", CN2, "NumCNVs", NumCNVs, "PredictedByOverlap", PredictedByOverlap,"\n") 
+		cat("ChrM:",ChrM, "CNM", CNM, "CN2", CN2, "CNV.Predicted", CNV.Predicted, "OverlapLenghM", OverlapLenghM, "OverlapSNP", OverlapSNP, "CNVID",CNVID, "CNVID2",CNVID2, "CN2", CN2, "NumCNVs", NumCNVs, "PredictedByOverlap", PredictedByOverlap,"\n") 
 		
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
 		save(df2, file="df2.RData")
