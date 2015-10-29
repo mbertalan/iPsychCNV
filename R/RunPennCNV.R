@@ -99,7 +99,13 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		
 		return(df)
 	})
+	
 	df <- MatrixOrList2df(Res)
 	df$Source <- "PennCNV"
+	
+	# Removing tmp files
+	RemoveTmpFiles <- paste(PathRawData, "/*penncnv*", sep="", collapse="")
+	unlink(x=RemoveTmpFiles)
+	
 	return(df)
 }
