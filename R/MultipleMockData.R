@@ -23,7 +23,7 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
 
 		# Filter + Hotspots + ReScanCNVs
-		CNVs.Hotspots <- HotspotsCNV(df=PennCNV.filter, Freq=1, OverlapCutoff=0.8, Cores=28)
+		CNVs.Hotspots <- HotspotsCNV(df=PennCNV.filter, Freq=3, OverlapCutoff=0.8, Cores=28)
 		PennCNV.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=28, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData="/home/people/bertala/iPsychCNV/Test")
 
 		# Evaluating methods
