@@ -2,7 +2,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
 {
 	tmp2 <- apply(roi, 1, function(X)
 	{
-		cat(X, "\n")
+		cat(X, "\r")
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
 		StopRoi <- as.numeric(X["Stop"])
