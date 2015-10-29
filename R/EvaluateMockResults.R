@@ -54,8 +54,8 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 		}
 		else
 		{	
-			StartO <- max(c(res$Start, StartM))[1]
-			StopO <- min(c(res$Stop, StopM))[1]
+			StartO <- max(c(as.numeric(res$Start), as.numeric(StartM)))[1]
+			StopO <- min(c(as.numeric(res$Stop), as.numeric(StopM)))[1]
 			if(StartO == StartM & StopO == StopM)
 			{
 				StartO <- max(res$Start)[1]
