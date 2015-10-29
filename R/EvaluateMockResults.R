@@ -31,7 +31,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
  		res <- subset(df, Chr == ChrM & Start <= StopM & Stop >= StartM & ID %in% IDM)
  	
 		NumCNVs <- nrow(res)
-		if(NumCNVs > 1) # Selecting only one CNV
+		if(NumCNVs > 0) # Selecting only one CNV
 		{
 			DifLength <- abs(res$Length - LengthM)
 			names(DifLength) <- res$Length
