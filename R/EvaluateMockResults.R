@@ -103,7 +103,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 				} 
 			}
 		}
-		if(as.character(CNV.Present)
+		if(as.character(CNV.Present))
 		{
 			cat(CNV.Present, CNV.Predicted, OverlapLenghM, OverlapSNP, CNVID, CNVID2, CN2, NumCNVs, PredictedByOverlap, "\n")
 		}
