@@ -6,7 +6,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 	#if(length(MockCNVs$ID) == 0){ MockCNVs$ID <- "Sample" } # if no CNVID is provide
 	#if(length(df$ID) == 0){ df$ID <- "Sample" } # if no CNVID is provide
 	
-	df <- df[, c("CN", "Start", "Stop", "CNVID", "ID", "Length")]
+	df <- df[, c("CN", "Start", "Stop", "CNVID", "ID", "Length", "Chr")]
 	df$Start <- as.numeric(df$Start)
 	df$Stop <- as.numeric(df$Stop)
 	df$Chr <- as.numeric(df$Chr)
