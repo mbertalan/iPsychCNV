@@ -26,7 +26,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 		CNVID <- as.numeric(X["CNVID"])
 		CNM <- as.numeric(X["CN"])
 
-		if(CNM == 2){ CNV.Present=0 }else{ CNV.Present=1 }
+		if(CNM == 2){ CNV.Present <- 0 }else{ CNV.Present <- 1 }
 		# From df predition
  		res <- subset(df, Chr == ChrM & Start <= StopM & Stop >= StartM & ID %in% IDM)
  	
