@@ -83,7 +83,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 			{
 				if(CNM == CN2)
 				{	
-					CNV.Predicted = 1 
+					CNV.Predicted <- 1 
 					if(OverlapLenghM > 80 & OverlapLenghM < 120)
 					{ 
 						PredictedByOverlap <- 1 
@@ -100,7 +100,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 				} 
 			}
 		}
-		cat("Test: ", ChrM,":", nrow(res), " ", CNM, CN2, CNVID2, i, "\n") 
+		cat("Test: ", ChrM,":", nrow(res), " ", CNM, CN2, CNVID2, i, CNV.Present,CNV.Predicted,"\n") 
 		
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
 		return(df2)
