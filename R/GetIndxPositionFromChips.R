@@ -24,5 +24,5 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 		return(df)
 	})
 	df <- MatrixOrList2df(tmp=Res2)
-	return(CNVs)
+	return(df)
 }
