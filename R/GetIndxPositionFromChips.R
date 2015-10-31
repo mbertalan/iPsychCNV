@@ -10,7 +10,7 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 		CHR <- gsub(" ", "", CHR)	
 		subSample <- subset(Sample, Chr %in% CHR) 			# Subset by Chr
 		subSample <- subSample[with(subSample, order(Position)),]	
-		cat("SubSample rows:", nrow(subSample), "\n")
+		#cat("SubSample rows:", nrow(subSample), "\n")
 		# Order
 		StartIndx <- which.min(abs(subSample$Position - StartM))
 		StopIndx <- which.min(abs(subSample$Position - StopM))
