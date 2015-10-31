@@ -2,7 +2,7 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 {
 	Res <- apply(CNVs, 1, function(X)
 	{
-		cat(X, "\n")
+		#cat(X, "\n")
 		StartM <- as.numeric(X["Start"]) # CNV Start
 		StopM <- as.numeric(X["Stop"])
 		CHR <- X["Chr"]
