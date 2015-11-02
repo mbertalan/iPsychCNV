@@ -8,8 +8,9 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 		subSample <- subset(Sample, Chr %in% CHR) 			# Subset by Chr
 		subSample <- subSample[with(subSample, order(Position)),]	
 	
-		Res <- apply(df2, 1, function(X)
+		Res <- sapply(1:nrow(df2), function(i)
 		{
+			X <- df2[i,]
 			StartM <- as.numeric(X["Start"]) # CNV Start
 			StopM <- as.numeric(X["Stop"])
 			# Order
@@ -18,8 +19,7 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 			NumSNPs <- StopIndx - StartIndx
 			# df <- data.frame(Start=StartM, Stop=StopM, Chr=CHR, StartIndx=StartIndx, StopIndx=StopIndx, NumSNPs=NumSNPs)
 			df <- data.frame(StartIndx=StartIndx, StopIndx=StopIndx, NumSNPs=NumSNPs)
-			df2 <- as.data.frame(X)
-			df3 <- cbind(df, df2)
+			df3 <- cbind(df, df2[i,])
 			return(df3)
 		})
 		df <- MatrixOrList2df(tmp=Res)
