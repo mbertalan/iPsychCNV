@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
+FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose=FALSE) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
 	CNVID <- rownames(CNVs)
 	CNVs$CNVID <- CNVID
@@ -14,7 +14,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
-		#cat(Y, "\n")
+		if(verbose){ cat(Y, "\n") }
 		CHR <- Y["Chr"]
 		CHR <- gsub(" ", "", CHR)
 		CNVStart <- as.numeric(Y["Start"]) 
@@ -22,7 +22,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		NumSNPs <- as.numeric(Y["NumSNPs"])
 		Size <- CNVStop - CNVStart
 		ID <- ID
-		# cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n")
+		if(verbose){ cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n") }
 
 		# Subselection of Data
 		tmp <- subset(CNV, Chr %in% CHR) # Whole Chr
@@ -50,18 +50,18 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		if(length(Data$High) > 20 & length(Data$CNV) > 20){ CNV2HighPvalue <- t.test(Data$High, Data$CNV)$p.value }else{ CNV2HighPvalue <- 0 }
 		if(length(Data$Low) > 20 & length(Data$CNV) > 20) { CNV2LowPvalue <- t.test(Data$Low, Data$CNV)$p.value }else{ CNV2LowPvalue <- 0 }
 
-		#cat("Get Variables", " ", proc.time(), "\n")
+		if(verbose){ cat("Get Variables", " ", proc.time(), "\n") }
 		ptm.tmp <- proc.time()
 		res2 <- GetDataVariables(Data)
 		Res.tmp <- proc.time() - ptm.tmp
-		#cat("GetDataVariables time: ", Res.tmp["elapsed"], "\n")
+		if(verbose){ cat("GetDataVariables time: ", Res.tmp["elapsed"], "\n") }
 
 		# My BAF Classification	
 		ptm.tmp <- proc.time()
 		res <- ClassNumbers(tmpRaw)
 		MyBAF <- EvaluateMyBAF(res, res2)
 		Res.tmp <- proc.time() - ptm.tmp
-		#cat("ClassNumbers time: ", Res.tmp["elapsed"], "\n")
+		if(verbose){ cat("ClassNumbers time: ", Res.tmp["elapsed"], "\n") }
 	
 		# Defining LogRRatio
 		if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
@@ -71,7 +71,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=10, Sample, ID="Test") #  Path
 		
 
 		# Class by turnpoint: BAlleleFreq by density # Step detection
-		#cat("Turn points", " ", proc.time(), " \n")
+		if(verbose){ cat("Turn points", " ", proc.time(), " \n") }
 		BAFDes <- density(tmpRaw$B.Allele.Freq)
 		tp <- turnpoints(BAFDes$y)
 		
