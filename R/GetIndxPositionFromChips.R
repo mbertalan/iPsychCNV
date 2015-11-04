@@ -2,10 +2,10 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 {
 	Res2 <- sapply(unique(CNVs$Chr), function(y)
 	{
-		CHR <- y
-		CHR <- gsub(" ", "", CHR)
-		df2 <- subset(CNVs, Chr %in% CHR)	
-		subSample <- subset(Sample, Chr %in% CHR) 			# Subset by Chr
+		CHR2 <- y
+		CHR2 <- gsub(" ", "", CHR2)
+		df2 <- subset(CNVs, Chr %in% CHR2)	
+		subSample <- subset(Sample, Chr %in% CHR2) 			# Subset by Chr
 		subSample <- subSample[with(subSample, order(Position)),]	
 	
 		Res <- sapply(1:nrow(df2), function(i)
