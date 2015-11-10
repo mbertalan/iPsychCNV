@@ -1,6 +1,6 @@
 ##' Compress CNVs
 ##'
-##'
+##' @test
 ##' @title CompressCNVs
 ##' @return Hotspots
 ##' @author Marcelo Bertalan
