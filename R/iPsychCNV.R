@@ -91,25 +91,32 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		}
 	})
 	cat("Done all !\n")
-	df <- MatrixOrList2df(tmp)
-	df <- subset(df, CN != 2) # removing non-CNV results to save memory
-	df <- df[, !colnames(df) %in% "Class"]
-	
-	if(!is.na(OutputPath))
+	if(nrow(tmp) ==)
 	{
-		# Print results or return as an object ?
-		if(Cores > 1)
-		{
-			OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
-		}
-		else
-		{
-			OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
-		}
-		write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+		cat("Sorry no CNV found.\n")
 	}
-		
+	else
+	{
+		df <- MatrixOrList2df(tmp)
+		df <- subset(df, CN != 2) # removing non-CNV results to save memory
+		df <- df[, !colnames(df) %in% "Class"]
+	
+		if(!is.na(OutputPath))
+		{
+			# Print results or return as an object ?
+			if(Cores > 1)
+			{
+				OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
+			}
+			else
+			{
+			OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+			}
+			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+		}
+		return(df)
+	}
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
-	return(df)
+	
 }
