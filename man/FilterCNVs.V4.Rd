@@ -4,7 +4,8 @@
 \alias{FilterCNVs.V4}
 \title{iPsychCNVs}
 \usage{
-FilterCNVs.V4(CNVs = CNVs, MinNumSNPs, CNV, ID)
+FilterCNVs.V4(CNVs = CNVs, MinNumSNPs = 20, Sample, ID = "Test",
+  verbose = FALSE)
 }
 \value{
 Data frame with CNVs and classification.

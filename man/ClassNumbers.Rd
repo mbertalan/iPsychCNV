@@ -4,7 +4,7 @@
 \alias{ClassNumbers}
 \title{ClassNumbers}
 \usage{
-ClassNumbers(BAF)
+ClassNumbers(tmpRaw)
 }
 \value{
 Data frame with a populate percentage for each class

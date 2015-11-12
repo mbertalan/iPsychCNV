@@ -4,7 +4,7 @@
 \alias{EvaluateMyBAF}
 \title{EvaluateMyBAF}
 \usage{
-EvaluateMyBAF(res, CNVmean)
+EvaluateMyBAF(res, res2)
 }
 \value{
 Classification for BAF.
