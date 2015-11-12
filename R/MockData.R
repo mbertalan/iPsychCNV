@@ -1,3 +1,4 @@
+##' @export
 MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or PKU (Perfect or noise)
 {
 	# Use Wave1 PFB ? Wave1PFB comes with the package.
