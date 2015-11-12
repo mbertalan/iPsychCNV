@@ -120,11 +120,11 @@ stack.plot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL){
                         }
                     }
                     ## Plot Log R ratio and Intestity points
-                    points(id[,3], (id[,4]/2) + (topY-(0.5*box)), pch=20, cex=0.5, col = "darkred") 
-                    points(id[,3], id[,5] + (topY-2*box-(space/2)), pch=20, cex=0.5, col = "darkblue")
+                    points(id[,3], id[,4] + (topY-2*box-(space/2)), pch=20, cex=0.5, col = "darkblue")
+                    points(id[,3], (id[,5]/2) + (topY-(0.5*box)), pch=20, cex=0.5, col = "darkred")
                     ## Draw center line in boxs (x0, y0, x1, y1)
-                    segments(reg.start, topY-(box/2), reg.stop, topY-(box/2), col="gray") 
-                    segments(reg.start, (topY-1.5*box-(space/2)), reg.stop, (topY-1.5*box-(space/2)), col="gray")
+                    segments(reg.start, topY-(box/2), reg.stop, topY-(box/2), col="black") 
+                    segments(reg.start, (topY-1.5*box-(space/2)), reg.stop, (topY-1.5*box-(space/2)), col="black")
                     ## Calc new Y-top spot 
                     topY <- topY-(2*box+1.5*space)
                     
