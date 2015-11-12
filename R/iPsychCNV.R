@@ -94,6 +94,8 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	if(length(tmp) == 0)
 	{
 		cat("Sorry no CNV found.\n")
+		TimeRes <- proc.time() - ptm
+		cat("Total time: ", TimeRes["elapsed"], "\n")
 	}
 	else
 	{
@@ -113,13 +115,12 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			}
 			else
 			{
-			OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
 			}
 			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
 		}
+		TimeRes <- proc.time() - ptm
+		cat("Total time: ", TimeRes["elapsed"], "\n")
 		return(df)
 	}
-	TimeRes <- proc.time() - ptm
-	cat("Total time: ", TimeRes["elapsed"], "\n")
-	
 }
