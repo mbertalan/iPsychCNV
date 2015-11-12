@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, hg="hg18", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, OutputFileName="Test") # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, OutputFileName="Test") # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -91,25 +91,33 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		}
 	})
 	cat("Done all !\n")
-	df <- MatrixOrList2df(tmp)
-	df <- subset(df, CN != 2) # removing non-CNV results to save memory
-	df <- df[, !colnames(df) %in% "Class"]
-	
-	if(!is.na(OutputPath))
+	save(tmp, file="tmp.RData")
+	if(length(tmp) == 0)
 	{
-		# Print results or return as an object ?
-		if(Cores > 1)
-		{
-			OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
-		}
-		else
-		{
-			OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
-		}
-		write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+		cat("Sorry no CNV found.\n")
 	}
-		
+	else
+	{
+		df <- MatrixOrList2df(tmp)
+		df <- subset(df, CN != 2) # removing non-CNV results to save memory
+		df <- df[, !colnames(df) %in% "Class"]
+	
+		if(!is.na(OutputPath))
+		{
+			# Print results or return as an object ?
+			if(Cores > 1)
+			{
+				OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
+			}
+			else
+			{
+			OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+			}
+			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+		}
+		return(df)
+	}
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
-	return(df)
+	
 }
