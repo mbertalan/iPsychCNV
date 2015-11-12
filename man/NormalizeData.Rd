@@ -4,7 +4,8 @@
 \alias{NormalizeData}
 \title{Normalize Data}
 \usage{
-NormalizeData(CNV, ExpectedMean = 0, DF = 40, NormQspline = TRUE)
+NormalizeData(Sample = Sample, ExpectedMean = 0, penalty = 60,
+  Quantile = FALSE, QSpline = FALSE, sd = 0.18)
 }
 \value{
 LRR normalized

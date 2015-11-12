@@ -4,7 +4,8 @@
 \alias{FindCNV.V4}
 \title{FindCNV}
 \usage{
-FindCNV.V4(ID, MinNumSNPs, CNV)
+FindCNV.V4(ID = "Test", Sample = Sample, CPTmethod = "meanvar",
+  CNVSignal = 0.1, penvalue = 10)
 }
 \value{
 A data frame with CNVs, with start and stop position, chr and etc. for each sample.

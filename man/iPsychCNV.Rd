@@ -5,9 +5,12 @@
 \title{iPsychCNV}
 \usage{
 iPsychCNV(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/",
-  MINNumSNPs = 100, Cores = 10, NumFiles = "All", Pattern = "22q11_*",
-  MinLength = 1e+05, SelectedFiles = NA, NormQspline = FALSE,
-  DFspline = NA)
+  MINNumSNPs = 20, Cores = 1, hg = "hg19", NumFiles = "All",
+  Pattern = "22q11_*", MinLength = 10, SelectedFiles = NA, Skip = 10,
+  LCR = FALSE, PFB = NULL, chr = NA, penalty = 60, Quantile = FALSE,
+  QSpline = FALSE, sd = 0.18, recursive = FALSE, CPTmethod = "meanvar",
+  CNVSignal = 0.1, penvalue = 10, OutputPath = NA,
+  OutputFileName = "Test", OnlyCNVs = FALSE)
 }
 \value{
 Data frame with CNVs predicted.
