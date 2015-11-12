@@ -91,7 +91,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 		}
 	})
 	cat("Done all !\n")
-	if(nrow(tmp) ==)
+	if(nrow(tmp) == 0)
 	{
 		cat("Sorry no CNV found.\n")
 	}
