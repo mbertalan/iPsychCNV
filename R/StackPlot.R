@@ -10,36 +10,17 @@
 ##' @param Highlight Position of a specific region to be highlighted, in the form chr21:1050000-1350000
 ##' @return A png plot of the specified loci
 ##' @author Johan Hilge Thygesen
-##' @export
 ##' @examples
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
-##' stack.plot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
-library(data.table)
-
-### Function to verify position integrity
-verify.pos <- function(Pos, argument = "Position"){
-    regmatch <- regexpr("chr[1-9X]{1,2}:[0-9]+-[0-9]+", Pos) # Regexp test of position
-    if(attr(regmatch, "match.length") == nchar(Pos)) { # Split postion
-        chr <- sub("chr", "", unlist(strsplit(Pos,":"))[1])
-        Pos <- unlist(strsplit(Pos,":"))[2]
-        x.start <- as.numeric(unlist(strsplit(Pos,"-"))[1])
-        x.stop <- as.numeric(unlist(strsplit(Pos,"-"))[2])
-        ## Test if start is smaller than stop
-        if(x.stop<=x.start) {  
-            stop(paste(argument,"stop is <= start /n/n"))
-        }
-    }else{
-        stop(paste("the",argument,"position argument is not valid see --help"))
-    }
-    return(c(chr,x.start,x.stop))
-}
-
-stack.plot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL){
+##' StackPlot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
+##' @export
+StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL){
+    suppressPackageStartupMessages(library(data.table))
     options(scipen=999) ## Disable scientific notation of positions
 
     ## Check and split position
-    split.pos <- verify.pos(Pos)
+    split.pos <- VerifyPos(Pos)
     chr <- split.pos[1]
     reg.start <- as.numeric(split.pos[2])
     reg.stop <- as.numeric(split.pos[3])
@@ -51,7 +32,7 @@ stack.plot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL){
 
     ## Check highlight position if specified
     if (length(Highlight) > 0){
-        split.pos <- verify.pos(sub("--highlight ", "", Highlight)) 
+        split.pos <- VerifyPos(sub("--highlight ", "", Highlight)) 
         high.chr <- split.pos[1]
         high.start <- as.numeric(split.pos[2])
         high.stop <- as.numeric(split.pos[3])
@@ -81,7 +62,7 @@ stack.plot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL){
                        }
         png(paste(outname, ".png", sep=""), width=1024, height=768)
         plot(xrange, yrange, type="n", yaxt='n', xaxt='n', xlab="", ylab="", main = Pos, cex.main=0.6)
-        axis(3, at=axTicks(3),labels=formatC(axTicks(3), format="d", big.mark='.'))
+        axis(3, at=axTicks(3),labels=formatC(axTicks(3), format="d", big.mark=','))
         topY <- max(yrange) - space
         ## CREATE a new plot after pr.page individuals have been plotted
         while(i <= pr.page) {

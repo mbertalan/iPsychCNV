@@ -12,6 +12,9 @@ iPsychCNV(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/",
   CNVSignal = 0.1, penvalue = 10, OutputPath = NA,
   OutputFileName = "Test", OnlyCNVs = FALSE)
 }
+\arguments{
+\item{PathRawData}{The path to the raw data files contining LRR and BAF values.}
+}
 \value{
 Data frame with CNVs predicted.
 }
@@ -20,6 +23,10 @@ iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
 }
 \details{
 Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+mockCNV <- MockData(N=5, Type="Blood", Cores=1)
+cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 }
 \author{
 Marcelo Bertalan
