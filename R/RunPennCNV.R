@@ -15,7 +15,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	{
 		# penncnv needs a name before LRR and BAF.
 		cat(file, "\n")
-		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F)
+		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F, skip=Skip)
 		tmp <- subset(tmp, !is.na(tmp$B.Allele.Freq))
 		tmp <- subset(tmp, !is.na(tmp$Log.R.Ratio))
 		
