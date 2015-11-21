@@ -1,10 +1,20 @@
 ##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title iPsychCNV
-##' @return Data frame with CNVs predicted.
+##' AbnBAF
+
+##' @title AbnBAF
+##' @param res
+##' @param LRR
+##' @param chrY.Perce
+
+##' @return BAlleleFreq: Estimate BAF copy number. 
 ##' @author Marcelo Bertalan
 ##' @export
+##' @examples
+##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
+##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
+
 
 AbnBAF <- function(res, LRR, chrY.Perc)
 {
