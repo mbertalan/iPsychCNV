@@ -13,8 +13,8 @@
 ##' @author Marcelo Bertalan
 ##' @export
 ##' @examples
-##' 
-##' 
+##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
+##' cnvs <- CheckAbnChr(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
 CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2", Cores=40, Pattern="*.txt$", skip=10, NumFiles="All")
 {
