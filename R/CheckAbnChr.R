@@ -1,9 +1,20 @@
-##' CheckAbnChr
+##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
 ##'
-##' @title CheckAbnChr
-##' @return Abnormal chromosomes
+##' CheckAbnChr: Estimate abnormal chromosome.
+##'
+##' @title CheckAbnChr.
+##' @param Path2RawFiles: Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
+##' @param Cores: Number of cores to run in parallel. 
+##' @param Pattern: Files pattern in the path. Example: "*.txt$"
+##' @param skip: How many rows should skip. Use if file has comments.
+##' @param NumFiles: Number of files to run. Example: numeric, 10 or character "All". 
+##' @return Data frame with the estimate copy number for each chromosome.
 ##' @author Marcelo Bertalan
 ##' @export
+##' @examples
+##' 
+##' 
 
 CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2", Cores=40, Pattern="*.txt$", skip=10, NumFiles="All")
 {
