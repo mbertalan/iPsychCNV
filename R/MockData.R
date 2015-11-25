@@ -54,7 +54,6 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	
 		tmp <- sapply(unique(CNV$Chr), function(CHR) # Chromosome loop
 		{
-			cat("Chr: ", CHR, "\n")
 			# CNV is a RData from the package with the Psycho chip information. 
 			# It has SNP position and names. It is used to guide the mock data.
 			subCNV <- subset(CNV, Chr %in% CHR) 
@@ -82,10 +81,9 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 		
 			# Adding CNVs		
 			NumCNVs <- ((round(length(X)/2000))-1)
-			cat(NumCNVs, "NumCNVs\n")
+			#cat(NumCNVs, "NumCNVs\n")
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
-				cat("2 \n")
 				PositionIndx <- as.numeric(i) * 2000
 
 				# Using fix size for chr position.
@@ -147,20 +145,19 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
 				return(df)
 			})
-			cat("3 \n")
 			df <- MatrixOrList2df(DF)
 			#save(df, file="df.RData")
 			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF, stringsAsFactors=FALSE)
 			return(list(LRR=df2, CNVs=df))
 		})
-		cat("4 \n")
+		
 		DF <- MatrixOrList2df(tmp["CNVs",])
 		LRR <- MatrixOrList2df(tmp["LRR",])
 	
 		write.table(LRR, sep="\t", quote=FALSE, row.names=FALSE, file=FileName) 
 		return(DF)
 	})
-	cat("5 \n")
+	
 	CNVs <- MatrixOrList2df(All)
 	#save(CNVs, file="CNVs.RData")
 	CNVs$Length <- CNVs$Stop -  CNVs$Start
