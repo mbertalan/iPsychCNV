@@ -6,7 +6,7 @@ Description: Find CNVs in GWAS data.
 Depends:
     R (>= 3.1.0)
 License: What license is it under?
-LazyData: false
+LazyData: true
 Imports:
     ggplot2,plyr,parallel,pastecs,changepoint,randtests,moments,RColorBrewer,
     stats,ggbio,GenomicRanges,biovizBase,Biostrings,scales,RColorBrewer,mclust,IRanges,data.table,
