@@ -54,7 +54,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	
 		tmp <- sapply(unique(CNV$Chr), function(CHR) # Chromosome loop
 		{
-			cat(CHR, "\n")
+			cat("Chr: ", CHR, "\n")
 			# CNV is a RData from the package with the Psycho chip information. 
 			# It has SNP position and names. It is used to guide the mock data.
 			subCNV <- subset(CNV, Chr %in% CHR) 
