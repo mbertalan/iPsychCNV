@@ -5,7 +5,7 @@
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
 ##' @export
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15, PennCNVFormat=FALSE)
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15, PennCNVFormat=FALSE, RemoveTmpfiles=FALSE)
 {
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=FALSE)
@@ -114,8 +114,11 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	df$Source <- "PennCNV"
 	
 	# Removing tmp files
-	#RemoveTmpFiles <- paste(PathRawData, "/*penncnv*", sep="", collapse="")
-	#unlink(x=RemoveTmpFiles)
+	if(RemoveTmpfiles)
+	{
+		RemoveTmpFiles <- paste(PathRawData, "/*penncnv*", sep="", collapse="")
+		unlink(x=RemoveTmpFiles)
+	}
 	
 	return(df)
 }
