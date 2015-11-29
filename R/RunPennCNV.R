@@ -5,33 +5,36 @@
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
 ##' @export
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15)
-
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15, PennCNVFormat=FALSE)
 {
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=FALSE)
+
 	# Re-writing file.
-	mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(file) 
+	if(!PennCNVFormat) # If not in PennCNV format, than make files to match PennCNV format.
 	{
-		# penncnv needs a name before LRR and BAF.
-		cat(file, "\n")
-		tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F, skip=Skip)
-		tmp <- subset(tmp, !is.na(tmp$B.Allele.Freq))
-		tmp <- subset(tmp, !is.na(tmp$Log.R.Ratio))
-		
-		if(Normalization)
+		mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(file) 
 		{
-			tmp <- NormalizeData(tmp,ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
-		}
+			# penncnv needs a name before LRR and BAF.
+			cat(file, "\n")
+			tmp <- read.table(file, sep="\t", header=TRUE, stringsAsFactors=F, skip=Skip)
+			tmp <- subset(tmp, !is.na(tmp$B.Allele.Freq))
+			tmp <- subset(tmp, !is.na(tmp$Log.R.Ratio))
 		
-		colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B Allele Freq"
-		colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
-		colnames(tmp)[colnames(tmp) %in% "SNP.Name"] <- "Name"
-		tmp <- tmp[, c("Name", "Position", "Chr", "C B Allele Freq", "C Log R Ratio")]
-		Newfile <- paste(file, ".penncnv", sep="", collapse="")
-		write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
-	})
-	Files <- list.files(path=PathRawData, pattern=".*\\.penncnv$", full.names=TRUE, recursive=FALSE)
+			if(Normalization)
+			{
+				tmp <- NormalizeData(tmp,ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
+			}
+		
+			colnames(tmp)[colnames(tmp) %in% "B.Allele.Freq"] <- "C B Allele Freq"
+			colnames(tmp)[colnames(tmp) %in% "Log.R.Ratio"] <- "C Log R Ratio"
+			colnames(tmp)[colnames(tmp) %in% "SNP.Name"] <- "Name"
+			tmp <- tmp[, c("Name", "Position", "Chr", "C B Allele Freq", "C Log R Ratio")]
+			Newfile <- paste(file, ".penncnv", sep="", collapse="")
+			write.table(tmp, file=Newfile, quote=FALSE, row.names=FALSE, sep="\t")
+		})
+		Files <- list.files(path=PathRawData, pattern=".*\\.penncnv$", full.names=TRUE, recursive=FALSE)
+	}
 	
 	# Creating Chip info file for PennCNV
 	cat(Files[1], "\n")
