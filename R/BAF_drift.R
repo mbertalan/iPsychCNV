@@ -7,6 +7,7 @@
 ##' @param BAF: BAF information from CNV region.
 ##' @return Data frame with QC variables.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
 ##' BAF <- subCNV$B.Allele.Freq
