@@ -4,6 +4,7 @@
 ##' @title ClassNumbers
 ##' @return Data frame with a populate percentage for each class
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 
