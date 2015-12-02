@@ -4,6 +4,7 @@
 ##' @title DefineCNVType
 ##' @return CNV type.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 DefineCNVType <- function(tmp2)
