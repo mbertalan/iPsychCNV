@@ -1,6 +1,6 @@
 ##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
 ##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
-##' ##' @source \url{http://biopsych.dk/iPsychCNV/tutorial.html}
+##' ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##'
 ##' FilterFromCNVs: Filter CNV from other methods.
 ##'
