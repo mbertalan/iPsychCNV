@@ -4,6 +4,7 @@
 ##' @title CleaningPeaks
 ##' @return Peaks for BAF.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 CleaningPeaks <- function(tp)
