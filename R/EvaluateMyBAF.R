@@ -4,6 +4,7 @@
 ##' @title EvaluateMyBAF
 ##' @return Classification for BAF.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 EvaluateMyBAF <- function(res, res2)
