@@ -4,6 +4,7 @@
 ##' @title iPsychCNVs
 ##' @return Data frame with CNVs and classification.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose=FALSE) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
