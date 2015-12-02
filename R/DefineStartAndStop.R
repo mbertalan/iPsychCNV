@@ -4,6 +4,7 @@
 ##' @title DefineStartAndStop
 ##' @return Data frame with Start and Stop.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 DefineStartAndStop <- function(indx, subCNV, CHR, ID, CPT.Res)
