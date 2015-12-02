@@ -2,6 +2,7 @@
 ##' @title CompressCNVs
 ##' @return Hotspots
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
