@@ -1,6 +1,5 @@
 ##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
 ##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
-
 ##'
 ##' FilterFromCNVs: Filter CNV from other methods.
 ##'
@@ -24,8 +23,6 @@
 ##' Gada.filter <- FilterFromCNVs(CNVs=Gada, PathRawData=".", MinNumSNPs=10, Source="Gada", Skip=0, Cores=1)
 ##' See iPsychCNV tutorial for more examples
 ##' http://biopsych.dk/iPsychCNV/tutorial.html
-
- 
 
 FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=0, Cores=1)
 {
