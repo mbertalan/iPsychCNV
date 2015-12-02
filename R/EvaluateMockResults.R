@@ -4,6 +4,7 @@
 ##' @title iPsychCNV
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 EvaluateMockResults <- function(MockCNVs, df, Cores=1)
