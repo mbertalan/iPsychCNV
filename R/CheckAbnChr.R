@@ -11,6 +11,7 @@
 ##' @param NumFiles: Number of files to run. Example: numeric, 10 or character "All". 
 ##' @return Data frame with the estimate copy number for each chromosome.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
