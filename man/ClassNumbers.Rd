@@ -3,6 +3,9 @@
 \name{ClassNumbers}
 \alias{ClassNumbers}
 \title{ClassNumbers}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 ClassNumbers(tmpRaw)
 }

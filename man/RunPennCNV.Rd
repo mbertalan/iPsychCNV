@@ -9,7 +9,8 @@ RunPennCNV(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs = 20,
   Normalization = FALSE, PFB = "NO",
   HMM = "/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm",
   Path2PennCNV = "/media/NeoScreen/NeSc_home/share/Programs/penncnv/",
-  penalty = 60, Quantile = TRUE, QSpline = TRUE, sd = 0.15)
+  penalty = 60, Quantile = TRUE, QSpline = TRUE, sd = 0.15,
+  PennCNVFormat = FALSE, RemoveTmpfiles = FALSE)
 }
 \value{
 Data frame with CNVs predicted.

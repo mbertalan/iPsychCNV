@@ -3,6 +3,9 @@
 \name{CleaningPeaks}
 \alias{CleaningPeaks}
 \title{CleaningPeaks}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 CleaningPeaks(tp)
 }

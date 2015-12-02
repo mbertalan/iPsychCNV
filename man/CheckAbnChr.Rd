@@ -3,6 +3,9 @@
 \name{CheckAbnChr}
 \alias{CheckAbnChr}
 \title{CheckAbnChr.}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 
   CheckAbnChr(Path2RawFiles = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2",

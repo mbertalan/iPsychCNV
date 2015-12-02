@@ -3,6 +3,9 @@
 \name{CompressCNVs}
 \alias{CompressCNVs}
 \title{CompressCNVs}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 CompressCNVs(tmp4, OverlapCutoff, Cores)
 }

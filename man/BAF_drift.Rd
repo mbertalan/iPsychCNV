@@ -3,6 +3,9 @@
 \name{BAF_drift}
 \alias{BAF_drift}
 \title{BAF_drift}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 BAF_drift(BAF)
 }

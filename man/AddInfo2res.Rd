@@ -3,6 +3,9 @@
 \name{AddInfo2res}
 \alias{AddInfo2res}
 \title{AddInfo2res}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 AddInfo2res(res, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF,
   LogRRatio, SumPeaks, SDChr, MeanChr)
@@ -40,8 +43,6 @@ AddInfo2res: Function to add variables for each CNV region. Function is used at 
 res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 }
 \author{
-Marcelo Bertalan
-
 Marcelo Bertalan
 }
 
