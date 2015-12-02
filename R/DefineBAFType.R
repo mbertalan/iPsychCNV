@@ -4,6 +4,7 @@
 ##' @title DefineBAFType
 ##' @return BAF classification.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 DefineBAFType <- function(SumPeaks)
