@@ -4,6 +4,7 @@
 ##' @title DefineCNVClass
 ##' @return CNV class.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 
