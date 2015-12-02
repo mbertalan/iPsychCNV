@@ -1,18 +1,19 @@
 ##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
 ##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
-##' ##' @source \url{http://biopsych.dk/iPsychCNV}
+
 ##'
 ##' FilterFromCNVs: Filter CNV from other methods.
 ##'
 ##' @title FilterFromCNVs.
-##' @param CNVs: data frame with CNVs.
-##' @param PathRawData: Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
-##' @param Cores: Number of cores to run in parallel. 
-##' @param Skip: How many rows should skip. Use if file has comments.
-##' @param MinNumSNPs: Minimum number of SNPs per CNV. 
-##' @param Source: Which method is the original call.
+##' @param CNVs data frame with CNVs.
+##' @param PathRawData Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
+##' @param Cores Number of cores to run in parallel. 
+##' @param Skip How many rows should skip. Use if file has comments.
+##' @param MinNumSNPs Minimum number of SNPs per CNV. 
+##' @param Source Which method is the original call.
 ##' @return Data frame with the estimate copy number for each chromosome.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
 
@@ -22,7 +23,8 @@
 ##' Gada <- RunGada(Sample)
 ##' Gada.filter <- FilterFromCNVs(CNVs=Gada, PathRawData=".", MinNumSNPs=10, Source="Gada", Skip=0, Cores=1)
 ##' See iPsychCNV tutorial for more examples
-##' @source \url{http://biopsych.dk/iPsychCNV/tutorial.html}
+##'  \url{http://biopsych.dk/iPsychCNV/tutorial.html}
+
  
 
 FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=0, Cores=1)
