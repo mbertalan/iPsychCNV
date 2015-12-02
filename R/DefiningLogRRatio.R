@@ -4,6 +4,7 @@
 ##' @title DefiningLogRRatio
 ##' @return Classification for LRR.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 
 DefiningLogRRatio <- function(res2)
