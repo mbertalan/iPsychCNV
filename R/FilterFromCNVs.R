@@ -23,7 +23,7 @@
 ##' Gada <- RunGada(Sample)
 ##' Gada.filter <- FilterFromCNVs(CNVs=Gada, PathRawData=".", MinNumSNPs=10, Source="Gada", Skip=0, Cores=1)
 ##' See iPsychCNV tutorial for more examples
-##'  \url{http://biopsych.dk/iPsychCNV/tutorial.html}
+##' http://biopsych.dk/iPsychCNV/tutorial.html
 
  
 
