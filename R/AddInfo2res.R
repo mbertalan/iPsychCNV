@@ -18,12 +18,10 @@
 ##' @return return all variables together in a in data frame
 
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
 ##' res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
-
-##' @author Marcelo Bertalan
-##' @export
 
 AddInfo2res <- function(res, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 {
