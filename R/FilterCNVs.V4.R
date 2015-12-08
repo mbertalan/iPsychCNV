@@ -48,10 +48,9 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		
 		# Creating a list with variables
 		Data <- list(Low=Low$Log.R.Ratio, CNV=tmpRaw$Log.R.Ratio, High=High$Log.R.Ratio, LRR=tmpRaw$LRR) # LRR is original corrected for mean = 0.
-		if(length(Data$High) > 20 & length(Data$CNV) > 20){ CNV2HighPvalue <- t.test(Data$High, Data$CNV)$p.value }else{ CNV2HighPvalue <- 0 }
-		if(length(Data$Low) > 20 & length(Data$CNV) > 20) { CNV2LowPvalue <- t.test(Data$Low, Data$CNV)$p.value }else{ CNV2LowPvalue <- 0 }
+		if(length(Data$High) > 10 & length(Data$CNV) > 10){ CNV2HighPvalue <- t.test(Data$High, Data$CNV)$p.value }else{ CNV2HighPvalue <- 0 }
+		if(length(Data$Low) > 10 & length(Data$CNV) > 10) { CNV2LowPvalue <- t.test(Data$Low, Data$CNV)$p.value }else{ CNV2LowPvalue <- 0 }
 
-		if(verbose){ cat("Get Variables", " ", proc.time(), "\n") }
 		ptm.tmp <- proc.time()
 		res2 <- GetDataVariables(Data)
 		Res.tmp <- proc.time() - ptm.tmp
@@ -65,13 +64,17 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		if(verbose){ cat("ClassNumbers time: ", Res.tmp["elapsed"], "\n") }
 	
 		# Defining LogRRatio
+		ptm.tmp <- proc.time()
 		if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
 		{
 			LogRRatio <- DefiningLogRRatio(res2)
 		}else{ LogRRatio <- 2 }
+		Res.tmp <- proc.time() - ptm.tmp
+		if(verbose){ cat("Define LRR time: ", Res.tmp["elapsed"], "\n") }
 		
 
 		# Class by turnpoint: BAlleleFreq by density # Step detection
+		ptm.tmp <- proc.time()
 		if(verbose){ cat("Turn points", " ", proc.time(), " \n") }
 		BAFDes <- density(tmpRaw$B.Allele.Freq)
 		tp <- turnpoints(BAFDes$y)
@@ -84,6 +87,8 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		dfTmp <- DefineBAFType(SumPeaks)
 		BAlleleFreq <- dfTmp$BAlleleFreq
 		Class <- dfTmp$Class
+		Res.tmp <- proc.time() - ptm.tmp
+		if(verbose){ cat("Define BAF time: ", Res.tmp["elapsed"], "\n") }
 
 		# Get genotype Info
 		#Genotype <- GetGenotypeInfo(tmpRaw)
