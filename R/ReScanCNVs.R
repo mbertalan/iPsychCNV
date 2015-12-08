@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, hg="hg18", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA) # Files2 OutputPath
+ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 	suppressPackageStartupMessages(library(parallel))
@@ -35,7 +35,10 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr)
 
 		# The CNVs are given by hotspots, Position might change if multiple chips are used.
-		CNVs <- GetIndxPositionFromChips(CNVs, Sample)
+		if(IndxPos)
+		{
+			CNVs <- GetIndxPositionFromChips(CNVs, Sample)
+		}
 		
 		if(nrow(CNVs) > 0)
 		{
