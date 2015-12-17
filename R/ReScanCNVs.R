@@ -52,15 +52,15 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 			df$CN[df$CN %in% "DoubleDel"] <- "0"
 			df$CN[df$CN %in% "DoubleDup"] <- "4"
 			df$CN <- as.numeric(df$CN)
-			df$SampleID <- ID
+			df <- subset(df, CN != 2) # removing non-CNV results to save memory
+			df <- df[, !colnames(df) %in% "Class"]
+			df$ID <- ID
 			return(df)
 		}	
 		Res.tmp <- proc.time() - ptm.tmp
 	})
 	cat("Done all !\n")
 	df <- MatrixOrList2df(tmp)
-	df <- subset(df, CN != 2) # removing non-CNV results to save memory
-	df <- df[, !colnames(df) %in% "Class"]
 	
 	if(!is.na(OutputPath))
 	{
