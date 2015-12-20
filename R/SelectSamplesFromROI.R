@@ -1,10 +1,16 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' SelectSamplesFromROI
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title iPsychCNV
-##' @return Data frame with CNVs predicted.
+##' Given hotspots regions and overlap cutoff it will return CNVs that belong to each hotspot.
+##' @title SelectSamplesFromTOI
+##' @return Data frame with CNVs predicted that belong to each hotspot.
+##' @param DF: Data frame with CNVs predicted for each sample. 
+##' @param roi: Regions of Interest or hotspots.
+##' @param OverlapMin: Minimum overlap a CNV need to have with the hotspot to be selected. 
+##' @param OverlapMax: Maximum overlap accepted for a CNV and a hotspots.  
 ##' @author Marcelo Bertalan
 ##' @export
+##' @examples
+##' cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 
 SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
 {
