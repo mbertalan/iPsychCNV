@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-SelectSamplesFromROI <- function(DF, roi, OverlapMin, OverlapMax)
+SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
 {
 	tmp2 <- apply(roi, 1, function(X)
 	{
