@@ -7,13 +7,13 @@
 
 PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=100) # Path from cluster  
 {
+	library(ggplot2)
 	library(mclust)
 	library(parallel)
-	library(biovizBase)
+	#library(biovizBase)
 	library(GenomeGraphs)
 	library(ggbio)
 	library(IRanges)
-	library(ggplot2)
 	library(GenomicRanges)
 	library(RColorBrewer)
 	
