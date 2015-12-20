@@ -16,7 +16,8 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	library(ggplot2)
 	library(GenomicRanges)
 	library(RColorBrewer)
-
+	
+	LocalFolder <- getwd()
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 	DF$UniqueID <- 1:nrow(DF)
 	#matrixList <- lapply(1:NROW(as.matrix(DF)), function(i) DF[i,,drop=FALSE]) 
@@ -43,7 +44,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	
 		OutFolder <- paste(CNVstart, CNVstop, chr, sep="_", collapse="")
 		# Setting working directory and creating a directory
-		LocalFolder <- getwd()
+
 		if (file.exists(OutFolder)){ setwd(file.path(LocalFolder, OutFolder))
 		}
 		else
