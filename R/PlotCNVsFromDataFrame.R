@@ -41,6 +41,17 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 		Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
 		Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
 	
+		OutFolder <- paste(CNVstart, CNVstop, chr, sep="_", collapse="")
+		# Setting working directory and creating a directory
+		LocalFolder <- getwd()
+		if (file.exists(OutFolder)){ setwd(file.path(LocalFolder, OutFolder))
+		}
+		else
+		{ 
+    			dir.create(file.path(LocalFolder, OutFolder))
+    			setwd(file.path(LocalFolder, OutFolder))
+		}
+		
 		NewName <- paste(UniqueID, CNVstart, CNVstop, chr, ID, sep="_", collapse="")
 		OutPlotfile <- paste(NewName, "plot.png", sep=".", collapse="")
 
