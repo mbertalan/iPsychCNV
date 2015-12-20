@@ -10,9 +10,9 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	library(ggplot2)
 	library(mclust)
 	library(parallel)
-	#library(biovizBase)
+	library(biovizBase)
 	library(GenomeGraphs)
-	library(ggbio)
+	library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
 	library(IRanges)
 	library(GenomicRanges)
 	library(RColorBrewer)
