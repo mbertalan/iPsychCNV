@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=100) # Path from cluster  
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=100, Files=NA) # Path from cluster  
 {
 	library(ggplot2)
 	library(mclust)
@@ -18,18 +18,20 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	library(RColorBrewer)
 	
 	LocalFolder <- getwd()
-	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+	if(is.na(Files))
+	{
+		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+	}
+	
 	DF$UniqueID <- 1:nrow(DF)
 	#matrixList <- lapply(1:NROW(as.matrix(DF)), function(i) DF[i,,drop=FALSE]) 
 	#mclapply(matrixList, mc.cores=Cores, function(X) 
 	mclapply(DF$UniqueID, mc.cores=Cores, function(UID) 
 	{
 		X <- subset(DF, UniqueID %in% UID)
-	
 		chr <- X$Chr
 		ID <- X$ID
 		UniqueID <- X$UniqueID
-
 		cat(ID, "\n")
 	
 		CNVstart <- as.numeric(X$Start)
