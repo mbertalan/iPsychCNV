@@ -77,9 +77,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			ptm.tmp <- proc.time()
 			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
 			Res.tmp <- proc.time() - ptm.tmp
-			#cat("Filter CNVs time: ", Res.tmp["elapsed"], "\n")
-			#cat("CNVsRes:", nrow(CNVsRes), "\n")
-			#save(CNVsRes, file="CNVsRes.RData")
+		
 			df$Source <- rep("iPsychCNV", nrow(df))
 			df$CN <- df$Class
 			df$CN[df$CN %in% "Del"] <- "1"
@@ -88,12 +86,18 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			df$CN[df$CN %in% "DoubleDel"] <- "0"
 			df$CN[df$CN %in% "DoubleDup"] <- "4"
 			df$CN <- as.numeric(df$CN)
-
 			if(OnlyCNVs)
 			{
 				df <- subset(df, CN != 2) # removing non-CNV results to save memory
 			}
 			df <- df[, !colnames(df) %in% "Class"]
+			
+			# Check if every sample results should be printed or not.
+			if(!is.na(OutputPath))
+			{
+				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+				write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+			}
 			return(df)
 		}
 	})
@@ -110,16 +114,8 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	
 		if(!is.na(OutputPath))
 		{
-			# Print results or return as an object ?
-			if(Cores > 1)
-			{
-				OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
-			}
-			else
-			{
-				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
-			}
 			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+			OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
 		}
 		TimeRes <- proc.time() - ptm
 		cat("Total time: ", TimeRes["elapsed"], "\n")
