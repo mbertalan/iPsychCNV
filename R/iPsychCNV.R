@@ -88,9 +88,12 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			df$CN[df$CN %in% "DoubleDel"] <- "0"
 			df$CN[df$CN %in% "DoubleDup"] <- "4"
 			df$CN <- as.numeric(df$CN)
-			# Dup <- subset(df, CNVmean > 0.15)
-			# Del <- subset(df, CNVmean < -0.35)
-			#df <- rbind(Dup, Del)
+
+			if(OnlyCNVs)
+			{
+				df <- subset(df, CN != 2) # removing non-CNV results to save memory
+			}
+			df <- df[, !colnames(df) %in% "Class"]
 			return(df)
 		}
 	})
@@ -104,11 +107,6 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	else
 	{
 		df <- MatrixOrList2df(tmp)
-		if(OnlyCNVs)
-		{
-			df <- subset(df, CN != 2) # removing non-CNV results to save memory
-		}
-		df <- df[, !colnames(df) %in% "Class"]
 	
 		if(!is.na(OutputPath))
 		{
