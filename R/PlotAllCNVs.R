@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg18") # TimesLength
+PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg19", chr=NA, start=NA, stop=NA) # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
@@ -43,8 +43,14 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	
 	tmp2 <- rbind(tmp2, CytoBands, roi)
 
-	tmp3 <- subset(tmp2, Indx > 0)
+	# Subset if specific region is selected.
+	if(!is.na(chr))
+	{ 
+		tmp2 <- subset(tmp2, Chr %in% chr & Start < stop & Stop > start)
+	}	
 
+	# Creating titles and check CNV count.
+	tmp3 <- subset(tmp2, Indx > 0)
 	Info <- tapply(tmp3$ID, as.factor(tmp3$Chr), function(X){ c(length(unique(X)), length(X)) }) 
 	df <- do.call(rbind.data.frame, Info)
 	names(df) <- c("Samples", "CNVs")
@@ -64,9 +70,12 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	Colors <- brewer.pal("Set1", n=9) # + scale_color_brewer(palette="Set1")
 	b <- ggplot() + geom_segment(data=tmp2, aes(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class)))# aes(x=Start, y=Indx)
 	b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))
-	b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
-	b <- b + geom_vline(aes(xintercept = c(Start, Stop)), data=tmp2ROI, alpha=0.2) 
-	#return(b)
+	
+	if(is.na(start))
+	{
+		b <- b + geom_vline(aes(xintercept = c(Start, Stop)), data=tmp2ROI, alpha=0.2) 
+		b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
+	}
+	
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
-	#return(tmp2)
 }
