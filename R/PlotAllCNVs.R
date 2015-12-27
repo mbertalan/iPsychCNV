@@ -75,6 +75,8 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	{
 		b <- b + geom_vline(aes(xintercept = c(Start, Stop)), data=tmp2ROI, alpha=0.2) 
 		b <- b + facet_wrap(~ Titles, scales = "free", ncol = NCOL) 
+	}else{
+		b <- b + xlim(start, stop)
 	}
 	
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
