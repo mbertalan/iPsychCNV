@@ -44,17 +44,9 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
 			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
-			df$Source <- rep("iPsychCNV", nrow(df))
-			df$CN <- df$Class
-			df$CN[df$CN %in% "Del"] <- "1"
-			df$CN[df$CN %in% "Normal"] <- "2"
-			df$CN[df$CN %in% "Dup"] <- "3"
-			df$CN[df$CN %in% "DoubleDel"] <- "0"
-			df$CN[df$CN %in% "DoubleDup"] <- "4"
-			df$CN <- as.numeric(df$CN)
-			df <- subset(df, CN != 2) # removing non-CNV results to save memory
-			df <- df[, !colnames(df) %in% "Class"]
-			df$ID <- ID
+
+			# removing non-CNV results to save memory
+			df <- subset(df, CN != 2) 
 			
 			# Save memory if too many CNVRs to ReScan. Print results or return as an object ?
 			if(ResPerSample)
