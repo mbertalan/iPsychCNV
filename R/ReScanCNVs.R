@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE) # Files2 OutputPath
+ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE) # Files2 OutputPath
 {	
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 	suppressPackageStartupMessages(library(parallel))
@@ -55,7 +55,17 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 			df <- subset(df, CN != 2) # removing non-CNV results to save memory
 			df <- df[, !colnames(df) %in% "Class"]
 			df$ID <- ID
-			return(df)
+			
+			# Save memory if too many CNVRs to ReScan. Print results or return as an object ?
+			if(ResPerSample)
+			{
+				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+				write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+			}
+			else
+			{
+				return(df)
+			}
 		}	
 		Res.tmp <- proc.time() - ptm.tmp
 	})
@@ -64,8 +74,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 	
 	if(!is.na(OutputPath))
 	{
-		# Print results or return as an object ?
-		OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+		OutputFile <- paste(OutputPath, "All_CNVs.tab", sep="", collapse="")
 		write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
 	}
 		
