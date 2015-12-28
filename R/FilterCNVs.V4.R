@@ -102,10 +102,21 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	tmp2 <- cbind(CNVs, df) # Combining position variables with filter ones.
 
 	# Define if the CNV is Good or Bad
-	Type <- DefineCNVType(tmp2)
+	#Type <- DefineCNVType(tmp2)
+	#tmp2$Type <- Type
 	Class <- DefineCNVClass(tmp2)
-	tmp2$Type <- Type
 	tmp2$Class <- Class
-	return(tmp2)
+	df <- tmp2
+	df$Source <- rep("iPsychCNV", nrow(df))
+	df$CN <- df$Class
+	df$CN[df$CN %in% "Del"] <- "1"
+	df$CN[df$CN %in% "Normal"] <- "2"
+	df$CN[df$CN %in% "Dup"] <- "3"
+	df$CN[df$CN %in% "DoubleDel"] <- "0"
+	df$CN[df$CN %in% "DoubleDup"] <- "4"
+	df$CN <- as.numeric(df$CN)
+	df <- df[, !colnames(df) %in% "Class"]
+	df$ID <- ID
+	return(df)
 }
 
