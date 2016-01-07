@@ -3,8 +3,31 @@
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title iPsychCNV
 ##' @param PathRawData The path to the raw data files contining LRR and BAF values.
+##' @param MINNumSNPs Minimum number of SNPs per CNV. Default 20.
+##' @param Cores Number of cores used. Default 1.
+##' @param hg Human genome version. Default hg19.
+##' @param NumFiles Number of files to be analyzed from PathRawData.
+##' @param Pattern File pattern in the PathRawData. Example: "*.txt".
+##' @param MinLength Minimum CNV length.
+##' @param SelectedFiles List of file names that should be analyzed from PathRawData. 
+##' @param Skip integer: the number of lines of the data file to skip before beginning to read data.
+##' @param LCR list: low complex region, list of SNPs that should be removed.
+##' @param PFB vector: Population frequency 0 to 1 for each SNP in the array. 
+##' @param chr character: select a specific chromosome to be analyzed. 
+##' @param penalty
+##' @param Quantile
+##' @param QSpline
+##' @param sd
+##' @param recursive
+##' @param CPTmethod
+##' @param CNVSignal
+##' @param penvalue
+##' @param OutputPath
+##' @param OutputFileName
+##' @param OnlyCNVs
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
