@@ -34,8 +34,12 @@
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
-##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
-##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
+##' MockDataCNVs <- MockData(N=100, Type="PKU", Cores=20)
+##' iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^MockSample", MinLength=10, Skip=0)
+##' iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
+##' iPsych.Pred.Rescan <- ReScanCNVs(iPsych.Pred.hotspots, PathRawData="./Data", hg="hg19", Pattern="*", Cores=20, Skip=0)
+##' iPsych.Pred.Rescan$ID <- iPsych.Pred.Rescan$SampleID
+##' PlotAllCNVs(iPsych.Pred.Rescan, Name="iPsych.Pred.Rescan.png", hg="hg19", Roi=MockDataCNVs.roi)
 
 ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA) # Files2 OutputPath
 {	
