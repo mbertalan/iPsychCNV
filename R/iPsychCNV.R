@@ -14,11 +14,11 @@
 ##' @param LCR list: low complex region, list of SNPs that should be removed.
 ##' @param PFB vector: Population frequency 0 to 1 for each SNP in the array. 
 ##' @param chr character: select a specific chromosome to be analyzed. 
-##' @param penalty
-##' @param Quantile
-##' @param QSpline
-##' @param sd
-##' @param recursive
+##' @param penalty the coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.
+##' @param Quantile logical, if quantile normalization should be applied or not. Default FALSE.
+##' @param QSpline logical, if a cubic smoothing spline should be used to normalize the data. Default FALSE.
+##' @param sd numeric Log R ratio standard deviation for the quantile nomarlization. Default 0.18.
+##' @param recursive logical, Should the listing recurse into directories? From list.files {base}.
 ##' @param CPTmethod
 ##' @param CNVSignal
 ##' @param penvalue
