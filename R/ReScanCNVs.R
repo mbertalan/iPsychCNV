@@ -2,9 +2,40 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title ReScanCNVs
+##' @param CNVs data frame with hotspots to re-scan. Minimum information necessary is Chr, Start and Stop position. 
+##' @param PathRawData The path to the raw data files contining LRR and BAF values.
+##' @param MINNumSNPs Minimum number of SNPs per CNV. Default 20.
+##' @param Cores Number of cores used. Default 1.
+##' @param hg Human genome version. Default hg19.
+##' @param NumFiles Number of files to be analyzed from PathRawData.
+##' @param Pattern File pattern in the PathRawData. Example: "*.txt".
+##' @param MinLength Minimum CNV length.
+##' @param SelectedFiles List of file names that should be analyzed from PathRawData. 
+##' @param Skip integer: the number of lines of the data file to skip before beginning to read data.
+##' @param LCR list: low complex region, list of SNPs that should be removed.
+##' @param PFB vector: Population frequency 0 to 1 for each SNP in the array. 
+##' @param chr character: select a specific chromosome to be analyzed. 
+##' @param penalty the coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.
+##' @param Quantile logical, if quantile normalization should be applied or not. Default FALSE.
+##' @param QSpline logical, if a cubic smoothing spline should be used to normalize the data. Default FALSE.
+##' @param sd numeric Log R ratio standard deviation for the quantile nomarlization. Default 0.18.
+##' @param recursive logical, Should the listing recurse into directories? From list.files {base}.
+##' @param CPTmethod character, method to find change points from changepoint package by Rebecca Killick. Default "meanvar", or "mean".
+##' @param CNVSignal numeric, minumum CNV signal to be consider a CNV in absolute value. Default 0.1, any CNV with mean Log R ration in the CNV region with abs(X) < 0.1 is ignored. 
+##' @param penvalue Same as pen.value from function cpt.mean at changepoint R package by Rebecca Killick. Default 10. "The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text           giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters".
+##' @param OutputPath character, path for output.
+##' @param OutputFileName character, Output file name. 
+##' @param OnlyCNVs logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.
+##' @param IndxPos, if index position for each hotspot is not included it will calculate. However, this step is time consuming.
+##' @param ResPerSample, If TRUE saves the results from each sample.  
+##' @param Files, a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time. 
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples
+##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
+##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
 ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA) # Files2 OutputPath
 {	
