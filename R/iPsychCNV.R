@@ -19,12 +19,12 @@
 ##' @param QSpline logical, if a cubic smoothing spline should be used to normalize the data. Default FALSE.
 ##' @param sd numeric Log R ratio standard deviation for the quantile nomarlization. Default 0.18.
 ##' @param recursive logical, Should the listing recurse into directories? From list.files {base}.
-##' @param CPTmethod
-##' @param CNVSignal
-##' @param penvalue
-##' @param OutputPath
-##' @param OutputFileName
-##' @param OnlyCNVs
+##' @param CPTmethod character, method to find change points from changepoint package by Rebecca Killick. Default "meanvar", or "mean".
+##' @param CNVSignal numeric, minumum CNV signal to be consider a CNV in absolute value. Default 0.1, any CNV with mean Log R ration in the CNV region with abs(X) < 0.1 is ignored. 
+##' @param penvalue Same as pen.value from function cpt.mean at changepoint R package by Rebecca Killick. Default 10. "The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text           giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters".
+##' @param OutputPath character, path for output.
+##' @param OutputFileName character, Output file name. 
+##' @param OnlyCNVs logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.
 ##' @return Data frame with CNVs predicted.
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
