@@ -1,9 +1,19 @@
-##' HotspotsCNV
+##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
 ##'
-##' @title CompressCNVsHighFreq
+##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title HotspotsCNV
+##' @param df dataframe with CNV predction with Chr, Start and Stop.
+##' @param Freq minimum number of CNVs to be considered a hotspot.
+##' @param OverlapCutoff minimum overlap among CNVs to be considered the same CNV region.
+##' @param Cores numeric, CPU numbers to be used. 
 ##' @return Hotspots
 ##' @author Marcelo Bertalan
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples
+##' MockDataCNVs <- MockData(N=100, Type="PKU", Cores=20)
+##' iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^MockSample", MinLength=10, Skip=0)
+##' iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
 
 HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 {
