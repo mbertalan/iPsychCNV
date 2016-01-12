@@ -3,6 +3,9 @@
 \name{EvaluateMyBAF}
 \alias{EvaluateMyBAF}
 \title{EvaluateMyBAF}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 EvaluateMyBAF(res, res2)
 }

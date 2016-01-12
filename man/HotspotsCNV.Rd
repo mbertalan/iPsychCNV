@@ -2,15 +2,35 @@
 % Please edit documentation in R/HotspotsCNV.R
 \name{HotspotsCNV}
 \alias{HotspotsCNV}
-\title{CompressCNVsHighFreq}
+\title{HotspotsCNV}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 HotspotsCNV(df, Freq = 1, OverlapCutoff = 0.7, Cores = 1)
+}
+\arguments{
+\item{df}{dataframe with CNV predction with Chr, Start and Stop.}
+
+\item{Freq}{minimum number of CNVs to be considered a hotspot.}
+
+\item{OverlapCutoff}{minimum overlap among CNVs to be considered the same CNV region.}
+
+\item{Cores}{numeric, CPU numbers to be used.}
 }
 \value{
 Hotspots
 }
 \description{
-HotspotsCNV
+iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+}
+\details{
+Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+MockDataCNVs <- MockData(N=100, Type="PKU", Cores=20)
+iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^MockSample", MinLength=10, Skip=0)
+iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
 }
 \author{
 Marcelo Bertalan

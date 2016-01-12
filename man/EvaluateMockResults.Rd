@@ -3,6 +3,9 @@
 \name{EvaluateMockResults}
 \alias{EvaluateMockResults}
 \title{iPsychCNV}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 EvaluateMockResults(MockCNVs, df, Cores = 1)
 }

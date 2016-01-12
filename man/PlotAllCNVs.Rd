@@ -5,7 +5,8 @@
 \title{PlotAllCNVs}
 \usage{
 PlotAllCNVs(df = CNV.Res, Name = "CNV.Res.Test.png", NCOL = 2,
-  Roi = roi, width = 16, height = 30, hg = "hg18")
+  Roi = roi, width = 16, height = 30, hg = "hg19", chr = NA,
+  start = NA, stop = NA)
 }
 \value{
 return data in data frame

@@ -3,6 +3,9 @@
 \name{DefineStartAndStop}
 \alias{DefineStartAndStop}
 \title{DefineStartAndStop}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 DefineStartAndStop(indx, subCNV, CHR, ID, CPT.Res)
 }

@@ -2,18 +2,30 @@
 % Please edit documentation in R/SelectSamplesFromROI.R
 \name{SelectSamplesFromROI}
 \alias{SelectSamplesFromROI}
-\title{iPsychCNV}
+\title{SelectSamplesFromTOI}
 \usage{
-SelectSamplesFromROI(DF, roi, OverlapMin, OverlapMax)
+SelectSamplesFromROI(DF, roi, OverlapMin = 0.8, OverlapMax = 1.2)
+}
+\arguments{
+\item{DF:}{Data frame with CNVs predicted for each sample.}
+
+\item{roi:}{Regions of Interest or hotspots.}
+
+\item{OverlapMin:}{Minimum overlap a CNV need to have with the hotspot to be selected.}
+
+\item{OverlapMax:}{Maximum overlap accepted for a CNV and a hotspots.}
 }
 \value{
-Data frame with CNVs predicted.
+Data frame with CNVs predicted that belong to each hotspot.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+SelectSamplesFromROI
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Given hotspots regions and overlap cutoff it will return CNVs that belong to each hotspot.
+}
+\examples{
+cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 }
 \author{
 Marcelo Bertalan

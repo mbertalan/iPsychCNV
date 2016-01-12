@@ -3,6 +3,9 @@
 \name{DefineCNVType}
 \alias{DefineCNVType}
 \title{DefineCNVType}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 DefineCNVType(tmp2)
 }

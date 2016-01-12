@@ -3,6 +3,9 @@
 \name{DefiningLogRRatio}
 \alias{DefiningLogRRatio}
 \title{DefiningLogRRatio}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 DefiningLogRRatio(res2)
 }

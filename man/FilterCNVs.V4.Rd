@@ -3,6 +3,9 @@
 \name{FilterCNVs.V4}
 \alias{FilterCNVs.V4}
 \title{iPsychCNVs}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 FilterCNVs.V4(CNVs = CNVs, MinNumSNPs = 20, Sample, ID = "Test",
   verbose = FALSE)

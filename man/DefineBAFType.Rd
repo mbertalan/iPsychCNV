@@ -3,6 +3,9 @@
 \name{DefineBAFType}
 \alias{DefineBAFType}
 \title{DefineBAFType}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 DefineBAFType(SumPeaks)
 }

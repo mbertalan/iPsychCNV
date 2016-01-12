@@ -5,7 +5,8 @@
 \title{PlotCNVsFromDataFrame}
 \usage{
 PlotCNVsFromDataFrame(DF, PathRawData = ".", Cores = 1, Skip = 0,
-  PlotPosition = 1, Pattern = "*", recursive = TRUE, dpi = 100)
+  PlotPosition = 1, Pattern = "*", recursive = TRUE, dpi = 100,
+  Files = NA)
 }
 \value{
 Data frame with CNVs predicted.
