@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10)
+FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=20, Merge=TRUE)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
@@ -39,8 +39,11 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=
 		
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
-			DF2 <- MergeCNVs(DF, MaxNumSNPs=50)
-			DF <- DF2[,colnames(DF)] # returning to same colname order as if you do not go in MergeCNVs
+			if(Merge)
+			{
+				DF2 <- MergeCNVs(DF, MaxNumSNPs=50)
+				DF <- DF2[,colnames(DF)] # returning to same colname order as if you do not go in MergeCNVs
+			}
 		}
 		return(DF)
 	})
