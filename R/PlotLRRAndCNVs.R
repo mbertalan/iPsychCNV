@@ -13,6 +13,11 @@ PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", R
 	
 	tmp <- Sample
 	
+	if(length(CNV$Source) == 0)
+	{
+		CNV$Source <- "iPsychCNV" 
+	}
+	
 	if(length(Roi$CNVmean) == 0)
 	{
 		Roi$CNVmean <- rep(CNVMean, nrow(Roi))
