@@ -9,7 +9,6 @@
 PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock)
 {
 	library(ggplot2)
-	library(ggbio)
 	library(RColorBrewer)
 	
 	tmp <- Sample
@@ -57,7 +56,7 @@ PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", R
 	}
 
 	p2 <- p2 + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))		
-
+	library(ggbio)
 	Plot <- tracks(p1, p2, heights=c(4,4))
 	ggsave(Plot, file=Name, width=16, height=6, dpi=300)
 	#
