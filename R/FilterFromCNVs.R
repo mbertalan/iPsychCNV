@@ -56,9 +56,10 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 		tmp <- cbind(subCNVs, df)
 		#save(tmp, file="tmp.RData")
 		tmp2 <- FilterCNVs.V4(CNVs=tmp, MinNumSNPs=MinNumSNPs, Sample=Sample, ID=IDs)
-		#save(tmp2, file="tmp2.RData")
+		save(tmp2, file="tmp2.RData")
 		return(tmp2)
 	})
+	save(tmp, file="tmp.RData")
 	tmp2 <- MatrixOrList2df(tmp)
 	df <- tmp2[, !colnames(tmp2) %in% ".id"]
 	df$Source <- Source
