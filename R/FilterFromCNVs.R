@@ -63,12 +63,12 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	tmp2 <- MatrixOrList2df(tmp)
 	df <- tmp2[, !colnames(tmp2) %in% ".id"]
 	df$Source <- Source
-	df$CN <- df$Class
-	df$CN[df$CN %in% "Del"] <- "1"
-	df$CN[df$CN %in% "Normal"] <- "2"
-	df$CN[df$CN %in% "Dup"] <- "3"
-	df$CN[df$CN %in% "DoubleDel"] <- "0"
-	df$CN[df$CN %in% "DoubleDup"] <- "4"
-	df$CN <- as.numeric(df$CN)
+	#df$CN <- df$Class
+	#df$CN[df$CN %in% "Del"] <- "1"
+	#df$CN[df$CN %in% "Normal"] <- "2"
+	#df$CN[df$CN %in% "Dup"] <- "3"
+	#df$CN[df$CN %in% "DoubleDel"] <- "0"
+	#df$CN[df$CN %in% "DoubleDup"] <- "4"
+	#df$CN <- as.numeric(df$CN)
 	return(df)
 }
