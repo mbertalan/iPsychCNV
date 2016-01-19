@@ -102,13 +102,13 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 			Res.tmp <- proc.time() - ptm.tmp
 		
 			df$Source <- rep("iPsychCNV", nrow(df))
-			df$CN <- df$Class
-			df$CN[df$CN %in% "Del"] <- "1"
-			df$CN[df$CN %in% "Normal"] <- "2"
-			df$CN[df$CN %in% "Dup"] <- "3"
-			df$CN[df$CN %in% "DoubleDel"] <- "0"
-			df$CN[df$CN %in% "DoubleDup"] <- "4"
-			df$CN <- as.numeric(df$CN)
+			#df$CN <- df$Class
+			#df$CN[df$CN %in% "Del"] <- "1"
+			#df$CN[df$CN %in% "Normal"] <- "2"
+			#df$CN[df$CN %in% "Dup"] <- "3"
+			#df$CN[df$CN %in% "DoubleDel"] <- "0"
+			#df$CN[df$CN %in% "DoubleDup"] <- "4"
+			#df$CN <- as.numeric(df$CN)
 			if(OnlyCNVs)
 			{
 				df <- subset(df, CN != 2) # removing non-CNV results to save memory
