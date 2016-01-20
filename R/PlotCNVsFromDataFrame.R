@@ -28,6 +28,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	#mclapply(matrixList, mc.cores=Cores, function(X) 
 	mclapply(DF$UniqueID, mc.cores=Cores, function(UID) 
 	{
+		setwd(LocalFolder)
 		X <- subset(DF, UniqueID %in% UID)
 		chr <- X$Chr
 		ID <- X$ID
@@ -47,7 +48,9 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 		OutFolder <- paste(CNVstart, CNVstop, chr, sep="_", collapse="")
 		# Setting working directory and creating a directory
 
-		if (file.exists(OutFolder)){ setwd(file.path(LocalFolder, OutFolder))
+		if (file.exists(OutFolder))
+		{
+			setwd(file.path(LocalFolder, OutFolder))
 		}
 		else
 		{ 
