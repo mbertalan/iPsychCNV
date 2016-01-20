@@ -5,7 +5,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=100, Files=NA) # Path from cluster  
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, ByFolder=FALSE) # Path from cluster  
 {
 	library(ggplot2)
 	library(mclust)
@@ -17,7 +17,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	library(GenomicRanges)
 	library(RColorBrewer)
 	
-	LocalFolder <- getwd()
+	LocalFolder <- PathRawData
 	if(is.na(Files))
 	{
 		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
@@ -48,16 +48,19 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 		OutFolder <- paste(CNVstart, CNVstop, chr, sep="_", collapse="")
 		# Setting working directory and creating a directory
 
-		if (file.exists(OutFolder))
+
+		if(ByFolder)
 		{
-			setwd(file.path(LocalFolder, OutFolder))
+			if (file.exists(OutFolder))
+			{
+				setwd(file.path(LocalFolder, OutFolder))
+			}
+			else
+			{ 
+    				dir.create(file.path(LocalFolder, OutFolder))
+    				setwd(file.path(LocalFolder, OutFolder))
+			}
 		}
-		else
-		{ 
-    			dir.create(file.path(LocalFolder, OutFolder))
-    			setwd(file.path(LocalFolder, OutFolder))
-		}
-		
 		NewName <- paste(UniqueID, CNVstart, CNVstop, chr, ID, sep="_", collapse="")
 		OutPlotfile <- paste(NewName, "plot.png", sep=".", collapse="")
 
@@ -70,11 +73,9 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 		red <-subset(red, Position > Start & Position < Stop)	
 		red2 <- red[with(red, order(Position)),]
 		
-	
 		Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
 		red2$Mean <- Mean
 		
-
 		# Ideogram
 		data(hg19IdeogramCyto,package="biovizBase")
 		CHR <- paste("chr", chr, collapse="", sep="")
