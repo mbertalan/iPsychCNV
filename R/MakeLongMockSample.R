@@ -22,7 +22,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 		{
 			df <- sapply(Type, function(Ty)
 			{
-				df <- data.frame("Type"=Ty,"Mean"=M,"NumSNPs"=S, stringsAsFactors=FALSE)			
+				df <- data.frame("Type"=Ty,"Mean"=M,"Size"=S, stringsAsFactors=FALSE)			
 				return(df)
 			})
 			df <- MatrixOrList2df(df)
@@ -47,6 +47,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	LongRoi$ID <- "LongMockSample.tab"
 	LongRoi$CNVID <- 1:nrow(LongRoi)
 	LongRoi$Length <- LongRoi$Size
+	colnames(LongRoi)[colnames(LongRoi) %in% "Size"] <- "NumSNPs"
 
 	# BAFs
 	BAFs <- seq(from=0, to=1, by=0.01) # 101
