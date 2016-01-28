@@ -22,7 +22,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 		{
 			df <- sapply(Type, function(Ty)
 			{
-				df <- data.frame("Type"=Ty,"Mean"=M,"Size"=S, stringsAsFactors=FALSE)			
+				df <- data.frame("Type"=Ty,"Mean"=M,"NumSNPs"=S, stringsAsFactors=FALSE)			
 				return(df)
 			})
 			df <- MatrixOrList2df(df)
