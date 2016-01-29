@@ -65,6 +65,9 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	TitleIndx <- sapply(unique(tmp2$Title), function(X){ as.numeric(unlist(strsplit(unlist(strsplit(unique(X)[1], ","))[1], "chr:"))[2]) })
 	tmp2$Titles <-  factor(tmp2$Title, levels= names(sort(TitleIndx)))
 
+	tmp2$Start <- as.numeric(tmp2$Start)
+	tmp2$Stop <- as.numeric(tmp2$Stop)
+
 	tmp2ROI <- subset(tmp2, Class %in% "ROI")
 	# Change name from start and stop so it is different from the two data.frames. This avoid problems with ggplot2 aes.
 	
