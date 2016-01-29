@@ -8,9 +8,9 @@
 
 GetLocus <- function(df) # df with CHR=chr12, CNV_Start=numeric, CNV_Stop=numeric
 {
-	library(GenomicRanges)
+	#library(GenomicRanges)
 	library(biovizBase)
-	library(Biostrings)
+	#library(Biostrings)
 	library(BiocGenerics)
 	data(hg19IdeogramCyto)
 	tmp <- BiocGenerics::as.data.frame(hg19IdeogramCyto)
