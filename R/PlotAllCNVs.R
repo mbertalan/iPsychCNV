@@ -74,8 +74,8 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	Colors <- brewer.pal("Set1", n=9) # + scale_color_brewer(palette="Set1")
 	b <- ggplot() + geom_segment(data=tmp2, aes(x = Start, y = Indx, xend = Stop, yend = Indx, colour=as.factor(Class)))# aes(x=Start, y=Indx)
 	b <- b + scale_colour_manual(values = c("ROI" = Colors[6],"q" = Colors[5],"p" = Colors[4], "1" = Colors[1], "3" = Colors[2], "4" = Colors[3], "0"=Colors[7], "2"=Colors[9]))
-	b <- b + geom_vline(aes(xintercept = Start), data=tmp2ROI, alpha=0.3) 
-	b <- b + geom_vline(aes(xintercept = Stop), data=tmp2ROI, alpha=0.3)
+	b <- b + geom_vline(aes(xintercept = Start), data=tmp2ROI, alpha=0.2) 
+	b <- b + geom_vline(aes(xintercept = Stop), data=tmp2ROI, alpha=0.2)
 	
 	if(is.na(start))
 	{
