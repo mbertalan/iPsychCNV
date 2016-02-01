@@ -66,8 +66,14 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 		OutPlotfile <- paste(NewName, "plot.png", sep=".", collapse="")
 
 		# Reading sample file
-		#RawFile <- paste(PathRawData, ID, sep="", collapse="")
-		RawFile <- Files[grep(ID, Files)]
+		if(is.na(Files))
+		{
+			RawFile <- paste(PathRawData, ID, sep="", collapse="")
+		}
+		else
+		{
+			RawFile <- Files[grep(ID, Files)]
+		}
 		cat(RawFile,"\n")
 		sample <- ReadSample(RawFile, skip=Skip)
 		red<-subset(sample,Chr==chr)	
