@@ -8,14 +8,15 @@
 PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, ByFolder=FALSE) # Path from cluster  
 {
 	library(ggplot2)
-	library(mclust)
+	library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
 	library(parallel)
 	library(biovizBase)
-	library(GenomeGraphs)
-	library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
-	library(IRanges)
-	library(GenomicRanges)
 	library(RColorBrewer)
+	library(GenomicRanges)
+	
+	#library(mclust)
+	#library(GenomeGraphs)
+	#library(IRanges)
 	
 	LocalFolder <- PathRawData
 	if(is.na(Files))
