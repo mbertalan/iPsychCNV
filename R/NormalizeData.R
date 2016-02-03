@@ -25,6 +25,7 @@ NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FAL
 			Spline <- smooth.spline(LRR, penalty=penalty)
 			Mean <- Spline$y
 			LRR <- LRR - Mean
+			subSample$Log.R.Ratio <- LRR
 		}
 	
 		if(Quantile) # Same distribution, fixed sd and mean
@@ -34,8 +35,9 @@ NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FAL
 			M2 <- cbind(M, LRR)
 			M3 <- normalize.quantiles(M2)
 			LRR <- M3[, 51]
+			subSample$Log.R.Ratio <- LRR
 		}
-		subSample$Log.R.Ratio <- LRR
+		
 		return(subSample)
 	})
 	tmp2 <- MatrixOrList2df(tmp)
