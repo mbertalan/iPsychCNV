@@ -29,6 +29,7 @@ GetDataVariables <- function(Data)
 	SDLow <- sd(Data$Low)
 	DiffHigh <- abs(CNVmean - HighMean)
 	DiffLow <- abs(CNVmean - LowMean)
+	CNVmeanByRef <- CNVmean - ((HighMean+LowMean)/2)
 	
 	# Wave
 	#tp <- turnpoints(Data$LRR)
@@ -53,7 +54,7 @@ GetDataVariables <- function(Data)
 	#Amplitude.SD <- sd(Amplitude)
 
 	#res2 <- data.frame(CNVmean=CNVmean, HighMean=HighMean, LowMean=LowMean, CNVmeanOrig=CNVmeanOrig, SDCNV=SDCNV, SDMeansCNV=SDMeansCNV, SDHigh=SDHigh, SDLow=SDLow,VarianceCNV=VarianceCNV, DiffHigh=DiffHigh, DiffLow=DiffLow,  Wave.Length.Mean=Wave.Length.Mean, Wave.Length.SD=Wave.Length.SD, Amplitude.Mean=Amplitude.Mean, Amplitude.SD=Amplitude.SD)
-	res2 <- data.frame(CNVmean=CNVmean, HighMean=HighMean, LowMean=LowMean, CNVmeanOrig=CNVmeanOrig, SDCNV=SDCNV, SDMeansCNV=SDMeansCNV, SDHigh=SDHigh, SDLow=SDLow,VarianceCNV=VarianceCNV, DiffHigh=DiffHigh, DiffLow=DiffLow)
+	res2 <- data.frame(CNVmean=CNVmean, CNVmeanByRef=CNVmeanByRef, UpMean=HighMean, DownMean=LowMean, , SDCNV=SDCNV) # SDMeansCNV=SDMeansCNV, SDHigh=SDHigh, SDLow=SDLow,VarianceCNV=VarianceCNV, DiffHigh=DiffHigh, DiffLow=DiffLow, CNVmeanOrig=CNVmeanOrig
 	return(res2)	
 	
 }
