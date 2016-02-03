@@ -15,9 +15,11 @@ NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FAL
 		subSample <- subSample[with(subSample, order(Position)),]
 		subSample$LRR <- subSample$Log.R.Ratio
 		LRR <- subSample$Log.R.Ratio
+	
+		# Center chromosome LRR	
+		subSample$Log.R.Ratio <- subSample$Log.R.Ratio - mean(subSample$Log.R.Ratio)
 		
 		# add later data that LRR with 2 peaks.
-		
 		if(QSpline) # detrend the data, only when sd is high & sd(LRR) > 0.2
 		{
 			Spline <- smooth.spline(LRR, penalty=penalty)
