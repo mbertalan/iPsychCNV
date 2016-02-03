@@ -100,7 +100,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	})
 	df <- do.call(rbind, AllRes)
 	tmp2 <- cbind(CNVs, df) # Combining position variables with filter ones.
-
+	save(tmp2, file="tmp2.RData")
 	# Define if the CNV is Good or Bad
 	#Type <- DefineCNVType(tmp2)
 	#tmp2$Type <- Type
