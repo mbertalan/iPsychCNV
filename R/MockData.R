@@ -17,12 +17,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	}
 		
 	# CNV Info: Using always the same position. Rdata from the package.
-	CNVsSize <- c(50, 100, 150, 300, 450, 600, 750, 900)
+	CNVsSize <- c(25, 50, 100, 150, 300, 450, 600, 900)
 	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
 	names(CNVSizeFixed) = 1:50
 	
 	# Always the same CN
-	CNFixed <- sample(c(0,1,2,2,2,2,3,4), 50, replace=TRUE) # CNV Type
+	CNFixed <- sample(c(0,1,1,2,2,2,2,3,3,4), 50, replace=TRUE) # CNV Type
 	names(CNFixed) = 1:50
 
 	List <- GetMockValues(Type=Type)
