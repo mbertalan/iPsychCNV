@@ -12,15 +12,17 @@ DefineCNVClass <- function(tmp2)
 {
 	Type <- apply(tmp2, 1, function(X)
 	{
-		Class <- "Normal"
+		Class <- 2
 		if(X["LogRRatio"] %in% X["BAlleleFreq"] & X["BAlleleFreq"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" )
 		{
-			Class <- GetCNVClass(X["LogRRatio"])
+			#Class <- GetCNVClass(X["LogRRatio"])
+			Class <- X["LogRRatio"]
 		}
 		else if(X["LogRRatio"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" ) # Just to avoid 2 Undefined being good.
 		{	
 				
-			Class <- GetCNVClass(X["LogRRatio"])
+			#Class <- GetCNVClass(X["LogRRatio"])
+			Class <- X["LogRRatio"]
 		}
 		else
 		{
@@ -28,16 +30,16 @@ DefineCNVClass <- function(tmp2)
 			{
 				Class <- 0
 			}
-			else if(X["LogRRatio"] == 2 & X["BAlleleFreq"] == 4 || X["MyBAF"] == 4)
+			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 4 || X["MyBAF"] == 4)
 			{
 				Class <- 4
 			}
+			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 1 || X["MyBAF"] == 1) # Duplication with LOH.
+			{
+				Class <- 3
+			}
 		}
-		# turnpoints needs some adjustments 
-		#else if(X["LogRRatio"] %in% X["BAlleleFreq"] & !X["LogRRatio"] %in% "Undefined")
-		#{	
-		#	Class <- GetCNVClass(X["LogRRatio"])
-		#}
+		
 		return(Class)
 	})
 	return(Type)
