@@ -26,17 +26,17 @@ DefineCNVClass <- function(tmp2)
 		}
 		else
 		{
-			if(X["LogRRatio"] == 1 & X["BAlleleFreq"] == 0 || X["MyBAF"] == 0)
+			if(X["LogRRatio"] == 1 & X["BAlleleFreq"] == 0 || X["LogRRatio"] == 1 & X["MyBAF"] == 0)
 			{
 				Class <- 0
 			}
-			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 4 || X["MyBAF"] == 4)
+			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 4 || X["LogRRatio"] == 3 & X["MyBAF"] == 4)
 			{
 				Class <- 4
 			}
 			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 1 || X["MyBAF"] == 1) # Duplication with LOH.
 			{
-				Class <- 3
+				Class <- 5
 			}
 		}
 		
