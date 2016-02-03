@@ -32,7 +32,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=
 		DF <- DefineStartAndStop(indx, subSample, CHR, ID, CPT.Res)
 		
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
-		DF <- subset(DF, abs(CNVMean) > 0.14)
+		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
 		DF$CN[DF$CN > 0] <- 3
 		DF$CN[DF$CN < 0] <- 1
