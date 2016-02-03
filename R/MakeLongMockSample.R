@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000))
+MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000), ChrMean=0, ChrSD=0.18)
 {
 	library(RColorBrewer)
 	library(ggplot2)
@@ -87,7 +87,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	BAF_CN4[c(50:51)] <- BAF_CN4[c(50:51)] + 0.1
 
 	BAF <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=DataSize)
-	LRR <- rnorm(DataSize, mean=0, sd=0.2)
+	LRR <- rnorm(DataSize, mean=ChrMean, sd=ChrSD)
 
 	sapply(1:nrow(df2), function(i)
 	{
