@@ -14,10 +14,6 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	library(RColorBrewer)
 	library(GenomicRanges)
 	
-	#library(mclust)
-	#library(GenomeGraphs)
-	#library(IRanges)
-	
 	LocalFolder <- PathRawData
 	if(is.na(Files))
 	{
@@ -25,8 +21,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 	}
 	
 	DF$UniqueID <- 1:nrow(DF)
-	#matrixList <- lapply(1:NROW(as.matrix(DF)), function(i) DF[i,,drop=FALSE]) 
-	#mclapply(matrixList, mc.cores=Cores, function(X) 
+
 	mclapply(DF$UniqueID, mc.cores=Cores, function(UID) 
 	{
 		setwd(LocalFolder)
