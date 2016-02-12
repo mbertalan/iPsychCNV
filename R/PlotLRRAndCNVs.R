@@ -6,7 +6,7 @@
 ##' @author Marcelo Bertalan
 ##' @export
 
-PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock, width=10, height=6, dpi=300, PNG=TRUE)
+PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock, width=9, height=3, dpi=200, PNG=TRUE)
 {
 	library(ggplot2)
 	library(RColorBrewer)
