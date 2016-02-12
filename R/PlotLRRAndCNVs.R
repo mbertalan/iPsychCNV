@@ -70,7 +70,7 @@ PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", R
 	Plot <- tracks(p1, p2, heights=c(4,4))
 	if(PNG)
 	{
-		ggsave(Plot, file=Name, width=10, height=6, dpi=300)
+		ggsave(Plot, file=Name, width=width, height=height, dpi=dpi)
 	}
 	else
 	{
