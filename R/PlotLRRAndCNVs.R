@@ -49,13 +49,13 @@ PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", R
 	Colors2 = brewer.pal("Dark2", n=7)
 
 	# LRR
-	p1 <- ggplot(tmp, aes(x=Position, y=Log.R.Ratio)) + geom_point(aes(x=Position, y=Log.R.Ratio), alpha=0.2, size=0.3) 
-	p1 <- p1 + geom_rect(data=Roi, aes(xmin =Start, xmax=Stop, ymin=(CNVmean-0.1), ymax=(CNVmean+0.1)), colour=Colors2[3], fill=NA, alpha=0.5, inherit.aes = FALSE, size=2) + theme(legend.title=element_blank())
+	p1 <- ggplot(tmp, aes(x=Position, y=Log.R.Ratio)) + geom_point(aes(x=Position, y=Log.R.Ratio), alpha=0.4, size=0.3) 
+	p1 <- p1 + geom_rect(data=Roi, aes(xmin =Start, xmax=Stop, ymin=(CNVmean-0.1), ymax=(CNVmean+0.1)), colour=Colors2[3], fill=NA, alpha=0.2, inherit.aes = FALSE, size=2) + theme(legend.title=element_blank())
 	p1 <- p1 +  geom_segment(data=CNV, aes(x = Start, y = CNVmean, xend = Stop, yend = CNVmean, colour=as.factor(CN)), size=4) + scale_colour_manual(values = c("1" = Colors[1], "2"=Colors[9], "3" = Colors[2], "4" = Colors[3], "0"=Colors[4], "5"=Colors[5], "B.Allele.Freq"=Colors[2], "CNV region"=Colors[3], "CNV predicted"=Colors[4], "Mean"="black"))	
-	p1 <- p1 + geom_line(data=tmp, aes(x=Position, y = Mean), size = 0.5, alpha=0.5) 
+	p1 <- p1 + geom_line(data=tmp, aes(x=Position, y = Mean), size = 0.5, alpha=0.4) 
 	
 	# BAF
-	p2 <- ggplot(tmp, aes(x=Position, y=B.Allele.Freq)) + geom_point(aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), alpha=0.2, size=0.3) 
+	p2 <- ggplot(tmp, aes(x=Position, y=B.Allele.Freq)) + geom_point(aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), alpha=0.9, size=0.3) 
 	p2 <- p2 + geom_rect(data=Roi, aes(xmin=Start, xmax=Stop, ymin=YMin, ymax=YMax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) 
 	
 	CNV <- subset(CNV, CN != 2)
