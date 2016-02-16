@@ -18,12 +18,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 		
 	# CNV Info: Using always the same position. Rdata from the package.
 	CNVsSize <- c(25, 50, 100, 150, 300, 450, 600, 900)
-	CNVSizeFixed <- sample(CNVsSize, 50, replace=TRUE)
-	names(CNVSizeFixed) = 1:50
+	CNVSizeFixed <- sample(CNVsSize, 100, replace=TRUE)
+	names(CNVSizeFixed) = 1:100
 	
 	# Always the same CN
-	CNFixed <- sample(c(0,1,1,2,2,2,2,3,3,4), 50, replace=TRUE) # CNV Type
-	names(CNFixed) = 1:50
+	CNFixed <- sample(c(0,1,1,2,2,3,3,4), 100, replace=TRUE) # CNV Type
+	names(CNFixed) = 1:100
 
 	List <- GetMockValues(Type=Type)
 	
@@ -80,11 +80,11 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			names(BAF) <- SNP.Name
 		
 			# Adding CNVs		
-			NumCNVs <- ((round(length(X)/2000))-1)
+			NumCNVs <- ((round(length(X)/1000))-1)
 			#cat(NumCNVs, "NumCNVs\n")
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
-				PositionIndx <- as.numeric(i) * 2000
+				PositionIndx <- as.numeric(i) * 1000
 
 				# Using fix size for chr position.
 				Size <- CNVSizeFixed[i]
