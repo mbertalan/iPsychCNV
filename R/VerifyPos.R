@@ -11,7 +11,7 @@
 ##' VerifyPos("chr21:1050000-135")
 ##' @export
 VerifyPos <- function(Pos, argument = "Position"){
-    regmatch <- regexpr("chr[1-9X]{1,2}:[0-9]+-[0-9]+", Pos) # Regexp test of position
+    regmatch <- regexpr("chr[0-9X]{1,2}:[0-9]+-[0-9]+", Pos) # Regexp test of position
     if(attr(regmatch, "match.length") == nchar(Pos)) { # Split postion
         chr <- sub("chr", "", unlist(strsplit(Pos,":"))[1])
         Pos <- unlist(strsplit(Pos,":"))[2]
