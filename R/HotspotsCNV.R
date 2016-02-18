@@ -79,7 +79,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 	CNV_Count <- sapply(1:nrow(tmp5), function(X)
 	{
 		tmp <- SelectSamplesFromROI(DF=OriginalDF, roi=tmp5[X,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
-		Counts <- data.frame("CN0"=0, "CN1"=0, "CN3"=0, "CN4"=0)
+		Counts <- data.frame("CN0"=0, "CN1"=0, "CN2"=0, "CN3"=0, "CN4"=0, "CN5"=0)
 		if(nrow(tmp) > 0)
 		{
 			tmp2 <- as.data.frame(table(tmp$CN), stringsAsFactors=F)
