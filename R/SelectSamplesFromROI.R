@@ -12,11 +12,13 @@
 ##' @examples
 ##' cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 
+suppressPackageStartupMessages(library(parallel))
+
 SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=1)
 {
 	tmp2 <- mclapply(1:nrow(roi), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
-		X <- roi[i,]
+		X <- roi[as.numeric(i),]
 		cat(X, "\r")
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
