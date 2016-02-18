@@ -86,10 +86,11 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 	})
 
 	CNV_Count2 <- MatrixOrList2df(CNV_Count)
+	save(CNV_Count2, file="CNV_Count.RData")
+	save(tmp5, file="tmp5.RData")
 	tmp5 <- GetLocus(tmp5)	
 	tmp5$ID <- rep("ROI", nrow(tmp5))	
 	tmp5$Class <- rep("ROI", nrow(tmp5))		
-	save(CNV_Count2, tmp5, file="CNV_Count.RData")
 	tmp6 <- cbind(tmp5, CNV_Count2)
 	tmp6$CNTotal <- tmp6$CN0 + tmp6$CN1 + tmp6$CN3 + tmp6$CN4
 	return(tmp6)
