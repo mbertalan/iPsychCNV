@@ -19,9 +19,9 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=
 	
 	tmp2 <- mclapply(1:nrow(roi), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
-		cat(i)
-		X <- roi[as.numeric(i),]
-		cat(X, "\r")
+		cat(i, "\n")
+		X <- roi[i,]
+		print(X)
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
 		StopRoi <- as.numeric(X["Stop"])
