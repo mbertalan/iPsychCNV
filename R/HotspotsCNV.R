@@ -6,6 +6,8 @@
 ##' @param Freq minimum number of CNVs to be considered a hotspot.
 ##' @param OverlapCutoff minimum overlap among CNVs to be considered the same CNV region.
 ##' @param Cores numeric, CPU numbers to be used. 
+##' @param OverlapMin Minimum overlap with hotspot to be selected for counting.
+##' @param OverlapMax Maximum overlap with hotspot to be selected for counting.
 ##' @return Hotspots
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -15,7 +17,7 @@
 ##' iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^MockSample", MinLength=10, Skip=0)
 ##' iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
 
-HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
+HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9,  OverlapMax=1.1)
 {
 	library(plyr)
 	library(parallel)
@@ -76,13 +78,16 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1)
 	save(tmp5, file="tmp5.RData")
 	CNV_Count <- sapply(1:nrow(tmp5), function(X)
 	{
-		tmp <- SelectSamplesFromROI(DF=OriginalDF, roi=tmp5[X,], OverlapMin=0.9,  OverlapMax=1.1)
+		tmp <- SelectSamplesFromROI(DF=OriginalDF, roi=tmp5[X,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
 		Counts <- data.frame("CN0"=0, "CN1"=0, "CN3"=0, "CN4"=0)
-		tmp2 <- as.data.frame(table(tmp$CN), stringsAsFactors=F)
-		tmp3 <- tmp2$Freq
-		names(tmp3) <- tmp2$Var1
-		names(tmp3) <- sapply(names(tmp3), function(X){ paste("CN", X, sep="", collapse="") })
-		Counts[names(tmp3)] <- tmp3
+		if(nrow(tmp) > 0)
+		{
+			tmp2 <- as.data.frame(table(tmp$CN), stringsAsFactors=F)
+			tmp3 <- tmp2$Freq
+			names(tmp3) <- tmp2$Var1
+			names(tmp3) <- sapply(names(tmp3), function(X){ paste("CN", X, sep="", collapse="") })
+			Counts[names(tmp3)] <- tmp3
+		}
 		return(Counts)
 	})
 
