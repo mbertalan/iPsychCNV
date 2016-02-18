@@ -20,12 +20,13 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=
 	tmp2 <- mclapply(1:nrow(roi), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
 		X <- roi[i,]
-		print(X, sep="\r")
+		#print(X, sep="\r")
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
 		StopRoi <- as.numeric(X["Stop"])
 		ChrRoi <-gsub(" ", "", X["Chr"])
 		Locus <- as.character(X["locus"])
+		cat(paste(ChrRoi, StartRoi, StopRoi, sep="\t", collapse="\t"), "\r") 
 		tmp <- subset(DF, Chr %in% ChrRoi & Start < StopRoi & Stop > StartRoi)  # & ((Length/LengthRoi) >  Overlap)
 		if(nrow(tmp) > 0)
 		{
