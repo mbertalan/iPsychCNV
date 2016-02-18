@@ -13,14 +13,13 @@
 ##' cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 
 
-SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=1)
+SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
 {
-	suppressPackageStartupMessages(library(parallel))
+	#suppressPackageStartupMessages(library(parallel))
+	# For some reason I could not make this function parallel.
 	
-	tmp2 <- mclapply(1:nrow(roi), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
+	tmp2 <- apply(roi, 1, function(X) 
 	{
-		X <- roi[i,]
-		#print(X, sep="\r")
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
 		StopRoi <- as.numeric(X["Stop"])
