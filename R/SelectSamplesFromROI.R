@@ -27,7 +27,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=
 		ChrRoi <-gsub(" ", "", X["Chr"])
 		Locus <- as.character(X["locus"])
 		cat(paste(ChrRoi, StartRoi, StopRoi, sep="\t", collapse="\t"), "\r") 
-		flush.console()
+		cat("								\r")
 		tmp <- subset(DF, Chr %in% ChrRoi & Start < StopRoi & Stop > StartRoi)  # & ((Length/LengthRoi) >  Overlap)
 		if(nrow(tmp) > 0)
 		{
