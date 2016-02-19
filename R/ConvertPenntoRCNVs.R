@@ -4,8 +4,12 @@
 ##' @title ConvertPenntoRCNVs
 ##' @param PennCNVFile - filepath with CNVs called in PennCNV
 ##' @return return output from PennCNV in dataframe and a R-readable file with the extension ".Rtxt"
-##' @author Marcelo Bertalan/Ida Sønderby
+##' @author Ida Sønderby, Marcelo Bertalan
 ##' @export
+##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @examples
+##' 
+
 
 ConvertPenntoRCNVs <- function(PennCNVFile = "Test_CNVs.txt") {
 
