@@ -2,30 +2,29 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title ConvertPenntoRCNVs
-##' @return return output from PennCNV in dataframe
-##' @param PennCNVFile - file with CNVs called in PennCNV
+##' @param PennCNVFile - filepath with CNVs called in PennCNV
+##' @return return output from PennCNV in dataframe and a R-readable file with the extension ".Rtxt"
 ##' @author Marcelo Bertalan/Ida Sønderby
 ##' @export
 
-# Function that takes pennCNV-output and convert to R-readable file in the same folder with extension ".Rtxt" and reads in this dataframe
-ConvertPenntoRCNVs <- function(File = PennCNVFile) { 
-  
+ConvertPenntoRCNVs <- function(PennCNVFile = "Test_CNVs.txt") {
+
   # load Conversion script (pennCNV-format to R-format)
   Penn2Tab <- system.file("exec/Penn2Tab.pl",package="iPsychCNV")
-  
-  
+
+
   # Make a new name for the output-data
-  CNVs_R <- paste(PennCNVFile, ".Rtxt", sep="", collapse="") # a way to get output in particular place...
-  
+  CNVs_R <- paste(PennCNVFile, ".Rtxt", sep="", collapse="") # extension=".Rtxt"
+
   # convert data-command
   Command <- paste(Penn2Tab, " < ", PennCNVFile, " > ", CNVs_R, sep="", collapse="")
   cat(Command, "\n")
-  
-  # run command that creates a file in the same folder as filtered QCed CNVs with addition .Rtxt
-  system(Command) 
-  
-  CNVs <- read.table(CNVs_R, sep="\t", header=TRUE) # read in data
-  CNVs$Source <- as.factor(rep("PennCNV", nrow(CNVs))) # add source of CNVs
-  CNVs$ID <- CNVs$File
+
+  # run command that creates a file in the same folder as filtered QCed CNVs with addition ".Rtxt"
+  system(Command)
+
+  CNVs <- read.table(CNVs_R, sep="\t", header=TRUE) # read in data in dataframe
+  CNVs$Source <- as.factor(rep("PennCNV", nrow(CNVs))) # add source of CNVs as PennCNVs
+  CNVs$ID <- CNVs$File # adds an ID-column
   return(CNVs)
 }
