@@ -18,7 +18,7 @@
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 ##' StackPlot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
 ##' @export
-StackPlot_key <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder="."){
+StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder="."){
   suppressPackageStartupMessages(library(data.table))
   options(scipen=999) ## Disable scientific notation of positions
   
