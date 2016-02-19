@@ -1,96 +1,111 @@
-##' Plot CNVs from data frame 
+##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' Specifically designed to reduce false positive CNVs and amplified DNA on dried blood spots.
+
+##' PlotCNVsFromDataFrame: Function to plot LRR and BAF-plots of CNVs from dataframe
 ##'
 ##' @title PlotCNVsFromDataFrame
-##' @return Data frame with CNVs predicted.
-##' @author Marcelo Bertalan
+
+##' @param SNPList: getting Chr and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr & Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5  
+##' @param key: exchange the ID printed on the plot and in the name of file with a deidentified ID - requires that the DF contains a column called ID_deidentified 
+##' @param OutFolder: path for saving outputfiles. Default is current folder
+##' @return one BAF- and LRR-plot for each CNV
+
+##' @author Marcelo Bertalan, Ida Elken Sønderby
+##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @examples PlotCNVsFromDataFrame(DF=CNVs.Good[1:4,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder=".")
 ##' @export
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, ByFolder=FALSE) # Path from cluster  
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".") # Path from cluster  ByFolder=FALSE, 
 {
-	library(ggplot2)
-	library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
-	library(parallel)
-	library(biovizBase)
-	library(RColorBrewer)
-	library(GenomicRanges)
-	
-	LocalFolder <- PathRawData
-	if(is.na(Files))
-	{
-		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
-	}
-	
-	DF$UniqueID <- 1:nrow(DF)
+  library(ggplot2)
+  library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
+  library(parallel)
+  library(biovizBase)
+  library(RColorBrewer)
+  library(GenomicRanges)
+  
+  LocalFolder <- PathRawData
+  if(is.na(Files))
+  {
+    Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+  }
+  
+  DF$UniqueID <- 1:nrow(DF)
+  
+  mclapply(DF$UniqueID, mc.cores=Cores, function(UID) 
+  {
+    X <- subset(DF, UniqueID %in% UID)
+    chr <- X$Chr
+    ID <- X$ID
+    UniqueID <- X$UniqueID
+    cat(ID, "\n")
+    
+    CNVstart <- as.numeric(X$Start)
+    CNVstop <- as.numeric(X$Stop)
+    Size <- as.numeric(X$Length)
+    CN <- X$CN
+    SDCNV <- round(as.numeric(X$SDCNV), digits=2)
+    NumSNP <- as.numeric(X$NumSNPs)
+    
+    Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
+    Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
 
-	mclapply(DF$UniqueID, mc.cores=Cores, function(UID) 
-	{
-		setwd(LocalFolder)
-		X <- subset(DF, UniqueID %in% UID)
-		chr <- X$Chr
-		ID <- X$ID
-		UniqueID <- X$UniqueID
-		cat(ID, "\n")
-	
-		CNVstart <- as.numeric(X$Start)
-		CNVstop <- as.numeric(X$Stop)
-		Size <- as.numeric(X$Length)
-		CN <- X$CN
-		SDCNV <- round(as.numeric(X$SDCNV), digits=2)
-		NumSNP <- as.numeric(X$NumSNPs)
+    ## Naming output-file    
+ 
+    # based on key or not
+    if (!is.na(key)) { # if want a different ID from the genetic ID in the plot
+      ID_deidentified <- X$ID_deidentified  # Added this to get ID_deidentified
+      NewName <- paste(ID_deidentified, "_", UniqueID, "_chr", chr, ":", CNVstart, "-", CNVstop, sep="", collapse="")
+    } else {
+      NewName <- paste(ID, "_", UniqueID, "_chr", chr, ":", CNVstart, "-", CNVstop, sep="", collapse="")
+    }
 
-		Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
-		Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
-	
-		OutFolder <- paste(CNVstart, CNVstop, chr, sep="_", collapse="")
-		# Setting working directory and creating a directory
+    # based on OutFolder or not  
+      if(OutFolder!=".") {
+      OutPlotfile <- paste(OutFolder, NewName, "_plot.png", sep="", collapse="")
+      print(OutPlotfile)
+      }
+    else {
+      OutPlotfile <- paste(NewName, "plot.png", sep="_", collapse="")
+      print(OutPlotfile)
+      }
 
-
-		if(ByFolder)
-		{
-			if (file.exists(OutFolder))
-			{
-				setwd(file.path(LocalFolder, OutFolder))
-			}
-			else
-			{ 
-    				dir.create(file.path(LocalFolder, OutFolder))
-    				setwd(file.path(LocalFolder, OutFolder))
-			}
-		}
-		NewName <- paste(UniqueID, CNVstart, CNVstop, chr, ID, sep="_", collapse="")
-		OutPlotfile <- paste(NewName, "plot.png", sep=".", collapse="")
-
-		# Reading sample file
-		#RawFile <- paste(PathRawData, ID, sep="", collapse="")
-		RawFile <- Files[grep(ID, Files)]
-		cat("File: ", RawFile,"\n")
-		
-		sample <- ReadSample(RawFile, skip=Skip)
-		red<-subset(sample,Chr==chr)	
-		red <-subset(red, Position > Start & Position < Stop)	
-		red2 <- red[with(red, order(Position)),]
-		
-		Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
-		red2$Mean <- Mean
-		
-		# Ideogram
-		data(hg19IdeogramCyto,package="biovizBase")
-		CHR <- paste("chr", chr, collapse="", sep="")
-		p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3) + xlim(GRanges(CHR,IRanges(Start,Stop)))
-	
-		# Colors
-		Colors = brewer.pal(7,"Set1")
-
-		# B.Allele
-		rect2 <- data.frame (xmin=CNVstart, xmax=CNVstop, ymin=0, ymax=1) # CNV position
-	
-		p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col="B.Allele.Freq"), size=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]))
-
-		# LogRRatio
-		p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col="Log.R.Ratio")) + geom_point(alpha = 0.6, size=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[1], "black"))
-
-		Title <- paste("CN: ", CN, ", SDCNV: ", SDCNV, ", NumSNPs: ", NumSNP, ", Sample: ", ID, sep="", collapse="")
-		Plot <- tracks(p3,p1, p2, main=Title, heights=c(3,5,5))
-		ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=dpi) 
-	})
+    # Reading sample file
+    #RawFile <- paste(PathRawData, ID, sep="", collapse="")
+    RawFile <- Files[grep(ID, Files)]
+    cat("File: ", RawFile,"\n")
+    
+    sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList)
+    red<-subset(sample,Chr==chr)	
+    red <-subset(red, Position > Start & Position < Stop)	
+    red2 <- red[with(red, order(Position)),]
+    
+    Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
+    red2$Mean <- Mean
+    
+    # Ideogram
+    data(hg19IdeogramCyto,package="biovizBase")
+    CHR <- paste("chr", chr, collapse="", sep="")
+    p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3) + xlim(GRanges(CHR,IRanges(Start,Stop)))
+    
+    # Colors
+    Colors = brewer.pal(7,"Set1")
+    
+    # B.Allele
+    rect2 <- data.frame (xmin=CNVstart, xmax=CNVstop, ymin=0, ymax=1) # CNV position
+    
+    p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col="B.Allele.Freq"), size=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]))
+    
+    # LogRRatio
+    p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col="Log.R.Ratio")) + geom_point(alpha = 0.6, size=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[1], "black"))
+    
+    # Title printed for plot
+    if (!is.na(key)) { # if want a different ID from the genetic ID in the plot
+      Title <- paste("CN: ", CN, ", SDCNV: ", SDCNV, ", NumSNPs: ", NumSNP, ", Sample: ", ID_deidentified, sep="", collapse="")
+    } else {
+      Title <- paste("CN: ", CN, ", SDCNV: ", SDCNV, ", NumSNPs: ", NumSNP, ", Sample: ", ID, sep="", collapse="")
+    }
+        Plot <- tracks(p3,p1, p2, main=Title, heights=c(3,5,5))
+    ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=dpi) 
+  })
 }
