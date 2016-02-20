@@ -80,7 +80,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			names(BAF) <- SNP.Name
 		
 			# Adding CNVs		
-			NumCNVs <- ((round(length(X)/1000))-1)
+			NumCNVs <- ((round(length(X)/1000))-2)
 			#cat(NumCNVs, "NumCNVs\n")
 			DF <- sapply(1:NumCNVs, function(i) # Adding CNVs in the data.
 			{
