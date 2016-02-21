@@ -20,7 +20,7 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 
 		# PennCNV
 		cat("Running PennCNV\n")
-		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="*.tab.penncnv$", Cores=Cores, Skip=0, Normalization=FALSE, PFB="NO", HMM=HMM, Path2PennCNV=Path2PennCNV)
+		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="^MockSample.*\\.tab\\.penncnv$", Cores=Cores, Skip=0, Normalization=FALSE, PFB="NO", HMM=HMM, Path2PennCNV=Path2PennCNV)
 
 		# PennCNV Filter
 		#PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
