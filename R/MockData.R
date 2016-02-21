@@ -198,7 +198,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			Df2$NumCNVs <- rep(unique(subCNVs$NumCNVs), nrow(Df2))
 			Df2$ChrMean <- rep(unique(subCNVs$ChrMean), nrow(Df2))
 			Df2$Length <- Df2$Stop - Df2$Start
-			Df2 <- Df2[, colnames(subCNVs)]
+			#Df2 <- Df2[, colnames(subCNVs)]
 			return(Df2)
 		})
 		tmp2 <- MatrixOrList2df(tmp)
