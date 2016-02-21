@@ -10,7 +10,8 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	library(parallel)
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=FALSE)
 
-	# Re-writing file.
+	# Rewriting file.
+	cat("Rewriting files to fit PennCNV format.\n")
 	if(!PennCNVFormat) # If not in PennCNV format, than make files to match PennCNV format.
 	{
 		mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(file) 
@@ -37,7 +38,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 	}
 	
 	# Creating Chip info file for PennCNV
-	cat(Files[1], "\n")
+	cat("Files with PennCNV format: ", Files[1], "\n")
 	ChipInfo <- read.table(Files[1], sep="\t", header=TRUE, stringsAsFactors=F)
 	ChipInfo <- ChipInfo[, c("Name", "Chr", "Position")]
 	write.table(ChipInfo, file="SNP.Position.tab", quote=FALSE, row.names=FALSE, sep="\t")
@@ -58,8 +59,6 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		PFB <- "Mock.pfb"
 	}
 		
-		
-	
 
 	Res <- mclapply(Files, mc.cores=Cores, mc.preschedule = FALSE, function(X) 
 	{
