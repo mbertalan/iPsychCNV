@@ -11,15 +11,15 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 	Res <- sapply(1:NLoops, function(Loops)
 	{
 		# Creating Mock data
-		cat("Creating mock data\n")
+		cat("Creating mock data: Loop ", Loops, "\n")
 		MockDataCNVs <- MockData(N=NSamples, Type="PKU", Cores=Cores)
 	
 		# iPsychCNV prediction
-		cat("Running iPsychCNV\n")
+		cat("Running iPsychCNV: Loop ", Loops, "\n" )
 		iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=Cores, Pattern="^MockSample", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
 
 		# PennCNV
-		cat("Running PennCNV\n")
+		cat("Running PennCNV: Loop ", Loops, "\n")
 		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="^MockSample.*", Cores=Cores, Skip=0, Normalization=FALSE, PFB="NO", HMM=HMM, Path2PennCNV=Path2PennCNV)
 
 		# PennCNV Filter
@@ -32,7 +32,7 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		#PennCNV.rescan$ID <- PennCNV.rescan$SampleID
 
 		# Evaluating methods
-		cat("Evaluting methods\n")
+		cat("Evaluting methods: Loop ", Loops, "\n")
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
 		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred, Cores=Cores)
 		#Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
