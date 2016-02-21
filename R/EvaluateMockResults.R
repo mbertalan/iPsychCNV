@@ -126,6 +126,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 	else
 	{
 		df3 <- Eval
+		stop("More samples than CNV or vice versa. Evaluation to do match MockCNVs.\n")
 	}
 	return(df3)
 }
