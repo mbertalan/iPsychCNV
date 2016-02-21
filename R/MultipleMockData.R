@@ -11,34 +11,38 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 	Res <- sapply(1:NLoops, function(Loops)
 	{
 		# Creating Mock data
+		cat("Creating mock data\n")
 		MockDataCNVs <- MockData(N=NSamples, Type="PKU", Cores=Cores)
 	
 		# iPsychCNV prediction
+		cat("Running iPsychCNV\n")
 		iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=Cores, Pattern="^MockSample", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
 
 		# PennCNV
+		cat("Running PennCNV\n")
 		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="*.tab.penncnv$", Cores=Cores, Skip=0, Normalization=FALSE, PFB="NO", HMM=HMM, Path2PennCNV=Path2PennCNV)
 
 		# PennCNV Filter
-		PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
+		#PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
 
 		# Filter + Hotspots + ReScanCNVs
-		tmp <- subset(PennCNV.filter, CN != 2)
-		CNVs.Hotspots <- HotspotsCNV(df=tmp[,1:20], Freq=1, OverlapCutoff=0.8, Cores=Cores)
-		PennCNV.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".")
-		PennCNV.rescan$ID <- PennCNV.rescan$SampleID
+		#tmp <- subset(PennCNV.filter, CN != 2)
+		#CNVs.Hotspots <- HotspotsCNV(df=tmp[,1:20], Freq=1, OverlapCutoff=0.8, Cores=Cores)
+		#PennCNV.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".")
+		#PennCNV.rescan$ID <- PennCNV.rescan$SampleID
 
 		# Evaluating methods
+		cat("Evaluting methods\n")
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
 		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred, Cores=Cores)
-		Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
-		Rescan.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.rescan, Cores=Cores)
+		#Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
+		#Rescan.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.rescan, Cores=Cores)
 		
 		# ROC 
 		iPsychCNV.AUC <- roc(iPsychCNV.Eval$CNV.Predicted, iPsychCNV.Eval$CNV.Present)$auc[1]
 		PennCNV.AUC <- roc(PennCNV.Eval$CNV.Predicted, PennCNV.Eval$CNV.Present)$auc[1]
-		Filter.AUC <- roc(Filter.Eval$CNV.Predicted, Filter.Eval$CNV.Present)$auc[1]
-		Rescan.AUC <- roc(Rescan.Eval$CNV.Predicted, Rescan.Eval$CNV.Present)$auc[1]
+		#Filter.AUC <- roc(Filter.Eval$CNV.Predicted, Filter.Eval$CNV.Present)$auc[1]
+		#Rescan.AUC <- roc(Rescan.Eval$CNV.Predicted, Rescan.Eval$CNV.Present)$auc[1]
 		
 
 		# When prediction fail.
@@ -61,24 +65,25 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		df2 <- data.frame(AUC=iPsychCNV.AUC,True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="iPsychCNV", Loop=Loops, stringsAsFactors=F)
 		
 		## PennCNV + Filter
-		tmp <- subset(Filter.Eval, CN != 2)
-		tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
-		tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
-		tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
-		tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
-		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
-		df3 <- data.frame(AUC=Filter.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="Filter", Loop=Loops, stringsAsFactors=F)
+		#tmp <- subset(Filter.Eval, CN != 2)
+		#tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
+		#tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
+		#tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
+		#tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
+		#tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
+		#df3 <- data.frame(AUC=Filter.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="Filter", Loop=Loops, stringsAsFactors=F)
 		
 		## PennCNV + Filter + Hotspots + ReScan
-		tmp <- subset(Rescan.Eval, CN != 2)
-		tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
-		tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
-		tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
-		tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
-		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
-		df4 <- data.frame(AUC=Rescan.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="ReScan", Loop=Loops, stringsAsFactors=F)
+		#tmp <- subset(Rescan.Eval, CN != 2)
+		#tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
+		#tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
+		#tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
+		#tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
+		#tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
+		#df4 <- data.frame(AUC=Rescan.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="ReScan", Loop=Loops, stringsAsFactors=F)
 		
-		df5 <- rbind(df, df2, df3, df4)
+		df5 <- rbind(df, df2)
+		#df5 <- rbind(df, df2, df3, df4)
 		system("rm -f MockSample_*")
 		return(df5)
 	})
