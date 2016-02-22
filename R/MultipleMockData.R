@@ -20,7 +20,7 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 
 		# iPsychCNV + Hotspots + ReScanCNVs
 		tmp <- subset(iPsych.Pred, CN != 2)
-		CNVs.Hotspots <- HotspotsCNV(df=tmp, Freq=1, OverlapCutoff=0.8, Cores=Cores)
+		CNVs.Hotspots <- HotspotsCNV(df=tmp, Freq=3, OverlapCutoff=0.8, Cores=Cores)
 		iPsych.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".", IndxPos=TRUE)
 	
 		
