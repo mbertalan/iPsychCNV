@@ -38,10 +38,13 @@ MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoSc
 		#PennCNV.rescan$ID <- PennCNV.rescan$SampleID
 
 		# Evaluating methods
-		cat("Evaluting methods: Loop ", Loops, "\n")
+		cat("iPsychCNV evaluting methods: Loop ", Loops, "\n")
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
+		cat("PennCNV Evaluting methods: Loop ", Loops, "\n")
 		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred, Cores=Cores)
+		cat("ReiPsychCNV Evaluting methods: Loop ", Loops, "\n")
 		ReiPsych.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.rescan, Cores=Cores)
+		cat("Done evaluting methods: Loop ", Loops, "\n")
 		#Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
 		#Rescan.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.rescan, Cores=Cores)
 		
