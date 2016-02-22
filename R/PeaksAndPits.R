@@ -3,6 +3,7 @@
 ##' @return Data frame with QC variables.
 ##' @author Marcelo Bertalan
 ##' @export
+##' @source \url{http://biopsych.dk/iPsychCNV}
 
 PeaksAndPits <- function(DF, PlotName)
 {
