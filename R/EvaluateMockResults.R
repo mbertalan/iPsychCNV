@@ -110,7 +110,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 				} 
 			}
 		}
-		cat("ChrM:",ChrM, "CNM", CNM, "CN2", CN2, "CNV.Predicted", CNV.Predicted, "OverlapLenghM", OverlapLenghM, "OverlapSNP", OverlapSNP, "CNVID",CNVID, "CNVID2",CNVID2, "CN2", CN2, "NumCNVs", NumCNVs, "PredictedByOverlap", PredictedByOverlap,"\n") 
+		cat("ChrM:",ChrM, "CNM", CNM, "CN2", CN2, "CNV.Predicted", CNV.Predicted, "OverlapLenghM", OverlapLenghM, "OverlapSNP", OverlapSNP, "CNVID",CNVID, "CNVID2",CNVID2, "CN2", CN2, "NumCNVs", NumCNVs, "PredictedByOverlap", PredictedByOverlap,"\r") 
 		
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
 		save(df2, file="df2.RData")
