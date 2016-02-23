@@ -1,11 +1,13 @@
-##' DefineBAFType: Define BAF by peaks. 
+##' DefineBAFType: Define B Allele Frequency (BAF) by peaks. 
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title DefineBAFType
+##' @param SumPeaks: unknown
 ##' @return BAF classification.
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown
 
 DefineBAFType <- function(SumPeaks)
 {
