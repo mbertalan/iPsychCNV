@@ -5,6 +5,7 @@
 ##' @return LRR normalized
 ##' @author Marcelo Bertalan
 ##' @export
+##' @source \url{http://biopsych.dk/iPsychCNV}
 
 NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
 {
