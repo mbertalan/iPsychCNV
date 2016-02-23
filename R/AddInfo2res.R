@@ -15,7 +15,7 @@
 ##' @param SumPeaks: Result from CleaningPeaks function.
 ##' @param SDChr: LRR standard deviation from whole chromosome. 
 ##' @param MeanChr: LRR mean from whole chromosome.
-##' @return return all variables together in a in data frame
+##' @return return all variables together in a data frame
 
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
