@@ -6,7 +6,7 @@
 ##' @param OverlapCutoff: Unknown, default = 0.8.
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffidng. 
-
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown
 
