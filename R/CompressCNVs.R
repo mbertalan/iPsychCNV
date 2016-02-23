@@ -1,9 +1,9 @@
 ##' Compress CNVs: unknown
 
 ##' @title CompressCNVs
-##' @param tmp4
-##' @param OverlapCutoff
-##' @param Cores
+##' @param tmp4:
+##' @param OverlapCutoff:
+##' @param Cores:
 ##' @return Hotspots
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
