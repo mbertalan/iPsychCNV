@@ -5,7 +5,7 @@
 ##' @param Variable: Numeric, Unknown.
 ##' @return return data in data frame.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
-
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown.
 
