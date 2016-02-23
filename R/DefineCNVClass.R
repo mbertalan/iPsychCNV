@@ -1,12 +1,12 @@
-##' DefineCNVClass: Define if the CNV class. 
+##' DefineCNVClass: Define if the CNV class. Unknown -sentence? 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title DefineCNVClass
 ##' @return CNV class.
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-
+##' @examples Uknown
 
 DefineCNVClass <- function(tmp2)
 {
