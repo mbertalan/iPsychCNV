@@ -13,9 +13,9 @@
 ##' @param MyBAF: Result from EvaluateMyBAF function.
 ##' @param LogRRatio: Result from  DefiningLogRRatio function.
 ##' @param SumPeaks: Result from CleaningPeaks function.
-##' @param SDChr: LRR standard deviation from whole chromosome. 
-##' @param MeanChr: LRR mean from whole chromosome.
-##' @return return all variables together in a in data frame
+##' @param SDChr: Log R Ratio (LRR) standard deviation from whole chromosome. 
+##' @param MeanChr: Log R Ratio (LRR) mean from whole chromosome.
+##' @return return all variables together in a data frame.
 
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
