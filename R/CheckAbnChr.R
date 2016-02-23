@@ -4,11 +4,11 @@
 ##' CheckAbnChr: Estimate abnormal chromosome.
 ##'
 ##' @title CheckAbnChr.
-##' @param Path2RawFiles: Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
-##' @param Cores: Number of cores to run in parallel. 
-##' @param Pattern: Files pattern in the path. Example: "*.txt$"
-##' @param skip: How many rows should skip. Use if file has comments.
-##' @param NumFiles: Number of files to run. Example: numeric, 10 or character "All". 
+##' @param Path2RawFiles: Path for the Log R Ratio (LRR) and B Allele Frequency (BAF) files. Example: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
+##' @param Cores: Number of cores to run in parallel, default = 1. 
+##' @param Pattern: Files pattern in the path. Example: "*.txt$".
+##' @param Skip: How many rows should be skipped. Use if file has comments, default = 10.
+##' @param NumFiles: Number of files to run. Example: numeric, 10 or character "All", default = All. 
 ##' @return Data frame with the estimate copy number for each chromosome.
 ##' @author Marcelo Bertalan
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -17,7 +17,7 @@
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- CheckAbnChr(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
-CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2", Cores=40, Pattern="*.txt$", skip=10, NumFiles="All")
+CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2", Cores=1, Pattern="*.txt$", skip=10, NumFiles="All")
 {
 	library(iPsychCNV)
 	library(parallel)
