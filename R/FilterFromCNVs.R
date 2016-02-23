@@ -1,5 +1,5 @@
 ##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
+##' Specifically designed to reduce false positive CNVs and handle noisy data from amplified DNA on phenylketonuria (PKU) cards.
 ##'
 ##' FilterFromCNVs: Filter CNV from other methods.
 ##'
