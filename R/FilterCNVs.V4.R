@@ -3,7 +3,7 @@
 ##' The function receives a data frame with CNV information, ex: chr., start position, stop position, and sample ID. 
 ##' @title iPsychCNVs
 ##' @param CNVs: Unknown?
-##' @param MinNumSNPs: Minimum number of SNPs, default = 20.
+##' @param MinNumSNPs: Minimum number of SNPs per CNV, default = 20.
 ##' @param Sample: Unknown?.
 ##' @param ID: ID="Test". Unknown?
 ##' @param verbose: Unknown, default = FALSE.
