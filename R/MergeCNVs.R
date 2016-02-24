@@ -2,13 +2,13 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MergeCNVs
-##' @param df: Unkown, default = Unknown. 
-##' @param MaxNumSNPs: Unknown, default = 50. 
+##' @param Df: Data frame with predicted CNVs for each sample, default = Unknown. 
+##' @param MaxNumSNPs: Maximum number of SNPs per CNV, default = 50. 
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 MergeCNVs <- function(df, MaxNumSNPs=50)
