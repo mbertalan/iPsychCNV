@@ -8,6 +8,7 @@
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown.
+##'
 
 GetCNVClass <- function(Variable) # Can be 0, 1, 3, 4
 {
