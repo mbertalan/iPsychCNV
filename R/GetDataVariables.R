@@ -3,12 +3,12 @@
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title GetDataVariables
 ##' @param Data: Unknown.
-##' @return Hotspots - Unknown
+##' @return Hotspots - Unknown.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown
-
+##'
 
 GetDataVariables <- function(Data)
 {
