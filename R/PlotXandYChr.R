@@ -5,10 +5,10 @@
 ##' @param Sample: Unknown, default = Unknown.
 ##' @param Name: Unknown, default = Unknown.
 ##' @return png plot
-##' @author Marcelo Bertalan, Louise K. Hoeffding
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples unknown
+##' @examples unknown.
 ##' 
 
 PlotXandYChr <- function(Sample=MockData, Name="Test.png")
