@@ -1,6 +1,6 @@
 ##' MultipleMockData: Runs mock data multiple times. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on dried blood spot (DBS) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MultipleMockData
 ##' @param NSamples: Unknown, default = 10.
 ##' @param NLoops: Unknown, default = 10.
