@@ -1,4 +1,4 @@
-##' MakeOneMockSample: Run a single mock sample   
+##' MakeOneMockSample: Run a single mock sample.   
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MakeOneMockSample
