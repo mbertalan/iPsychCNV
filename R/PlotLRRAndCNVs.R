@@ -6,7 +6,7 @@
 ##' @param Sample: Unknown, default = MockData. 
 ##' @param CNVMean: Unknown, default = Unknown. 
 ##' @param Name: Unknown, default = Unknown. 
-##' @param Roi: Unknown, default = Unknown. 
+##' @param Roi: Region of Interest or hotspot, default = Unknown. 
 ##' @param Width: Unknown, default = 12.
 ##' @param Height: Unknown, default = 5.
 ##' @param Dpi: Dots per inch, default = 100.
@@ -15,7 +15,7 @@
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##' 
 
 PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock, width=12, height=5, dpi=100, PNG=TRUE)
