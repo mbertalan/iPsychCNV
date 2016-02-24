@@ -2,9 +2,16 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title iPsychCNV
-##' @return Data frame with CNVs predicted.
-##' @author Marcelo Bertalan
+##' @param N: Unknown, default = 100. 
+##' @param Wave1: Unknown, default = FALSE.
+##' @param Type: Unknown, default = PKU.
+##' @param Cores: Unknown, default = 20. 
+##' @return Data frame with predicted CNVs.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples
+##' 
 
 MakeAndEvalMockData <- function(N=100, Wave1=FALSE, Type="PKU", Cores=20)
 {
