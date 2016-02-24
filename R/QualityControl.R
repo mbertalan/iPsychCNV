@@ -1,10 +1,19 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' QualityControl: Unknown. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title QualityControl
+##' @param PathRawData: Path for the raw data. 
+##' @param Cores: Unknown, default = 10.
+##' @param Pattern: Unknown, default = "*_*assed_*".
+##' @param NumFiles: Unknown, default = All.
+##' @param Skip: Unknown, default = 0.
+##' @param Normalization: Unknown, default = FALSE. 
 ##' @return Data frame with QC variables.
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Cores=10, Pattern="*_*assed_*", NumFiles="All", Skip=0, Normalization=FALSE) # Files2 OutputPath
 {	
