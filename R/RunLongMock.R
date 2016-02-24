@@ -4,17 +4,17 @@
 ##' @title RunSingleMock
 ##' @param Name: Unknown.
 ##' @param Method: The Copy Number Variation (CNV) calling algorithm, default = PennCNV.
-##' @param CNVDistance: Unkown, default = 1000.
+##' @param CNVDistance: Distance between CNVs, default = 1000.
 ##' @param Type: Unknown, default = Unknown.
 ##' @param Mean: Unknown, default = Unknown.
 ##' @param Size: Unknown, default = Unknown.  
 ##' @param HMM: Unknown, default = Unknown. 
-##' @param Path2PennCNV: The path for pennCNV, Unknown. 
+##' @param Path2PennCNV: The path to the pennCNV algorithm, Unknown. 
 ##' @return Classification for Log R Ratio (LRR).
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 RunLongMock <- function(Name="Test", Method="PennCNV", CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.3, -0.6, 0.3, 0.6), Size=c(300, 600), HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/" )
