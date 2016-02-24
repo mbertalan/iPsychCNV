@@ -2,11 +2,11 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MultiPlotsManySamples
-##' @param df: Unknown, default = Unknown.
+##' @param df: Data frame with predicted CNVs for each sample, default = Unknown.
 ##' @param Name: Unknown, default =Unknown.
 ##' @param Height: Unknown, default = 1800.
 ##' @param Width: Unknown, default = 2000.
-##' @param Res: resolution, defualt = 120.
+##' @param Res: Resolution, defualt = 120.
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
