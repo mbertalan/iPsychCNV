@@ -9,7 +9,7 @@
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 RunGada <- function(MockData=tmp, MinSegLen=50, Tgada=4.5)
