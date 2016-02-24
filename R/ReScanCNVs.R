@@ -2,7 +2,7 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title ReScanCNVs
-##' @param CNVs: Data frame with hotspots to re-scan. Minimum information necessary is chromosome (Chr), Start and Stop position. 
+##' @param CNVs: Data frame with hotspots to re-scan. Minimum information necessary is chromosome (Chr.), Start and Stop position. 
 ##' @param PathRawData: The path to the raw data files containing Log R Ratio (LRR) and B Allele Frequency (BAF) values.
 ##' @param MINNumSNPs: Minimum number of SNPs per CNV, default = 20.
 ##' @param Cores: Number of cores used; default = 1.
@@ -12,13 +12,13 @@
 ##' @param MinLength: Minimum CNV length, default = 10.
 ##' @param SelectedFiles: List of file names that should be analyzed from PathRawData. 
 ##' @param Skip: Integer the number of lines of the data file to skip before beginning to read data.
-##' @param LCR: List low complex region, list of SNPs that should be removed.
+##' @param LCR: List low copy repeat region region, list of SNPs that should be removed.
 ##' @param PFB: Vector population frequency 0 to 1 for each SNP in the array. 
 ##' @param Chr: Character, select a specific chromosome to be analyzed. 
 ##' @param Penalty: The coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.
 ##' @param Quantile: Logical, if quantile normalization should be applied or not, default = FALSE.
 ##' @param QSpline: Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.
-##' @param Sd: numeric, LLR standard deviation (sd) for the quantile nomarlization, default = 0.18.
+##' @param Sd: numeric, LRR standard deviation (sd) for the quantile nomarlization, default = 0.18.
 ##' @param Recursive: Logical, should the listing recurse into directories (Unknown)? From list.files {base}.
 ##' @param CPTmethod: Character, method to find change points from changepoint package by Rebecca Killick, default = "meanvar", or "mean".
 ##' @param CNVSignal: Numeric, minumum CNV signal to be consider a CNV in absolute value, default = 0.1, any CNV with mean LLR in the CNV region with abs(X) < 0.1 is ignored. 
