@@ -1,13 +1,13 @@
-##' SelectSamplesFromROI
+##' SelectSamplesFromROI: Unknown
 ##'
 ##' Given hotspots regions and overlap cutoff it will return CNVs that belong to each hotspot.
-##' @title SelectSamplesFromTOI
-##' @return Data frame with CNVs predicted that belong to each hotspot.
-##' @param DF: Data frame with CNVs predicted for each sample. 
-##' @param roi: Regions of Interest or hotspots.
-##' @param OverlapMin: Minimum overlap a CNV need to have with the hotspot to be selected. 
-##' @param OverlapMax: Maximum overlap accepted for a CNV and a hotspots.  
-##' @author Marcelo Bertalan
+##' @title SelectSamplesFromROI
+##' @param DF: Data frame with predicted CNVs for each sample. 
+##' @param roi: Regions Of Interest or hotspots.
+##' @param OverlapMin: Minimum overlap a CNV need to have with the hotspot to be selected, default = 0.8. 
+##' @param OverlapMax: Maximum overlap accepted for a CNV and a hotspots, default = 1.2.  
+##' @return Data frame with predicted CNVs that belong to each hotspot.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @export
 ##' @examples
 ##' cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
