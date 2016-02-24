@@ -2,11 +2,11 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title QualityControl
-##' @param PathRawData: Path for the raw data. 
-##' @param Cores: Unknown, default = 10.
-##' @param Pattern: Unknown, default = "*_*assed_*".
-##' @param NumFiles: Unknown, default = All.
-##' @param Skip: Unknown, default = 0.
+##' @param PathRawData: The path to the raw data files containing the Log R Ratio (LRR) and B Allele Frequency (BAF) vaules. 
+##' @param Cores: Number of cores used, default = 10.
+##' @param Pattern: File pattern in the raw data, default = "*_*assed_*".
+##' @param NumFiles: Number of files to be analyzed from raw data, default = All.
+##' @param Skip: Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 0.
 ##' @param Normalization: Unknown, default = FALSE. 
 ##' @return Data frame with QC variables.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
