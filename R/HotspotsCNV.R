@@ -1,15 +1,15 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' HotspotsCNV: Identify Copy Number Variation (CNV) hotspots. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title HotspotsCNV
-##' @param df dataframe with CNV predction with Chr, Start and Stop.
-##' @param Freq minimum number of CNVs to be considered a hotspot.
-##' @param OverlapCutoff minimum overlap among CNVs to be considered the same CNV region.
-##' @param Cores numeric, CPU numbers to be used. 
-##' @param OverlapMin Minimum overlap with hotspot to be selected for counting.
-##' @param OverlapMax Maximum overlap with hotspot to be selected for counting.
-##' @return Hotspots
-##' @author Marcelo Bertalan
+##' @param Df: Dataframe with CNV predction with chromosome (Chr.), start, and stop position.
+##' @param Freq: Minimum number of CNVs to be considered a hotspot, default = 1.
+##' @param OverlapCutoff: Minimum overlap among CNVs to be considered the same CNV region, default = 0.7.
+##' @param Cores: Numeric, Number of cores used, default = 1. 
+##' @param OverlapMin: Minimum overlap with hotspot to be selected for counting, default = 0.9.
+##' @param OverlapMax: Maximum overlap with hotspot to be selected for counting, default = 1.1.
+##' @return CNV hotspots.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples

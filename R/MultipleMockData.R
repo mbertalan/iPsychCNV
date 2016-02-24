@@ -1,10 +1,18 @@
 ##' MultipleMockData: Runs mock data multiple times. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on dried blood spot (DBS) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MultipleMockData
-##' @return return data in data frame
-##' @author Marcelo Bertalan
+##' @param NSamples: Unknown, default = 10.
+##' @param NLoops: Unknown, default = 10.
+##' @param Cores: Number of cores used, default = 30.
+##' @param HMM: Unknown, default = Unknown.
+##' @param Path2PennCNV: The path to pennCNV.
+##' @return Return data in a data frame.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 {

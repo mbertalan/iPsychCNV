@@ -1,10 +1,14 @@
-##' GetCNVClass: read data. 
+##' GetCNVClass: Read data. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title GetCNVClass
-##' @return return data in data frame
-##' @author Marcelo Bertalan
+##' @param Variable: Numeric, Unknown.
+##' @return return data in data frame.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 GetCNVClass <- function(Variable) # Can be 0, 1, 3, 4
 {

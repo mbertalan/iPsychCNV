@@ -1,3 +1,18 @@
+##' Multiplot: Unknown
+##'
+##' Specifically designed to handle data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions. 
+##' @title Multiplot
+##' @param Plotlist: Unknown, default = NULL.
+##' @param File: Unknown, default = Unknown.
+##' @param Cols: Numeric, columns, default = 1.
+##' @param Layout, Unknown, default = NULL.
+##' @return Unknown.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @export
+##' @examples 
+##'
+
 # Multiple plot function
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
@@ -8,6 +23,8 @@
 # then plot 1 will go in the upper left, 2 will go in the upper right, and
 # 3 will go all the way across the bottom.
 # From: http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
+
+
 Multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
 

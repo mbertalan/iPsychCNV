@@ -2,10 +2,12 @@
 ##'
 ##' Receive a vector with BAF and returns a data frame with a populate percentage for each class. Each class represent a group where a BAF is more likely to be found. 
 ##' @title ClassNumbers
-##' @return Data frame with a populate percentage for each class
-##' @author Marcelo Bertalan
+##' @param TmpRaw: Unknown.
+##' @return Data frame with a populate percentage for each class.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
 
 
 ClassNumbers <- function(tmpRaw)

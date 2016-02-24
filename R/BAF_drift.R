@@ -1,12 +1,10 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' BAF_drift: Calculate the drift in B allele freqeuncy (BAF). Used at PeaksAndPits function.
+##'
 ##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
-##'
-##' BAF drift: Calculate the drift in B allele freqeuncy (BAF). Used at PeaksAndPits function.
-##'
 ##' @title BAF_drift
 ##' @param BAF: BAF information from CNV region.
 ##' @return Data frame with QC variables.
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples

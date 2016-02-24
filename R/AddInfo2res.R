@@ -1,13 +1,10 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' AddInfo2res: Function to add variables for each CNV region. Function is used at FilterCNVs.V4.R. 
+##' 
 ##' Specifically designed to reduce false positive CNVs and amplified DNA on dried blood spots.
-
-##' AddInfo2res: Function to add variables for each CNV region. Function is used at FilterCNVs.V4.R.
-##'
 ##' @title AddInfo2res
-
-##' @param res: cbind of two data frames. 1-) GetDataVariables. 2-) ClassNumbers.
-##' @param CNV2HighPvalue: p value of t.test among CNV region and its upstream region.
-##' @param CNV2LowPvalue: p value of t.test among CNV region and its downstream region.
+##' @param Res:cbind of two data frames. 1-) GetDataVariables. 2-) ClassNumbers.
+##' @param CNV2HighPvalue: P value of t.test among CNV region and its upstream region.
+##' @param CNV2LowPvalue: P value of t.test among CNV region and its downstream region.
 ##' @param Class: Result from DefineBAFType function.
 ##' @param BAlleleFreq: Result from DefineBAFType function.
 ##' @param MyBAF: Result from EvaluateMyBAF function.
@@ -15,9 +12,8 @@
 ##' @param SumPeaks: Result from CleaningPeaks function.
 ##' @param SDChr: Log R Ratio (LRR) standard deviation from whole chromosome. 
 ##' @param MeanChr: Log R Ratio (LRR) mean from whole chromosome.
-##' @return return all variables together in a data frame.
-
-##' @author Marcelo Bertalan
+##' @return Return all variables together in a data frame.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples

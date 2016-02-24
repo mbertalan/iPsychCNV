@@ -1,10 +1,15 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' RemoveCentromere: Remove centromeres from the analysis. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title iPsychCNV
-##' @return Data frame with CNVs predicted.
-##' @author Marcelo Bertalan
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title RemoveCentromere
+##' @param Df: Data frame, Unknown. 
+##' @param HG: Human genome version, default = hg19. 
+##' @return Unknown.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 RemoveCentromere <- function(df, HG="hg19")
 {

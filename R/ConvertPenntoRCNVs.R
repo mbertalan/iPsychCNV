@@ -1,19 +1,19 @@
-##' ConvertPenntoRCNVs: converts PennCNV-output to R-readable file with the extension ".Rtxt" and reads in as dataframe
+##' ConvertPenntoRCNVs: Converts PennCNV-output to R-readable file with the extension ".Rtxt" and reads in as dataframe.
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title ConvertPenntoRCNVs
-##' @param PennCNVFile - filepath with CNVs called in PennCNV
-##' @return return output from PennCNV in dataframe and a R-readable file with the extension ".Rtxt"
-##' @author Ida Sønderby, Marcelo Bertalan
-##' @export
+##' @param PennCNVFile: File path with CNVs called in PennCNV.
+##' @return Return output from PennCNV in data frame and a R-readable file with the extension ".Rtxt".
+##' @author Ida Sønderby, Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
-##' @examples
+##' @export
+##' @examples Unknown
 ##' 
 
 
 ConvertPenntoRCNVs <- function(PennCNVFile = "Test_CNVs.txt") {
 
-  # load Conversion script (pennCNV-format to R-format)
+  # Load conversion script (pennCNV-format to R-format)
   Penn2Tab <- system.file("exec/Penn2Tab.pl",package="iPsychCNV")
 
 
