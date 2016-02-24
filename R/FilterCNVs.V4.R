@@ -1,17 +1,18 @@
-##' Filter CNVs: Function to filter predicted Copy Number Variation (CNVs) and avoid a high number of false positive calls. 
+##' FilterCNVs.V4.: Function to filter predicted Copy Number Variation (CNVs) and avoid a high number of false positive calls. 
 ##'
 ##' The function receives a data frame with CNV information, ex: chr., start position, stop position, and sample ID. 
-##' @title iPsychCNVs
-##' @param CNVs: Unknown?
+##' @title FilterCNVs.V4.
+##' @param CNVs: Data frame with CNVs. Unknown?
 ##' @param MinNumSNPs: Minimum number of SNPs per CNV, default = 20.
-##' @param Sample: Unknown?.
-##' @param ID: ID="Test". Unknown?
-##' @param verbose: Unknown, default = FALSE.
+##' @param Sample: Unknown.
+##' @param ID: Unknown.
+##' @param Verbose: Unknown, default = FALSE.
 ##' @return Data frame with CNVs and classification. 
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
+##'
 
 FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose=FALSE) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
