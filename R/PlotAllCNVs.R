@@ -2,13 +2,13 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title PlotAllCNVs
-##' @param Df: Unknown, default = CNV.Res.
+##' @param Df: Data frame with predicted CNVs for each sample, default = CNV.Res.
 ##' @param Name:Unknown, default = Unknown.
 ##' @param NCOL: Number of columns, default = 2.
-##' @param Roi: Unknown, default = roi.
+##' @param Roi: Regions of interest or hotspots, default = roi.
 ##' @param Width: Unknown, defualt = 16.
 ##' @param Height: Unknown, default = 30.
-##' @param Hg: Human genome, default = hg19.
+##' @param Hg: Human genome version, default = hg19.
 ##' @param Chr: Chromosome, default = NA.
 ##' @param Start: The start position of each CNV, default = NA.
 ##' @param Stop: The stop position of each CNV, default = NA.
