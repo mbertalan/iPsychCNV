@@ -1,3 +1,19 @@
+##' Multiplot: Unknown
+##' Specifically designed to handle data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions. 
+##' @title Multiplot
+##' @param Plotlist: Unknown, default = NULL.
+##' @param File: Unknown, default = Unknown.
+##' @param Cols: Unknown, default = 1.
+##' @param Layout, Unknown, default = NULL.
+##' @return Unknown.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @export
+##' @examples Unknown.
+##'
+
+
+
 # Multiple plot function
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
