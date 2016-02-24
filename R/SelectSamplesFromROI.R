@@ -1,9 +1,9 @@
-##' SelectSamplesFromROI: Unknown
+##' SelectSamplesFromROI: Select region of interest based on the samples.
 ##'
 ##' Given hotspots regions and overlap cutoff it will return CNVs that belong to each hotspot.
 ##' @title SelectSamplesFromROI
 ##' @param DF: Data frame with predicted CNVs for each sample. 
-##' @param roi: Regions Of Interest or hotspots.
+##' @param Roi: Regions Of Interest or hotspots.
 ##' @param OverlapMin: Minimum overlap a CNV need to have with the hotspot to be selected, default = 0.8. 
 ##' @param OverlapMax: Maximum overlap accepted for a CNV and a hotspots, default = 1.2.  
 ##' @return Data frame with predicted CNVs that belong to each hotspot.
