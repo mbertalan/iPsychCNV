@@ -1,9 +1,15 @@
-##' PlotXandYChr
+##' PlotXandYChr: Plot Log R Ratio (LRR) and copy number variations (CNVs) for the X and Y chromosome the whole mock sample.   
 ##'
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title PlotXandYChr
+##' @param Sample: Unknown, default = Unknown.
+##' @param Name: Unknown, default = Unknown.
 ##' @return png plot
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples unknown
+##' 
 
 PlotXandYChr <- function(Sample=MockData, Name="Test.png")
 {
