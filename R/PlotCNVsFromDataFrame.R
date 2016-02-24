@@ -1,19 +1,26 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-##' Specifically designed to reduce false positive CNVs and amplified DNA on dried blood spots.
-
-##' PlotCNVsFromDataFrame: Function to plot LRR and BAF-plots of CNVs from dataframe
+##' PlotCNVsFromDataFrame: Function to plot Log R Ratio (LRR) and B Allele Frequency (BAF) of CNVs from a data frame (DF). 
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##'
 ##' @title PlotCNVsFromDataFrame
-
-##' @param SNPList: getting Chr and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr & Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5  
-##' @param key: exchange the ID printed on the plot and in the name of file with a deidentified ID - requires that the DF contains a column called ID_deidentified 
-##' @param OutFolder: path for saving outputfiles. Default is current folder
-##' @return one BAF- and LRR-plot for each CNV
-
-##' @author Marcelo Bertalan, Ida Elken Sønderby
+##' @param DF: Unknown, default = Unknown. 
+##' @param PathRawData: Path for the raw data. 
+##' @param Cores: Unknown, default = 1.
+##' @param Skip: Unknown, default = 0.
+##' @param PlotPosition: Unknown, default = 1.
+##' @param Pattern: Unknown, default = "*".
+##' @param Recursive: Unknown, default = TRUE.
+##' @param Dpi: Dots per inch, default = 300. 
+##' @param Files: Dots per inch, default = NA.
+##' @param SNPList: Getting chromosome (Chr) and position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, and Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5, default = NULL.   
+##' @param Key: Exchange the ID printed on the plot and in the name of file with a deidentified ID - requires that the DF contains a column called ID_deidentified, default = NA. 
+##' @param OutFolder: Path for saving outputfiles, default is the current folder.
+##' @return One BAF- and LRR-plot for each CNV.
+##' @author Marcelo Bertalan, Ida Elken Sønderby, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
-##' @examples PlotCNVsFromDataFrame(DF=CNVs.Good[1:4,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder=".")
 ##' @export
+##' @examples 
+##'PlotCNVsFromDataFrame(DF=CNVs.Good[1:4,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder=".")
+
 
 PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".") # Path from cluster  ByFolder=FALSE, 
 {
