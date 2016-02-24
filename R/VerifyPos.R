@@ -1,15 +1,16 @@
-##' Verify position - checks if a genomic position is valid
+##' VerifyPos: Verify each genomic position. 
 ##'
-##' @title Verify position
-##' @param Pos Position of the loci to plot in the form chr21:1050000-1350000
-##' @param argument A character string, default being position, which is
-##' added to the beining of the error message. E.g position/highlight
-##' argument is not valid.
-##' @return An error message if the postion is not valid
-##' @author Johan Hilge Thygesen
+##' Checks if a genomic position is valid.
+##' @title VerifyPos
+##' @param Pos: Position of the loci to plot, in the form chr21:1050000-1350000.
+##' @param Argument: A character string, default being position, which is added to the beining of the error message. E.g position/highlight argument is not valid.
+##' @return An error message if the postion is not valid.
+##' @author Johan Hilge Thygesen, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @export
 ##' @examples
 ##' VerifyPos("chr21:1050000-135")
-##' @export
+
 VerifyPos <- function(Pos, argument = "Position"){
     regmatch <- regexpr("chr[0-9X]{1,2}:[0-9]+-[0-9]+", Pos) # Regexp test of position
     if(attr(regmatch, "match.length") == nchar(Pos)) { # Split postion
