@@ -1,7 +1,8 @@
 ##' PeaksAndPits: Unknown
+##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title PeaksAndPits
-##' @param DF: Unknown, default = Unknown. 
+##' @param DF: Data frame with predicted CNVs for each sample, default = Unknown. 
 ##' @param PlotName: Unknown, default = Unknown.
 ##' @return Data frame with QC variables.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
