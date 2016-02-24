@@ -1,10 +1,22 @@
-##' PlotLRRAndCNVs: Plot  whole mock sample   
+##' PlotLRRAndCNVs: Plot Log R Ratio (LRR) and copy number variations (CNVs) for the whole mock sample.   
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title PlotLRRAndCNVs
+##' @param CNV: Copy Number Variation, default = Unknown.
+##' @param Sample: Unknown, default = MockData. 
+##' @param CNVMean: Unknown, default = Unknown. 
+##' @param Name: Unknown, default = Unknown. 
+##' @param Roi: Unknown, default = Unknown. 
+##' @param Width: Unknown, default = 12.
+##' @param Height: Unknown, default = 5.
+##' @param Dpi: Dots per inch, default = 100.
+##' @param PNG: Portable Network Graphics, default = TRUE.
 ##' @return Classification for LRR.
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown
+##' 
 
 PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock, width=12, height=5, dpi=100, PNG=TRUE)
 {
