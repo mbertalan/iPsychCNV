@@ -4,9 +4,9 @@
 ##' @title MultipleMockData
 ##' @param NSamples: Unknown, default = 10.
 ##' @param NLoops: Unknown, default = 10.
-##' @param Cores: Unknown, default = 30.
+##' @param Cores: Number of cores used, default = 30.
 ##' @param HMM: Unknown, default = Unknown.
-##' @param Path2PennCNV: Unknown, default = Unknown.
+##' @param Path2PennCNV: The path to pennCNV.
 ##' @return Return data in a data frame.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
