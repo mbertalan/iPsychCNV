@@ -2,17 +2,17 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title ReadSample
-##' @param RawFile, The raw data files, default = Test.txt.
-##' @param Skip: Integer the number of lines of the data file to skip before beginning to read data, default = 0.
+##' @param RawFile: The raw data files, default = Test.txt.
+##' @param Skip: Integer, the number of lines of the data file to skip before beginning to read data, default = 0.
 ##' @param LCR: List low copy repeat regions, list of SNPs that should be removed, default = FALSE. 
 ##' @param PFB: Vector, population frequency 0 to 1 for each SNP in the array, default = NULL.
 ##' @param Chr: Character, select a specific chromosome to be analyzed, default = NA.
-##' @param SNPList: Getting Chr and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5  
+##' @param SNPList: Getting Chr. and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5  
 ##' @return Return data in a data frame.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA, SNPList=NULL)
