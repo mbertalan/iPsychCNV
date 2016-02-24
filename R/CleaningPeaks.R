@@ -1,11 +1,13 @@
-##' CleaningPeaks: Remove noise from peaks in BAF. 
+##' CleaningPeaks: Remove noise from peaks in B Allele Frequency (BAF). 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title CleaningPeaks
+##' @param Tp: Unknown.
 ##' @return Peaks for BAF.
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
 
 CleaningPeaks <- function(tp)
 {
