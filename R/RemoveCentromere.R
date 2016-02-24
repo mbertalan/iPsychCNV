@@ -1,4 +1,4 @@
-##' RemoveCentromere: Remove  centromeres from the analysis. 
+##' RemoveCentromere: Remove centromeres from the analysis. 
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title RemoveCentromere
@@ -8,7 +8,7 @@
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 RemoveCentromere <- function(df, HG="hg19")
