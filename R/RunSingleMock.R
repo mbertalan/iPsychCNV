@@ -10,7 +10,7 @@
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 RunSingleMock <- function(Noise=0, CNVMean=0.4, Name="Test", Method="PennCNV")
