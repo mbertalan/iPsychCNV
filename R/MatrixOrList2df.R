@@ -1,10 +1,14 @@
-##' MatrixOrList2df: read data. 
+##' MatrixOrList2df: Read data. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MatrixOrList2df
-##' @return return data in data frame
-##' @author Marcelo Bertalan
+##' @param tmp: Unknwon, default = Unknown.
+##' @return return data in a data frame.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 MatrixOrList2df <- function(tmp)
 {
