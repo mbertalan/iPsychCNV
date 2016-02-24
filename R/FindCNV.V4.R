@@ -1,14 +1,14 @@
-##' FindCNV: Find CNVs using Log R Ratio (LRR) data by cpt.meanvar method. 
+##' FindCNV.V4.: Find CNVs using Log R Ratio (LRR) data by cpt.meanvar method. 
 ##'
-##' Input: sample path, CNV in data frame format and minium number of SNPs.
-##' @title FindCNV
+##' Unknown
+##' @title FindCNV.V4.
 ##' @param ID: Unknown. 
 ##' @param Sample: Unknown.
 ##' @param CPTmethod: Unknown, default = meanvar.
 ##' @param CNVSignal: Unknown, default = 0.1.
 ##' @param Penvalue: Unknown, defualt = 20.
 ##' @param Merge: Unknown, default = TRUE.
-##' @return A data frame with CNVs, with start and stop position, chr.,  and etc. for each sample. 
+##' @return A data frame with CNVs, with start and stop position, chromosome (chr.), and etc. for each sample. 
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @export
 ##' @examples Unknown.
