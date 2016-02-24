@@ -1,11 +1,16 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' EvaluateMockResults: Unknown. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title iPsychCNV
-##' @return Data frame with CNVs predicted.
-##' @author Marcelo Bertalan
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title EvaluateMockResults
+##' @param MockCNV: Unknown. 
+##' @param Df: Data frame with predicted CNVs for each sample? Unknown.
+##' @param Cores: Number of cores used, default = 1.
+##' @return Data frame with predicted CNVs.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown
+##'
 
 EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 {

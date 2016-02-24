@@ -1,9 +1,22 @@
-##' PlotHotspots
+##' PlotHotspots: Plot hot spot for CNVs. 
 ##'
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title PlotHotspots
-##' @return png files
-##' @author Marcelo Bertalan
+##' @param CNVsDF: Data frame with CNVs, default = Unknown.
+##' @param Hotspots: Unknown, default = Unknown.
+##' @param AllHeadFiles: Unknown, default = Unknown. 
+##' @param Cores: The number of cores used, default = 1.
+##' @param Skip: Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 10.
+##' @param Penalty: The coefficient of the penalty for degrees of freedom, default = 60.
+##' @param Quantile: Logical, if quantile normalization should be applied or not, default = FALSE.
+##' @param QSpline: Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.
+##' @param Sd: Numeric, Log R Ratio standard deviation for the quantile normalization, default = 0.18.
+##' @return Png files
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown. 
+##' 
 
 PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
 {

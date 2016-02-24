@@ -1,11 +1,18 @@
-##' DefineStartAndStop: Define Start and Stop for CNV. 
+##' DefineStartAndStop: Define start and stop positions for a given CNV. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title DefineStartAndStop
-##' @return Data frame with Start and Stop.
-##' @author Marcelo Bertalan
+##' @param Indx: Unknown.
+##' @param SubCNV: Unknown.
+##' @param CHR: Character, select a specific chromosome to be analyzed. 
+##' @param ID: Unknown.
+##' @param CPT.Res: Unknown.
+##' @return Data frame with start and stop positions for each CNV.
+##' @author Marcelo Bertalan, Louise K. Hoeffding
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 DefineStartAndStop <- function(indx, subCNV, CHR, ID, CPT.Res)
 {

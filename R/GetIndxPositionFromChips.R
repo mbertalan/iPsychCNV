@@ -1,10 +1,15 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' GetIndxPositionFromChips: Unknown. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title iPsychCNV
-##' @return Data frame with CNVs predicted.
-##' @author Marcelo Bertalan
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title GetIndxPositionFromChips
+##' @param CNVs: Data frame with information on CNVs. Unknown.
+##' @param Sample: Unknown.
+##' @return Data frame with predicted CNVs.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 GetIndxPositionFromChips <- function(CNVs, Sample)
 {

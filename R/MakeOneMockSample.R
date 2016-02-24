@@ -1,10 +1,15 @@
-##' MakeOneMockSample: Run a single mock sample   
+##' MakeOneMockSample: Run a single mock sample.   
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MakeOneMockSample
-##' @return Classification for LRR.
-##' @author Marcelo Bertalan
+##' @param Noise: Unknown, defualt = 0.5.
+##' @param CNVMean: Unknown, default = 0.2.
+##' @return Classification for Log R Ratio (LRR).
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 MakeOneMockSample <- function(Noise=0.5, CNVMean=0.2)
 {

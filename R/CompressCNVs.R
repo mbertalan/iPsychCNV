@@ -1,14 +1,15 @@
-##' Compress CNVs: unknown
-
+##' CompressCNVs: unknown
+##'
+##' Unknown - description?
 ##' @title CompressCNVs
-##' @param tmp4:unknown.
-##' @param OverlapCutoff:unknown.
-##' @param Cores:unknown.
+##' @param tmp4:Unknown.
+##' @param OverlapCutoff:Unknown.
+##' @param Cores:Number of cores used, default = 1. 
 ##' @return Hotspots.
-##' @author Marcelo Bertalan.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples
+##' @examples Unknown
 
 CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 {

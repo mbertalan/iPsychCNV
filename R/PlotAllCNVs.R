@@ -1,9 +1,23 @@
-##' PlotAllCNVs: Plot all CNVs in one plot. 
+##' PlotAllCNVs: Plot all Copy Number Variations (CNVs) in one plot. 
 ##'
+##' Specifically designed to handle noisy data from amplified DNA on Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title PlotAllCNVs
-##' @return return data in data frame
-##' @author Marcelo Bertalan
-##' @export
+##' @param Df: Data frame with predicted CNVs for each sample, default = CNV.Res.
+##' @param Name:Unknown, default = Unknown.
+##' @param NCOL: Number of columns, default = 2.
+##' @param Roi: Regions of interest or hotspots, default = roi.
+##' @param Width: Unknown, defualt = 16.
+##' @param Height: Unknown, default = 30.
+##' @param Hg: Human genome version, default = hg19.
+##' @param Chr: Chromosome, default = NA.
+##' @param Start: The start position of each CNV, default = NA.
+##' @param Stop: The stop position of each CNV, default = NA.
+##' @return Return data in a data frame.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @export 
+##' @examples Unknown.
+##' 
 
 PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg19", chr=NA, start=NA, stop=NA) # TimesLength
 {	

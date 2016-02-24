@@ -1,21 +1,18 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-##' Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
-##'
 ##' FilterFromCNVs: Filter CNV from other methods.
 ##'
-##' @title FilterFromCNVs.
-##' @param CNVs data frame with CNVs.
-##' @param PathRawData Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
-##' @param Cores Number of cores to run in parallel. 
-##' @param Skip How many rows should skip. Use if file has comments.
-##' @param MinNumSNPs Minimum number of SNPs per CNV. 
-##' @param Source Which method is the original call.
-##' @return Data frame with the estimate copy number for each chromosome.
-##' @author Marcelo Bertalan
+##' Specifically designed to reduce false positive CNVs and handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title FilterFromCNVs
+##' @param CNVs: Data frame with CNVs.
+##' @param PathRawData: The path to the raw data files containing Log R Ratio (LRR) and B Allele Frequency (BAF) values. Example: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".
+##' @param MinNumSNPs: Minimum number of SNPs per CNV, default = 10. 
+##' @param Source: Which method is the original call, default = iPsychCNV.
+##' @param Skip: Integer, the number of rows of the data file that should be skipped before beginning tp read the data. Use if file has comments, default = 0.
+##' @param Cores: Number of cores to run in parallel, default = 1. 
+##' @return Data frame with the estimated copy number for each chromosome.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples
-
+##' @examples 
 ##' LongRoi <- MakeLongMockSample(Mean=c(-0.6, -0.3, 0.3, 0.6), Size=c(200, 400, 600))
 ##' # GADA
 ##' Sample <- read.table("LongMockSample.tab", sep="\t", header=TRUE, stringsAsFactors=F)

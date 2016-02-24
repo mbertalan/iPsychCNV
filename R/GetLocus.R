@@ -1,10 +1,14 @@
-##' iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
+##' GetLocus: Unknown. 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title GetLocus
-##' @return data frame with locus
-##' @author Marcelo Bertalan
+##' @param Df: Data frame with predicted CNVs for each sample.
+##' @return data frame with CNV locus.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown.
+##'
 
 GetLocus <- function(df) # df with CHR=chr12, CNV_Start=numeric, CNV_Stop=numeric
 {

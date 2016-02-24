@@ -2,9 +2,14 @@
 ##'
 ##' X <- a vector with the data. N <- the window size. 
 ##' @title SlideWindowMean
+##' @param X: Unknown, default = Unknown.
+##' @param Y: Unknown, default = Unknown. 
 ##' @return A vector with mean of the window size.
-##' @author Marcelo Bertalan
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples Unknown. 
+##' 
 
 SlideWindowMean <- function(X, N)
 {
