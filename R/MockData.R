@@ -5,12 +5,12 @@
 ##' @param N: Unknown, default = 1.
 ##' @param Wave1: Unknown, default = FALSE.
 ##' @param Type: Unknown, default = Blood.
-##' @param Cores: Unknown, default = 1.
+##' @param Cores: Number of cores used, default = 1.
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown
+##' @examples Unknown.
 ##'
 
 MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or PKU (Perfect or noise)
