@@ -2,12 +2,14 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title EvaluateMyBAF
-##' @param res2. Unknown?
+##' @param res: Unknown.
+##' @param res2. Unknown.
 ##' @return Classification for BAF.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown
+##'
 
 EvaluateMyBAF <- function(res, res2)
 {
