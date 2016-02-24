@@ -1,9 +1,14 @@
-##' HotspotsPrediction: Count number of true CNVs in hotspots. 
+##' HotspotsPrediction: Count number of true CNVs in each hotspots. 
 ##'
 ##' @title HotspotsPrediction
-##' @return return data in data frame
-##' @author Marcelo Bertalan
+##' @param Hotspots: Unkown.
+##' @param df: Unknown.
+##' @return return data in data frame.
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
+##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
+##' @examples
+##'
 
 HotspotsPrediction <- function(hotspots, df)
 { 	
