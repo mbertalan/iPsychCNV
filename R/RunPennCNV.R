@@ -2,16 +2,21 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title RunPennCNV
-##' @param PathRawData
-##' @param MINNumSNPs=20
-##' @param Pattern=".*Mock.*\\.tab$"
-##' @param Cores=20, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15, PennCNVFormat=FALSE, RemoveTmpfiles=TRUE
-##' @param Skip=0
-##' @param Normalization=FALSE
-##' @param
-##' @param
-##' @param
-##' @param
+##' @param PathRawData: The path to the raw data files containing Log R Ratio (LRR) and B Allele Frequency (BAF) values.
+##' @param MINNumSNPs: Minimum number of SNPs per CNV, default = 20.
+##' @param Pattern: File pattern in the PathRawData. Example: "*.txt".
+##' @param Cores: Number of cores used; default = 20.
+##' @param Skip: Integer the number of lines of the data file to skip before beginning to read data, default = 0.
+##' @param Normalization: Unknown, default = FALSE.
+##' @param PFB: Vector population frequency 0 to 1 for each SNP in the array, default = NO.
+##' @param HMM: Unknown, default = Unknown. 
+##' @param Path2PennCNV: The path to pennCNV.
+##' @param Penalty: The coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}, default = 60.
+##' @param Quantile: Logical, if quantile normalization should be applied or not, default = TRUE.
+##' @param QSpline: Logical, if a cubic smoothing spline should be used to normalize the data, default = TRUE.
+##' @param Sd: numeric, LLR standard deviation (sd) for the quantile nomarlization, default = 0.15.
+##' @param PennCNVFormat: Unknown, default = FALSE.
+##' @param RemoveTmpfiles: Unknown, default = TRUE.
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
