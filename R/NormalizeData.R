@@ -1,11 +1,19 @@
-##' NormalizeData: Normalize LRR. 
+##' NormalizeData: Normalize Log R Ratio (LRR). 
 ##'
-##' Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
-##' @title Normalize Data
-##' @return LRR normalized
-##' @author Marcelo Bertalan
-##' @export
+##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+##' @title NormalizeData
+##' @param Sample: Unknown, default = Unknown. 
+##' @param ExpectedMean: Unknown, default = 0.
+##' @param Penalty: Unknown, default = 60.
+##' @param Quantile: Unknown, default = FALSE.
+##' @param QSpline: Unknown, default = FALSE.
+##' @param Sd: standard deviation, default = 0.18.
+##' @return LRR normalized.
+##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
+##' @export
+##' @examples Unknown.
+##'
 
 NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
 {
