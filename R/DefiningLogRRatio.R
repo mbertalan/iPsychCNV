@@ -2,11 +2,13 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title DefiningLogRRatio
+##' @param res2: Unknown.
 ##' @return Classification for LRR.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown.
+##'
 
 DefiningLogRRatio <- function(res2)
 {
