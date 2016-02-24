@@ -8,9 +8,9 @@
 ##' @param Hg: Human genome version, default = hg19.
 ##' @param NumFiles: Number of files to be analyzed from PathRawData.
 ##' @param Pattern: File pattern in the PathRawData. Example: "*.txt".
-##' @param MinLength: Minimum CNV length.
+##' @param MinLength: Minimum CNV length, default = Unknown.
 ##' @param SelectedFiles: List of file names that should be analyzed from PathRawData. 
-##' @param Skip integer: The number of lines of the data file to skip before beginning to read data.
+##' @param Skip: Integer, the number of lines of the data file to skip before beginning to read data.
 ##' @param LCR list: Low copy repeat region, list of SNPs that should be removed.
 ##' @param PFB vector: Population frequency 0 to 1 for each SNP in the array. 
 ##' @param Chr: Character, select a specific chromosome to be analyzed. 
