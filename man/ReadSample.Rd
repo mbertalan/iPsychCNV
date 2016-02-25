@@ -3,20 +3,40 @@
 \name{ReadSample}
 \alias{ReadSample}
 \title{ReadSample}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 ReadSample(RawFile = "Test.txt", skip = 0, LCR = FALSE, PFB = NULL,
-  chr = NA)
+  chr = NA, SNPList = NULL)
+}
+\arguments{
+\item{RawFile:}{The raw data files, default = Test.txt.}
+
+\item{Skip:}{Integer, the number of lines of the data file to skip before beginning to read data, default = 0.}
+
+\item{LCR:}{List low copy repeat regions, list of SNPs that should be removed, default = FALSE.}
+
+\item{PFB:}{Vector, population frequency 0 to 1 for each SNP in the array, default = NULL.}
+
+\item{Chr:}{Character, select a specific chromosome to be analyzed, default = NA.}
+
+\item{SNPList:}{Getting Chr. and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5}
 }
 \value{
-return data in data frame
+Return data in a data frame.
 }
 \description{
-ReadSample: read data.
+ReadSample: Read data.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

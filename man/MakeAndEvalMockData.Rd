@@ -2,20 +2,36 @@
 % Please edit documentation in R/MakeAndEvalMockData.R
 \name{MakeAndEvalMockData}
 \alias{MakeAndEvalMockData}
-\title{iPsychCNV}
+\title{MakeAndEvalMockData}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 MakeAndEvalMockData(N = 100, Wave1 = FALSE, Type = "PKU", Cores = 20)
 }
+\arguments{
+\item{N:}{Unknown, default = 100.}
+
+\item{Wave1:}{Unknown, default = FALSE.}
+
+\item{Type:}{Unknown, default = PKU.}
+
+\item{Cores:}{Number of cores used, default = 20.}
+}
 \value{
-Data frame with CNVs predicted.
+Data frame with predicted CNVs.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+MakeAndEvalMockData: Generate and evaulate Mock data.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown. 
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

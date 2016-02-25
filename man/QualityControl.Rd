@@ -3,21 +3,41 @@
 \name{QualityControl}
 \alias{QualityControl}
 \title{QualityControl}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 QualityControl(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/",
   Cores = 10, Pattern = "*_*assed_*", NumFiles = "All", Skip = 0,
   Normalization = FALSE)
 }
+\arguments{
+\item{PathRawData:}{The path to the raw data files containing the Log R Ratio (LRR) and B Allele Frequency (BAF) vaules.}
+
+\item{Cores:}{Number of cores used, default = 10.}
+
+\item{Pattern:}{File pattern in the raw data, default = "*_*assed_*".}
+
+\item{NumFiles:}{Number of files to be analyzed from raw data, default = All.}
+
+\item{Skip:}{Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 0.}
+
+\item{Normalization:}{Unknown, default = FALSE.}
+}
 \value{
 Data frame with QC variables.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+QualityControl: Unknown.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

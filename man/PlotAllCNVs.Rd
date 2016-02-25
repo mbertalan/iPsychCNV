@@ -3,18 +3,49 @@
 \name{PlotAllCNVs}
 \alias{PlotAllCNVs}
 \title{PlotAllCNVs}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 PlotAllCNVs(df = CNV.Res, Name = "CNV.Res.Test.png", NCOL = 2,
   Roi = roi, width = 16, height = 30, hg = "hg19", chr = NA,
   start = NA, stop = NA)
 }
+\arguments{
+\item{Df:}{Data frame with predicted CNVs for each sample, default = CNV.Res.}
+
+\item{Name:Unknown, }{default = Unknown.}
+
+\item{NCOL:}{Number of columns, default = 2.}
+
+\item{Roi:}{Regions of interest or hotspots, default = roi.}
+
+\item{Width:}{Unknown, defualt = 16.}
+
+\item{Height:}{Unknown, default = 30.}
+
+\item{Hg:}{Human genome version, default = hg19.}
+
+\item{Chr:}{Chromosome, default = NA.}
+
+\item{Start:}{The start position of each CNV, default = NA.}
+
+\item{Stop:}{The stop position of each CNV, default = NA.}
+}
 \value{
-return data in data frame
+Return data in a data frame.
 }
 \description{
-PlotAllCNVs: Plot all CNVs in one plot.
+PlotAllCNVs: Plot all Copy Number Variations (CNVs) in one plot.
+}
+\details{
+Specifically designed to handle noisy data from amplified DNA on Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

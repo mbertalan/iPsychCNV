@@ -2,23 +2,43 @@
 % Please edit documentation in R/MakeLongMockSample.R
 \name{MakeLongMockSample}
 \alias{MakeLongMockSample}
-\title{iPsychCNV}
+\title{MakeLongMockSample}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 MakeLongMockSample(CNVDistance = 1000, Type = c(0, 1, 2, 3, 4),
   Mean = c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5,
   0.6, 0.7, 0.8, 0.9), Size = c(100, 200, 300, 400, 500, 600, 700, 800, 900,
-  1000))
+  1000), ChrMean = 0, ChrSD = 0.18)
+}
+\arguments{
+\item{CNVDistance:}{Unknown, defualt = 1000.}
+
+\item{Type:}{Unknown, default = Unknown.}
+
+\item{Mean:}{Unknown, default = Unknown.}
+
+\item{Size:}{Unknown, default = Unknown.}
+
+\item{ChrMean:}{Unknown, default = 0.}
+
+\item{ChrSD:}{Unknown, default = 0.18.}
 }
 \value{
-Data frame with CNVs predicted.
+Data frame with predicted CNVs.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+MakeLongMockSample: Unknown
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

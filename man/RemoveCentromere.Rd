@@ -2,20 +2,32 @@
 % Please edit documentation in R/RemoveCentromere.R
 \name{RemoveCentromere}
 \alias{RemoveCentromere}
-\title{iPsychCNV}
+\title{RemoveCentromere}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 RemoveCentromere(df, HG = "hg19")
 }
+\arguments{
+\item{Df:}{Data frame, Unknown.}
+
+\item{HG:}{Human genome version, default = hg19.}
+}
 \value{
-Data frame with CNVs predicted.
+Unknown.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+RemoveCentromere: Remove centromeres from the analysis.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

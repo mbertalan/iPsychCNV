@@ -12,70 +12,70 @@ iPsychCNV(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/",
   Pattern = "22q11_*", MinLength = 10, SelectedFiles = NA, Skip = 10,
   LCR = FALSE, PFB = NULL, chr = NA, penalty = 60, Quantile = FALSE,
   QSpline = FALSE, sd = 0.18, recursive = FALSE, CPTmethod = "meanvar",
-  CNVSignal = 0.1, penvalue = 10, OutputPath = NA,
+  CNVSignal = 0.1, penvalue = 20, OutputPath = NA,
   OutputFileName = "Test", OnlyCNVs = FALSE)
 }
 \arguments{
-\item{PathRawData}{The path to the raw data files contining LRR and BAF values.}
-
-\item{MINNumSNPs}{Minimum number of SNPs per CNV. Default 20.}
-
-\item{Cores}{Number of cores used. Default 1.}
-
-\item{hg}{Human genome version. Default hg19.}
-
-\item{NumFiles}{Number of files to be analyzed from PathRawData.}
-
-\item{Pattern}{File pattern in the PathRawData. Example: "*.txt".}
-
-\item{MinLength}{Minimum CNV length.}
-
-\item{SelectedFiles}{List of file names that should be analyzed from PathRawData.}
-
-\item{Skip}{integer: the number of lines of the data file to skip before beginning to read data.}
-
-\item{LCR}{list: low complex region, list of SNPs that should be removed.}
+\item{LCR}{list: Low copy repeat region, list of SNPs that should be removed.}
 
 \item{PFB}{vector: Population frequency 0 to 1 for each SNP in the array.}
 
-\item{chr}{character: select a specific chromosome to be analyzed.}
+\item{PathRawData:}{The path to the raw data files contining Log R Ratio (LRR) and B Allele Frequency (BAF) values.}
 
-\item{penalty}{the coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.}
+\item{MINNumSNPs:}{Minimum number of SNPs per CNV, default = 20.}
 
-\item{Quantile}{logical, if quantile normalization should be applied or not. Default FALSE.}
+\item{Cores:}{Number of cores used, default =  1.}
 
-\item{QSpline}{logical, if a cubic smoothing spline should be used to normalize the data. Default FALSE.}
+\item{Hg:}{Human genome version, default = hg19.}
 
-\item{sd}{numeric Log R ratio standard deviation for the quantile nomarlization. Default 0.18.}
+\item{NumFiles:}{Number of files to be analyzed from PathRawData.}
 
-\item{recursive}{logical, Should the listing recurse into directories? From list.files {base}.}
+\item{Pattern:}{File pattern in the PathRawData. Example: "*.txt".}
 
-\item{CPTmethod}{character, method to find change points from changepoint package by Rebecca Killick. Default "meanvar", or "mean".}
+\item{MinLength:}{Minimum CNV length, default = Unknown.}
 
-\item{CNVSignal}{numeric, minumum CNV signal to be consider a CNV in absolute value. Default 0.1, any CNV with mean Log R ration in the CNV region with abs(X) < 0.1 is ignored.}
+\item{SelectedFiles:}{List of file names that should be analyzed from PathRawData.}
 
-\item{penvalue}{Same as pen.value from function cpt.mean at changepoint R package by Rebecca Killick. Default 10. "The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text           giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters".}
+\item{Skip:}{Integer, the number of lines of the data file to skip before beginning to read data.}
 
-\item{OutputPath}{character, path for output.}
+\item{Chr:}{Character, select a specific chromosome to be analyzed.}
 
-\item{OutputFileName}{character, Output file name.}
+\item{Penalty:}{The coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.}
 
-\item{OnlyCNVs}{logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.}
+\item{Quantile:}{Logical, if quantile normalization should be applied or not, default = FALSE.}
+
+\item{QSpline:}{Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.}
+
+\item{Sd:}{Numeric, LRR standard deviation for the quantile nomarlization, default = 0.18.}
+
+\item{Recursive:}{Logical, should the listing recurse into directories? From list.files {base}.}
+
+\item{CPTmethod:}{Character, method to find change points from changepoint package by Rebecca Killick. Default "meanvar", or "mean".}
+
+\item{CNVSignal:}{Numeric, minumum CNV signal to be consider a CNV in absolute value, default = 0.1, any CNV with mean LRR in the CNV region with abs(X) < 0.1 is ignored.}
+
+\item{Penvalue:}{Same as pen.value from function cpt.mean at changepoint R package by Rebecca Killick, default = 10. "The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text           giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters".}
+
+\item{OutputPath:}{Character, path for output.}
+
+\item{OutputFileName:}{Character, output file name.}
+
+\item{OnlyCNVs:}{Logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.}
 }
 \value{
-Data frame with CNVs predicted.
+Data frame with predicted CNVs.
 }
 \description{
 iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
 mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

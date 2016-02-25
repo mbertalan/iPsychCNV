@@ -3,8 +3,16 @@
 \name{SlideWindowMean}
 \alias{SlideWindowMean}
 \title{SlideWindowMean}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 SlideWindowMean(X, N)
+}
+\arguments{
+\item{X:}{Unknown, default = Unknown.}
+
+\item{Y:}{Unknown, default = Unknown.}
 }
 \value{
 A vector with mean of the window size.
@@ -15,7 +23,11 @@ SlideWindowMean: Create a smooth effect on the data.
 \details{
 X <- a vector with the data. N <- the window size.
 }
+\examples{
+Unknown. 
+
+}
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

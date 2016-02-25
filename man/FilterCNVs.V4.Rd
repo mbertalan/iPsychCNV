@@ -2,7 +2,7 @@
 % Please edit documentation in R/FilterCNVs.V4.R
 \name{FilterCNVs.V4}
 \alias{FilterCNVs.V4}
-\title{iPsychCNVs}
+\title{FilterCNVs.V4.}
 \source{
 \url{http://biopsych.dk/iPsychCNV}
 }
@@ -10,16 +10,31 @@
 FilterCNVs.V4(CNVs = CNVs, MinNumSNPs = 20, Sample, ID = "Test",
   verbose = FALSE)
 }
+\arguments{
+\item{CNVs:}{Data frame with CNVs. Unknown?}
+
+\item{MinNumSNPs:}{Minimum number of SNPs per CNV, default = 20.}
+
+\item{Sample:}{Unknown.}
+
+\item{ID:}{Unknown.}
+
+\item{Verbose:}{Unknown, default = FALSE.}
+}
 \value{
 Data frame with CNVs and classification.
 }
 \description{
-Filter CNVs: function to filter predicted CNVs and avoid high number of false positives.
+FilterCNVs.V4.: Function to filter predicted Copy Number Variation (CNVs) and avoid a high number of false positive calls.
 }
 \details{
-The function receives a data frame with CNV information, ex: Chr, Start position, Stop position and Sample ID. Returns a data frame with CNVs and a Type difining if is bad or good.
+The function receives a data frame with CNV information, ex: chr., start position, stop position, and sample ID.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

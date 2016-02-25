@@ -7,25 +7,30 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-HotspotsCNV(df, Freq = 1, OverlapCutoff = 0.7, Cores = 1)
+HotspotsCNV(df, Freq = 1, OverlapCutoff = 0.7, Cores = 1,
+  OverlapMin = 0.9, OverlapMax = 1.1)
 }
 \arguments{
-\item{df}{dataframe with CNV predction with Chr, Start and Stop.}
+\item{Df:}{Dataframe with CNV predction with chromosome (Chr.), start, and stop position.}
 
-\item{Freq}{minimum number of CNVs to be considered a hotspot.}
+\item{Freq:}{Minimum number of CNVs to be considered a hotspot, default = 1.}
 
-\item{OverlapCutoff}{minimum overlap among CNVs to be considered the same CNV region.}
+\item{OverlapCutoff:}{Minimum overlap among CNVs to be considered the same CNV region, default = 0.7.}
 
-\item{Cores}{numeric, CPU numbers to be used.}
+\item{Cores:}{Numeric, Number of cores used, default = 1.}
+
+\item{OverlapMin:}{Minimum overlap with hotspot to be selected for counting, default = 0.9.}
+
+\item{OverlapMax:}{Maximum overlap with hotspot to be selected for counting, default = 1.1.}
 }
 \value{
-Hotspots
+CNV hotspots.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+HotspotsCNV: Identify Copy Number Variation (CNV) hotspots.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
 MockDataCNVs <- MockData(N=100, Type="PKU", Cores=20)
@@ -33,6 +38,6 @@ iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^Moc
 iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

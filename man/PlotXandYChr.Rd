@@ -3,16 +3,31 @@
 \name{PlotXandYChr}
 \alias{PlotXandYChr}
 \title{PlotXandYChr}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 PlotXandYChr(Sample = MockData, Name = "Test.png")
+}
+\arguments{
+\item{Sample:}{Unknown, default = Unknown.}
+
+\item{Name:}{Unknown, default = Unknown.}
 }
 \value{
 png plot
 }
 \description{
-PlotXandYChr
+PlotXandYChr: Plot Log R Ratio (LRR) and copy number variations (CNVs) for the X and Y chromosome the whole mock sample.
+}
+\details{
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

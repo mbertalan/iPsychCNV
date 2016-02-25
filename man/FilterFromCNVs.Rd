@@ -2,7 +2,7 @@
 % Please edit documentation in R/FilterFromCNVs.R
 \name{FilterFromCNVs}
 \alias{FilterFromCNVs}
-\title{FilterFromCNVs.}
+\title{FilterFromCNVs}
 \source{
 \url{http://biopsych.dk/iPsychCNV}
 }
@@ -11,27 +11,26 @@ FilterFromCNVs(CNVs, PathRawData, MinNumSNPs = 10, Source = "iPsychCNV",
   Skip = 0, Cores = 1)
 }
 \arguments{
-\item{CNVs}{data frame with CNVs.}
+\item{CNVs:}{Data frame with CNVs.}
 
-\item{PathRawData}{Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".}
+\item{PathRawData:}{The path to the raw data files containing Log R Ratio (LRR) and B Allele Frequency (BAF) values. Example: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".}
 
-\item{MinNumSNPs}{Minimum number of SNPs per CNV.}
+\item{MinNumSNPs:}{Minimum number of SNPs per CNV, default = 10.}
 
-\item{Source}{Which method is the original call.}
+\item{Source:}{Which method is the original call, default = iPsychCNV.}
 
-\item{Skip}{How many rows should skip. Use if file has comments.}
+\item{Skip:}{Integer, the number of rows of the data file that should be skipped before beginning tp read the data. Use if file has comments, default = 0.}
 
-\item{Cores}{Number of cores to run in parallel.}
+\item{Cores:}{Number of cores to run in parallel, default = 1.}
 }
 \value{
-Data frame with the estimate copy number for each chromosome.
+Data frame with the estimated copy number for each chromosome.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
+FilterFromCNVs: Filter CNV from other methods.
 }
 \details{
-FilterFromCNVs: Filter CNV from other methods.
+Specifically designed to reduce false positive CNVs and handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
 LongRoi <- MakeLongMockSample(Mean=c(-0.6, -0.3, 0.3, 0.6), Size=c(200, 400, 600))
@@ -43,6 +42,6 @@ See iPsychCNV tutorial for more examples
 http://biopsych.dk/iPsychCNV/tutorial.html
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

@@ -11,11 +11,11 @@ AddInfo2res(res, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF,
   LogRRatio, SumPeaks, SDChr, MeanChr)
 }
 \arguments{
-\item{res:}{cbind of two data frames. 1-) GetDataVariables. 2-) ClassNumbers.}
+\item{Res:cbind}{of two data frames. 1-) GetDataVariables. 2-) ClassNumbers.}
 
-\item{CNV2HighPvalue:}{p value of t.test among CNV region and its upstream region.}
+\item{CNV2HighPvalue:}{P value of t.test among CNV region and its upstream region.}
 
-\item{CNV2LowPvalue:}{p value of t.test among CNV region and its downstream region.}
+\item{CNV2LowPvalue:}{P value of t.test among CNV region and its downstream region.}
 
 \item{Class:}{Result from DefineBAFType function.}
 
@@ -27,22 +27,23 @@ AddInfo2res(res, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF,
 
 \item{SumPeaks:}{Result from CleaningPeaks function.}
 
-\item{SDChr:}{LRR standard deviation from whole chromosome.}
+\item{SDChr:}{Log R Ratio (LRR) standard deviation from whole chromosome.}
 
-\item{MeanChr:}{LRR mean from whole chromosome.}
+\item{MeanChr:}{Log R Ratio (LRR) mean from whole chromosome.}
 }
 \value{
-return all variables together in a in data frame
+Return all variables together in a data frame.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-Specifically designed to reduce false positive CNVs and amplified DNA on dried blood spots.
 AddInfo2res: Function to add variables for each CNV region. Function is used at FilterCNVs.V4.R.
+}
+\details{
+Specifically designed to reduce false positive CNVs and amplified DNA on dried blood spots.
 }
 \examples{
 res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

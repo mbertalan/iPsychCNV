@@ -9,16 +9,31 @@
 \usage{
 DefineStartAndStop(indx, subCNV, CHR, ID, CPT.Res)
 }
+\arguments{
+\item{Indx:}{Unknown.}
+
+\item{SubCNV:}{Unknown.}
+
+\item{CHR:}{Character, select a specific chromosome to be analyzed.}
+
+\item{ID:}{Unknown.}
+
+\item{CPT.Res:}{Unknown.}
+}
 \value{
-Data frame with Start and Stop.
+Data frame with start and stop positions for each CNV.
 }
 \description{
-DefineStartAndStop: Define Start and Stop for CNV.
+DefineStartAndStop: Define start and stop positions for a given CNV.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding
 }
 

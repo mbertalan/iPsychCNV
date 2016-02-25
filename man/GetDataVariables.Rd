@@ -2,17 +2,30 @@
 % Please edit documentation in R/GetDataVariables.R
 \name{GetDataVariables}
 \alias{GetDataVariables}
-\title{CompressCNVsHighFreq}
+\title{GetDataVariables}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 GetDataVariables(Data)
 }
+\arguments{
+\item{Data:}{Unknown.}
+}
 \value{
-Hotspots
+Hotspots - Unknown.
 }
 \description{
-GetDataVariables
+GetDataVariables: Unknown.
+}
+\details{
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

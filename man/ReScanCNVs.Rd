@@ -14,71 +14,71 @@ ReScanCNVs(CNVs = CNVs,
   PFB = NULL, chr = NA, penalty = 60, Quantile = FALSE,
   QSpline = FALSE, sd = 0.18, recursive = FALSE, CPTmethod = "meanvar",
   CNVSignal = 0.1, penvalue = 10, OutputPath = NA, IndxPos = FALSE,
-  ResPerSample = FALSE, Files = NA)
+  ResPerSample = FALSE, Files = NA, OnlyCNVs = TRUE)
 }
 \arguments{
-\item{CNVs}{data frame with hotspots to re-scan. Minimum information necessary is Chr, Start and Stop position.}
+\item{CNVs:}{Data frame with hotspots to re-scan. Minimum information necessary is chromosome (Chr.), Start and Stop position.}
 
-\item{PathRawData}{The path to the raw data files contining LRR and BAF values.}
+\item{PathRawData:}{The path to the raw data files containing Log R Ratio (LRR) and B Allele Frequency (BAF) values.}
 
-\item{MINNumSNPs}{Minimum number of SNPs per CNV. Default 20.}
+\item{MINNumSNPs:}{Minimum number of SNPs per CNV, default = 20.}
 
-\item{Cores}{Number of cores used. Default 1.}
+\item{Cores:}{Number of cores used; default = 1.}
 
-\item{hg}{Human genome version. Default hg19.}
+\item{Hg:}{Human genome version, default = hg19.}
 
-\item{NumFiles}{Number of files to be analyzed from PathRawData.}
+\item{NumFiles:}{Number of files to be analyzed from PathRawData.}
 
-\item{Pattern}{File pattern in the PathRawData. Example: "*.txt".}
+\item{Pattern:}{File pattern in the PathRawData. Example: "*.txt".}
 
-\item{MinLength}{Minimum CNV length.}
+\item{MinLength:}{Minimum CNV length, default = 10.}
 
-\item{SelectedFiles}{List of file names that should be analyzed from PathRawData.}
+\item{SelectedFiles:}{List of file names that should be analyzed from PathRawData.}
 
-\item{Skip}{integer: the number of lines of the data file to skip before beginning to read data.}
+\item{Skip:}{Integer the number of lines of the data file to skip before beginning to read data.}
 
-\item{LCR}{list: low complex region, list of SNPs that should be removed.}
+\item{LCR:}{List low copy repeat region region, list of SNPs that should be removed.}
 
-\item{PFB}{vector: Population frequency 0 to 1 for each SNP in the array.}
+\item{PFB:}{Vector population frequency 0 to 1 for each SNP in the array.}
 
-\item{chr}{character: select a specific chromosome to be analyzed.}
+\item{Chr:}{Character, select a specific chromosome to be analyzed.}
 
-\item{penalty}{the coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.}
+\item{Penalty:}{The coefficient of the penalty for degrees of freedom in the GCV criterion. From smooth.spline {stats}.}
 
-\item{Quantile}{logical, if quantile normalization should be applied or not. Default FALSE.}
+\item{Quantile:}{Logical, if quantile normalization should be applied or not, default = FALSE.}
 
-\item{QSpline}{logical, if a cubic smoothing spline should be used to normalize the data. Default FALSE.}
+\item{QSpline:}{Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.}
 
-\item{sd}{numeric Log R ratio standard deviation for the quantile nomarlization. Default 0.18.}
+\item{Sd:}{numeric, LRR standard deviation (sd) for the quantile nomarlization, default = 0.18.}
 
-\item{recursive}{logical, Should the listing recurse into directories? From list.files {base}.}
+\item{Recursive:}{Logical, should the listing recurse into directories (Unknown)? From list.files {base}.}
 
-\item{CPTmethod}{character, method to find change points from changepoint package by Rebecca Killick. Default "meanvar", or "mean".}
+\item{CPTmethod:}{Character, method to find change points from changepoint package by Rebecca Killick, default = "meanvar", or "mean".}
 
-\item{CNVSignal}{numeric, minumum CNV signal to be consider a CNV in absolute value. Default 0.1, any CNV with mean Log R ration in the CNV region with abs(X) < 0.1 is ignored.}
+\item{CNVSignal:}{Numeric, minumum CNV signal to be consider a CNV in absolute value, default = 0.1, any CNV with mean LLR in the CNV region with abs(X) < 0.1 is ignored.}
 
-\item{penvalue}{Same as pen.value from function cpt.mean at changepoint R package by Rebecca Killick. Default 10. "The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty.  The value of the penalty when using the Manual penalty option - this can be a numeric value or text           giving the formula to use.  Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters".}
+\item{Penvalue:}{Same as pen.value from function cpt.mean at changepoint R package by Rebecca Killick. default = 10. "The theoretical type I error e.g.0.05 when using the Asymptotic penalty.  A vector of length 2 (min,max) if using the CROPS penalty. The value of the penalty when using the Manual penalty option - this can be a numeric value or text giving the formula to use. Available variables are, n=length of original data, null=null likelihood, alt=alternative likelihood, tau=proposed changepoint, diffparam=difference in number of alternatve and null parameters".}
 
-\item{OutputPath}{character, path for output.}
+\item{OutputPath:}{Character, path for output.}
 
-\item{IndxPos, }{if index position for each hotspot is not included it will calculate. However, this step is time consuming.}
+\item{OutputFileName:}{Character, output file name.}
 
-\item{ResPerSample, }{If TRUE saves the results from each sample.}
+\item{OnlyCNVs:}{Logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.}
 
-\item{Files, }{a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time.}
+\item{IndxPos:}{If index position for each hotspot is not included it will calculate. However, this step is time consuming.}
 
-\item{OutputFileName}{character, Output file name.}
+\item{ResPerSample:}{If TRUE saves the results from each sample.}
 
-\item{OnlyCNVs}{logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.}
+\item{Files:}{a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time.}
 }
 \value{
-Data frame with CNVs predicted.
+Data frame with predicted CNVs.
 }
 \description{
 ReScanCNVs: Find Copy Number Variation (CNV) from SNP genotyping arrays.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
 MockDataCNVs <- MockData(N=100, Type="PKU", Cores=20)
@@ -89,6 +89,6 @@ iPsych.Pred.Rescan$ID <- iPsych.Pred.Rescan$SampleID
 PlotAllCNVs(iPsych.Pred.Rescan, Name="iPsych.Pred.Rescan.png", hg="hg19", Roi=MockDataCNVs.roi)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan; Louise K. Hoeffding.
 }
 

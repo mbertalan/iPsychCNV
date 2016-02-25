@@ -2,24 +2,24 @@
 % Please edit documentation in R/SelectSamplesFromROI.R
 \name{SelectSamplesFromROI}
 \alias{SelectSamplesFromROI}
-\title{SelectSamplesFromTOI}
+\title{SelectSamplesFromROI}
 \usage{
 SelectSamplesFromROI(DF, roi, OverlapMin = 0.8, OverlapMax = 1.2)
 }
 \arguments{
-\item{DF:}{Data frame with CNVs predicted for each sample.}
+\item{DF:}{Data frame with predicted CNVs for each sample.}
 
-\item{roi:}{Regions of Interest or hotspots.}
+\item{Roi:}{Regions Of Interest or hotspots.}
 
-\item{OverlapMin:}{Minimum overlap a CNV need to have with the hotspot to be selected.}
+\item{OverlapMin:}{Minimum overlap a CNV need to have with the hotspot to be selected, default = 0.8.}
 
-\item{OverlapMax:}{Maximum overlap accepted for a CNV and a hotspots.}
+\item{OverlapMax:}{Maximum overlap accepted for a CNV and a hotspots, default = 1.2.}
 }
 \value{
-Data frame with CNVs predicted that belong to each hotspot.
+Data frame with predicted CNVs that belong to each hotspot.
 }
 \description{
-SelectSamplesFromROI
+SelectSamplesFromROI: Select region of interest based on the samples.
 }
 \details{
 Given hotspots regions and overlap cutoff it will return CNVs that belong to each hotspot.
@@ -28,6 +28,6 @@ Given hotspots regions and overlap cutoff it will return CNVs that belong to eac
 cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 
