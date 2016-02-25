@@ -10,7 +10,6 @@
 ##' @export
 ##' @examples Unknown. 
 ##'
->>>>>>> 212131d017d0c2fd0ffe110ecd8c817f4750e44c
 
 PeaksAndPits <- function(DF, PlotName)
 {
