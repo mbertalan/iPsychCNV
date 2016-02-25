@@ -3,6 +3,9 @@
 \name{RunLongMock}
 \alias{RunLongMock}
 \title{RunSingleMock}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 RunLongMock(Name = "Test", Method = "PennCNV", CNVDistance = 1000,
   Type = c(0, 1, 2, 3, 4), Mean = c(-0.3, -0.6, 0.3, 0.6), Size = c(300,
@@ -10,16 +13,37 @@ RunLongMock(Name = "Test", Method = "PennCNV", CNVDistance = 1000,
   HMM = "/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm",
   Path2PennCNV = "/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 }
+\arguments{
+\item{Name:}{Unknown.}
+
+\item{Method:}{The Copy Number Variation (CNV) calling algorithm, default = PennCNV.}
+
+\item{CNVDistance:}{Distance between CNVs, default = 1000.}
+
+\item{Type:}{Unknown, default = Unknown.}
+
+\item{Mean:}{Unknown, default = Unknown.}
+
+\item{Size:}{Unknown, default = Unknown.}
+
+\item{HMM:}{Unknown, default = Unknown.}
+
+\item{Path2PennCNV:}{The path to the pennCNV algorithm, Unknown.}
+}
 \value{
-Classification for LRR.
+Classification for Log R Ratio (LRR).
 }
 \description{
-RunLongMock: Run a single mock sample
+RunLongMock: Run a single mock sample.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

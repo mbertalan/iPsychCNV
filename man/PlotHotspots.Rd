@@ -3,17 +3,46 @@
 \name{PlotHotspots}
 \alias{PlotHotspots}
 \title{PlotHotspots}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 PlotHotspots(CNVsDF, Hotspots, AllHeadFiles, Cores = 1, Skip = 10,
   penalty = 60, Quantile = FALSE, QSpline = FALSE, sd = 0.18)
 }
+\arguments{
+\item{CNVsDF:}{Data frame with CNVs, default = Unknown.}
+
+\item{Hotspots:}{Unknown, default = Unknown.}
+
+\item{AllHeadFiles:}{Unknown, default = Unknown.}
+
+\item{Cores:}{The number of cores used, default = 1.}
+
+\item{Skip:}{Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 10.}
+
+\item{Penalty:}{The coefficient of the penalty for degrees of freedom, default = 60.}
+
+\item{Quantile:}{Logical, if quantile normalization should be applied or not, default = FALSE.}
+
+\item{QSpline:}{Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.}
+
+\item{Sd:}{Numeric, Log R Ratio standard deviation for the quantile normalization, default = 0.18.}
+}
 \value{
-png files
+Png files
 }
 \description{
-PlotHotspots
+PlotHotspots: Plot hot spot for CNVs.
+}
+\details{
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown. 
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

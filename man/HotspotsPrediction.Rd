@@ -3,16 +3,31 @@
 \name{HotspotsPrediction}
 \alias{HotspotsPrediction}
 \title{HotspotsPrediction}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 HotspotsPrediction(hotspots, df)
 }
+\arguments{
+\item{Hotspots:}{Unkown.}
+
+\item{df:}{Data frame. Unknown.}
+}
 \value{
-return data in data frame
+Data frame with predicted hotspots.
 }
 \description{
-HotspotsPrediction: Count number of true CNVs in hotspots.
+HotspotsPrediction: Count number of true CNVs in each hotspots.
+}
+\details{
+Unknown
+}
+\examples{
+Unknown. 
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

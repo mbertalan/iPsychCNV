@@ -2,20 +2,34 @@
 % Please edit documentation in R/RunGada.R
 \name{RunGada}
 \alias{RunGada}
-\title{iPsychCNV}
+\title{RunGada}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 RunGada(MockData = tmp, MinSegLen = 50, Tgada = 4.5)
 }
+\arguments{
+\item{MockData:}{The mock data set, default = tmp.}
+
+\item{MinSegLen:}{Unknown, default = 50.}
+
+\item{Tgada:}{Unknown, default = 4.5.}
+}
 \value{
-Data frame with CNVs predicted.
+Data frame with predicted CNVs.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+RunGada: Unknown.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

@@ -16,17 +16,16 @@ BAF_drift(BAF)
 Data frame with QC variables.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
+BAF_drift: Calculate the drift in B allele freqeuncy (BAF). Used at PeaksAndPits function.
 }
 \details{
-BAF drift: Calculate the drift in BAF. Used at PeaksAndPits function.
+Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
 }
 \examples{
 BAF <- subCNV$B.Allele.Freq
 BAF_Res <- BAF_drift(BAF)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

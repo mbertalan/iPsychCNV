@@ -9,8 +9,11 @@
 \usage{
 ClassNumbers(tmpRaw)
 }
+\arguments{
+\item{TmpRaw:}{Unknown.}
+}
 \value{
-Data frame with a populate percentage for each class
+Data frame with a populate percentage for each class.
 }
 \description{
 ClassNumbers: Define how B allele frequency (BAF) is distributed over five diferent classes.
@@ -18,7 +21,10 @@ ClassNumbers: Define how B allele frequency (BAF) is distributed over five difer
 \details{
 Receive a vector with BAF and returns a data frame with a populate percentage for each class. Each class represent a group where a BAF is more likely to be found.
 }
+\examples{
+Unknown.
+}
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

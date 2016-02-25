@@ -3,16 +3,31 @@
 \name{PeaksAndPits}
 \alias{PeaksAndPits}
 \title{PeaksAndPits}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 PeaksAndPits(DF, PlotName)
+}
+\arguments{
+\item{DF:}{Data frame with predicted CNVs for each sample, default = Unknown.}
+
+\item{PlotName:}{Unknown, default = Unknown.}
 }
 \value{
 Data frame with QC variables.
 }
 \description{
-PeaksAndPits
+PeaksAndPits: Unknown
+}
+\details{
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown. 
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

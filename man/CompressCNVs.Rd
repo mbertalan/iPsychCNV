@@ -9,13 +9,22 @@
 \usage{
 CompressCNVs(tmp4, OverlapCutoff, Cores)
 }
+\arguments{
+\item{Cores:Number}{of cores used, default = 1.}
+}
 \value{
-Hotspots
+Hotspots.
 }
 \description{
-Compress CNVs
+CompressCNVs: unknown
+}
+\details{
+Unknown - description?
+}
+\examples{
+Unknown
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

@@ -3,21 +3,39 @@
 \name{MultipleMockData}
 \alias{MultipleMockData}
 \title{MultipleMockData}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 MultipleMockData(NSamples = 10, NLoops = 10, Cores = 30,
   HMM = "/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm",
   Path2PennCNV = "/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 }
+\arguments{
+\item{NSamples:}{Unknown, default = 10.}
+
+\item{NLoops:}{Unknown, default = 10.}
+
+\item{Cores:}{Number of cores used, default = 30.}
+
+\item{HMM:}{Unknown, default = Unknown.}
+
+\item{Path2PennCNV:}{The path to pennCNV.}
+}
 \value{
-return data in data frame
+Return data in a data frame.
 }
 \description{
 MultipleMockData: Runs mock data multiple times.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on dried blood spot (DBS) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

@@ -2,21 +2,41 @@
 % Please edit documentation in R/NormalizeData.R
 \name{NormalizeData}
 \alias{NormalizeData}
-\title{Normalize Data}
+\title{NormalizeData}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 NormalizeData(Sample = Sample, ExpectedMean = 0, penalty = 60,
   Quantile = FALSE, QSpline = FALSE, sd = 0.18)
 }
+\arguments{
+\item{Sample:}{Unknown, default = Unknown.}
+
+\item{ExpectedMean:}{Unknown, default = 0.}
+
+\item{Penalty:}{The coefficient of the penalty for degrees of freedom, default = 60.}
+
+\item{Quantile:}{Logical, if quantile normalization should be applied or not, default = FALSE.}
+
+\item{QSpline:}{Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.}
+
+\item{Sd:}{Numeric, LRR standard deviation for the quantile normarlization, default = 0.18.}
+}
 \value{
-LRR normalized
+LRR normalized.
 }
 \description{
-NormalizeData: Normalize LRR.
+NormalizeData: Normalize Log R Ratio (LRR).
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

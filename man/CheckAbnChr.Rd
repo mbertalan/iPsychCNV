@@ -2,41 +2,40 @@
 % Please edit documentation in R/CheckAbnChr.R
 \name{CheckAbnChr}
 \alias{CheckAbnChr}
-\title{CheckAbnChr.}
+\title{CheckAbnChr}
 \source{
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
 
   CheckAbnChr(Path2RawFiles = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2",
-  Cores = 40, Pattern = "*.txt$", skip = 10, NumFiles = "All")
+  Cores = 1, Pattern = "*.txt$", skip = 10, NumFiles = "All")
 }
 \arguments{
-\item{Path2RawFiles:}{Path where are the LLR and BAF files. Exaple: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".}
+\item{Path2RawFiles:}{Path for the Log R Ratio (LRR) and B Allele Frequency (BAF) files. Example: "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2".}
 
-\item{Cores:}{Number of cores to run in parallel.}
+\item{Cores:}{Number of cores to run in parallel, default = 1.}
 
-\item{Pattern:}{Files pattern in the path. Example: "*.txt$"}
+\item{Pattern:}{Files pattern in the path. Example: "*.txt$".}
 
-\item{skip:}{How many rows should skip. Use if file has comments.}
+\item{Skip:}{Integer, the number of lines of the data file to be skipped before beginning to read data. Use if file has comments, default = 10.}
 
-\item{NumFiles:}{Number of files to run. Example: numeric, 10 or character "All".}
+\item{NumFiles:}{Number of files to run. Example: numeric, 10 or character "All", default = All.}
 }
 \value{
 Data frame with the estimate copy number for each chromosome.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays. 
-Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
+CheckAbnChr: Estimate abnormal chromosome.
 }
 \details{
-CheckAbnChr: Estimate abnormal chromosome.
+Specifically designed to reduce false positive CNVs and handle data from amplified DNA on dried blood spots.
 }
 \examples{
 mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 cnvs <- CheckAbnChr(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

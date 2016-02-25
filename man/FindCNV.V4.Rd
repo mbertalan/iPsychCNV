@@ -2,21 +2,37 @@
 % Please edit documentation in R/FindCNV.V4.R
 \name{FindCNV.V4}
 \alias{FindCNV.V4}
-\title{FindCNV}
+\title{FindCNV.V4.}
 \usage{
 FindCNV.V4(ID = "Test", Sample = Sample, CPTmethod = "meanvar",
-  CNVSignal = 0.1, penvalue = 10)
+  CNVSignal = 0.1, penvalue = 20, Merge = TRUE)
+}
+\arguments{
+\item{ID:}{Unknown.}
+
+\item{Sample:}{Unknown.}
+
+\item{CPTmethod:}{Unknown, default = meanvar.}
+
+\item{CNVSignal:}{Unknown, default = 0.1.}
+
+\item{Penvalue:}{Unknown, defualt = 20.}
+
+\item{Merge:}{Unknown, default = TRUE.}
 }
 \value{
-A data frame with CNVs, with start and stop position, chr and etc. for each sample.
+A data frame with CNVs, with start and stop position, chromosome (chr.), and etc. for each sample.
 }
 \description{
-FindCNV: Find CNVs using Log.R.Ratio data by cpt.meanvar method.
+FindCNV.V4.: Find CNVs using Log R Ratio (LRR) data by cpt.meanvar method.
 }
 \details{
-Input: sample path, CNV in data frame format and min number of SNPs
+Unknown
+}
+\examples{
+Unknown.
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

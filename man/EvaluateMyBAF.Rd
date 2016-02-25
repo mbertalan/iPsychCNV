@@ -9,16 +9,25 @@
 \usage{
 EvaluateMyBAF(res, res2)
 }
+\arguments{
+\item{res:}{Unknown.}
+
+\item{res2.}{Unknown.}
+}
 \value{
 Classification for BAF.
 }
 \description{
-EvaluateMyBAF: Evaluate BAF.
+EvaluateMyBAF: Evaluate B Allele Frequency (BAF).
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

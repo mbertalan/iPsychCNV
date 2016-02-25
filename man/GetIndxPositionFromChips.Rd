@@ -2,20 +2,32 @@
 % Please edit documentation in R/GetIndxPositionFromChips.R
 \name{GetIndxPositionFromChips}
 \alias{GetIndxPositionFromChips}
-\title{iPsychCNV}
+\title{GetIndxPositionFromChips}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 GetIndxPositionFromChips(CNVs, Sample)
 }
+\arguments{
+\item{CNVs:}{Data frame with information on CNVs. Unknown.}
+
+\item{Sample:}{Unknown.}
+}
 \value{
-Data frame with CNVs predicted.
+Data frame with predicted CNVs.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+GetIndxPositionFromChips: Unknown.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

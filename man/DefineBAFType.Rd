@@ -9,16 +9,23 @@
 \usage{
 DefineBAFType(SumPeaks)
 }
+\arguments{
+\item{SumPeaks:}{Unknown, default = Unknown.}
+}
 \value{
 BAF classification.
 }
 \description{
-DefineBAFType: Define BAF by peaks.
+DefineBAFType: Define B Allele Frequency (BAF) by peaks.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 

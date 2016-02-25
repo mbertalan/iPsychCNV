@@ -2,28 +2,39 @@
 % Please edit documentation in R/StackPlot.R
 \name{StackPlot}
 \alias{StackPlot}
-\title{Stacked plots of multiple sample of a specified loci}
+\title{StackPlot}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
-StackPlot(Pos, Ids, PathRawData, CNVs, Highlight = NULL)
+StackPlot(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
+  key = NA, OutFolder = ".")
 }
 \arguments{
-\item{Pos}{Position of the loci to plot in the form chr21:1050000-1350000}
+\item{Pos:}{Position of the loci to plot in the form chr21:1050000-1350000.}
 
-\item{PathRawData}{The path to the raw data files contining LRR and BAF values to plot}
+\item{IDs:}{List of IDs to plot}
 
-\item{CNVs}{Data.frame containing the cnvs called on the samples}
+\item{PathRawData:}{The path to the raw data files contining LRR and BAF values to plot.}
 
-\item{Highlight}{Position of a specific region to be highlighted, in the form chr21:1050000-1350000}
+\item{CNVs:}{Data frame containing the CNVs called on the samples.}
 
-\item{IDs}{List of IDs to plot}
+\item{Highlight:}{Position of a specific region to be highlighted, in the form chr21:1050000-1350000, default = NULL.}
+
+\item{SNPList:}{Getting chromosome (chr) and position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, and Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5, default = NULL.}
+
+\item{key:}{Exchange the ID printed on the plot with a deidentified ID - requires that the CNV data frame contains a column called ID_deidentified, default = NA.}
+
+\item{OutFolder:}{Path for saving outputfiles. Default is current folder}
 }
 \value{
-A png plot of the specified loci
+A png plot of the specified loci.
 }
 \description{
-stack.plot produces stacked plots of cnv calls from multiple samples
-for a specific lucus. For each sample two tracks are plotted
-representing the intensity and the B-allel frequency.
+Stackplot: Produces stacked plots of CNV calls from multiple samples for a given locus.
+}
+\details{
+For each sample two tracks are plotted representing the Log R Ratio (LRR) and the B Allele Frequency (BAF).
 }
 \examples{
 mockCNV <- MockData(N=5, Type="Blood", Cores=1)
@@ -31,6 +42,6 @@ cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 StackPlot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
 }
 \author{
-Johan Hilge Thygesen
+Johan Hilge Thygesen, Ida Elken Sønderby, Louise K. Hoeffding.
 }
 

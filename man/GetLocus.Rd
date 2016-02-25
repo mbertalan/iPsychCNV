@@ -3,19 +3,29 @@
 \name{GetLocus}
 \alias{GetLocus}
 \title{GetLocus}
+\source{
+\url{http://biopsych.dk/iPsychCNV}
+}
 \usage{
 GetLocus(df)
 }
+\arguments{
+\item{Df:}{Data frame with predicted CNVs for each sample.}
+}
 \value{
-data frame with locus
+data frame with CNV locus.
 }
 \description{
-iPsychCNV: Find Copy Number Variation (CNV) from SNP genotyping arrays.
+GetLocus: Unknown.
 }
 \details{
-Specifically designed to handle noisy data from amplified DNA on  Phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
+}
+\examples{
+Unknown.
+
 }
 \author{
-Marcelo Bertalan
+Marcelo Bertalan, Louise K. Hoeffding.
 }
 
