@@ -2,11 +2,11 @@
 ##'
 ##' Unknown - description?
 ##' @title CompressCNVs
-##' @param tmp4:Unknown.
-##' @param OverlapCutoff:Unknown.
-##' @param Cores:Number of cores used, default = 1. 
+##' @param tmp4: Unknown.
+##' @param OverlapCutoff: Unknown.
+##' @param Cores: Number of cores used, default = 1.
 ##' @return Hotspots.
-##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples Unknown
@@ -17,11 +17,11 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 	library(parallel)
 
 	CHRs <- unique(tmp4$Chr)
-	
+
 	tmp5 <- mclapply(CHRs, mc.cores=Cores, mc.preschedule = FALSE, function(X) #tmp5 <- sapply(CHRs, function(X)
 	{
-		
-		tmp <- subset(tmp4, Chr %in%  X) 
+
+		tmp <- subset(tmp4, Chr %in%  X)
 		rownames(tmp) <- tmp$NewName
 		cat("Chr\t",X, "\t", nrow(tmp), "\r")
 		if(nrow(tmp) > 1)
@@ -29,7 +29,7 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 			tmp2 <- FindHighFreqCNVs(tmp,OverlapCutoff)
 			tmp3 <- apply(tmp2, 1, function(Z) { names(Z[Z]) })
 			tmp5 <- lapply(tmp3, function(L)
-			{ 
+			{
 				NewStart <- sort(as.numeric(tmp[L,]$Start))[1]
 				NewStop <- sort(as.numeric(tmp[L,]$Stop), decreasing=T)[1]
 				#NewStart <- as.integer(quantile(tmp[L,]$Start, probs=1:100/100)[20]) # 20%
