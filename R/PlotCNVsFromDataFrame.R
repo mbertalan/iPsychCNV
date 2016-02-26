@@ -13,7 +13,7 @@
 ##' @param Files: Unknown, default = NA.
 ##' @param SNPList: Getting chromosome (Chr) and position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, and Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5, default = NULL.
 ##' @param Key: Exchange the ID printed on the plot and in the name of file with a deidentified ID - requires that the DF contains a column called ID_deidentified, default = NA.
-##' @param Highlight: Position of a specific region to be highlighted, in the form chr21:1050000-1350000, default = NULL.
+##' @param XAxisDefine: Position of a specific region to be plotted, in the form chr21:1050000-1350000, default = NULL.
 ##' @param OutFolder: Path for saving outputfiles, default is the current folder.
 ##' @return One BAF- and LRR-plot for each CNV.
 ##' @author Marcelo Bertalan, Ida Elken Sønderby, Louise K. Hoeffding.
@@ -24,9 +24,9 @@
 ##' MockCNVs <- MockData(N=2, Type="Blood", Cores=10)
 ##' CNVs <- iPsychCNV(PathRawData=".", Pattern="^MockSample*", Skip=0)
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
-##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", Highlight = NULL)
+##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", Highlight = NULL) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -58,19 +58,19 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     SDCNV <- round(as.numeric(X$SDCNV), digits=2)
     NumSNP <- as.numeric(X$NumSNPs)
 
-    ## Input Highlight as defined start/stop for plot-area if specified
-    if (length(Highlight) > 0) {
-      split.pos <- VerifyPos(sub("--highlight ", "", Highlight))
+    ## Input XAxisDefine as defined start/stop for plot-area if specified
+    if (length(XAxisDefine) > 0) {
+      split.pos <- VerifyPos(sub("--highlight ", "", XAxisDefine))
       high.chr <- split.pos[1]
       high.start <- as.numeric(split.pos[2])
       high.stop <- as.numeric(split.pos[3])
-      Start <- high.start # change start and stop-position to position of Highlight
-      Stop <- high.stop # change stop-position to that of Highlight
-      if(high.chr!=chr){ # check that match between Highlight-Chr & chr of CNV
-        stop("The highlight chromosome does not match the chromosome of the given position")
+      Start <- high.start # change start and stop-position to position of XAxisDefine
+      Stop <- high.stop # change stop-position to that of XAxisDefine
+      if(high.chr!=chr){ # check that match between XAxisDefine-Chr & chr of CNV
+        stop("The XAxisDefine chromosome does not match the chromosome of the given position")
       }
-      if(high.start>CNVstart | high.stop<CNVstop){ # check that Highlight Position covers CNV
-        stop("The highlight start and stop does not cover the range of the CNV")
+      if(high.start>CNVstart | high.stop<CNVstop){ # check that XAxisDefine Position covers CNV
+        stop("The XAxisDefine start and stop does not cover the range of the CNV")
       }
 
     }
