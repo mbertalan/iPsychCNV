@@ -9,7 +9,8 @@
 \usage{
 PlotCNVsFromDataFrame(DF, PathRawData = ".", Cores = 1, Skip = 0,
   PlotPosition = 1, Pattern = "*", recursive = TRUE, dpi = 300,
-  Files = NA, SNPList = NULL, key = NA, OutFolder = ".")
+  Files = NA, SNPList = NULL, key = NA, OutFolder = ".",
+  XAxisDefine = NULL)
 }
 \arguments{
 \item{DF:}{Data frame with predicted CNVs for each sample, default = Unknown.}
@@ -34,6 +35,8 @@ PlotCNVsFromDataFrame(DF, PathRawData = ".", Cores = 1, Skip = 0,
 
 \item{Key:}{Exchange the ID printed on the plot and in the name of file with a deidentified ID - requires that the DF contains a column called ID_deidentified, default = NA.}
 
+\item{XAxisDefine:}{Position of a specific region to be plotted, in the form chr21:1050000-1350000, default = NULL.}
+
 \item{OutFolder:}{Path for saving outputfiles, default is the current folder.}
 }
 \value{
@@ -46,7 +49,11 @@ PlotCNVsFromDataFrame: Function to plot Log R Ratio (LRR) and B Allele Frequency
 Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
-PlotCNVsFromDataFrame(DF=CNVs.Good[1:4,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder=".")
+# Creating CNVs from MockData & plotting
+MockCNVs <- MockData(N=2, Type="Blood", Cores=10)
+CNVs <- iPsychCNV(PathRawData=".", Pattern="^MockSample*", Skip=0)
+CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
+PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 }
 \author{
 Marcelo Bertalan, Ida Elken Sønderby, Louise K. Hoeffding.

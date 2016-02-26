@@ -10,7 +10,11 @@
 CompressCNVs(tmp4, OverlapCutoff, Cores)
 }
 \arguments{
-\item{Cores:Number}{of cores used, default = 1.}
+\item{tmp4:}{Unknown.}
+
+\item{OverlapCutoff:}{Unknown.}
+
+\item{Cores:}{Number of cores used, default = 1.}
 }
 \value{
 Hotspots.
