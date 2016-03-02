@@ -18,7 +18,7 @@
 ##' @examples Unknown.
 ##' 
 
-PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock, width=12, height=5, dpi=100, PNG=TRUE)
+PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", Roi=RoiSingleMock, width=12, height=5, dpi=100, PNG=TRUE, WindowSize=35)
 {
 	library(ggplot2)
 	library(RColorBrewer)
@@ -53,7 +53,7 @@ PlotLRRAndCNVs <- function(CNV, Sample=MockData, CNVMean=0.3, Name="Test.png", R
 	Roi$YMin <- rep(0, length(Roi$CNVmean))
 	Roi$YMax <- rep(1, length(Roi$CNVmean))
 	
-	Mean <- SlideWindowMean(tmp$Log.R.Ratio, 35)
+	Mean <- SlideWindowMean(tmp$Log.R.Ratio, WindowSize)
 	tmp$Mean <- Mean
 
 
