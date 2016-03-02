@@ -59,22 +59,25 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     NumSNP <- as.numeric(X$NumSNPs)
 
     ## Input XAxisDefine as defined start/stop for plot-area if specified
-    if (length(XAxisDefine) > 0) {
+    if (length(XAxisDefine) > 0)
+    {
       split.pos <- VerifyPos(sub("--highlight ", "", XAxisDefine))
       high.chr <- split.pos[1]
       high.start <- as.numeric(split.pos[2])
       high.stop <- as.numeric(split.pos[3])
       Start <- high.start # change start and stop-position to position of XAxisDefine
       Stop <- high.stop # change stop-position to that of XAxisDefine
-      if(high.chr!=chr){ # check that match between XAxisDefine-Chr & chr of CNV
+      if(high.chr!=chr) # check that match between XAxisDefine-Chr & chr of CNV
+      {
         stop("The XAxisDefine chromosome does not match the chromosome of the given position")
       }
-      if(high.start>CNVstart | high.stop<CNVstop){ # check that XAxisDefine Position covers CNV
+      if(high.start>CNVstart | high.stop<CNVstop) # check that XAxisDefine Position covers CNV
+      {
         stop("The XAxisDefine start and stop does not cover the range of the CNV")
       }
-
     }
-    else {
+    else
+    {
       # Start & Stop-positions of plot
       Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
       Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
@@ -83,22 +86,25 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     ## Naming output-file
 
     # based on key or not
-    if (!is.na(key)) { # if want a different ID from the genetic ID in the plot
+    if (!is.na(key))  # if want a different ID from the genetic ID in the plot
+    {
       ID_deidentified <- X$ID_deidentified  # Added this to get ID_deidentified
       NewName <- paste(ID_deidentified, "_chr", chr, ":", CNVstart, "-", CNVstop, sep="", collapse="")
-    } else {
+    }
+    else
+    {
       NewName <- paste(ID,"_chr", chr, ":", CNVstart, "-", CNVstop, sep="", collapse="")
     }
 
     # based on OutFolder or not
-      if(OutFolder!=".") {
+    if(OutFolder!=".")
+    {
       OutPlotfile <- paste(OutFolder, NewName, "_plot.png", sep="", collapse="")
-      print(OutPlotfile)
-      }
-    else {
+    }
+    else
+    {
       OutPlotfile <- paste(NewName, "plot.png", sep="_", collapse="")
-      print(OutPlotfile)
-      }
+    }
 
     # Reading sample file
     #RawFile <- paste(PathRawData, ID, sep="", collapse="")
@@ -106,8 +112,8 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     cat("File: ", RawFile,"\n")
 
     sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList)
-    red<-subset(sample,Chr==chr) # select SNPs from rawfile in Chr of interest
-    red <-subset(red, Position > Start & Position < Stop) # select SNPs from rawfile that is within the plotted area
+    red <- subset(sample,Chr==chr) # select SNPs from rawfile in Chr of interest
+    red <- subset(red, Position > Start & Position < Stop) # select SNPs from rawfile that is within the plotted area
     red2 <- red[with(red, order(Position)),] # order selected SNPs by Position
 
     Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
@@ -116,12 +122,11 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     # Ideogram
     data(hg19IdeogramCyto,package="biovizBase")
     CHR <- paste("chr", chr, collapse="", sep="")
-    p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE,
-                       aspect.ratio = 1/85, alpha = 0.3) +
+    p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3) +
       xlim(GRanges(CHR,IRanges(Start,Stop)))
 
     # Colors
-     Colors = brewer.pal(7,"Set1")
+    Colors = brewer.pal(7,"Set1")
 
     # B.Allele
     rect2 <- data.frame (xmin=CNVstart, xmax=CNVstop, ymin=0, ymax=1) # CNV position
@@ -146,12 +151,16 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
                          breaks = round(seq(min(red2$Position), max(red2$Position), by = 500000),1)) # this gives a distance of 500,000 between ticks on x-axis
 
     # Title printed for plot
-    if (!is.na(key)) { # if want a different ID from the genetic ID in the plot
-      Title <- paste("CN: ", CN, ", SDCNV: ", SDCNV, ", NumSNPs: ", NumSNP, ", Sample: ", ID_deidentified, sep="", collapse="")
-    } else {
-      Title <- paste("CN: ", CN, ", SDCNV: ", SDCNV, ", NumSNPs: ", NumSNP, ", Sample: ", ID, sep="", collapse="")
+    if (!is.na(key))  # if want a different ID from the genetic ID in the plot
+    {
+      Title <- paste("CN: ", CN, "   Size: ", prettyNum(Size, big.mark=",",scientific=FALSE), "   SNPs: ", NumSNP, "   Sample: ", ID_deidentified, sep="", collapse="")
     }
-        Plot <- tracks(p3,p1,p2, main=Title, heights=c(3,5,5)) #
+    else
+    {
+      Title <- paste("CN: ", CN, "   Size: ", prettyNum(Size, big.mark=",",scientific=FALSE), "   SNPs: ", NumSNP, "   Sample: ", ID, sep="", collapse="")
+    }
+    Plot <- tracks(p3, p1,p2, main=Title, heights=c(3, 5,5))
     ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=dpi)
+
   })
 }
