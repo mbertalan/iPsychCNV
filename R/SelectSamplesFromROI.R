@@ -13,7 +13,7 @@
 ##' cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 
 
-SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
+SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=1)
 {
 	suppressPackageStartupMessages(library(parallel))
 
