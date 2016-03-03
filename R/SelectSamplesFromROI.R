@@ -15,11 +15,11 @@
 
 SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
 {
-	#suppressPackageStartupMessages(library(parallel))
-	# For some reason I could not make this function parallel.
-	
-	tmp2 <- apply(roi, 1, function(X) 
+	suppressPackageStartupMessages(library(parallel))
+
+	tmp2 <- mclapply(1:nrow(roi), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
+		X <- roi[i,]
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
 		StopRoi <- as.numeric(X["Stop"])
