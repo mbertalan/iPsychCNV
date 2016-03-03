@@ -29,10 +29,10 @@ FindHighFreqCNVs <- function(df, OverlapCutoff=0.8)
 	
 			if(Chr1 %in% Chr2)
 			{
-				if(Start1 < Stop2 & Stop1 > Start2)	
+				if(Start1 <= Stop2 & Stop1 >= Start2)	
 				{
-					if(Start1 > Start2){ OverStart <- Start1 }else{ OverStart <- Start2 }
-					if(Stop1 > Stop2){ OverStop <- Stop2 }else{ OverStop <- Stop1 }
+					if(Start1 >= Start2){ OverStart <- Start1 }else{ OverStart <- Start2 }
+					if(Stop1 >= Stop2){ OverStop <- Stop2 }else{ OverStop <- Stop1 }
 					
 					Overlap <- OverStop - OverStart
 					OverL1 <- Overlap/Length1
