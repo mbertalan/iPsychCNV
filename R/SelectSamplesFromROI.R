@@ -59,7 +59,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
 					Overlaplength <- (Length/LengthRoi)
 					OverlapAll <- Length/LengthRoi
 				}
-				df <- data.frame(Overlaplength=Overlaplength, OverlapAll=OverlapAll, ROI=ROI)
+				df <- data.frame(Overlaplength=Overlaplength, OverlapAll=OverlapAll, ROI=ROI, stringsAsFactors=FALSE)
 				return(df)
 			})
 			Overlap <- MatrixOrList2df(Overlap)
