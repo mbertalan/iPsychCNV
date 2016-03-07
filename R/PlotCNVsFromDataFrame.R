@@ -138,7 +138,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
 
     # LogRRatio
     p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5)  + 
-      geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line 
+      geom_line(data=red2, aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line 
       ylim(-1, 1) + # set y-axis
       theme(legend.title=element_blank()) + 
       scale_color_manual(values = c(Colors[1], "black")) +  # black color
