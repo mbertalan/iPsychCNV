@@ -13,21 +13,21 @@
 ##' cnvs <- SelectSamplesFromROI(DF=Hotspots, roi=roi, OverlapMin=0.8, OverlapMax=1.2)
 
 
-SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
+SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=1)
 {
-	#suppressPackageStartupMessages(library(parallel))
-	# For some reason I could not make this function parallel.
-	
-	tmp2 <- apply(roi, 1, function(X) 
+	suppressPackageStartupMessages(library(parallel))
+
+	tmp2 <- mclapply(1:nrow(roi), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
+		X <- roi[i,]
 		LengthRoi <- as.numeric(X["Length"])
 		StartRoi <- as.numeric(X["Start"])
 		StopRoi <- as.numeric(X["Stop"])
 		ChrRoi <-gsub(" ", "", X["Chr"])
-		Locus <- as.character(X["locus"])
+		#Locus <- as.character(X["locus"])
 		ROI <- paste(ChrRoi, StartRoi, StopRoi, sep="_", collapse="")
-		cat(paste("Chr:", ChrRoi, "Start:", StartRoi, "Stop:", StopRoi, sep="\t", collapse="\t"), "\r") 
-		cat("								\r")
+		cat(paste(i,"/", nrow(roi), "Chr:", ChrRoi, "Start:", StartRoi, "Stop:", StopRoi, sep="\t", collapse="\t"), "\r") 
+
 		tmp <- subset(DF, Chr %in% ChrRoi & Start < StopRoi & Stop > StartRoi)  # & ((Length/LengthRoi) >  Overlap)
 		if(nrow(tmp) > 0)
 		{
@@ -64,7 +64,7 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2)
 			})
 			Overlap <- MatrixOrList2df(Overlap)
 			tmp2 <- cbind(tmp, Overlap)
-			tmp2$Locus <- rep(Locus, nrow(tmp2))
+			#tmp2$locus <- rep(Locus, nrow(tmp2))
 			tmp <- subset(tmp2, OverlapAll > OverlapMin & OverlapAll < OverlapMax & Overlaplength > OverlapMin)
 			#cat(nrow(tmp), "\n")
 			return(tmp)
