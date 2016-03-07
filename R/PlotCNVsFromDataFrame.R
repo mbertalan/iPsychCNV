@@ -131,23 +131,19 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     # B.Allele
     rect2 <- data.frame (xmin=CNVstart, xmax=CNVstop, ymin=0, ymax=1) # CNV position
 
-    p1 <- ggplot() +
-      geom_point(red2, aes(Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=0.5) +
-      geom_rect(data=rect2,
-                aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"),
-                alpha=0.2, inherit.aes = FALSE) +
-      theme(legend.title=element_blank()) +
-      scale_color_manual(values = c(Colors[2:4]) ) +
-      scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = 500000),1))
+    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=0.5) 
+    + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) 
+    + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]) ) 
+    + scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = 500000),1))
 
     # LogRRatio
     p2 <- ggplot() +
-      geom_point(red2, aes(Position, y = Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5) +
-      geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line
-      ylim(-1, 1) + # set y-axis
-      theme(legend.title=element_blank()) +
-      scale_color_manual(values = c(Colors[1], "black")) + # black color
-      scale_x_continuous(labels=format_si(), # this sets the axis label to K, M for 1000, 1000000 etc...
+      geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5) 
+      + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) # Mean of signal line 
+      + ylim(-1, 1) # set y-axis
+      + theme(legend.title=element_blank()) 
+      + scale_color_manual(values = c(Colors[1], "black"))  # black color
+      + scale_x_continuous(labels=format_si(), # this sets the axis label to K, M for 1000, 1000000 etc...
                          breaks = round(seq(min(red2$Position), max(red2$Position), by = 500000),1)) # this gives a distance of 500,000 between ticks on x-axis
 
     # Title printed for plot
