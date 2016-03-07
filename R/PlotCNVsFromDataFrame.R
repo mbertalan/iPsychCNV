@@ -131,10 +131,13 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     # B.Allele
     rect2 <- data.frame (xmin=CNVstart, xmax=CNVstop, ymin=0, ymax=1) # CNV position
 
+    # Info for breaks, to always have 10 breaks.
+    BY <- round((max(red2$Position) - min(red2$Position))/10)
+
     p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=0.5) + 
     geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + 
     theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]) ) + 
-    scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = 500000),1))
+    scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1))
 
     # LogRRatio
     p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5)  + 
@@ -143,7 +146,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
       theme(legend.title=element_blank()) + 
       scale_color_manual(values = c(Colors[1], "black")) +  # black color
       scale_x_continuous(labels=format_si(), # this sets the axis label to K, M for 1000, 1000000 etc...
-                         breaks = round(seq(min(red2$Position), max(red2$Position), by = 500000),1)) # this gives a distance of 500,000 between ticks on x-axis
+                         breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1)) # this gives a distance of 500,000 between ticks on x-axis
 
     # Title printed for plot
     if (!is.na(key))  # if want a different ID from the genetic ID in the plot
