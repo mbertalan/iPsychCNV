@@ -130,13 +130,17 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 	{
 		df <- MatrixOrList2df(tmp)
 
+		TimeRes <- proc.time() - ptm
+		cat("Total time: ", TimeRes["elapsed"], "\n")
+		
 		if(!is.na(OutputPath))
 		{
 			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
 			OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
 		}
-		TimeRes <- proc.time() - ptm
-		cat("Total time: ", TimeRes["elapsed"], "\n")
-		return(df)
+		else
+		{
+			return(df) # Only returns data.frame if outputpath is not used. 
+		}
 	}
 }
