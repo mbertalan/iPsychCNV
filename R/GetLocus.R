@@ -19,7 +19,7 @@ GetLocus <- function(df, hg="hg19") # df with CHR=chr12, CNV_Start=numeric, CNV_
 	if(hg!="hg19")
 	{
 		IdeogramCyto <- getIdeogram(hg, cytoband = TRUE)
-		tmp <- IdeogramCyto
+		tmp <- as.data.frame(IdeogramCyto)
   	}
 	else
 	{
