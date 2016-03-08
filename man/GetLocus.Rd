@@ -7,22 +7,24 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-GetLocus(df)
+GetLocus(df, hg = "hg19")
 }
 \arguments{
-\item{Df:}{Data frame with predicted CNVs for each sample.}
+\item{df:}{Data frame (with predicted CNVs for each sample) with at least Chr, Start, Stop.}
+
+\item{hg:}{Human genome version, default = hg19. For full range of possibilities, run ucscGenomes()$db {rtracklayer}}
 }
 \value{
 data frame with CNV locus.
 }
 \description{
-GetLocus: Unknown.
+GetLocus: Adds locus to dataframe based on UCSC cytobands.
 }
 \details{
 Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
-Unknown.
+GetLocus(CNVs, hg="hg18")
 
 }
 \author{
