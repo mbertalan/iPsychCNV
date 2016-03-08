@@ -4,7 +4,8 @@
 \alias{SelectSamplesFromROI}
 \title{SelectSamplesFromROI}
 \usage{
-SelectSamplesFromROI(DF, roi, OverlapMin = 0.8, OverlapMax = 1.2)
+SelectSamplesFromROI(DF, roi, OverlapMin = 0.8, OverlapMax = 1.2,
+  Cores = 1)
 }
 \arguments{
 \item{DF:}{Data frame with predicted CNVs for each sample.}
