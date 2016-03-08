@@ -16,16 +16,8 @@ GetLocus <- function(df, hg="hg19") # df with CHR=chr12, CNV_Start=numeric, CNV_
 	library(biovizBase)
 	library(BiocGenerics)
 	
-	if(hg!="hg19")
-	{
-		IdeogramCyto <- getIdeogram(hg, cytoband = TRUE)
-		tmp <- as.data.frame(IdeogramCyto)
-  	}
-	else
-	{
-		data(hg19IdeogramCyto)
-		tmp <- BiocGenerics::as.data.frame(hg19IdeogramCyto)
-	}
+	tmp <- as.data.frame(getIdeogram(hg, cytoband = TRUE))
+	#tmp <- BiocGenerics::as.data.frame(hg19IdeogramCyto)
 	
 	df$CHR <- sapply(df$Chr, function(X){ paste("chr", X, sep="", collapse="") })
 	if(length(df$CNV_Start) == 0){ 	df$CNV_Start <- df$Start }
