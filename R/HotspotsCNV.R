@@ -22,6 +22,8 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 	library(plyr)
 	library(parallel)
 
+	if(table(df$ID) < 2){ stop("Need at least two samples or no ID found.") }
+	
 	if(length(df$Source[1]) > 0){ Source <- df$Source[1] }else{ stop("Data frame does not have Source\n") }
 	OriginalDF <- df
 
