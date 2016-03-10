@@ -8,6 +8,7 @@
 ##' @param Quantile: Logical, if quantile normalization should be applied or not, default = FALSE.
 ##' @param QSpline: Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.
 ##' @param Sd: Numeric, LRR standard deviation for the quantile normarlization, default = 0.18.
+##' @parem ReCenter: Re-center LRR mean to be zero.
 ##' @return LRR normalized.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -15,7 +16,7 @@
 ##' @examples Unknown.
 ##'
 
-NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
+NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, ReCenter=FALSE)
 {
 	library(preprocessCore)
 	tmp <- sapply(unique(Sample$Chr), function(X) # X is chr. Loop over Chr.
@@ -26,7 +27,10 @@ NormalizeData <- function(Sample=Sample,ExpectedMean=0, penalty=60, Quantile=FAL
 		LRR <- subSample$Log.R.Ratio
 	
 		# Center chromosome LRR	
-		subSample$Log.R.Ratio <- subSample$Log.R.Ratio - mean(subSample$Log.R.Ratio)
+		if(ReCenter)
+		{
+			subSample$Log.R.Ratio <- subSample$Log.R.Ratio - mean(subSample$Log.R.Ratio)
+		}
 		
 		# add later data that LRR with 2 peaks.
 		if(QSpline) # detrend the data, only when sd is high & sd(LRR) > 0.2
