@@ -1,15 +1,16 @@
-##' HotspotsCNV: Identify Copy Number Variation (CNV) hotspots. 
+##' HotspotsCNV: Identify Copy Number Variation (CNV) hotspots.
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title HotspotsCNV
 ##' @param Df: Dataframe with CNV predction with chromosome (Chr.), start, and stop position.
 ##' @param Freq: Minimum number of CNVs to be considered a hotspot, default = 1.
 ##' @param OverlapCutoff: Minimum overlap among CNVs to be considered the same CNV region, default = 0.7.
-##' @param Cores: Numeric, Number of cores used, default = 1. 
+##' @param Cores: Numeric, Number of cores used, default = 1.
 ##' @param OverlapMin: Minimum overlap with hotspot to be selected for counting, default = 0.9.
 ##' @param OverlapMax: Maximum overlap with hotspot to be selected for counting, default = 1.1.
+##' @param hg: Human genome version, default = hg19. For full range of possibilities, run ucscGenomes()$db {rtracklayer}
 ##' @return CNV hotspots.
-##' @author Marcelo Bertalan, Louise K. Hoeffding. 
+##' @author Marcelo Bertalan, Louise K. Hoeffding, Ida Elken Sønderby.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
 ##' @examples
@@ -17,13 +18,13 @@
 ##' iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^MockSample", MinLength=10, Skip=0)
 ##' iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
 
-HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9,  OverlapMax=1.1)
+HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9,  OverlapMax=1.1, hg="hg19")
 {
 	library(plyr)
 	library(parallel)
 
 	if(table(df$ID) < 2){ stop("Need at least two samples or no ID found.") }
-	
+
 	if(length(df$Source[1]) > 0){ Source <- df$Source[1] }else{ stop("Data frame does not have Source\n") }
 	OriginalDF <- df
 
@@ -33,7 +34,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 		Stop1 <- as.numeric(X["Stop"])
 		Chr1 <- gsub(" ", "", X["Chr"])
 		Length1 <- as.numeric(X["Length"])
-		CNV_Pos <- paste(Chr1, Start1, Stop1, Length1, sep="_", collapse="") 
+		CNV_Pos <- paste(Chr1, Start1, Stop1, Length1, sep="_", collapse="")
 		return(CNV_Pos)
 	})
 
@@ -55,7 +56,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 	})
 	tmp4 <- as.data.frame(t(tmp), stringsAsFactors=F)
 	tmp4$Source <- rep(Source, nrow(tmp4))
-	
+
 	cat("Running CompressCNVs", nrow(tmp4), "\n")
 	tmp5 <- CompressCNVs(tmp4, OverlapCutoff, Cores) # Problem
 	cat("Re-running CompressCNVs", nrow(tmp5), "\n")
@@ -74,7 +75,7 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 		}
 	}
 	#save(tmp5, file="tmp5.RData")
-	# Count CNVs in compressed CNV regions	
+	# Count CNVs in compressed CNV regions
 	cat("Counting CNVs\n")
 
 	#save(tmp5, file="tmp5.RData")
@@ -93,9 +94,9 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 	CNV_Count2 <- MatrixOrList2df(CNV_Count)
 	#save(CNV_Count2, file="CNV_Count.RData")
 	#save(tmp5, file="tmp5.RData")
-	tmp5 <- GetLocus(tmp5)	
-	tmp5$ID <- rep("ROI", nrow(tmp5))	
-	tmp5$Class <- rep("ROI", nrow(tmp5))		
+	tmp5 <- GetLocus(tmp5, hg)
+	tmp5$ID <- rep("ROI", nrow(tmp5))
+	tmp5$Class <- rep("ROI", nrow(tmp5))
 	tmp6 <- cbind(tmp5, CNV_Count2)
 	tmp6$CNTotal <- tmp6$CN0 + tmp6$CN1 + tmp6$CN3 + tmp6$CN4
 	return(tmp6)
