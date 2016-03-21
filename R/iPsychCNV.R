@@ -44,7 +44,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 
-	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
+	if(length(SelectedFiles) >= 1 & !is.na(SelectedFiles[1]))
 	{
 		Files <- sapply(SelectedFiles, function(X){ Files[grep(X, Files)] })
 	}
@@ -132,16 +132,16 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", M
 
 		TimeRes <- proc.time() - ptm
 		cat("Total time: ", TimeRes["elapsed"], "\n")
-		
+
 		# writing in a file all CNVs
-		if(!is.na(OutputPath)) 
+		if(!is.na(OutputPath))
 		{
 			OutputFile <- paste(OutputPath,	OutputFileName, ".CNVs", sep="", collapse="")
 			write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
 		}
 		else
 		{
-			return(df) # Only returns data.frame if outputpath is not used. 
+			return(df) # Only returns data.frame if outputpath is not used.
 		}
 	}
 }
