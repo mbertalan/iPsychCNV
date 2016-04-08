@@ -4,7 +4,7 @@
 ##' @title PlotHotspots
 ##' @param CNVsDF: Data frame with CNVs, default = Unknown.
 ##' @param Hotspots: Unknown, default = Unknown.
-##' @param AllHeadFiles: Unknown, default = Unknown. 
+##' @param AllHeadFiles: Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Than use AllHeadFiles=Files.
 ##' @param Cores: The number of cores used, default = 1.
 ##' @param Skip: Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 10.
 ##' @param Penalty: The coefficient of the penalty for degrees of freedom, default = 60.
