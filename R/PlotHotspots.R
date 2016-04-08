@@ -4,7 +4,7 @@
 ##' @title PlotHotspots
 ##' @param CNVsDF: Data frame with CNVs, default = Unknown.
 ##' @param Hotspots: Unknown, default = Unknown.
-##' @param AllHeadFiles: Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Than use AllHeadFiles=Files.
+##' @param ListOfRawDataPath: Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Than use ListOfRawDataPath=Files.
 ##' @param Cores: The number of cores used, default = 1.
 ##' @param Skip: Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 10.
 ##' @param Penalty: The coefficient of the penalty for degrees of freedom, default = 60.
@@ -18,7 +18,7 @@
 ##' @examples Unknown. 
 ##' 
 
-PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
+PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18)
 {
 	library(iPsychCNV)
 	library(mclust)
@@ -69,7 +69,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penal
 		
 				cat(ID, "\n")
 				# Reading file
-				File <- AllHeadFiles[grep(ID, AllHeadFiles)]
+				File <- ListOfRawDataPath[grep(ID, ListOfRawDataPath)]
 				Sample <- ReadSample(RawFile=File, skip=Skip, chr=Chr)
 				Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 	
