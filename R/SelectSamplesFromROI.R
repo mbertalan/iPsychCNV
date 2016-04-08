@@ -38,34 +38,36 @@ SelectSamplesFromROI <- function(DF, roi, OverlapMin=0.8, OverlapMax=1.2, Cores=
 				Length <- as.numeric(Y["Length"])
 				Start <- as.numeric(Y["Start"])
 				Stop <- as.numeric(Y["Stop"])
-				#cat(Start, Stop, StartRoi, StopRoi, "\n")
+				#cat(Start, Stop, StartRoi, StopRoi, "\n") 
+				
+				# Calculate the overlap region, than the percentage with ref and with CNV.
 				if(Start >= StartRoi & Stop >= StopRoi) # |-->--|---<
 				{				     
-					   Overlaplength <- ((StopRoi - Start)/LengthRoi)
-					   OverlapAll <- Length/LengthRoi
+					   OverlapRef <- ((StopRoi - Start)/LengthRoi)
+					   OverlapCNV <- ((StopRoi - Start)/Length)
 				}
 				if(Start <= StartRoi & Stop <= StopRoi) # >---|----<----|
 				{					
-					Overlaplength <- ((Stop - StartRoi)/LengthRoi)
-					OverlapAll <- Length/LengthRoi
+					OverlapRef <- ((Stop - StartRoi)/LengthRoi)
+					OverlapCNV <- ((Stop - StartRoi)/Length)
 				}
 				if(Start >= StartRoi & Stop <= StopRoi) # |--->-----<---|
 				{
-					Overlaplength <- (Length/LengthRoi)
-					OverlapAll <- Length/LengthRoi
+					OverlapRef <- (Length/LengthRoi)
+					OverlapCNV <- Length/Length
 				}
 				if(Start <= StartRoi & Stop >= StopRoi) # >---|-------|---<
 				{
-					Overlaplength <- (Length/LengthRoi)
-					OverlapAll <- Length/LengthRoi
+					OverlapRef <- (Length/LengthRoi)
+					OverlapCNV <- Length/Length
 				}
-				df <- data.frame(Overlaplength=Overlaplength, OverlapAll=OverlapAll, ROI=ROI, stringsAsFactors=FALSE)
+				df <- data.frame(OverlapRef=OverlapRef, OverlapCNV=OverlapCNV, ROI=ROI, stringsAsFactors=FALSE)
 				return(df)
 			})
 			Overlap <- MatrixOrList2df(Overlap)
 			tmp2 <- cbind(tmp, Overlap)
 			#tmp2$locus <- rep(Locus, nrow(tmp2))
-			tmp <- subset(tmp2, OverlapAll > OverlapMin & OverlapAll < OverlapMax & Overlaplength > OverlapMin)
+			tmp <- subset(tmp2, OverlapRef > OverlapMin & OverlapRef < OverlapMax & OverlapCNV > OverlapMin & OverlapCNV < OverlapMax)
 			#cat(nrow(tmp), "\n")
 			return(tmp)
 		}

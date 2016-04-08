@@ -26,7 +26,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=35) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -116,7 +116,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     red <- subset(red, Position > Start & Position < Stop) # select SNPs from rawfile that is within the plotted area
     red2 <- red[with(red, order(Position)),] # order selected SNPs by Position
 
-    Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
+    Mean <- SlideWindowMean(red2$Log.R.Ratio, Window)
     red2$Mean <- Mean
 
     # Ideogram
