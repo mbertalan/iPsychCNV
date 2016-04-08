@@ -37,7 +37,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, AllHeadFiles, Cores=1, Skip=10, penal
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=0.9,  OverlapMax=1.1)
 		
 		# Selecting only the best samples for hotspots plot
-		if(nrow(df) > 10)
+		if(nrow(df) > 10 & length(df$SDChr) > 0)
 		{
 			#df <- df[order(df$SDChr),]
 			df <- df[with(df, order(SDChr, !CN)), ] 
