@@ -28,6 +28,10 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 		{
 			tmp2 <- FindHighFreqCNVs(tmp,OverlapCutoff)
 			tmp3 <- apply(tmp2, 1, function(Z) { names(Z[Z]) })
+			
+			# Check if all regions match with itself.
+			if(sum(unlist(lapply(tmp3, length)) == 0) > 0){ stop("The region does not match with itself. Please check your start, stop and length of your region\n") 
+				
 			tmp5 <- lapply(tmp3, function(L)
 			{
 				NewStart <- sort(as.numeric(tmp[L,]$Start))[1]
