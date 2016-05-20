@@ -20,16 +20,16 @@
 
 PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
 {
-	library(iPsychCNV)
-	library(mclust)
-	library(parallel)
-	library(biovizBase)
-	library(GenomeGraphs)
-	library(ggbio)
-	library(IRanges)
-	library(ggplot2)
-	library(GenomicRanges)
-	library(RColorBrewer)
+	suppressPackageStartupMessages(library(iPsychCNV))
+	suppressPackageStartupMessages(library(mclust))
+	suppressPackageStartupMessages(library(parallel))
+	suppressPackageStartupMessages(library(biovizBase))
+	suppressPackageStartupMessages(library(GenomeGraphs))
+	suppressPackageStartupMessages(library(ggbio))
+	suppressPackageStartupMessages(library(IRanges))
+	suppressPackageStartupMessages(library(ggplot2))
+	suppressPackageStartupMessages(library(GenomicRanges))
+	suppressPackageStartupMessages(library(RColorBrewer))
 
 	# loop over hotspots
 	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
