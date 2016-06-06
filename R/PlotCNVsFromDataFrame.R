@@ -26,7 +26,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=35) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -79,8 +79,12 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     else
     {
       # Start & Stop-positions of plot
-      Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
-      Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
+      Start <- CNVstart - ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      Stop <-  CNVstop + ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      if(is.na(Window))
+      {
+        Window <- round(sqrt(NumSNP))
+      }
     }
 
     ## Naming output-file
