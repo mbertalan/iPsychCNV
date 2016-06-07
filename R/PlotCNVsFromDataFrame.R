@@ -138,13 +138,14 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     # Info for breaks, to always have 10 breaks.
     BY <- round((max(red2$Position) - min(red2$Position))/10)
 
-    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=0.5) + 
+    # B Allele Freq
+    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=1) + 
     geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + 
     theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]) ) + 
     scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1))
 
     # LogRRatio
-    p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5)  + 
+    p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=1)  + 
       geom_line(data=red2, aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line 
       ylim(-1, 1) + # set y-axis
       theme(legend.title=element_blank()) + 
