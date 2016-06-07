@@ -13,9 +13,6 @@
 
 EvaluateMyBAF <- function(res, res2)
 {
-	#Centers <- c(0, 0.2, 0.35, 0.5, 0.65, 0.8, 1)
-	#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
-	
 	if(res2$CNVmean < 0) # It might be the whole chromosome a CNV
 	{
 		if(res$AAAA > 15  & res$AB < 5 & res$BBBB > 15 & res$ABB < 5 & res$AAB < 5)  # Del
@@ -33,13 +30,15 @@ EvaluateMyBAF <- function(res, res2)
 	}
 	else if(res2$CNVmean > 0)
 	{
-		if(res$AAB > 4 & res$AB < 6 & res$ABB > 4) # Dup 3, 10, 3
-		{
-			BAlleleFreq <- 3
-		}
-		else if(res$AAAA > 15 & res$AB > 4 & res$AAB > 5 & res$ABB > 4 & res$BBBB > 15) # Double Dup AB = AABB, res$AAAB < 6 & res$ABBB < 6 & res$AB > 5 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 6 & res$ABB > 6
+		#Centers <- c(0, 0.25, 0.34, 0.5, 0.67, 0.75, 1)
+		#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
+		if(res$AAAB > 5 & res$AB > 5 & res$ABBB > 5) # Double Dup AB = AABB, res$AAAB < 6 & res$ABBB < 6 & res$AB > 5 & res$AAAA > 7 & res$BBBB > 7 & res$AAB > 6 & res$ABB > 6
 		{
 			BAlleleFreq <- 4
+		}
+		else if(res$AAB > 5 & res$ABB > 5) # Dup 3, 10, 3
+		{
+			BAlleleFreq <- 3
 		}
 		else
 		{
