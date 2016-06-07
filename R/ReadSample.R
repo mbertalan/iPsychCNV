@@ -59,7 +59,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA, 
 
   if(sum(colnames(Sample) %in% c("Log.R.Ratio", "B.Allele.Freq", "Chr")) == 0)
   {
-    stop("\n ERROR: Could not find header with correct name.\nPlease check if you need to skip some lines using skip variable: default = 10.\nExpected header:SNP.Name\tChr\tPosition\tB.Allele.Freq\tLog.R.Ratio.\n")
+    stop("\n ERROR: Could not find header.\nPlease check if you need to skip some lines using skip variable: default = 10.\nExpected header:SNP.Name\tChr\tPosition\tB.Allele.Freq\tLog.R.Ratio.\n")
   }
 
   # removing chr from chromosome name (deCODE)
