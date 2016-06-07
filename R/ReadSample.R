@@ -57,13 +57,15 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA, 
     Sample <- total    
    }
 
-  # removing chr from chromosome name (deCODE)
-  Sample$Chr <- gsub("chr", "", Sample$Chr)
-  
-  if(sum(colnames(Sample) %in% c("Log.R.Ratio", "B.Allele.Freq")) == 0)
+  if(sum(colnames(Sample) %in% c("Log.R.Ratio", "B.Allele.Freq", "Chr")) == 0)
   {
     stop("Could not find header with correct name\nPlease use:SNP.Name\tChr\tPosition\tB.Allele.Freq\tLog.R.Ratio\n")
   }
+
+  # removing chr from chromosome name (deCODE)
+  Sample$Chr <- gsub("chr", "", Sample$Chr)
+  
+  
   
   # PFB
   if(is.null(PFB)){ Sample$PFB <- rep(0.5, nrow(Sample)) }else{ Sample$PFB <- PFB }
