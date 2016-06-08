@@ -37,14 +37,14 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
 		
 		# Selecting only the best samples for hotspots plot
-		if(nrow(df) > 10)
+		if(nrow(df) > 20)
 		{
 			#df <- df[order(df$SDChr),]
 			if(length(df$SDChr) > 0)
 			{
-				df <- df[with(df, order(SDChr, !CN)), ] 
+				df <- df[with(df, order(SDChr, SDCNV, abs(CNVmean))), ] 
 			}
-			df <- df[1:10,]
+			df <- df[1:20,]
 		}
 
 		if(nrow(df) > 0)
@@ -62,6 +62,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 				ID <- X["ID"]
 				NumSNP <- as.numeric(X["NumSNPs"])
 				Size <- as.numeric(X["Length"])
+				CN <- X["CN"]
 				if(Size < 100000){ Size <- Size * 2 }
 	
 				Start <- CNVstart - (Size)*(3/log10(NumSNP))^4
@@ -75,6 +76,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	
 				# CNV region
 				tmp <- subset(Sample, Position > Start & Position < Stop)
+				tmp$CN <- CN
 				return(tmp)
 			})
 			red <- MatrixOrList2df(Data)
@@ -97,10 +99,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			# B.Allele
 			rect2 <- data.frame (xmin=Start, xmax=Stop, ymin=0, ymax=1) # CNV position
 		
-			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col="B.Allele.Freq"), size=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]))
+			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col="CN"), size=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]))
 
 			# LogRRatio
-			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col="Log.R.Ratio")) + geom_point(size=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[1], "black"))
+			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col="CN")) + geom_point(size=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[1], "black"))
 	
 			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
