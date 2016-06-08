@@ -121,7 +121,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			# B.Allele
 			rect2 <- data.frame (xmin=Start, xmax=Stop, ymin=0, ymax=1) # CNV position
 			
-			save(rect2, red2, file="Files.RData")
+			#save(rect2, red2, file="Files.RData")
 		
 			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN)), size=0.5, alpha=Alpha) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = Colors[1], "3"=Colors[3], "CNV region"=Colors[2]))
 
