@@ -47,8 +47,8 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 				if(nrow(del) > 1){ del <- del[with(del, order(SDChr, SDCNV, CNVmean)), ] }
 				if(nrow(dup) > 1){ dup <- dup[with(dup, order(SDChr, SDCNV, -CNVmean)), ] }
 				
-				if(nrow(del) > 10){ del <- del[1:10,] })
-				if(nrow(dup) > 10){ dup <- dup[1:10,] })
+				if(nrow(del) > 10){ del <- del[1:10,] }
+				if(nrow(dup) > 10){ dup <- dup[1:10,] }
 				
 				if(nrow(del) > 0 & nrow(dup) > 0)
 				{
