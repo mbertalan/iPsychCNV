@@ -18,7 +18,7 @@
 ##' @examples Unknown. 
 ##' 
 
-PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
+PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=0.8, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
 {
 	suppressPackageStartupMessages(library(iPsychCNV))
 	suppressPackageStartupMessages(library(mclust))
@@ -121,10 +121,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			# B.Allele
 			rect2 <- data.frame (xmin=Start, xmax=Stop, ymin=0, ymax=1) # CNV position
 		
-			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN)), size=0.5, alpha=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = Colors[1], "3"=Colors[3]))
+			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN)), size=0.5, alpha=Alpha) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = Colors[1], "3"=Colors[3], "CNV region"=Colors[2]))
 
 			# LogRRatio
-			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN))) + geom_point(size=0.5, alpha=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
+			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
 	
 			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
