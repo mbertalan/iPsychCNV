@@ -41,10 +41,32 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 		{
 			#df <- df[order(df$SDChr),]
 			if(length(df$SDChr) > 0)
-			{
-				df <- df[with(df, order(SDChr, SDCNV, abs(CNVmean))), ] 
+			{	
+				del <- subset(df, CN == 1)
+				dup <- subset(df, CN == 3)
+				if(nrow(del) > 1){ del <- del[with(del, order(SDChr, SDCNV, CNVmean))), ] }
+				if(nrow(dup) > 1){ dup <- dup[with(dup, order(SDChr, SDCNV, -CNVmean))), ] }
+				
+				if(nrow(del) > 10){ del <- del[1:10,] })
+				if(nrow(dup) > 10){ dup <- dup[1:10,] })
+				
+				if(nrow(del) > 0 & nrow(dup) > 0)
+				{
+					df <- rbind(del,dup)
+				}
+				else if(nrow(del) == 0)
+				{
+					df <- dup
+				}
+				else
+				{
+					df <- del
+				}
 			}
-			df <- df[1:20,]
+			else
+			{
+				df <- df[1:20,]
+			}
 		}
 
 		if(nrow(df) > 0)
@@ -99,10 +121,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			# B.Allele
 			rect2 <- data.frame (xmin=Start, xmax=Stop, ymin=0, ymax=1) # CNV position
 		
-			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN)), size=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) #  + scale_color_manual(values = c(Colors[2:4]))
+			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN)), size=0.5, alpha=0.5) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = "red", "3"="green"))
 
 			# LogRRatio
-			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN))) + geom_point(size=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) #  + scale_color_manual(values = c(Colors[1], "black"))
+			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN))) + geom_point(size=0.5, alpha=0.5) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("1" = "red", "3"="green", "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
 	
 			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
