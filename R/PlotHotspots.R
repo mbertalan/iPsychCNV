@@ -106,8 +106,11 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			WindowSize <- round(nrow(red2)/100)
 			if(WindowSize < 5){ WindowSize <- 5 }
 			if(WindowSize > 35){ WindowSize <- 35 }
-			Mean <- SlideWindowMean(red2$Log.R.Ratio, 35)
-			red2$Mean <- Mean	
+			
+			# Mean LRR for del
+			if(sum(red2$CN == 1) > 0){ Mean.del <- SlideWindowMean(red2$Log.R.Ratio[red2$CN == 1], 35); red2$Mean.del <- Mean.del }
+			if(sum(red2$CN == 3) > 0){ Mean.dup <- SlideWindowMean(red2$Log.R.Ratio[red2$CN == 3], 35); red2$Mean.dup <- Mean.dup }
+				
 			chr <- unique(red2$Chr)[1]
 			
 			# Checking overlap points between 1 and 3.
@@ -132,7 +135,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN)), size=0.5, alpha=Alpha) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6], "1" = Colors[1], "3"=Colors[3], "CNV region"=Colors[2]))
 
 			# LogRRatio
-			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col="Mean"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6],"1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
+			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean.del, col="Mean.del"), size = 0.5) + + geom_line(aes(x=Position, y = Mean.dup, col="Mean.dup"), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("Mean.del"="black", "Mean.dup"="gray" , "both"=Colors[6],"1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
 	
 			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
