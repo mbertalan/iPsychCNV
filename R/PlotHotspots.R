@@ -18,7 +18,7 @@
 ##' @examples Unknown. 
 ##' 
 
-PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=0.8, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
+PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=0.8, NumSamples=20, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
 {
 	suppressPackageStartupMessages(library(iPsychCNV))
 	suppressPackageStartupMessages(library(mclust))
@@ -37,9 +37,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
 		
 		# Selecting only the best samples for hotspots plot
-		if(nrow(df) > 20)
+		if(nrow(df) > NumSamples)
 		{
 			#df <- df[order(df$SDChr),]
+			NumSamples2 <- round((NumSamples/2), digits=0)
 			if(length(df$SDChr) > 0)
 			{	
 				del <- subset(df, CN == 1)
@@ -47,8 +48,8 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 				if(nrow(del) > 1){ del <- del[with(del, order(SDChr, SDCNV, CNVmean)), ] }
 				if(nrow(dup) > 1){ dup <- dup[with(dup, order(SDChr, SDCNV, -CNVmean)), ] }
 				
-				if(nrow(del) > 10){ del <- del[1:10,] }
-				if(nrow(dup) > 10){ dup <- dup[1:10,] }
+				if(nrow(del) > NumSamples2){ del <- del[1:NumSamples2,] }
+				if(nrow(dup) > NumSamples2){ dup <- dup[1:NumSamples2,] }
 				
 				if(nrow(del) > 0 & nrow(dup) > 0)
 				{
