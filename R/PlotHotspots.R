@@ -123,7 +123,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			red2$CN.BAF[red2$tmp2 %in% names(tmp3[tmp3 > 1])] <- "both"
 			
 			# Checking overlap points between 1 and 3 for LRR values	
-			red2$CN3.LRR <- red2$CN
+			red2$CN.LRR <- red2$CN
 			red2$tmp <- round(red2$Log.R.Ratio, digits=1)
 			red2$tmp2 <- apply(red2, 1, function(X){ paste(X["SNP.Name"], X["tmp"], sep="_", collapse="") })
 			tmp3 <- tapply(red2$CN, as.factor(red2$tmp2), function(X){ length(unique(X)) })
@@ -145,7 +145,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN.BAF)), size=0.5, alpha=Alpha) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6], "1" = Colors[1], "3"=Colors[3], "CNV region"=Colors[2]))
 
 			# LogRRatio
-			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN.LRR))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col=as.factor(CN2)), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6],"1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
+			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN.LRR))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col=as.factor(CN)), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6],"1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
 	
 			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
