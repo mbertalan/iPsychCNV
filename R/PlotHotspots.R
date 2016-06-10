@@ -18,7 +18,7 @@
 ##' @examples Unknown. 
 ##' 
 
-PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=0.5, NumSamples=20, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
+PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=1, NumSamples=20, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.8, OverlapMax=1.2)
 {
 	suppressPackageStartupMessages(library(iPsychCNV))
 	suppressPackageStartupMessages(library(mclust))
@@ -35,6 +35,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
+		df <- subset(df, DiffHigh > 0.1 & DiffLow > 0.1)
 		
 		# Selecting only the best samples for hotspots plot
 		if(nrow(df) > NumSamples)
@@ -45,8 +46,8 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			{	
 				del <- subset(df, CN == 1)
 				dup <- subset(df, CN == 3)
-				if(nrow(del) > 1){ del <- del[with(del, order(SDChr, SDCNV, CNVmean)), ] }
-				if(nrow(dup) > 1){ dup <- dup[with(dup, order(SDChr, SDCNV, -CNVmean)), ] }
+				if(nrow(del) > 1){ del <- del[with(del, order(abs(MeanChr), SDChr, SDCNV, CNVmean)), ] }
+				if(nrow(dup) > 1){ dup <- dup[with(dup, order(abs(MeanChr), SDChr, SDCNV, -CNVmean)), ] }
 				
 				if(nrow(del) > NumSamples2){ del <- del[1:NumSamples2,] }
 				if(nrow(dup) > NumSamples2){ dup <- dup[1:NumSamples2,] }
@@ -129,6 +130,11 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			tmp3 <- tapply(red2$CN, as.factor(red2$tmp2), function(X){ length(unique(X)) })
 			red2$CN.LRR[red2$tmp2 %in% names(tmp3[tmp3 > 1])] <- "both"
 			
+			# CN mean different color than normal CN
+			red2$CN.Mean <- red2$CN
+			red2$CN.Mean[red2$CN.Mean %in% "1"] <- "del"	
+			red2$CN.Mean[red2$CN.Mean %in% "3"] <- "dup"
+			
 			# Ideogram
 			data(hg19IdeogramCyto,package="biovizBase")
 			CHR <- paste("chr", chr, collapse="", sep="")
@@ -136,16 +142,17 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	
 			# Colors
 			Colors = brewer.pal(7,"Set1")
+			Colors2 = brewer.pal(7,"Pastel")
 	
 			# B.Allele
 			rect2 <- data.frame (xmin=Start, xmax=Stop, ymin=0, ymax=1) # CNV position
 			
 			#save(rect2, red2, file="Files.RData")
 		
-			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN.BAF)), size=0.5, alpha=Alpha) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6], "1" = Colors[1], "3"=Colors[3], "CNV region"=Colors[2]))
+			p1 <- ggplot(red2, aes(Position, y = B.Allele.Freq)) + geom_point(aes(col=as.factor(CN.BAF)), size=0.5, alpha=Alpha) + geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.3, inherit.aes = FALSE) + theme(legend.title=element_blank()) + scale_color_manual(values = c("del"=Colors[1], "dup"=Colors[3], "both"=Colors2[6], "1" = Colors2[1], "3"=Colors2[3], "CNV region"=Colors[2]))
 
 			# LogRRatio
-			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN.LRR))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col=as.factor(CN)), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("both"=Colors[6],"1" = Colors[1], "3"=Colors[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
+			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN.LRR))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col=as.factor(CN.Mean)), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("del"=Colors[1], "dup"=Colors[3],"both"=Colors2[6],"1" = Colors2[1], "3"=Colors2[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
 	
 			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
