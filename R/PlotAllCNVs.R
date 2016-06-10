@@ -29,6 +29,7 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	# Select which human build it will plot
 	CytoBands <- subset(CytoBands2, Human %in% hg & Chr %in% c(1:22))	
 
+	if(length(df$CN) == 0){ stop("Missing CN\n") }
 	
 	if(length(df$CN) > 0){ df$Class <- df$CN }
 	if(length(df$File) > 0){ df$ID <- df$File }
