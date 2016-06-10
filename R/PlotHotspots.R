@@ -35,7 +35,11 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
-		df <- subset(df, DiffHigh > 0.1 & DiffLow > 0.1)
+		df <- subset(df, DiffHigh > 0.15 & DiffLow > 0.15)
+		
+		Total.Del <- sum(df$CN == 1)
+		Total.Dup <- sum(df$CN == 3)
+		Total <- nrow(df)
 		
 		# Selecting only the best samples for hotspots plot
 		if(nrow(df) > NumSamples)
@@ -154,7 +158,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			# LogRRatio
 			p2 <- ggplot(red2, aes(Position, y = Log.R.Ratio, col=as.factor(CN.LRR))) + geom_point(size=0.5, alpha=Alpha) + geom_line(aes(x=Position, y = Mean, col=as.factor(CN.Mean)), size = 0.5) + ylim(-1, 1) + theme(legend.title=element_blank()) + scale_color_manual(values = c("del"=Colors[1], "dup"=Colors[3],"both"=Colors2[6],"1" = Colors2[1], "3"=Colors2[3], "Mean"="black")) #  + scale_color_manual(values = c(Colors[1], "black"))
 	
-			Title <- paste("Hotspot: ", HotSpotID, sep="", collapse="")
+			Title <- paste("Hotspot: ", HotSpotID, "Total:", Total, " 1:", Total.Del, " 3:", Total.Dup, sep="", collapse="")
 			OutPlotfile <- paste("Hotspot", HotSpotID, "plot.png", sep=".", collapse="")
 			Plot <- tracks(p3,p1, p2, main=Title, heights=c(3,5,5))
 			ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=200) 
