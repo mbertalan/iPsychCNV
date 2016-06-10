@@ -35,7 +35,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
-		df <- subset(df, DiffHigh > 0.15 & DiffLow > 0.15)
+		#df <- subset(df, DiffHigh > 0.15 & DiffLow > 0.15)
 		
 		Total.Del <- sum(df$CN == 1)
 		Total.Dup <- sum(df$CN == 3)
@@ -71,7 +71,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			}
 			else
 			{
-				df <- df[1:20,]
+				df <- df[1:NumSamples,]
 			}
 		}
 
@@ -146,7 +146,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	
 			# Colors
 			Colors = brewer.pal(7,"Set1")
-			Colors2 = brewer.pal(7,"Pastel")
+			Colors2 = brewer.pal(7,"Pastel1")
 	
 			# B.Allele
 			rect2 <- data.frame (xmin=Start, xmax=Stop, ymin=0, ymax=1) # CNV position
