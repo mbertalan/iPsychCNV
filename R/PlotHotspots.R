@@ -86,10 +86,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 				NumSNP <- as.numeric(X["NumSNPs"])
 				Size <- as.numeric(X["Length"])
 				CN <- X["CN"]
-				if(Size < 100000){ Size <- Size * 2 }
+				if(Size < 100000){ Size <- Size + 100000 }
 	
-				Start <- CNVstart - (Size)*(3/log10(NumSNP))^4
-				Stop <-  CNVstop + (Size)*(3/log10(NumSNP))^4
+				Start <- CNVstart - (Size)*(3/log10(NumSNP))^3
+				Stop <-  CNVstop + (Size)*(3/log10(NumSNP))^3
 		
 				cat(ID, "\n")
 				# Reading file
