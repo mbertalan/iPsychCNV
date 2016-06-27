@@ -2,7 +2,8 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MakeLongMockSample
-##' @param CNVDistance: Unknown, defualt = 1000.
+##' @param Heterozygosity: Percentage of BAF around 0.5.
+##' @param CNVDistance: Distance among CNVs, defualt = 1000.
 ##' @param Type: Unknown, default = Unknown.
 ##' @param Mean: Unknown, default = Unknown.
 ##' @param Size: Unknown, default = Unknown.
@@ -15,15 +16,12 @@
 ##' @examples 
 ##' Sample <- MakeLongMockSample(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000), ChrMean=0, ChrSD=0.18)
 
-MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-1, -0.45, 0, 0.3, 0.75), Size=300, ChrMean=0, ChrSD=0.18)
+MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-1, -0.45, 0, 0.3, 0.75), Size=300, ChrMean=0, ChrSD=0.18)
 {
 	library(RColorBrewer)
 	library(ggplot2)
 	library(ggbio)
 
-	#Type <- c(0,1,2,3,4) # BAF types
-	#Mean <- c(-0.3, -0.6, 0.3, 0.6)
-	#Size <- c(300, 600)
 
 	df <- sapply(Mean, function(M)
 	{
