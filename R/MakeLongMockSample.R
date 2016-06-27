@@ -22,6 +22,10 @@ MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,
 	library(ggplot2)
 	library(ggbio)
 
+	# Defining heterozygosity from BAF 
+	Zygosity <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+	names(Zygosity) <- c(0.2, 0.4, 0.8, 1.35, 2, 3, 5, 8, 16, 80)
+	HeteroBAF <- as.numeric(names(Zygosity)[which(abs(Zygosity-Heterozygosity)==min(abs(Zygosity-Heterozygosity)))])
 
 	df <- sapply(Mean, function(M)
 	{
@@ -69,7 +73,7 @@ MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,
 	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 1
 	
 	BAF_Normal[c(47:53)] <- BAF_Normal[c(47:53)] + 0.05
-	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + 0.1
+	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + HeteroBAF
 
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
