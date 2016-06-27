@@ -88,9 +88,9 @@ MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,
 	BAF_Dup[1:2] <- BAF_Dup[1:2] + 1
 	BAF_Dup[100:101] <- BAF_Dup[100:101] + 1
 	BAF_Dup[30:35] <- BAF_Dup[30:35] + 0.05 
-	BAF_Dup[32:33] <- BAF_Dup[32:33] + 0.1 
+	BAF_Dup[32:33] <- BAF_Dup[32:33] + HeteroBAF/2
 	BAF_Dup[65:70] <- BAF_Dup[65:70] + 0.05
-	BAF_Dup[67:68] <- BAF_Dup[67:68] + 0.1 	
+	BAF_Dup[67:68] <- BAF_Dup[67:68] + HeteroBAF/2
 
 	# BAF CN=4
 	BAF_CN4 <- BAF_Basic
