@@ -91,7 +91,13 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-1, -
 	BAF_Dup[67:68] <- BAF_Dup[67:68] + 0.1 	
 
 	# BAF CN=4
-	BAF_CN4 <- BAF_Dup
+	BAF_CN4 <- BAF_Basic
+	BAF_CN4[1:2] <- BAF_CN4[1:2] + 1
+	BAF_CN4[100:101] <- BAF_CN4[100:101] + 1
+	BAF_CN4[23:27] <- BAF_CN4[23:27] + 0.05 
+	BAF_CN4[24:26] <- BAF_CN4[24:26] + 0.1 
+	BAF_CN4[73:77] <- BAF_CN4[73:77] + 0.05
+	BAF_CN4[74:76] <- BAF_CN4[74:76] + 0.1
 	BAF_CN4[c(47:53)] <- BAF_CN4[c(47:53)] + 0.05
 	BAF_CN4[c(50:51)] <- BAF_CN4[c(50:51)] + 0.1
 
