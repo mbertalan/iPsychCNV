@@ -101,6 +101,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50, Cores=28)
 		return(Test2)
 	})
 	Test2 <- MatrixOrList2df(Test2)
+	Test2 <- Test2[!duplicated(Test2[,c("Start", "Stop", "Chr", "ID")]),]
 	Test2 <- Test2[order(Test2$StartIndx),]
 	return(Test2)
 }
