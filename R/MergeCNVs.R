@@ -11,10 +11,12 @@
 ##' @examples Unknown.
 ##'
 
-MergeCNVs <- function(df, MaxNumSNPs=50)
+MergeCNVs <- function(df, MaxNumSNPs=50, Cores=28)
 {
 	tmp2 <- subset(df, CN != 2)
-	Test2 <- sapply(unique(tmp2$ID), function(IDs) # Sample Loop	
+	tmp2 <- tmp2[order(tmp2$Chr, tmp2$Start),]
+	
+	Test2 <- mclapply(unique(tmp2$ID), mc.cores=Cores, mc.preschedule = FALSE, function(IDs)
 	{
 		#cat("Sample: ", IDs, "\n")
 		tmp3 <- subset(tmp2, ID %in% IDs) 	 
