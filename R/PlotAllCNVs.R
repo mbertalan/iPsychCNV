@@ -12,6 +12,7 @@
 ##' @param Chr: Chromosome, default = NA.
 ##' @param Start: The start position of each CNV, default = NA.
 ##' @param Stop: The stop position of each CNV, default = NA.
+##' @param Order: Should the function order the CNVs ?, default = TRUE.
 ##' @return Return data in a data frame.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -19,7 +20,7 @@
 ##' @examples Unknown.
 ##' 
 
-PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg19", chr=NA, start=NA, stop=NA) # TimesLength
+PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg19", chr=NA, start=NA, stop=NA, Order=TRUE) # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
@@ -39,7 +40,8 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	tmp3 <- sapply(unique(tmp$Chr), function(X)
 	{
 		tmp2 <- subset(tmp, Chr %in% X)
-		tmp2 <- tmp2[with(tmp2, order(Start, !Length, CN)), ]  # , -Length
+		# Should I order your CNVs ?
+		if(Order){ tmp2 <- tmp2[with(tmp2, order(Start, !Length, CN)), ]  })
 		Samples <- 1:length(unique(tmp2$ID))
 		names(Samples) <- unique(tmp2$ID)
 		Indx <- sapply(tmp2$ID, function(Y){ Samples[as.character(Y)] })
