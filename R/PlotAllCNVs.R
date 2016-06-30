@@ -41,7 +41,7 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	{
 		tmp2 <- subset(tmp, Chr %in% X)
 		# Should I order your CNVs ?
-		if(Order){ tmp2 <- tmp2[with(tmp2, order(Start, !Length, CN)), ]  })
+		if(Order){ tmp2 <- tmp2[with(tmp2, order(Start, !Length, CN)), ]  }
 		Samples <- 1:length(unique(tmp2$ID))
 		names(Samples) <- unique(tmp2$ID)
 		Indx <- sapply(tmp2$ID, function(Y){ Samples[as.character(Y)] })
