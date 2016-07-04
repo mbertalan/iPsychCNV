@@ -13,6 +13,7 @@
 MatrixOrList2df <- function(tmp)
 {
 	library(plyr)
+	library(data.table)
 	if(class(tmp) %in% "matrix")
 	{
 		df <- apply(tmp, 2, function(X){ as.data.frame(X,  stringsAsFactors=F) })
@@ -22,7 +23,8 @@ MatrixOrList2df <- function(tmp)
 	if(class(tmp) %in% "list")
 	{	
 		#tmp <- tmp[unlist(lapply(tmp, function(X){ names(X)[1] %in% "Start" }))]
-		df <- do.call(rbind.data.frame, tmp)
+		#df <- do.call(rbind.data.frame, tmp)
+		df <- rbindlist(tmp)
 	}
 	if(class(tmp) %in% "data.frame")
 	{
