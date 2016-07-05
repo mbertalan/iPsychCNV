@@ -29,6 +29,7 @@
 ##' @param IndxPos: If index position for each hotspot is not included it will calculate. However, this step is time consuming.
 ##' @param ResPerSample: If TRUE saves the results from each sample.  
 ##' @param Files: a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time. 
+##' @param SNPList: Getting Chr. and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan; Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
