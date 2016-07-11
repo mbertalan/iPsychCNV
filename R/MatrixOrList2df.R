@@ -24,7 +24,9 @@ MatrixOrList2df <- function(tmp)
 	{	
 		#tmp <- tmp[unlist(lapply(tmp, function(X){ names(X)[1] %in% "Start" }))]
 		#df <- do.call(rbind.data.frame, tmp)
-		df <- rbindlist(tmp)
+		Indx <- lapply(tmp, is.data.frame)
+		tmp2 <- tmp[unlist(Indx)]
+		df <- rbindlist(tmp2)
 	}
 	if(class(tmp) %in% "data.frame")
 	{
