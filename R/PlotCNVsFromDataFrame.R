@@ -35,6 +35,14 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
   library(RColorBrewer)
   library(GenomicRanges)
 
+  MustBeCol <- c("Chr", "Start", "Stop", "Length")
+  if(sum(colnames(DF) %in% MustBeCol) != 4)
+  {
+    MissingCol <- setdiff(MustBeCol, colnames(DF)[colnames(DF) %in% MustBeCol])
+    stop("You are missing: ", MissingCol, "\n")
+  }
+    
+
   LocalFolder <- PathRawData
   if(is.na(Files))
   {
