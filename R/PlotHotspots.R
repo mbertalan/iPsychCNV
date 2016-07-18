@@ -18,7 +18,7 @@
 ##' @examples Unknown. 
 ##' 
 
-PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=1, Times=10, NumSamples=20, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.9, OverlapMax=1.1)
+PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, Alpha=1, Times=10, NumSamples=20, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, OverlapMin=0.9, OverlapMax=1.1, SNPList=NULL)
 {
 	suppressPackageStartupMessages(library(iPsychCNV))
 	suppressPackageStartupMessages(library(mclust))
@@ -101,7 +101,7 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 				cat(ID, "\n")
 				# Reading file
 				File <- ListOfRawDataPath[grep(ID, ListOfRawDataPath)]
-				Sample <- ReadSample(RawFile=File, skip=Skip, chr=Chr)
+				Sample <- ReadSample(RawFile=File, skip=Skip, chr=Chr, SNPList=SNPList)
 				Sample <- NormalizeData(Sample, ExpectedMean=0, penalty=penalty, Quantile=Quantile, QSpline=QSpline, sd=sd)
 	
 				# CNV region
