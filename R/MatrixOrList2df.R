@@ -26,6 +26,9 @@ MatrixOrList2df <- function(tmp)
 		#df <- do.call(rbind.data.frame, tmp)
 		Indx <- lapply(tmp, is.data.frame)
 		tmp2 <- tmp[unlist(Indx)]
+		tmp3 <- lapply(tmp2, colnames) # Get colnames from all elements in the list 
+		tmp3 <- Reduce(intersect, tmp3) # Get only common colnames. 
+		tmp2 <- lapply(tmp2, function(X){ X[,tmp3]}) # Making the list with same columns. 
 		df <- rbindlist(tmp2)
 	}
 	if(class(tmp) %in% "data.frame")
