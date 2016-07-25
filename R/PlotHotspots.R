@@ -37,8 +37,8 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
 		#df <- subset(df, DiffHigh > 0.15 & DiffLow > 0.15)
 		
-		#Total.Del <- sum(df$CN == 1)
-		#Total.Dup <- sum(df$CN == 3)
+		Total.Del <- sum(df$CN == 1)
+		Total.Dup <- sum(df$CN == 3)
 		Total <- nrow(df)
 		
 		# Selecting only the best samples for hotspots plot
