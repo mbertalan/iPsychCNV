@@ -148,7 +148,8 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 			# Ideogram
 			data(hg19IdeogramCyto,package="biovizBase")
 			CHR <- paste("chr", chr, collapse="", sep="")
-			p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3) + xlim(GRanges(CHR,IRanges(Start,Stop)))
+		
+			p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3, zoom.region = c(Start,Stop))
 	
 			# Colors
 			Colors = brewer.pal(7,"Set1")
