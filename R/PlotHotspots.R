@@ -77,6 +77,10 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 
 		if(nrow(df) > 0)
 		{
+			del <- subset(df, CN == 1)
+			dup <- subset(df, CN == 3)
+			df <- rbind(del,dup)
+			
 			HotSpotID <- paste(Hotspots[i,"Chr"],Hotspots[i,"Start"], Hotspots[i,"Stop"], sep=".", collapse="")
 			Start <- Hotspots[i,"Start"]
 			Stop <- Hotspots[i,"Stop"]	
