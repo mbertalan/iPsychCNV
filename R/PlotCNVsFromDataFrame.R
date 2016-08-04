@@ -96,9 +96,9 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
       {
         Window <- round(sqrt(NumSNP))
       }
-      if(WindowSize < 5){ WindowSize <- 5 }
-			if(WindowSize > 35){ WindowSize <- 35 }
-    }
+      if(Window < 5){ Window <- 5 }
+      if(Window > 35){ Window <- 35 }
+     }
 
     ## Naming output-file
 
