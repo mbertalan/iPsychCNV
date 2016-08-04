@@ -87,12 +87,17 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     else
     {
       # Start & Stop-positions of plot
-      Start <- CNVstart - ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
-      Stop <-  CNVstop + ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      #Start <- CNVstart - ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      #Stop <-  CNVstop + ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      Start <- CNVstart - (Size*10)
+      Stop <-  CNVstop + (Size*10)
+
       if(is.na(Window))
       {
         Window <- round(sqrt(NumSNP))
       }
+      if(WindowSize < 5){ WindowSize <- 5 }
+			if(WindowSize > 35){ WindowSize <- 35 }
     }
 
     ## Naming output-file
