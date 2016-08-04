@@ -63,7 +63,7 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   page.count <- 1 # start with page 1
   
   ## Loop over each ID and plot away
-  while(x < length(Ids)){
+  while(x <= length(Ids)){
     if(OutFolder!=".") {
       outname <- paste(OutFolder, basename, "_page-", page.count, sep="") }
     else {
@@ -132,7 +132,7 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
       }
       ## increment
       i <- i + 1
-      if(x < length(Ids)){ x <- 1 + x}
+      if(x <= length(Ids)){ x <- 1 + x}
       else{
         break
       }
