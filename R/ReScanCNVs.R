@@ -74,6 +74,8 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
     ptm.tmp <- proc.time()
     Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
 
+    if(nrow(Sample) < 10){ stop("You sample has less than 10 rows, somethings must be wrong, maybe format is not correct.") }
+
     # The CNVs are given by hotspots, Position might change if multiple chips are used.
     if(IndxPos)
     {
@@ -105,6 +107,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
     Res.tmp <- proc.time() - ptm.tmp
   })
   cat("Done all !\n")
+  save(tmp, file="tmp.RData")
   df <- MatrixOrList2df(tmp)
 
   if(!is.na(OutputPath))
