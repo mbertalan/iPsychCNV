@@ -11,10 +11,12 @@
 ##' @examples Unknown.
 ##'
 
-MergeCNVs <- function(df, MaxNumSNPs=50)
+MergeCNVs <- function(df, MaxNumSNPs=50, Cores=28)
 {
 	tmp2 <- subset(df, CN != 2)
-	Test2 <- sapply(unique(tmp2$ID), function(IDs) # Sample Loop	
+	tmp2 <- tmp2[order(tmp2$Chr, tmp2$Start),]
+	
+	Test2 <- mclapply(unique(tmp2$ID), mc.cores=Cores, mc.preschedule = FALSE, function(IDs)
 	{
 		#cat("Sample: ", IDs, "\n")
 		tmp3 <- subset(tmp2, ID %in% IDs) 	 
@@ -54,7 +56,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 						{
 							# CN 1 and 3 should not be merged. If more than 1 CN, select the most common.
 							tmp <- subset(tmp4[Indx,], CN == as.numeric(names(sort(table(tmp4[Indx,"CN"]), decreasing=T)[1])))
-							Indx <- as.numeric(tmp$CNVID)
+							#Indx <- as.numeric(tmp$CNVID)
 							
 							#cat("4-) Great ! Join ", Indx, "\n")
 							NewStart <- sort(tmp4[Indx,"Start"])[1]
@@ -99,6 +101,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50)
 		return(Test2)
 	})
 	Test2 <- MatrixOrList2df(Test2)
+	Test2 <- Test2[!duplicated(Test2[,c("Start", "Stop", "Chr", "ID")]),]
 	Test2 <- Test2[order(Test2$StartIndx),]
 	return(Test2)
 }

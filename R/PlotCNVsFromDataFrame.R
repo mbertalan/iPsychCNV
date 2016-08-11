@@ -26,7 +26,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=35) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -34,6 +34,14 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
   library(biovizBase)
   library(RColorBrewer)
   library(GenomicRanges)
+
+  MustBeCol <- c("Chr", "Start", "Stop", "Length")
+  if(sum(colnames(DF) %in% MustBeCol) != 4)
+  {
+    MissingCol <- setdiff(MustBeCol, colnames(DF)[colnames(DF) %in% MustBeCol])
+    stop("You are missing: ", MissingCol, "\n")
+  }
+    
 
   LocalFolder <- PathRawData
   if(is.na(Files))
@@ -79,9 +87,18 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     else
     {
       # Start & Stop-positions of plot
-      Start <- CNVstart - (Size*PlotPosition)*(3/log10(NumSNP))^3
-      Stop <-  CNVstop + (Size*PlotPosition)*(3/log10(NumSNP))^3
-    }
+      #Start <- CNVstart - ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      #Stop <-  CNVstop + ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
+      Start <- CNVstart - (Size*10)
+      Stop <-  CNVstop + (Size*10)
+
+      if(is.na(Window))
+      {
+        Window <- round(sqrt(NumSNP))
+      }
+      if(Window < 5){ Window <- 5 }
+      if(Window > 35){ Window <- 35 }
+     }
 
     ## Naming output-file
 
@@ -134,13 +151,14 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     # Info for breaks, to always have 10 breaks.
     BY <- round((max(red2$Position) - min(red2$Position))/10)
 
-    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=0.5) + 
+    # B Allele Freq
+    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=1) + 
     geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + 
     theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]) ) + 
     scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1))
 
     # LogRRatio
-    p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5)  + 
+    p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=1)  + 
       geom_line(data=red2, aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line 
       ylim(-1, 1) + # set y-axis
       theme(legend.title=element_blank()) + 

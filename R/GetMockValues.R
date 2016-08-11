@@ -55,9 +55,20 @@ GetMockValues <- function(Type="Blood")
 	BAF_CN0 <- BAF_Basic
 	
 	# BAF CN=4
-	BAF_CN4 <- BAF_Dup
-	BAF_CN4[c(47:53)] <- BAF_CN4[c(47:53)] + 0.05
+	BAF_CN4 <- BAF_Basic
+	
+	BAF_CN4[1:2] <- BAF_CN4[1:2] + 1
+	BAF_CN4[100:101] <- BAF_CN4[100:101] + 1
+	
+	BAF_CN4[21:29] <- BAF_CN4[21:29] + 0.05 
+	BAF_CN4[23:27] <- BAF_CN4[23:27] + 0.1
+	
+	BAF_Dup[71:79] <- BAF_Dup[71:79] + 0.05
+	BAF_Dup[73:77] <- BAF_Dup[73:77] + 0.1
+	
+	BAF_CN4[c(48:53)] <- BAF_CN4[c(48:53)] + 0.05
 	BAF_CN4[c(50:51)] <- BAF_CN4[c(50:51)] + 0.1
+	
 
 	if(Type %in% "Blood")
 	{

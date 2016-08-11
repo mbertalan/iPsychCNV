@@ -2,7 +2,8 @@
 ##'
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title MakeLongMockSample
-##' @param CNVDistance: Unknown, defualt = 1000.
+##' @param Heterozygosity: Percentage of BAF around 0.5.
+##' @param CNVDistance: Distance among CNVs, defualt = 1000.
 ##' @param Type: Unknown, default = Unknown.
 ##' @param Mean: Unknown, default = Unknown.
 ##' @param Size: Unknown, default = Unknown.
@@ -12,18 +13,19 @@
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
-##' @examples Unknown.
-##' 
+##' @examples 
+##' Sample <- MakeLongMockSample(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000), ChrMean=0, ChrSD=0.18)
 
-MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000), ChrMean=0, ChrSD=0.18)
+MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-1, -0.45, 0, 0.3, 0.75), Size=300, ChrMean=0, ChrSD=0.18)
 {
 	library(RColorBrewer)
 	library(ggplot2)
 	library(ggbio)
 
-	#Type <- c(0,1,2,3,4) # BAF types
-	#Mean <- c(-0.3, -0.6, 0.3, 0.6)
-	#Size <- c(300, 600)
+	# Defining heterozygosity from BAF 
+	Zygosity <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+	names(Zygosity) <- c(0.2, 0.4, 0.8, 1.35, 2, 3, 5, 8, 16, 80)
+	HeteroBAF <- as.numeric(names(Zygosity)[which(abs(Zygosity-Heterozygosity)==min(abs(Zygosity-Heterozygosity)))])
 
 	df <- sapply(Mean, function(M)
 	{
@@ -71,7 +73,7 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 1
 	
 	BAF_Normal[c(47:53)] <- BAF_Normal[c(47:53)] + 0.05
-	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + 0.1
+	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + HeteroBAF
 
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
@@ -86,12 +88,18 @@ MakeLongMockSample <- function(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9,
 	BAF_Dup[1:2] <- BAF_Dup[1:2] + 1
 	BAF_Dup[100:101] <- BAF_Dup[100:101] + 1
 	BAF_Dup[30:35] <- BAF_Dup[30:35] + 0.05 
-	BAF_Dup[32:33] <- BAF_Dup[32:33] + 0.1 
+	BAF_Dup[32:33] <- BAF_Dup[32:33] + HeteroBAF/2
 	BAF_Dup[65:70] <- BAF_Dup[65:70] + 0.05
-	BAF_Dup[67:68] <- BAF_Dup[67:68] + 0.1 	
+	BAF_Dup[67:68] <- BAF_Dup[67:68] + HeteroBAF/2
 
 	# BAF CN=4
-	BAF_CN4 <- BAF_Dup
+	BAF_CN4 <- BAF_Basic
+	BAF_CN4[1:2] <- BAF_CN4[1:2] + 1
+	BAF_CN4[100:101] <- BAF_CN4[100:101] + 1
+	BAF_CN4[23:27] <- BAF_CN4[23:27] + 0.05 
+	BAF_CN4[24:26] <- BAF_CN4[24:26] + 0.1 
+	BAF_CN4[73:77] <- BAF_CN4[73:77] + 0.05
+	BAF_CN4[74:76] <- BAF_CN4[74:76] + 0.1
 	BAF_CN4[c(47:53)] <- BAF_CN4[c(47:53)] + 0.05
 	BAF_CN4[c(50:51)] <- BAF_CN4[c(50:51)] + 0.1
 

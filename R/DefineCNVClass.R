@@ -38,7 +38,7 @@ DefineCNVClass <- function(tmp2)
 			}
 			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 1 || X["MyBAF"] == 1) # Duplication with LOH.
 			{
-				Class <- 5
+				Class <- 2 # removing 5, not working well.
 			}
 		}
 		
