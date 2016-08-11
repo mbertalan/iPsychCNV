@@ -27,8 +27,8 @@
 ##' @param OutputFileName: Character, output file name.
 ##' @param OnlyCNVs: Logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.
 ##' @param IndxPos: If index position for each hotspot is not included it will calculate. However, this step is time consuming.
-##' @param ResPerSample: If TRUE saves the results from each sample.  
-##' @param Files: a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time. 
+##' @param ResPerSample: If TRUE saves the results from each sample.
+##' @param Files: a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time.
 ##' @param SNPList: Getting Chr. and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan; Louise K. Hoeffding.
@@ -43,74 +43,80 @@
 ##' PlotAllCNVs(iPsych.Pred.Rescan, Name="iPsych.Pred.Rescan.png", hg="hg19", Roi=MockDataCNVs.roi)
 
 ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA, OnlyCNVs=TRUE, SNPList=NULL) # Files2 OutputPath
-{	
-	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
-	suppressPackageStartupMessages(library(parallel))
-	ptm <- proc.time()
-	
-	if(is.na(Files))
-	{
-		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
-	}
-	
-	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
-	{
-		Files <- sapply(SelectedFiles, function(X){ Files[grep(X, Files)] })
-	}
+{
+  if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
+  suppressPackageStartupMessages(library(parallel))
+  ptm <- proc.time()
 
   if(is.na(Files))
   {
     Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
   }
 
-	cat("Running ", NumFiles, "files\n")
-	tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(RawFile) 
-	{
-		write(RawFile,file="Progress.txt",append=TRUE)
-		Count <- length(readLines("Progress.txt"))	
-		Percent <- round((Count/NumFiles)*100)
-		Percent <- paste(Percent, "%", sep="", collapse="")
-		cat("Running:\t", RawFile, "\t\t", Percent, "\n")
-		ID <- tail(unlist(strsplit(RawFile, "/")),n=1)
-	
-		# Read sample file		
-		ptm.tmp <- proc.time()
-		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
-		
-		if(nrow(Sample) < 10){ stop("You sample has less than 10 rows, somethings must be wrong, maybe format is not correct.") }
+  if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
+  {
+    Files <- sapply(SelectedFiles, function(X){ Files[grep(X, Files)] })
+  }
 
   if(NumFiles %in% "All"){ NumFiles <- length(Files) }
 
-			# removing non-CNV results to save memory
-			if(OnlyCNVs)
-			{
-				df <- subset(df, CN != 2) 
-			}
-			
-			# Save memory if too many CNVRs to ReScan. Print results or return as an object ?
-			if(ResPerSample)
-			{
-				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
-				write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
-			}
-			else
-			{
-				return(df)
-			}
-		}	
-		Res.tmp <- proc.time() - ptm.tmp
-	})
-	cat("Done all !\n")
-	save(tmp, file="tmp.RData")
-	df <- MatrixOrList2df(tmp)
-	
-	if(!is.na(OutputPath))
-	{
-		OutputFile <- paste(OutputPath, "All_CNVs.tab", sep="", collapse="")
-		write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
-	}
-		
-	TimeRes <- proc.time() - ptm
-	cat("Total time: ", TimeRes["elapsed"], "\n")
-	return(df)
+  cat("Running ", NumFiles, "files\n")
+  tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(RawFile)
+  {
+    write(RawFile,file="Progress.txt",append=TRUE)
+    Count <- length(readLines("Progress.txt"))
+    Percent <- round((Count/NumFiles)*100)
+    Percent <- paste(Percent, "%", sep="", collapse="")
+    cat("Running:\t", RawFile, "\t\t", Percent, "\n")
+    ID <- tail(unlist(strsplit(RawFile, "/")),n=1)
+
+    # Read sample file
+    ptm.tmp <- proc.time()
+    Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
+
+    if(nrow(Sample) < 10){ stop("You sample has less than 10 rows, somethings must be wrong, maybe format is not correct.") }
+
+    # The CNVs are given by hotspots, Position might change if multiple chips are used.
+    if(IndxPos)
+    {
+      CNVs <- GetIndxPositionFromChips(CNVs, Sample)
+    }
+
+    if(nrow(CNVs) > 0)
+    {
+      CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
+      df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
+
+      # removing non-CNV results to save memory
+      if(OnlyCNVs)
+      {
+        df <- subset(df, CN != 2)
+      }
+
+      # Save memory if too many CNVRs to ReScan. Print results or return as an object ?
+      if(ResPerSample)
+      {
+        OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+        write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+      }
+      else
+      {
+        return(df)
+      }
+    }
+    Res.tmp <- proc.time() - ptm.tmp
+  })
+  cat("Done all !\n")
+  save(tmp, file="tmp.RData")
+  df <- MatrixOrList2df(tmp)
+
+  if(!is.na(OutputPath))
+  {
+    OutputFile <- paste(OutputPath, "All_CNVs.tab", sep="", collapse="")
+    write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+  }
+
+  TimeRes <- proc.time() - ptm
+  cat("Total time: ", TimeRes["elapsed"], "\n")
+  return(df)
 }
