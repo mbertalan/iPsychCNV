@@ -68,7 +68,7 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   # Define Files
   if(is.na(Files))
   {
-    Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+    Files <- gsub("//", "/", list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive))
   }
 
 
@@ -87,14 +87,12 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
     while(i <= pr.page) {
 
       # Find appropriate file for plotting
-      if(is.na(Ids[x])) { # this deals with the issue that when using files, a line for each file is being printed: "No intensity files exists called")
-        x <- 1 + x
-        break
-      } else {
-#     id.file <- paste(PathRawData, Ids[x], sep="/")
-      id.file <- Files[which(Files == paste(PathRawData, Ids[x], Pattern, sep=""))]
-
-      }
+     if(is.na(Ids[x])) { # this deals with the issue that the script fails with an error since it does not find NA in Files
+       x <- 1 + x
+       break
+      }else{
+        id.file <- Files[which(Files == paste(PathRawData, Ids[x], Pattern, sep=""))]
+        }
 
       # Start to plot
       if(!file.exists(id.file)) {
