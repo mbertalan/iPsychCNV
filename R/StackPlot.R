@@ -86,7 +86,7 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
     ## CREATE a new plot after pr.page individuals have been plotted
     while(i <= pr.page) {
 #      id.file <- paste(PathRawData, Ids[x], sep="/")
-      id.file <- Files[grep(Ids[x], Files)]
+      id.file <- Files[which(Files == Ids[x])]
       if(!file.exists(id.file)) {
         print(paste("NO intensity files exists called: ", id.file))
       }else{
