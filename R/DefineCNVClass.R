@@ -15,7 +15,7 @@ DefineCNVClass <- function(tmp2)
 	Type <- apply(tmp2, 1, function(X)
 	{
 		Class <- 2
-		if(X["LogRRatio"] %in% X["BAlleleFreq"] & X["BAlleleFreq"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" )
+		if(X["LogRRatio"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" )
 		{
 			#Class <- GetCNVClass(X["LogRRatio"])
 			Class <- X["LogRRatio"]
@@ -28,15 +28,15 @@ DefineCNVClass <- function(tmp2)
 		}
 		else
 		{
-			if(X["LogRRatio"] == 1 & X["BAlleleFreq"] == 0 || X["LogRRatio"] == 1 & X["MyBAF"] == 0)
+			if(X["LogRRatio"] == 1 & X["MyBAF"] == 0)
 			{
 				Class <- 0
 			}
-			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 4 || X["LogRRatio"] == 3 & X["MyBAF"] == 4)
+			else if(X["LogRRatio"] == 3 & X["MyBAF"] == 4)
 			{
 				Class <- 4
 			}
-			else if(X["LogRRatio"] == 3 & X["BAlleleFreq"] == 1 || X["MyBAF"] == 1) # Duplication with LOH.
+			else if(X["LogRRatio"] == 3 & X["MyBAF"] == 1) # Duplication with LOH.
 			{
 				Class <- 2 # removing 5, not working well.
 			}
