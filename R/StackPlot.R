@@ -22,7 +22,7 @@
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 ##' StackPlot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
 
-StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder=".", Files=NA, Pattern="*",recursive=TRUE){
+StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder=".", Files=NA, Pattern="",recursive=TRUE){
   suppressPackageStartupMessages(library(data.table))
   options(scipen=999) ## Disable scientific notation of positions
 
@@ -85,12 +85,27 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
     topY <- max(yrange) - space
     ## CREATE a new plot after pr.page individuals have been plotted
     while(i <= pr.page) {
-#      id.file <- paste(PathRawData, Ids[x], sep="/")
-      id.file <- Files[grep(Ids[x], Files)]
+
+      # Find appropriate file for plotting
+      #      id.file <- paste(PathRawData, Ids[x], sep="/")
+      if(is.na(Ids[x])) { # this deals with the issue that when using files, a line for each file is being printed: "No intensity files exists called")
+        x <- 1 + x
+        break
+      } else {
+        if(Pattern =="") { # this deals with the challenge if there are similar file-names, i.e. TOP3 & TOP30, default pattern needs to be ""
+          id.file <- Files[grep(paste(Ids[x], "$", sep=""), Files)]
+          print(id.file)
+        } else {
+          id.file <- Files[grep(paste(Ids[x], Pattern, "$", sep=""), Files)]
+        }
+      }
+
+      # Start to plot
       if(!file.exists(id.file)) {
         print(paste("NO intensity files exists called: ", id.file))
       }else{
         print(paste("Plotting",Ids[x]))
+
         id <- ReadSample(id.file, chr=chr, SNPList = SNPList)
         id <- id[which(id[,"Position"] > reg.start & id[,"Position"] < reg.stop), ]
         ## Trim intensities to a range between 0.5:-0.5
