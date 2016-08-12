@@ -28,7 +28,7 @@ MergeCNVs <- function(df, MaxNumSNPs=50, Cores=28)
 			if(nrow(tmp4) > 1)
 			{		
 				# If the next CNV has distance shorter than MaxNumSNPs.
-				M2 <- sapply(1:(nrow(tmp4[,c("StartIndx","StopIndx")])-1), function(X){ if((as.numeric(tmp4[(X+1),1]) - as.numeric(tmp4[(X),2])) < MaxNumSNPs){ c(X, (X+1)) } })
+				M2 <- sapply(1:(nrow(tmp4)-1), function(X){ if((as.numeric(tmp4[(X+1),"StartIndx"]) - as.numeric(tmp4[(X),"StopIndx"])) < MaxNumSNPs & tmp4[(X+1),"CN"] %in% tmp4[X,"CN"]){ c(X, (X+1)) } })
 				if(length(unlist(M2)) > 0)
 				{
 					suppressPackageStartupMessages(library(igraph))
