@@ -60,6 +60,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 
 		ptm.tmp <- proc.time()
 		res2 <- GetDataVariables(Data)
+		res2$CNVmeanByRef <- res2$CNVmean - MeanChr
 		Res.tmp <- proc.time() - ptm.tmp
 		if(verbose){ cat("GetDataVariables time: ", Res.tmp["elapsed"], "\n") }
 

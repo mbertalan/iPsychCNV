@@ -50,10 +50,10 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 	suppressPackageStartupMessages(library(parallel))
 	ptm <- proc.time()
 	
-	if(is.na(Files))
+	suppressWarnings(if(is.na(Files))
 	{
 		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
-	}
+	})
 	
 	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
 	{
