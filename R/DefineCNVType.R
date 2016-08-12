@@ -14,7 +14,7 @@ DefineCNVType <- function(tmp2)
 {
 	Type <- apply(tmp2, 1, function(X)
 	{
-		if(X["LogRRatio"] %in% X["BAlleleFreq"] & X["BAlleleFreq"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "Undefined" )
+		if(X["LogRRatio"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "Undefined" )
 		{
 			return("Good")
 		}
