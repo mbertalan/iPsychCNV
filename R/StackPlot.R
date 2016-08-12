@@ -34,7 +34,11 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
 
   ## Check ids
   if(length(Ids) < 1) {
-    stop("Please specify minimum ID")
+    stop("Please specify minimum ID\n")
+  }
+  
+  if(sum(is.na(Ids) > 1) {
+    stop("Your Ids have NAs, please insert only valid IDs\n")
   }
 
   ## Check highlight position if specified
