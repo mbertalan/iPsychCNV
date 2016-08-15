@@ -20,9 +20,9 @@
 ##' @examples
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
-##' StackPlot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
+##' StackPlot(Pos="chr21:28338230-46844965", IDs=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
 
-StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder=".", Files=NA, Pattern="",recursive=TRUE){
+StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder=".", Files=NA, Pattern="",recursive=TRUE){
   suppressPackageStartupMessages(library(data.table))
   options(scipen=999) ## Disable scientific notation of positions
 
@@ -32,8 +32,8 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   reg.start <- as.numeric(split.pos[2])
   reg.stop <- as.numeric(split.pos[3])
 
-  ## Check ids
-  if(length(Ids) < 1) {
+  ## Check IDs
+  if(length(IDs) < 1) {
     stop("Please specify minimum ID")
   }
 
@@ -68,12 +68,12 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   # Define Files
   if(is.na(Files))
   {
-    Files <- gsub("//", "/", list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive))
+    Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
   }
 
 
   ## Loop over each ID and plot away
-  while(x <= length(Ids)){
+  while(x <= length(IDs)){
     if(OutFolder!=".") {
       outname <- paste(OutFolder, basename, "_page-", page.count, sep="") }
     else {
@@ -85,20 +85,23 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
     topY <- max(yrange) - space
     ## CREATE a new plot after pr.page individuals have been plotted
     while(i <= pr.page) {
-
       # Find appropriate file for plotting
-     if(is.na(Ids[x])) { # this deals with the issue that the script fails with an error since it does not find NA in Files
-       x <- 1 + x
-       break
-      }else{
-        id.file <- Files[which(Files == paste(PathRawData, Ids[x], Pattern, sep=""))]
+      if(is.na(IDs[x])) { # this deals with the issue that when using files, a line for each file is being printed: "No intensity files exists called")
+        x <- 1 + x
+        break
+      } else {
+        if(Pattern =="") { # this deals with the challenge if there are similar file-names, i.e. TOP3 & TOP30, default pattern needs to be ""
+          id.file <- Files[grep(paste(IDs[x], "$", sep=""), Files)]
+        } else {
+          id.file <- Files[grep(paste(IDs[x], Pattern, "$", sep=""), Files)]
         }
+      }
 
       # Start to plot
       if(!file.exists(id.file)) {
         print(paste("NO intensity files exists called: ", id.file))
       }else{
-        print(paste("Plotting",Ids[x]))
+        print(paste("Plotting",IDs[x]))
 
         id <- ReadSample(id.file, chr=chr, SNPList = SNPList)
         id <- id[which(id[,"Position"] > reg.start & id[,"Position"] < reg.stop), ]
@@ -112,9 +115,9 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
 
           # If key is tagged, the ID in the plot will be a column called ID_deidentified
           if (!is.na(key)) {
-            text(reg.stop-(reg.stop-reg.start)/2, topY + (space/3), paste("ID:",CNVs[CNVs$ID == Ids[x],]$ID_deidentified),lwd=1.5) ## Plot ID name
+            text(reg.stop-(reg.stop-reg.start)/2, topY + (space/3), paste("ID:",CNVs[CNVs$ID == IDs[x],]$ID_deidentified),lwd=1.5) ## Plot ID name
           } else {
-            text(reg.stop-(reg.stop-reg.start)/2, topY + (space/3), paste("ID:",Ids[x]),lwd=1.5) ## Plot ID name
+            text(reg.stop-(reg.stop-reg.start)/2, topY + (space/3), paste("ID:",IDs[x]),lwd=1.5) ## Plot ID name
           }
 
           ## Plot Log R ratio and Intensity boxes
@@ -127,7 +130,7 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
           }
 
             ## Draw all CNV Calls that match alias, chr and fall within region
-          match <- CNVs[which(CNVs[,"ID"]==Ids[x] & CNVs[,"Chr"] == chr & CNVs[,"Start"] <= reg.stop & CNVs[,"Start"] >= reg.start),]
+          match <- CNVs[which(CNVs[,"ID"]==IDs[x] & CNVs[,"Chr"] == chr & CNVs[,"Start"] <= reg.stop & CNVs[,"Start"] >= reg.start),]
           if(nrow(match)>0) {
             ## do not draw cnv boxes outside of plot
             if(any(match[,"Start"]<reg.start)) { match[which(match[,"Start"] < reg.start),"Start"] <- reg.start }
@@ -147,12 +150,12 @@ StackPlot <- function(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
           topY <- topY-(2*box+1.5*space)
 
         }else{
-          print(paste("No data available at this loci for",Ids[x]))
+          print(paste("No data available at this loci for",IDs[x]))
         }
       }
       ## increment
       i <- i + 1
-      if(x <= length(Ids)){ x <- 1 + x}
+      if(x <= length(IDs)){ x <- 1 + x}
       else{
         break
       }
