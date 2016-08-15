@@ -27,7 +27,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVs(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, Start=NA, Stop=NA, SNPList=NULL, OutFolder=".", Window=35, key = NA)    
+PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Pattern="",recursive=TRUE, dpi=300, Files=NA, Start=NA, Stop=NA, SNPList=NULL, OutFolder=".", Window=35, key = NA)
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -35,15 +35,15 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
   library(biovizBase)
   library(RColorBrewer)
   library(GenomicRanges)
-  
+
   LocalFolder <- PathRawData
   if(is.na(Files))
   {
     Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
   }
-  
+
   DF$UniqueID <- 1:nrow(DF)
-  
+
   mclapply(unique(DF$ID), mc.cores=Cores, function(UID)
   {
     X <- subset(DF, ID %in% UID)
@@ -51,7 +51,7 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
     ID <- X$ID
     UniqueID <- X$UniqueID
     cat(ID, "\n")
-    
+
     CNVstart <- as.numeric(X$Start)
     CNVstop <- as.numeric(X$Stop)
     Size <- as.numeric(X$Length)
@@ -59,7 +59,7 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
     SDCNV <- round(as.numeric(X$SDCNV), digits=2)
     NumSNP <- as.numeric(X$NumSNPs)
     if(length(X$status1) >0) {pheno <-unique(X$status1)[1] }
-    
+
     if(is.na(Start) & is.na(Stop))
     {
       TotalLength <- max(CNVstop) - min(CNVstart)
@@ -67,7 +67,7 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
       Start <- min(CNVstart) - (TotalLength*2)
       Stop <- max(CNVstop) + (TotalLength*2)
     }
-    
+
     ## Naming output-file
          # based on key or not
          if (!is.na(key))  # if want a different ID from the genetic ID in the plot
@@ -79,7 +79,7 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
          {
           NewName <- paste(unique(ID),"_chr", unique(chr), ":", Start, "-", Stop, sep="", collapse="")
          }
-    
+
     # based on OutFolder or not
     if(OutFolder!=".")
     {
@@ -91,42 +91,52 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
       OutPlotfile <- gsub(" ","",OutPlotfile)
     }
     print(OutPlotfile)
-    
-    
+
+
     # Reading sample file
     #     RawFile <- paste(PathRawData, ID, sep="", collapse="")
-    RawFile <- Files[grep(ID, Files)]
-    cat("File: ", RawFile,"\n")
-    
+#    RawFile <- Files[grep(ID, Files)]
+#    RawFile <- Files[which(Files == paste(PathRawData, ID, Pattern, sep=""))]
+      if(Pattern =="")
+      { # this deals with the challenge if there are similar file-names, i.e. TOP3 & TOP30, default pattern needs to be ""
+        RawFile <- Files[grep(paste(ID, "$", sep=""), Files)]
+      }
+      else
+      {
+        RawFile <- Files[grep(paste(ID, Pattern, "$", sep=""), Files)]
+      }
+
+        cat("File: ", RawFile,"\n")
+
     sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList)
     red <- subset(sample,Chr==unique(chr)) # select SNPs from rawfile in Chr of interest
     red <- subset(red, Position > min(Start) & Position < max(Stop)) # select SNPs from rawfile that is within the plotted area
     red2 <- red[with(red, order(Position)),] # order selected SNPs by Position
-    
+
     Mean <- SlideWindowMean(red2$Log.R.Ratio, Window)
     red2$Mean <- Mean
-    
+
     # Ideogram
     data(hg19IdeogramCyto,package="biovizBase")
     CHR <- paste("chr", unique(chr), collapse="", sep="")
     p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3) +
       xlim(GRanges(CHR,IRanges(min(Start),max(Stop))))
-    
+
     # Colors
     Colors = brewer.pal(9,"Set1")
-    
+
     # B.Allele
     rect2 <- data.frame (xmin=CNVstart, xmax=CNVstop, ymin=0, ymax=1, CN=as.character(CN)) # CNV position
-    
+
     # Info for breaks, to always have 10 breaks.
     ##     BY <- round((max(red2$Position) - min(red2$Position))/10) # superfluous?
-    
+
     p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=0.5) +
       geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, fill=as.factor(CN)), color="darkgrey", alpha=0.2) +
       theme(legend.title=element_blank()) + scale_colour_manual(values = c("1" = Colors[1], "2" = Colors[9], "3"= Colors[2], "4" = Colors[3], "0"= Colors[4], "5" = Colors[5], "B.Allele.Freq" = Colors[2], "CNV region" = Colors[3], "CNV predicted" = Colors[4], "Mean" = "black"))
-    ##     + scale_color_manual(values = c(Colors[2:4])) 
+    ##     + scale_color_manual(values = c(Colors[2:4]))
     ##     + scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1))
-    
+
     # LogRRatio
     p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=0.5)  +
       geom_line(data=red2, aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line
@@ -145,7 +155,7 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
     {
       IDfortitle <- unique(ID)
     }
-    
+
     ##     if (!is.na(key))  # if want a different ID from the genetic ID in the plot
     if (length(X$status1) > 0)
         {
@@ -159,6 +169,6 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
         }
         Plot <- tracks(p3, p1,p2, main=Title, heights=c(3,5,5))
         ggsave(OutPlotfile, plot=Plot, height=5, width=10, dpi=dpi)
-        
+
   })
 }
