@@ -53,8 +53,8 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   box <- 1
   pr.page <- 5
   datestamp <- gsub(":",".",unlist(strsplit(as.character(Sys.time())," "))[2])
-  if (!is.na(CNVs$Locus[1])) {
-    Locus <- as.character(CNVs$Locus[1])
+  if (!is.na(CNVs$locus[1])) {
+    Locus <- as.character(CNVs$locus[1])
     basename <- paste(Locus, "_", "chr",chr,"-",reg.start,"-",reg.stop, sep="")
     } else {
   basename <- paste("chr",chr,"-",reg.start,"-",reg.stop, "_at_", datestamp, sep="")
