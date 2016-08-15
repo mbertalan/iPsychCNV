@@ -41,7 +41,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     MissingCol <- setdiff(MustBeCol, colnames(DF)[colnames(DF) %in% MustBeCol])
     stop("You are missing: ", MissingCol, "\n")
   }
-    
+
 
   LocalFolder <- PathRawData
   if(is.na(Files))
@@ -67,7 +67,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     NumSNP <- as.numeric(X$NumSNPs)
 
     ## Input XAxisDefine as defined start/stop for plot-area if specified
-    if (length(XAxisDefine) > 0)
+    if ( !is.null(XAxisDefine))
     {
       split.pos <- VerifyPos(sub("--highlight ", "", XAxisDefine))
       high.chr <- split.pos[1]
@@ -92,13 +92,15 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
       Start <- CNVstart - (Size*10)
       Stop <-  CNVstop + (Size*10)
 
-      if(is.na(Window))
-      {
-        Window <- round(sqrt(NumSNP))
-      }
-      if(Window < 5){ Window <- 5 }
-      if(Window > 35){ Window <- 35 }
      }
+
+    # Defining Window-size
+    if(is.na(Window))
+    {
+      Window <- round(sqrt(NumSNP))
+    }
+    if(Window < 5){ Window <- 5 }
+    if(Window > 35){ Window <- 35 }
 
     ## Naming output-file
 
@@ -152,16 +154,16 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     BY <- round((max(red2$Position) - min(red2$Position))/10)
 
     # B Allele Freq
-    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=1) + 
-    geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) + 
-    theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]) ) + 
+    p1 <- ggplot() + geom_point(data=red2, aes(x=Position, y = B.Allele.Freq, col="B.Allele.Freq"), size=1) +
+    geom_rect(data=rect2, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, col="CNV region"), alpha=0.2, inherit.aes = FALSE) +
+    theme(legend.title=element_blank()) + scale_color_manual(values = c(Colors[2:4]) ) +
     scale_x_continuous(breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1))
 
     # LogRRatio
-    p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=1)  + 
-      geom_line(data=red2, aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line 
+    p2 <- ggplot() + geom_point(data=red2, aes(x=Position, y=Log.R.Ratio, col="Log.R.Ratio"), alpha = 0.6, size=1)  +
+      geom_line(data=red2, aes(x=Position, y = Mean, col="Mean"), size = 0.5) + # Mean of signal line
       ylim(-1, 1) + # set y-axis
-      theme(legend.title=element_blank()) + 
+      theme(legend.title=element_blank()) +
       scale_color_manual(values = c(Colors[1], "black")) +  # black color
       scale_x_continuous(labels=format_si(), # this sets the axis label to K, M for 1000, 1000000 etc...
                          breaks = round(seq(min(red2$Position), max(red2$Position), by = BY),1)) # this gives a distance of 500,000 between ticks on x-axis
