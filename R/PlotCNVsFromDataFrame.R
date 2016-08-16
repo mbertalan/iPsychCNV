@@ -129,8 +129,11 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     #RawFile <- paste(PathRawData, ID, sep="", collapse="")
     RawFile <- Files[grep(ID, Files)]
     cat("File: ", RawFile,"\n")
-
     sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList)
+
+    ## Set all CN-markers to NA (as they all have the non-usable value of 2) ONLY REALLY FOR AFFY DATA
+    if(any(sample[,"B.Allele.Freq"] == 2, na.rm=T)) { sample[which(sample[,"B.Allele.Freq"] == 2), "B.Allele.Freq"] <- NA }
+
     red <- subset(sample,Chr==chr) # select SNPs from rawfile in Chr of interest
     red <- subset(red, Position > Start & Position < Stop) # select SNPs from rawfile that is within the plotted area
     red2 <- red[with(red, order(Position)),] # order selected SNPs by Position
