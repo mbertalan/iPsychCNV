@@ -22,6 +22,8 @@ NormalizeData(Sample = Sample, ExpectedMean = 0, penalty = 60,
 \item{QSpline:}{Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.}
 
 \item{Sd:}{Numeric, LRR standard deviation for the quantile normarlization, default = 0.18.}
+
+\item{ReCenter:}{Re-center LRR mean to be zero.}
 }
 \value{
 LRR normalized.

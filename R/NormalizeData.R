@@ -8,7 +8,7 @@
 ##' @param Quantile: Logical, if quantile normalization should be applied or not, default = FALSE.
 ##' @param QSpline: Logical, if a cubic smoothing spline should be used to normalize the data, default = FALSE.
 ##' @param Sd: Numeric, LRR standard deviation for the quantile normarlization, default = 0.18.
-##' @parem ReCenter: Re-center LRR mean to be zero.
+##' @param ReCenter: Re-center LRR mean to be zero.
 ##' @return LRR normalized.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
