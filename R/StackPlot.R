@@ -12,7 +12,7 @@
 ##' @param OutFolder: Path for saving outputfiles. Default is current folder
 ##' @param Files: Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Then use Files=Files.
 ##' @param Pattern: File pattern in the raw data, default = "*".
-##' @param Recursive: Logical, Unknown, default = TRUE.
+##' @param Recursive: Logical, Should files matching patterns in subfolders be included, default = FALSE.
 ##' @return A png plot of the specified loci.
 ##' @author Johan Hilge Thygesen, Ida Elken Sønderby, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -22,7 +22,7 @@
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 ##' StackPlot(Pos="chr21:28338230-46844965", IDs=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
 
-StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder=".", Files=NA, Pattern="",recursive=TRUE){
+StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NULL, key=NA, OutFolder=".", Files=NA, Pattern="",recursive=FALSE){
   suppressPackageStartupMessages(library(data.table))
   options(scipen=999) ## Disable scientific notation of positions
 
@@ -53,7 +53,7 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   box <- 1
   pr.page <- 5
   datestamp <- gsub(":",".",unlist(strsplit(as.character(Sys.time())," "))[2])
-  if (!is.na(CNVs$locus[1])) {
+  if (!is.null(CNVs$locus[1])) {
     Locus <- as.character(CNVs$locus[1])
     basename <- paste(Locus, "_", "chr",chr,"-",reg.start,"-",reg.stop, sep="")
     } else {
@@ -66,7 +66,7 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
   page.count <- 1 # start with page 1
 
   # Define Files
-  if(is.na(Files))
+  if(is.na(Files[1]))
   {
     Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
   }
@@ -121,9 +121,11 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
           }
 
           ## Plot Log R ratio and Intensity boxes
-          rect(reg.start, topY-box, reg.stop, topY, col="#ffe2e2", border= F)
-          rect(reg.start, topY-(2*box+(space/2)), reg.stop, topY-(box+(space/2)), col="#e5e2ff", border= F)
-          ## Draw --Highlight box
+          rect(reg.start, topY-(2*box+(space/2)), reg.stop, topY-(box+(space/2)), col="#ffe2e2", border= F)
+          rect(reg.start, topY-box, reg.stop, topY, col="#e5e2ff", border= F)
+          
+
+            ## Draw --Highlight box
           if(length(Highlight) > 0) {
             segments(high.start, topY-(2*box+(space/2)), high.start, topY, col="black",lwd=1.5) # Start
             segments(high.stop, topY-(2*box+(space/2)), high.stop, topY, col="black",lwd=1.5) # Stop
@@ -141,8 +143,8 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
             }
           }
           ## Plot Log R ratio and Intensity points
-          points(id[,"Position"], id[,"B.Allele.Freq"] + (topY-2*box-(space/2)), pch=20, cex=0.5, col = "darkblue")
-          points(id[,"Position"], (id[,"Log.R.Ratio"]/2) + (topY-(0.5*box)), pch=20, cex=0.5, col = "darkred")
+          points(id[,"Position"], id[,"B.Allele.Freq"] + (topY-(1*box)), pch=20, cex=0.5, col = "darkblue")
+          points(id[,"Position"], (id[,"Log.R.Ratio"]/2) + (topY-1.5*box-(space/2)), pch=20, cex=0.5, col = "darkred")
           ## Draw center line in boxs (x0, y0, x1, y1)
           segments(reg.start, topY-(box/2), reg.stop, topY-(box/2), col="black")
           segments(reg.start, (topY-1.5*box-(space/2)), reg.stop, (topY-1.5*box-(space/2)), col="black")
