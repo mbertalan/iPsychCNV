@@ -7,15 +7,17 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-PlotHotspots(CNVsDF, Hotspots, AllHeadFiles, Cores = 1, Skip = 10,
-  penalty = 60, Quantile = FALSE, QSpline = FALSE, sd = 0.18)
+PlotHotspots(CNVsDF, Hotspots, ListOfRawDataPath, Cores = 1, Skip = 10,
+  Alpha = 1, Times = 10, NumSamples = 20, penalty = 60,
+  Quantile = FALSE, QSpline = FALSE, sd = 0.18, OverlapMin = 0.9,
+  OverlapMax = 1.1, SNPList = NULL)
 }
 \arguments{
 \item{CNVsDF:}{Data frame with CNVs, default = Unknown.}
 
 \item{Hotspots:}{Unknown, default = Unknown.}
 
-\item{AllHeadFiles:}{Unknown, default = Unknown.}
+\item{ListOfRawDataPath:}{Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Than use ListOfRawDataPath=Files.}
 
 \item{Cores:}{The number of cores used, default = 1.}
 

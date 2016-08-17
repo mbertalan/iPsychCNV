@@ -9,7 +9,7 @@
 \usage{
 PlotAllCNVs(df = CNV.Res, Name = "CNV.Res.Test.png", NCOL = 2,
   Roi = roi, width = 16, height = 30, hg = "hg19", chr = NA,
-  start = NA, stop = NA)
+  start = NA, stop = NA, Order = TRUE)
 }
 \arguments{
 \item{Df:}{Data frame with predicted CNVs for each sample, default = CNV.Res.}
@@ -31,6 +31,8 @@ PlotAllCNVs(df = CNV.Res, Name = "CNV.Res.Test.png", NCOL = 2,
 \item{Start:}{The start position of each CNV, default = NA.}
 
 \item{Stop:}{The stop position of each CNV, default = NA.}
+
+\item{Order:}{Should the function order the CNVs ?, default = TRUE.}
 }
 \value{
 Return data in a data frame.

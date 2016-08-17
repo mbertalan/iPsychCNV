@@ -8,7 +8,7 @@
 }
 \usage{
 HotspotsCNV(df, Freq = 1, OverlapCutoff = 0.7, Cores = 1,
-  OverlapMin = 0.9, OverlapMax = 1.1)
+  OverlapMin = 0.9, OverlapMax = 1.1, hg = "hg19")
 }
 \arguments{
 \item{Df:}{Dataframe with CNV predction with chromosome (Chr.), start, and stop position.}
@@ -22,6 +22,8 @@ HotspotsCNV(df, Freq = 1, OverlapCutoff = 0.7, Cores = 1,
 \item{OverlapMin:}{Minimum overlap with hotspot to be selected for counting, default = 0.9.}
 
 \item{OverlapMax:}{Maximum overlap with hotspot to be selected for counting, default = 1.1.}
+
+\item{hg:}{Human genome version, default = hg19. For full range of possibilities, run ucscGenomes()$db {rtracklayer}}
 }
 \value{
 CNV hotspots.
@@ -38,6 +40,6 @@ iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=20, Pattern="^Moc
 iPsych.Pred.hotspots <- HotspotsCNV(iPsych.Pred, Freq=2, OverlapCutoff=0.9, Cores=1)
 }
 \author{
-Marcelo Bertalan, Louise K. Hoeffding.
+Marcelo Bertalan, Louise K. Hoeffding, Ida Elken Sønderby.
 }
 
