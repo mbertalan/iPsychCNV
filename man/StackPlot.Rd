@@ -9,7 +9,7 @@
 \usage{
 StackPlot(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
   key = NA, OutFolder = ".", Files = NA, Pattern = "",
-  recursive = TRUE)
+  recursive = FALSE)
 }
 \arguments{
 \item{Pos:}{Position of the loci to plot in the form chr21:1050000-1350000.}
@@ -32,7 +32,7 @@ StackPlot(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
 
 \item{Pattern:}{File pattern in the raw data, default = "*".}
 
-\item{Recursive:}{Logical, Unknown, default = TRUE.}
+\item{Recursive:}{Logical, Should files matching patterns in subfolders be included, default = FALSE.}
 }
 \value{
 A png plot of the specified loci.
