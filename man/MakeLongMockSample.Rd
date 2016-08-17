@@ -7,13 +7,14 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-MakeLongMockSample(CNVDistance = 1000, Type = c(0, 1, 2, 3, 4),
-  Mean = c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5,
-  0.6, 0.7, 0.8, 0.9), Size = c(100, 200, 300, 400, 500, 600, 700, 800, 900,
-  1000), ChrMean = 0, ChrSD = 0.18)
+MakeLongMockSample(Heterozygosity = 0.2, CNVDistance = 1000, Type = c(0,
+  1, 2, 3, 4), Mean = c(-1, -0.45, 0, 0.3, 0.75), Size = 300, ChrMean = 0,
+  ChrSD = 0.18)
 }
 \arguments{
-\item{CNVDistance:}{Unknown, defualt = 1000.}
+\item{Heterozygosity:}{Percentage of BAF around 0.5.}
+
+\item{CNVDistance:}{Distance among CNVs, defualt = 1000.}
 
 \item{Type:}{Unknown, default = Unknown.}
 
@@ -35,8 +36,7 @@ MakeLongMockSample: Unknown
 Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 }
 \examples{
-Unknown.
-
+Sample <- MakeLongMockSample(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000), ChrMean=0, ChrSD=0.18)
 }
 \author{
 Marcelo Bertalan, Louise K. Hoeffding.

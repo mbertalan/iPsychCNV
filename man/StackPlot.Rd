@@ -7,8 +7,9 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-StackPlot(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
-  key = NA, OutFolder = ".")
+StackPlot(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
+  key = NA, OutFolder = ".", Files = NA, Pattern = "",
+  recursive = TRUE)
 }
 \arguments{
 \item{Pos:}{Position of the loci to plot in the form chr21:1050000-1350000.}
@@ -26,6 +27,12 @@ StackPlot(Pos, Ids, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
 \item{key:}{Exchange the ID printed on the plot with a deidentified ID - requires that the CNV data frame contains a column called ID_deidentified, default = NA.}
 
 \item{OutFolder:}{Path for saving outputfiles. Default is current folder}
+
+\item{Files:}{Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Then use Files=Files.}
+
+\item{Pattern:}{File pattern in the raw data, default = "*".}
+
+\item{Recursive:}{Logical, Unknown, default = TRUE.}
 }
 \value{
 A png plot of the specified loci.
@@ -39,7 +46,7 @@ For each sample two tracks are plotted representing the Log R Ratio (LRR) and th
 \examples{
 mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
-StackPlot(Pos="chr21:28338230-46844965", Ids=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
+StackPlot(Pos="chr21:28338230-46844965", IDs=unique(cnvs$ID), PathRawData=".", CNVs=cnvs, Highlight = "chr21:36653812-39117308")
 }
 \author{
 Johan Hilge Thygesen, Ida Elken Sønderby, Louise K. Hoeffding.

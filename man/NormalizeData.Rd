@@ -8,7 +8,7 @@
 }
 \usage{
 NormalizeData(Sample = Sample, ExpectedMean = 0, penalty = 60,
-  Quantile = FALSE, QSpline = FALSE, sd = 0.18)
+  Quantile = FALSE, QSpline = FALSE, sd = 0.18, ReCenter = FALSE)
 }
 \arguments{
 \item{Sample:}{Unknown, default = Unknown.}

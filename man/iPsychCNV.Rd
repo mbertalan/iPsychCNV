@@ -12,8 +12,8 @@ iPsychCNV(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/",
   Pattern = "22q11_*", MinLength = 10, SelectedFiles = NA, Skip = 10,
   LCR = FALSE, PFB = NULL, chr = NA, penalty = 60, Quantile = FALSE,
   QSpline = FALSE, sd = 0.18, recursive = FALSE, CPTmethod = "meanvar",
-  CNVSignal = 0.1, penvalue = 20, OutputPath = NA,
-  OutputFileName = "Test", OnlyCNVs = FALSE)
+  CNVSignal = 0.1, penvalue = 16, OutputPath = NA,
+  OutputFileName = "Test", OnlyCNVs = TRUE, SNPList = NULL)
 }
 \arguments{
 \item{LCR}{list: Low copy repeat region, list of SNPs that should be removed.}
@@ -61,6 +61,8 @@ iPsychCNV(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/",
 \item{OutputFileName:}{Character, output file name.}
 
 \item{OnlyCNVs:}{Logical, if TRUE only CNVs with copy number state 0,1,3,4 will be returned. If FALSE will return also changepoint regions with CN = 2.}
+
+\item{SNPList:}{Getting Chr. and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5}
 }
 \value{
 Data frame with predicted CNVs.

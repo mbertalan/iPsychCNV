@@ -14,7 +14,7 @@ ReScanCNVs(CNVs = CNVs,
   PFB = NULL, chr = NA, penalty = 60, Quantile = FALSE,
   QSpline = FALSE, sd = 0.18, recursive = FALSE, CPTmethod = "meanvar",
   CNVSignal = 0.1, penvalue = 10, OutputPath = NA, IndxPos = FALSE,
-  ResPerSample = FALSE, Files = NA, OnlyCNVs = TRUE)
+  ResPerSample = FALSE, Files = NA, OnlyCNVs = TRUE, SNPList = NULL)
 }
 \arguments{
 \item{CNVs:}{Data frame with hotspots to re-scan. Minimum information necessary is chromosome (Chr.), Start and Stop position.}
@@ -70,6 +70,8 @@ ReScanCNVs(CNVs = CNVs,
 \item{ResPerSample:}{If TRUE saves the results from each sample.}
 
 \item{Files:}{a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time.}
+
+\item{SNPList:}{Getting Chr. and Position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, amd Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5}
 }
 \value{
 Data frame with predicted CNVs.

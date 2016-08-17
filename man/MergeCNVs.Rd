@@ -7,7 +7,7 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-MergeCNVs(df, MaxNumSNPs = 50)
+MergeCNVs(df, MaxNumSNPs = 50, Cores = 28)
 }
 \arguments{
 \item{Df:}{Data frame with predicted CNVs for each sample, default = Unknown.}

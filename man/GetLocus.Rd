@@ -7,12 +7,14 @@
 \url{http://biopsych.dk/iPsychCNV}
 }
 \usage{
-GetLocus(df, hg = "hg19")
+GetLocus(df, hg = "hg19", Url = FALSE)
 }
 \arguments{
 \item{df:}{Data frame (with predicted CNVs for each sample) with at least Chr, Start, Stop.}
 
 \item{hg:}{Human genome version, default = hg19. For full range of possibilities, run ucscGenomes()$db {rtracklayer}}
+
+\item{Url:}{If you can access https, default FASLE, only for hg19.}
 }
 \value{
 data frame with CNV locus.
