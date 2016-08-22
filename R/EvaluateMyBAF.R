@@ -44,7 +44,7 @@ EvaluateMyBAF <- function(res, res2)
 		}
 		else
 		{
-			if((sum(sum(res$AAB > 5), sum(res$AB > 5), sum(res$ABB > 5), sum(res$AAAB > 5), sum(res$ABBB > 5)) == 2 & res$AB < 5) # Dup 3, 10, 3			BAlleleFreq <- 2
+			if(sum(sum(res$AAB > 5), sum(res$AB > 5), sum(res$ABB > 5), sum(res$AAAB > 5), sum(res$ABBB > 5)) == 2 & res$AB < 5) # Dup 3, 10, 3			BAlleleFreq <- 2
 			{
 				BAlleleFreq <- 3
 			}
