@@ -10,7 +10,7 @@
 ##' @param SNPList: Getting chromosome (chr) and position from another source than the RawFile - input should be the full path of the SNPList with columns: Name, Chr, and Position. Any positions from the RawFile will be erased. A PFB-column is also allowed but will be overwritten by the PFB-parameter or exchanged with 0.5, default = NULL.
 ##' @param key: Exchange the ID printed on the plot with a deidentified ID - requires that the CNV data frame contains a column called ID_deidentified, default = NA.
 ##' @param OutFolder: Path for saving outputfiles. Default is current folder
-##' @param Files: Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Then use Files=Files.
+##' @param Files: Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=FALSE). Then use Files=Files.
 ##' @param Pattern: File pattern in the raw data, default = "*".
 ##' @param Recursive: Logical, Should files matching patterns in subfolders be included, default = FALSE.
 ##' @return A png plot of the specified loci.
@@ -132,7 +132,7 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
           }
 
             ## Draw all CNV Calls that match alias, chr and fall within region
-          match <- CNVs[which(CNVs[,"ID"]==IDs[x] & CNVs[,"Chr"] == chr & CNVs[,"Start"] <= reg.stop & CNVs[,"Start"] >= reg.start),]
+          match <- CNVs[which(CNVs[,"ID"]==IDs[x] & CNVs[,"Chr"] == chr & CNVs[,"Start"] <= reg.stop & CNVs[,"Stop"] >= reg.start),]
           if(nrow(match)>0) {
             ## do not draw cnv boxes outside of plot
             if(any(match[,"Start"]<reg.start)) { match[which(match[,"Start"] < reg.start),"Start"] <- reg.start }
