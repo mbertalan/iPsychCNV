@@ -28,7 +28,7 @@ StackPlot(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList = NULL,
 
 \item{OutFolder:}{Path for saving outputfiles. Default is current folder}
 
-\item{Files:}{Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive). Then use Files=Files.}
+\item{Files:}{Full path for each sample. You can get it using the command: Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=FALSE). Then use Files=Files.}
 
 \item{Pattern:}{File pattern in the raw data, default = "*".}
 
