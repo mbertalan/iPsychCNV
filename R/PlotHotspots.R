@@ -34,8 +34,14 @@ PlotHotspots <- function(CNVsDF, Hotspots, ListOfRawDataPath, Cores=1, Skip=10, 
 	# loop over hotspots
 	mclapply(1:nrow(Hotspots), mc.cores=Cores, mc.preschedule = FALSE, function(i) 
 	{
-		df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
-		#df <- subset(df, DiffHigh > 0.15 & DiffLow > 0.15)
+		if(length(CNVsDF$hotspots) > 0)
+		{
+			df <- subset(CNVsDF, hotspots %in% Hotspots[i,"hotspots"])
+		}
+		else
+		{
+			df <- SelectSamplesFromROI(DF=CNVsDF, roi=Hotspots[i,], OverlapMin=OverlapMin,  OverlapMax=OverlapMax)
+		}
 		
 		Total.Del <- sum(df$CN == 1)
 		Total.Dup <- sum(df$CN == 3)
