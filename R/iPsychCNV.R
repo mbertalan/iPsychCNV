@@ -3,6 +3,7 @@
 ##' Specifically designed to handle noisy data from amplified DNA on phenylketonuria (PKU) cards. The function is a pipeline using many subfunctions.
 ##' @title iPsychCNV
 ##' @param PathRawData: The path to the raw data files contining Log R Ratio (LRR) and B Allele Frequency (BAF) values.
+##' @param Files: a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time.
 ##' @param MINNumSNPs: Minimum number of SNPs per CNV, default = 20.
 ##' @param Cores: Number of cores used, default =  1.
 ##' @param Hg: Human genome version, default = hg19.
@@ -34,13 +35,18 @@
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, OutputPath=NA, OutputFileName="Test", OnlyCNVs=TRUE, SNPList=NULL) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Files=NA, MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, OutputPath=NA, OutputFileName="Test", OnlyCNVs=TRUE, SNPList=NULL) # Files2 OutputPath
 {
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
 	suppressPackageStartupMessages(library(parallel))
 
 	ptm <- proc.time()
+	
+	suppressWarnings(if(is.na(Files))
+	{
+		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+	})
 
 	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 
