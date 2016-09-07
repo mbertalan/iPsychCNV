@@ -16,6 +16,7 @@
 ##' @param XAxisDefine: Position of a specific region to be plotted, in the form chr21:1050000-1350000, default = NULL.
 ##' @param OutFolder: Path for saving outputfiles, default is the current folder.
 ##' @return One BAF- and LRR-plot for each CNV.
+##' @param LCR: List low copy repeat region region, list of SNPs that should be removed.
 ##' @author Marcelo Bertalan, Ida Elken Sønderby, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
@@ -26,7 +27,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=FALSE, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -129,7 +130,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, PlotPosi
     #RawFile <- paste(PathRawData, ID, sep="", collapse="")
     RawFile <- Files[grep(ID, Files)]
     cat("File: ", RawFile,"\n")
-    sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList)
+    sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList, LCR=LCR)
 
     ## Set all CN-markers to NA (as they all have the non-usable value of 2) ONLY REALLY FOR AFFY DATA
     if(any(sample[,"B.Allele.Freq"] == 2, na.rm=T)) { sample[which(sample[,"B.Allele.Freq"] == 2), "B.Allele.Freq"] <- NA }
