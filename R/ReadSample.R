@@ -15,7 +15,7 @@
 ##' @examples Unknown.
 ##'
 
-ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA, SNPList=NULL)
+ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NA, PFB=NULL, chr=NA, SNPList=NULL)
 {
   suppressPackageStartupMessages(library(data.table))
   Sample <- fread(RawFile, head=T, sep="\t", skip=skip, verbose=FALSE)
@@ -78,9 +78,9 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=FALSE, PFB=NULL, chr=NA, 
   # chr specific. Example chr="22"
   if(!is.na(chr)){ Sample <- subset(Sample, Chr %in% chr) }
   
-  if(LCR == TRUE)
+  if(!is.na(LCR))
   {
-    Sample <- subset(Sample, !SNP.Name %in% LCR.SNPs) 
+    Sample <- subset(Sample, !SNP.Name %in% LCR) 
   }
   
   Sample$LRR <- Sample$Log.R.Ratio # CNV$LRR is the
