@@ -78,7 +78,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, S
   # chr specific. Example chr="22"
   if(!is.na(chr)){ Sample <- subset(Sample, Chr %in% chr) }
   
-  if(!is.na(LCR))
+  if(!is.null(LCR))
   {
     Sample <- subset(Sample, !SNP.Name %in% LCR) 
   }
