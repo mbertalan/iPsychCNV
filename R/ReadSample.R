@@ -84,5 +84,8 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, S
   }
   
   Sample$LRR <- Sample$Log.R.Ratio # CNV$LRR is the
+  
+  Sample <- Sample[order(Sample$Chr, Sample$Position),]
+  
   return(Sample)
 }
