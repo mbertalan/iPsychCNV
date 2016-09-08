@@ -15,7 +15,7 @@
 ##' @examples Unknown.
 ##'
 
-ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NA, PFB=NULL, chr=NA, SNPList=NULL)
+ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, SNPList=NULL)
 {
   suppressPackageStartupMessages(library(data.table))
   Sample <- fread(RawFile, head=T, sep="\t", skip=skip, verbose=FALSE)
