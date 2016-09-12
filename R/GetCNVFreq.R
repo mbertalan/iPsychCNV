@@ -13,12 +13,12 @@
 ##' @examples Unknown.
 ##'
 
-GetCNVFreq <- function(df, Pheno, Cut, roi)
+GetCNVFreq <- function(df, Pheno, roi, OverlapMin=0.9, OverlapMax=1.1)
 {
 	Source <- unique(df$Source)
 	TotalPheno <- table(Pheno$status1)
-	tmp <- SelectSamplesFromROI(DF=df, roi=roi, OverlapMin=0.9, OverlapMax=1.1)
-	tmp <- subset(tmp, CNVmean < Cut)
+	tmp <- SelectSamplesFromROI(DF=df, roi=roi, OverlapMin=OverlapMin, OverlapMax=OverlapMax)
+	#tmp <- subset(tmp, CNVmean < Cut)
 	cat(roi$locus, "\n")
 	if(nrow(tmp) > 1)
 	{
