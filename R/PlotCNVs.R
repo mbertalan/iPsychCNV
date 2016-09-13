@@ -73,11 +73,11 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
          if (!is.na(key))  # if want a different ID from the genetic ID in the plot
          {
            ID_deidentified <- X$ID_deidentified  # Added this to get ID_deidentified
-           NewName <- paste(ID_deidentified, "_chr", unique(chr), ":", Start, "-", Stop, sep="", collapse="")
+           NewName <- paste(ID_deidentified, "_chr", unique(chr), "_", Start, "-", Stop, sep="", collapse="")
          }
          else
          {
-          NewName <- paste(unique(ID),"_chr", unique(chr), ":", Start, "-", Stop, sep="", collapse="")
+          NewName <- paste(unique(ID),"_chr", unique(chr), "_", Start, "-", Stop, sep="", collapse="")
          }
 
     # based on OutFolder or not
