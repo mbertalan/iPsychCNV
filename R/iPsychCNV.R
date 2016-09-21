@@ -48,7 +48,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", F
 		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 	})
 
-	Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+	#Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 
 	if(length(SelectedFiles) >= 1 & !is.na(SelectedFiles[1]))
 	{
