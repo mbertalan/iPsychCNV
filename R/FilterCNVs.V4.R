@@ -46,7 +46,10 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 
 
 		# Only the CNV region
-		tmpRaw <- subset(tmp, Position >= CNVStart & Position <= CNVStop)	
+		tmpRaw <- subset(Chr.SNP.GC.LRR, Position >= CNVStart & Position <= CNVStop)	
+		CNV.LRR.GC <- cor(tmpRaw$GC, tmpRaw$LRR, use="p")	
+		LowGC <- subset(tmpRaw, GC < 55)
+		CNVmeanLowGC <- mean(LowGC$LRR)
 			
 		# Before and after CNV
 		IndxStart <- tmpRaw$PosIndx[1] - NumSNPs
@@ -112,6 +115,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		res3 <- cbind(res,res2)
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		res4$Cor.LRR.GC <- Cor.LRR.GC  
+		res4$CNVmeanLowGC <- CNVmeanLowGC
 		return(res4)
 	})
 	df <- do.call(rbind, AllRes)
