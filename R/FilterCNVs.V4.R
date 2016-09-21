@@ -44,7 +44,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		Chr.SNP.GC.LRR <- merge(tmp, Chr.SNP.GC, by="SNP.Name")
 		Cor.LRR.GC <- cor(Chr.SNP.GC.LRR$GC, Chr.SNP.GC.LRR$LRR, use="p")
 
-
+		save(Chr.SNP.GC.LRR, file="Chr.SNP.GC.LRR.RData")
 		# Only the CNV region
 		tmpRaw <- subset(Chr.SNP.GC.LRR, Position >= CNVStart & Position <= CNVStop)	
 		CNV.LRR.GC <- cor(tmpRaw$GC, tmpRaw$LRR, use="p")
