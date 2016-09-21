@@ -38,8 +38,13 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		MeanChr <- mean(tmp$LRR)
 		tmp <- tmp[with(tmp, order(Position)), ]
 		tmp$PosIndx <- 1:nrow(tmp)
+	
+		# GC and LRR
+		
 
-		tmpRaw <- subset(tmp, Position >= CNVStart & Position <= CNVStop)	# Only the CNV region
+
+		# Only the CNV region
+		tmpRaw <- subset(tmp, Position >= CNVStart & Position <= CNVStop)	
 			
 		# Before and after CNV
 		IndxStart <- tmpRaw$PosIndx[1] - NumSNPs
