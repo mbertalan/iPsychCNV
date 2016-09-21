@@ -6,7 +6,7 @@
 ##' @param PathRawData: The path to the raw data files containing LRR and BAF values.
 ##' @param Cores: Number of cores used, default = 1.
 ##' @param Skip: Integer, the number of lines of the data file to be skipped before beginning to read the data, default = 0.
-##' @param PlotPosition: Unknown, default = 1.
+##' @param PlotPosition: Number of times the CNV size for each side of the CNV, default = 10.
 ##' @param Pattern: File pattern in the raw data, default = "*".
 ##' @param Recursive: Logical, Unknown, default = TRUE.
 ##' @param Dpi: Dots per inch, default = 300.
@@ -27,7 +27,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL, PlotPosition=1, Pattern="*",recursive=TRUE, dpi=300, Files=NULL, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL, PlotPosition=10, Pattern="*",recursive=TRUE, dpi=300, Files=NULL, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -88,10 +88,8 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL
     else
     {
       # Start & Stop-positions of plot
-      #Start <- CNVstart - ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
-      #Stop <-  CNVstop + ((Size+50000)*PlotPosition)*((3/log10(NumSNP))^(3/log10(NumSNP)))
-      Start <- CNVstart - (Size*10)
-      Stop <-  CNVstop + (Size*10)
+      Start <- CNVstart - (Size*PlotPosition)
+      Stop <-  CNVstop + (Size*PlotPosition)
 
      }
 
