@@ -41,7 +41,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	
 		# GC and LRR
 		Chr.SNP.GC <- subset(SNPs.GC, Chr %in% CHR)
-		Chr.SNP.GC.LRR <- merge(tmp, Chr.SNP.GC, by="SNP.Name", all.x=TRUE, all.y=FALSE)
+		Chr.SNP.GC.LRR <- merge(tmp, Chr.SNP.GC)
 		Cor.LRR.GC <- cor(Chr.SNP.GC.LRR$GC, Chr.SNP.GC.LRR$LRR, use="p")
 
 		save(Chr.SNP.GC.LRR, tmp, Chr.SNP.GC, file="Chr.SNP.GC.LRR.RData")
