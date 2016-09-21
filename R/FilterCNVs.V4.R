@@ -40,7 +40,9 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		tmp$PosIndx <- 1:nrow(tmp)
 	
 		# GC and LRR
-		
+		Chr.SNP.GC <- subset(SNPs.GC, Chr %in% CHR)
+		Chr.SNP.GC.LRR <- merge(tmp, Chr.SNP.GC, by="SNP.Name")
+		Cor.LRR.GC <- cor(Chr.SNP.GC.LRR$GC, Chr.SNP.GC.LRR$LRR, use="p")
 
 
 		# Only the CNV region
@@ -109,6 +111,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		#res3 <- cbind(res,res2, Genotype)
 		res3 <- cbind(res,res2)
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
+		res4$Cor.LRR.GC <- Cor.LRR.GC  
 		return(res4)
 	})
 	df <- do.call(rbind, AllRes)
