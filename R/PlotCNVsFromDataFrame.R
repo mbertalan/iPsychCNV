@@ -143,7 +143,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL
     # Ideogram
     data(hg19IdeogramCyto,package="biovizBase")
     CHR <- paste("chr", chr, collapse="", sep="")
-    p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3) +
+    p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3, zoom.region=c(CNVstart, CNVstop)) +
       xlim(GRanges(CHR,IRanges(Start,Stop)))
 
     # Colors
