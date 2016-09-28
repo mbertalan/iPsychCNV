@@ -27,6 +27,9 @@ CompressCNVs <- function(tmp4, OverlapCutoff, Cores)
 		if(nrow(tmp) > 1)
 		{
 			tmp2 <- FindHighFreqCNVs(tmp,OverlapCutoff)
+			colnames(tmp2) <- tmp$NewName
+			rownames(tmp2) <- tmp$NewName
+			
 			tmp3 <- apply(tmp2, 1, function(Z) { names(Z[Z]) })
 			
 			# Check if all regions match with itself.
