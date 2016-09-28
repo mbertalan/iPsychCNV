@@ -30,8 +30,11 @@ GetIndxPositionFromChips <- function(CNVs, Sample)
 			StartIndx <- which.min(abs(subSample$Position - StartM))
 			StopIndx <- which.min(abs(subSample$Position - StopM))
 			NumSNPs <- StopIndx - StartIndx
-			# df <- data.frame(Start=StartM, Stop=StopM, Chr=CHR, StartIndx=StartIndx, StopIndx=StopIndx, NumSNPs=NumSNPs)
-			df <- data.frame(StartIndx=StartIndx, StopIndx=StopIndx, NumSNPs=NumSNPs)
+			
+			StartM <- subSample$Position[StartIndx]
+			StopM <- subSample$Position[StopIndx]
+			df <- data.frame(Start=StartM, Stop=StopM, Chr=CHR, StartIndx=StartIndx, StopIndx=StopIndx, NumSNPs=NumSNPs)
+			#df <- data.frame(StartIndx=StartIndx, StopIndx=StopIndx, NumSNPs=NumSNPs)
 			df3 <- cbind(df, df2[i,])
 			return(df3)
 		})
