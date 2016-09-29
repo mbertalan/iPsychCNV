@@ -13,11 +13,11 @@
 DefiningLogRRatio <- function(res2)
 {
 	LogRRatio <- 2
-	if(res2$CNVmeanByRef < -0.2 & res2$DiffHigh > 0.11 &  res2$DiffLow > 0.11)
+	if(res2$CNVmeanByRef < -0.2) # res2$DiffHigh > 0.1 &  res2$DiffLow > 0.1
 	{
 		LogRRatio <- 1
 	}
-	else if(res2$CNVmeanByRef > 0 & res2$DiffHigh > 0.025 &  res2$DiffLow > 0.025)
+	else if(res2$CNVmeanByRef > 0.1) # res2$DiffHigh > 0.02 &  res2$DiffLow > 0.02
 	{
 		LogRRatio <- 3
 	}
