@@ -90,10 +90,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	
 		# Defining LogRRatio
 		ptm.tmp <- proc.time()
-		if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
-		{
-			LogRRatio <- DefiningLogRRatio(res2)
-		}else{ LogRRatio <- 2 }
+		LogRRatio <- DefiningLogRRatio(res2)
+		#if(CNV2HighPvalue < 0.01 || CNV2LowPvalue < 0.01)
+		#{
+		#	
+		#}else{ LogRRatio <- 2 }
 		Res.tmp <- proc.time() - ptm.tmp
 		if(verbose){ cat("Define LRR time: ", Res.tmp["elapsed"], "\n") }
 		
