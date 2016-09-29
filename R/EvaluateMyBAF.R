@@ -48,6 +48,10 @@ EvaluateMyBAF <- function(res, res2)
 			{
 				BAlleleFreq <- 3
 			}
+			else if(sum(sum(res$AAB > 5), sum(res$AB > 5), sum(res$ABB > 5), sum(res$AAAB > 5), sum(res$ABBB > 5)) == 3) # Dup 3, 10, 3			BAlleleFreq <- 2
+			{
+				BAlleleFreq <- 4
+			}
 			else
 			{
 				BAlleleFreq <- 2
