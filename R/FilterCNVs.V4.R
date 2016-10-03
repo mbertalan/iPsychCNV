@@ -20,6 +20,8 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	CNVs$CNVID <- CNVID
 	CNV <- Sample
 	
+	CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
+	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
 		if(verbose){ cat(Y, "\n") }
