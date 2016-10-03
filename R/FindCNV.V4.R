@@ -1,9 +1,8 @@
 ##' FindCNV.V4.: Find CNVs using Log R Ratio (LRR) data by cpt.meanvar method. 
 ##'
-##' Unknown
 ##' @title FindCNV.V4.
-##' @param ID: Unknown. 
-##' @param Sample: Unknown.
+##' @param ID: Sample ID. 
+##' @param Sample: A data frame with samples information like LRR and BAF.
 ##' @param CPTmethod: Unknown, default = meanvar.
 ##' @param CNVSignal: Unknown, default = 0.1.
 ##' @param Penvalue: Unknown, defualt = 20.
