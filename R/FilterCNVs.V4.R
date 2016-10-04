@@ -50,7 +50,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		# Only the CNV region
 		tmpRaw <- subset(Chr.SNP.GC.LRR, Position >= CNVStart & Position <= CNVStop)	
 		CNV.LRR.GC <- cor(tmpRaw$GC, tmpRaw$LRR, use="p")
-		if(sum(tmpRaw$GC < 55) > 20)
+		if(sum(tmpRaw$GC[!is.na(tmpRaw$GC)] < 55) > 20)
 		{
 			LowGC <- subset(tmpRaw, GC < 55)
 			CNVmeanLowGC <- mean(LowGC$LRR)
