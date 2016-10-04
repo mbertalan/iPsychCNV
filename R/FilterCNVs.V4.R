@@ -44,6 +44,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		# GC and LRR
 		Chr.SNP.GC <- subset(SNPs.GC, Chr %in% CHR)
 		Chr.SNP.GC.LRR <- merge(tmp, Chr.SNP.GC, all=TRUE)
+		Chr.SNP.GC.LRR <- subset(Chr.SNP.GC.LRR, !is.na(Log.R.Ratio)) # remove NAs inserted by merged
 		Cor.LRR.GC <- cor(Chr.SNP.GC.LRR$GC, Chr.SNP.GC.LRR$LRR, use="p")
 
 		#save(Chr.SNP.GC.LRR, tmp, Chr.SNP.GC, file="Chr.SNP.GC.LRR.RData")
