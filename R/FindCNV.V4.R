@@ -12,7 +12,7 @@
 ##' @export
 ##' @examples Unknown.
 
-FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=20, Merge=TRUE)
+FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=0.15, penvalue=20, Merge=TRUE)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
