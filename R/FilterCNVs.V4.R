@@ -49,6 +49,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		#save(Chr.SNP.GC.LRR, tmp, Chr.SNP.GC, file="Chr.SNP.GC.LRR.RData")
 		# Only the CNV region
 		tmpRaw <- subset(Chr.SNP.GC.LRR, Position >= CNVStart & Position <= CNVStop)	
+		save(tmpRaw, file="tmpRaw.RData")
 		CNV.LRR.GC <- cor(tmpRaw$GC, tmpRaw$LRR, use="p")
 		if(sum(tmpRaw$GC[!is.na(tmpRaw$GC)] < 55) > 20)
 		{
@@ -102,8 +103,6 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		
 
 		# Class by turnpoint: BAlleleFreq by density # Step detection
-		save(tmpRaw, file="tmpRaw.RData")
-		cat(nrow(tmpRaw), "\n")
 		ptm.tmp <- proc.time()
 		BAFDes <- density(tmpRaw$B.Allele.Freq, adjust = 0.2)
 		tp <- turnpoints(BAFDes$y)
