@@ -102,6 +102,8 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		
 
 		# Class by turnpoint: BAlleleFreq by density # Step detection
+		save(tmpRaw, file="tmpRaw.RData")
+		cat(nrow(tmpRaw), "\n")
 		ptm.tmp <- proc.time()
 		BAFDes <- density(tmpRaw$B.Allele.Freq, adjust = 0.2)
 		tp <- turnpoints(BAFDes$y)
