@@ -5,6 +5,8 @@
 ##' @param MockCNV: Unknown. 
 ##' @param Df: Data frame with predicted CNVs for each sample? Unknown.
 ##' @param Cores: Number of cores used, default = 1.
+##' @param MinOverlap, Minimum overlap to accept a CNV, default = 80%.
+##' @param MaxOverlap, maximum overlap to accept a CNV, default = 120%.
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -12,7 +14,7 @@
 ##' @examples Unknown
 ##'
 
-EvaluateMockResults <- function(MockCNVs, df, Cores=1)
+EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap=120)
 {
 	library(pROC)
 	library(parallel)
@@ -99,7 +101,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1)
 				if(CNM == CN2)
 				{	
 					CNV.Predicted <- 1 
-					if(OverlapLenghM > 80 & OverlapLenghM < 120)
+					if(OverlapLenghM > MinOverlap & OverlapLenghM < 120)
 					{ 
 						PredictedByOverlap <- 1 
 					}
