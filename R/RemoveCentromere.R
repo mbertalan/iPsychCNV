@@ -24,7 +24,7 @@ RemoveCentromere <- function(df, HG="hg19")
 		df.tmp <- subset(df, Chr %in% X)
 		
 		# removing CNVs that overlap centromere
-		df.tmp <- subset(df.tmp, Stop < StartC | Start > StopC)
+		df.tmp <- subset(df.tmp, Stop < StopC & Start > StartC )
 		
 		return(df.tmp)
 	})
