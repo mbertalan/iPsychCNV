@@ -13,6 +13,7 @@
 
 MergeCNVs <- function(df, MaxNumSNPs=50, Cores=28)
 {
+	library(parallel)
 	tmp2 <- subset(df, CN != 2)
 	tmp2 <- tmp2[order(tmp2$Chr, tmp2$Start),]
 	
