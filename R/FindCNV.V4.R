@@ -47,7 +47,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
-		DF <- DefineStartAndStop(indx, subSample, CHR, ID, CPT.Res)
+		DF <- DefineStartAndStop(indx, subSample, CHR, ID)
 			
 		if(CPTmethod %in% "HMM")
 		{
