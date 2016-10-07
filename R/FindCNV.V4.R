@@ -51,7 +51,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 			
 		if(CPTmethod %in% "HMM")
 		{
-			Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X[1]:as.numeric(X[2]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
+			Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X[1]):as.numeric(X[2]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
 		}
 										 
 		DF$prob <- Probs
