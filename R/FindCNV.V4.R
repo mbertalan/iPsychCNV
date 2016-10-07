@@ -47,7 +47,13 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subSample, CHR, ID, CPT.Res)
-		
+			
+		if(CPTmethod %in% "HMM")
+		{
+			Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X[1]:as.numeric(X[2]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
+		}
+										 
+		DF$prob <- Probs
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
