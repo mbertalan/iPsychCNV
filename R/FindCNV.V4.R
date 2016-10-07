@@ -30,7 +30,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample)
 			LRR.fit <- fit(LRR.mod, verbose = FALSE)
 			LRR.prbs <- posterior(LRR.fit) 
-			State <- LRR.prbs$State
+			State <- LRR.prbs$state
 			indx <- sapply(1:(length(State)-1), function(i){ if(State[i] != State[(i+1)]){ return(i) }})
 		}	
 		else if(CPTmethod %in% "meanvar")
