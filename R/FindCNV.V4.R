@@ -12,10 +12,11 @@
 ##' @export
 ##' @examples Unknown.
 
-FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, Merge=TRUE)
+FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1, penvalue=16, Merge=TRUE)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
+	suppressPackageStartupMessages(library("depmixS4"))
 
 	tmp <- sapply(unique(Sample$Chr), function(X) # X is chr. Loop over Chr.
 	{
@@ -24,15 +25,25 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="meanvar", CNVSignal=
 		subSample <- subSample[with(subSample, order(Position)),]
 		
 		# Using changepoint package	
-		if(CPTmethod %in% "meanvar")
+		if(CPTmethod %in% "HMM")
+		{
+			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample)
+			LRR.fit <- fit(LRR.mod, verbose = FALSE)
+			LRR.prbs <- posterior(LRR.fit) 
+			State <- LRR.prbs$State
+			indx <- sapply(1:(length(State)-1), function(i){ if(State[i] != State[(i+1)]){ return(i) }})
+		}	
+		else if(CPTmethod %in% "meanvar")
 		{
 			CPT.Res <- cpt.meanvar(subSample$Log.R.Ratio, method='PELT', class=TRUE, pen.value=penvalue, penalty="Manual")
+			indx <- cpts(CPT.Res)
 		}
 		else if(CPTmethod %in% "mean")
 		{
 			CPT.Res <- cpt.mean(subSample$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE)
+			indx <- cpts(CPT.Res)
 		}
-		indx <- cpts(CPT.Res)
+		
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subSample, CHR, ID, CPT.Res)
