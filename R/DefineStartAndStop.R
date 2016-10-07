@@ -14,14 +14,14 @@
 ##' @examples Unknown.
 ##'
 
-DefineStartAndStop <- function(indx, subCNV, CHR, ID, CPT.Res)
+DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 {
 	suppressPackageStartupMessages(library(pastecs))
 	
 	Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
 	Info <- t(Info)
 	DF <- as.data.frame(Info)
-	CNVMean <- apply(DF, 1, function(X){ mean(CPT.Res@data.set[X[1]:X[2]]) } )
+	CNVMean <- apply(DF, 1, function(X){ mean(subCNV$LRR[as.numeric(X[1]):as.numeric(X[2])]) } )
 	DF$CNVMean <- CNVMean
 	names(DF) <- c("Start", "Stop", "CNVMean")
 	# removed many of the controls (normalization should take care of it).
