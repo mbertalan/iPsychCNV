@@ -56,6 +56,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		}
 										 
 		DF$prob <- Probs
+		save(DF, Probs, LRR.prbs, file="Probs.RData")
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
