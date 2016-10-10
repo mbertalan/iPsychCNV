@@ -30,7 +30,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample)
 			LRR.fit <- fit(LRR.mod, verbose = FALSE)
 			LRR.prbs <- posterior(LRR.fit) 
-			save(LRR.prbs, file="LRR.prbs.RData")
+			#save(LRR.prbs, file="LRR.prbs.RData")
 			State <- LRR.prbs$state
 			indx <- sapply(1:(length(State)-1), function(i){ if(State[i] != State[(i+1)]){ return(i) }})
 			indx <- unlist(indx)
@@ -53,10 +53,11 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		if(CPTmethod %in% "HMM")
 		{
 			Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
+			DF$prob <- Probs
 		}
 										 
-		DF$prob <- Probs
-		save(DF, Probs, LRR.prbs, file="Probs.RData")
+		
+		#save(DF, Probs, LRR.prbs, file="Probs.RData")
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
