@@ -15,6 +15,8 @@ ClassNumbers <- function(tmpRaw)
 	#Centers <- c(0, 0.25, 0.34, 0.5, 0.67, 0.75, 1)
 	#names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	tmp2 <- subset(tmpRaw, PFB > 0 & PFB < 1)
+	tmp3 <- subset(tmp2, B.Allele.Freq > 0 & B.Allele.Freq < 1) # Remove no heterozygous SNPs
+	if(nrow(tmp3) > 20){ tmp2 <- tmp3 } # 
 	UsedBAF <- round((nrow(tmp2)/nrow(tmpRaw))*100, 1)
 	Centers <- c(0, 0.25, 0.34, 0.5, 0.67, 0.75, 1)
 	names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
