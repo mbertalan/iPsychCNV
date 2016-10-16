@@ -24,13 +24,14 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		subSample <- subset(Sample, Chr %in% CHR)
 		subSample <- subSample[with(subSample, order(Position)),]
 		
+		# Getting prob for each SNP using depmix HMM and viterbi. 
+		LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2)))
+		MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
+		LRR.probs <- viterbi(MyFit2)
+		
 		# Using changepoint package	
 		if(CPTmethod %in% "HMM")
 		{
-			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample)
-			LRR.fit <- fit(LRR.mod, verbose = FALSE)
-			LRR.prbs <- posterior(LRR.fit) 
-			#save(LRR.prbs, file="LRR.prbs.RData")
 			State <- LRR.prbs$state
 			indx <- sapply(1:(length(State)-1), function(i){ if(State[i] != State[(i+1)]){ return(i) }})
 			indx <- unlist(indx)
@@ -49,13 +50,11 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subSample, CHR, ID)
-			
-		if(CPTmethod %in% "HMM")
-		{
-			Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
-			DF$prob <- Probs
-		}
-										 
+
+		# Adding mean probability of each state for each CNV
+		Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
+		DF$prob <- Probs
+					 
 		
 		#save(DF, Probs, LRR.prbs, file="Probs.RData")
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
