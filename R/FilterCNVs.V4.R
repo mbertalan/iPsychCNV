@@ -32,6 +32,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		CNVStart <- as.numeric(Y["Start"]) 
 		CNVStop <- as.numeric(Y["Stop"]) 
 		NumSNPs <- as.numeric(Y["NumSNPs"])
+		Probs <- as.numeric(Y["prob"])
 		Size <- CNVStop - CNVStart
 		ID <- ID
 		if(verbose){ cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n") }
@@ -44,14 +45,14 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		tmp$PosIndx <- 1:nrow(tmp)
 		
 		# Getting HMM prob if Probs is null
-		if(is.null(Y["prob"]))
+		if(length(Probs) == 0)
 		{
 			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = tmp, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
 			MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
 			LRR.probs <- viterbi(MyFit2)
 			res <- apply(LRR.prbs[CNVStart:CNVStop, 2:4], 2, mean) 
 			Probs <- sort(res, decreasing=TRUE)[1] 
-			cat("Probs:", Probs, "\n")
+			if(verbose){ cat("Probs:", Probs, "\n") }
 		}
 	
 		# GC and LRR
