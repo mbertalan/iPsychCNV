@@ -25,7 +25,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		subSample <- subSample[with(subSample, order(Position)),]
 		
 		# Getting prob for each SNP using depmix HMM and viterbi. 
-		LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2)))
+		LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
 		MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
 		LRR.probs <- viterbi(MyFit2)
 		
