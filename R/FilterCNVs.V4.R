@@ -51,8 +51,6 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 			MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
 			LRR.probs <- viterbi(MyFit2)
 			MeanStates <- apply(LRR.prbs[CNVStart:CNVStop, 2:4], 2, mean) 
-			Probs <- sort(MeanStates, decreasing=TRUE)[1] 
-			if(verbose){ cat("Probs:", Probs, "\n") }
 		}
 	
 		# GC and LRR
