@@ -22,6 +22,8 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	
 	CNVs <- subset(CNVs, NumSNPs > MinNumSNPs)
 	
+	
+	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
 		if(verbose){ cat(Y, "\n") }
@@ -30,6 +32,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		CNVStart <- as.numeric(Y["Start"]) 
 		CNVStop <- as.numeric(Y["Stop"]) 
 		NumSNPs <- as.numeric(Y["NumSNPs"])
+		Probs <- Y["prob"] # mean probability from HMM
 		Size <- CNVStop - CNVStart
 		ID <- ID
 		if(verbose){ cat(CHR, CNVStart,CNVStop,NumSNPs,Size,ID,  "\n") }
@@ -40,6 +43,16 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		MeanChr <- mean(tmp$LRR)
 		tmp <- tmp[with(tmp, order(Position)), ]
 		tmp$PosIndx <- 1:nrow(tmp)
+		
+		# Getting HMM prob if Probs is null
+		if(is.null(Probs))
+		{
+			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = tmp, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
+			MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
+			LRR.probs <- viterbi(MyFit2)
+			res <- apply(LRR.prbs[CNVStart:CNVStop, 2:4], 2, mean) 
+			Probs <- sort(res, decreasing=TRUE)[1] 
+		}
 	
 		# GC and LRR
 		Chr.SNP.GC <- subset(SNPs.GC, Chr %in% CHR)
@@ -128,6 +141,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		res4$Cor.LRR.GC <- Cor.LRR.GC  
 		res4$CNVmeanLowGC <- CNVmeanLowGC
+		res4$prob <- Probs
 		return(res4)
 	})
 	df <- do.call(rbind, AllRes)
