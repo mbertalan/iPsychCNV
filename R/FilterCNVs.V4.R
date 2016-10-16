@@ -142,7 +142,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		res4$Cor.LRR.GC <- Cor.LRR.GC  
 		res4$CNVmeanLowGC <- CNVmeanLowGC
-		if(is.null(Y["prob"]))
+		if(length(Probs) == 0 || is.na(Probs))
 		{ 
 			res4$CN1 <- round(MeanStates["S1"], digits=2); 
 			res4$CN2 <- round(MeanStates["S2"], digits=2); 
