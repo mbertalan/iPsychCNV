@@ -45,13 +45,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		tmp$PosIndx <- 1:nrow(tmp)
 		
 		# Getting HMM prob if Probs is null
-		if(length(Probs) == 0 || is.na(Probs))
-		{
-			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = tmp, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
-			MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
-			LRR.probs <- viterbi(MyFit2)
-			MeanStates <- apply(LRR.probs[CNVStart:CNVStop, 2:4], 2, mean) 
-		}
+		LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = tmp, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
+		MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
+		LRR.probs <- viterbi(MyFit2)
+		MeanStates <- apply(LRR.probs[CNVStart:CNVStop, 2:4], 2, mean) 
+		
 	
 		# GC and LRR
 		Chr.SNP.GC <- subset(SNPs.GC, Chr %in% CHR)
@@ -140,12 +138,12 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		res4$Cor.LRR.GC <- Cor.LRR.GC  
 		res4$CNVmeanLowGC <- CNVmeanLowGC
-		if(length(Probs) == 0 || is.na(Probs))
-		{ 
-			res4$CN1 <- round(MeanStates["S1"], digits=2); 
-			res4$CN2 <- round(MeanStates["S2"], digits=2); 
-			res4$CN3 <- round(MeanStates["S3"], digits=2); 
-		}
+		
+		# HMM prob for each state
+		res4$CN1 <- round(MeanStates["S1"], digits=2); 
+		res4$CN2 <- round(MeanStates["S2"], digits=2); 
+		res4$CN3 <- round(MeanStates["S3"], digits=2); 
+		
 		return(res4)
 	})
 	df <- do.call(rbind, AllRes)
