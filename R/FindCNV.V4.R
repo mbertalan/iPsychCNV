@@ -32,7 +32,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		# Using changepoint package	
 		if(CPTmethod %in% "HMM")
 		{
-			State <- LRR.prbs$state
+			State <- LRR.probs$state
 			indx <- sapply(1:(length(State)-1), function(i){ if(State[i] != State[(i+1)]){ return(i) }})
 			indx <- unlist(indx)
 		}	
@@ -52,11 +52,11 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		DF <- DefineStartAndStop(indx, subSample, CHR, ID)
 
 		# Adding mean probability of each state for each CNV
-		Probs <- apply(DF, 1, function(X){ res <- apply(LRR.prbs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
+		Probs <- apply(DF, 1, function(X){ res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
 		DF$prob <- Probs
 					 
 		
-		#save(DF, Probs, LRR.prbs, file="Probs.RData")
+		#save(DF, Probs, LRR.probs, file="Probs.RData")
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
