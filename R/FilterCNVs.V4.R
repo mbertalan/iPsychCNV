@@ -50,7 +50,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 			LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = tmp, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
 			MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
 			LRR.probs <- viterbi(MyFit2)
-			MeanStates <- apply(LRR.prbs[CNVStart:CNVStop, 2:4], 2, mean) 
+			MeanStates <- apply(LRR.probs[CNVStart:CNVStop, 2:4], 2, mean) 
 		}
 	
 		# GC and LRR
