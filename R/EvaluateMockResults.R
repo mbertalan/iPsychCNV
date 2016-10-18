@@ -23,13 +23,16 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 	#if(length(MockCNVs$ID) == 0){ MockCNVs$ID <- "Sample" } # if no CNVID is provide
 	#if(length(df$ID) == 0){ df$ID <- "Sample" } # if no CNVID is provide
 	
-	df <- df[, c("CN", "Start", "Stop", "CNVID", "ID", "Length", "Chr", "NumSNPs")]
+	if(length(df$probs) == 0){ df$probs <- 1 }
+	
+	df <- df[, c("CN", "Start", "Stop", "CNVID", "ID", "Length", "Chr", "NumSNPs", "probs")]
 	df$Start <- as.numeric(df$Start)
 	df$Stop <- as.numeric(df$Stop)
 	df$Chr <- as.numeric(df$Chr)
 	df$CN <- as.numeric(df$CN)
 	df$Length <- as.numeric(df$Length)
 	df$NumSNPs <- as.numeric(df$NumSNPs)
+	df$probs <- as.numeric(df$probs)
 	
 	Eval <- mclapply(1:nrow(MockCNVs), mc.cores=Cores, mc.preschedule = FALSE, function(i)
 	{
@@ -57,6 +60,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 			if(nrow(res) > 1){ res <- res[1,]}		
 			CNVID2 <- res$CNVID
 			CN2 <- as.numeric(res$CN)
+			OneProb <- as.numeric(res$probs)
 		}
 
 		if(NumCNVs == 0)
@@ -67,6 +71,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 			OverlapSNP <-0
 			CNVID2 <- NA
 			CN2 <- 2
+			OneProb <- 0
 			
 		}
 		else
@@ -88,7 +93,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 				if(nrow(res2) > 0)
 				{
 					CNV.Predicted <- 1
-					PredictedByOverlap <- 1		# It doesn't matter the overlap the prediction is in a non-CNV region.
+					PredictedByOverlap <- OneProb		# It doesn't matter the overlap the prediction is in a non-CNV region.
 				}
 				else
 				{
@@ -103,7 +108,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 					CNV.Predicted <- 1 
 					if(OverlapLenghM > MinOverlap & OverlapLenghM < 120)
 					{ 
-						PredictedByOverlap <- 1 
+						PredictedByOverlap <- OneProb
 					}
 					else
 					{
@@ -112,7 +117,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 				}
 				else						# There is a prediction but is not correct
 				{ 
-					CNV.Predicted <- 0 
+					CNV.Predicted <- OneProb
 					PredictedByOverlap <- 0
 				} 
 			}
