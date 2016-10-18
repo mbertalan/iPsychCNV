@@ -24,6 +24,7 @@
 FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=0, Cores=1)
 {
 	suppressPackageStartupMessages(library(parallel))
+	suppressPackageStartupMessages(library("depmixS4"))
 	
 	tmp <- mclapply(unique(CNVs$ID), mc.cores=Cores, mc.preschedule = FALSE, function(IDs) 
 	{
