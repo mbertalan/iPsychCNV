@@ -16,13 +16,12 @@
 
 FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose=FALSE) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
+	suppressPackageStartupMessages(library("depmixS4"))
+	
 	CNVID <- rownames(CNVs)
 	CNVs$CNVID <- CNVID
 	CNV <- Sample
-	
 	CNVs <- subset(CNVs, NumSNPs > MinNumSNPs)
-	
-	
 	
 	AllRes <- apply(CNVs, 1, function(Y) # Loop for CNVs
 	{  
