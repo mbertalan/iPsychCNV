@@ -92,8 +92,8 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 				res2 <- subset(df, Chr == ChrM & Start > StartM & Stop < StopM & ID %in% IDM) # If is a non-CNV region, than prediction need to be inside.
 				if(nrow(res2) > 0)
 				{
-					CNV.Predicted <- 1
-					PredictedByOverlap <- OneProb		# It doesn't matter the overlap the prediction is in a non-CNV region.
+					CNV.Predicted <- OneProb
+					PredictedByOverlap <- 0		# It doesn't matter the overlap the prediction is in a non-CNV region.
 				}
 				else
 				{
@@ -105,10 +105,10 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 			{
 				if(CNM == CN2)
 				{	
-					CNV.Predicted <- 1 
+					CNV.Predicted <- OneProb
 					if(OverlapLenghM > MinOverlap & OverlapLenghM < 120)
 					{ 
-						PredictedByOverlap <- OneProb
+						PredictedByOverlap <- OverlapLenghM
 					}
 					else
 					{
