@@ -18,7 +18,7 @@
 ##' @param PennCNVFormat: Unknown, default = FALSE.
 ##' @param RemoveTmpfiles: Unknown, default = TRUE.
 ##' @param SelectedFiles: List of file names that should be analyzed from PathRawData. 
-##' @param Files: a vector with all samples name and path. If too many samples, list all files using recursive=TRUE can take long time. 
+##' @param Files: a vector with all samples name and path. If too many samples, list all files using =TRUE can take long time. 
 ##' @return Data frame with predicted CNVs.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -26,7 +26,7 @@
 ##' @examples Unknown.
 ##'
 
-RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15, PennCNVFormat=FALSE, Files=NA, RemoveTmpfiles=TRUE, SelectedFiles=NA)
+RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, Pattern=".*Mock.*\\.tab$", Cores=20, Skip=0, Normalization=FALSE, PFB="NO", HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/",  penalty=60, Quantile=TRUE, QSpline=TRUE, sd=0.15, PennCNVFormat=FALSE, Files=NA, RemoveTmpfiles=TRUE, SelectedFiles=NA, recursive=FALSE)
 {
 	library(parallel)
 	
