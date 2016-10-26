@@ -16,16 +16,16 @@
 ##' @examples 
 ##' Sample <- MakeLongMockSample(CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9), Size=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000), ChrMean=0, ChrSD=0.18)
 
-MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-1, -0.45, 0, 0.3, 0.75), Size=300, ChrMean=0, ChrSD=0.18)
+MakeLongMockSample <- function(Heterozygosity=10, CNVDistance=1000, Type=c(0,1,2,3,4), Mean=c(-1, -0.45, 0, 0.3, 0.75), Size=300, ChrMean=0, ChrSD=0.18)
 {
 	library(RColorBrewer)
 	library(ggplot2)
 	library(ggbio)
 
 	# Defining heterozygosity from BAF 
-	Zygosity <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
-	names(Zygosity) <- c(0.2, 0.4, 0.8, 1.35, 2, 3, 5, 8, 16, 80)
-	HeteroBAF <- as.numeric(names(Zygosity)[which(abs(Zygosity-Heterozygosity)==min(abs(Zygosity-Heterozygosity)))])
+	#Zygosity <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+	#names(Zygosity) <- c(0.2, 0.4, 0.8, 1.35, 2, 3, 5, 8, 16, 80)
+	#HeteroBAF <- as.numeric(names(Zygosity)[which(abs(Zygosity-Heterozygosity)==min(abs(Zygosity-Heterozygosity)))])
 
 	df <- sapply(Mean, function(M)
 	{
@@ -65,15 +65,21 @@ MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,
 	BAF_Basic <- rep(0.00001, 101)
 	names(BAF_Basic) <- BAFs
 
-	BAF_Normal <- BAF_Basic
-	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + 1
-	BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + 0.05
+	##
+	BAFs <- seq(from=0, to=1, by=0.01)
+	# 0 or 1
+	Y = (100 - Heterozygosity)/36
+
+	BAF_Normal <- rep(0, 101)
+	BAF_Normal[c(1:2)] <- BAF_Normal[c(1:2)] + (Y *8)  # 40%
+	BAF_Normal[c(3:4)] <- BAF_Normal[c(3:4)] + Y # 5%
 	
-	BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + 0.05
-	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + 1
+	BAF_Normal[c(98:99)] <- BAF_Normal[c(98:99)] + Y # 5%
+	BAF_Normal[c(100:101)] <- BAF_Normal[c(100:101)] + (Y*8) # 40%
+		
+	BAF_Normal[c(49:52)] <- BAF_Normal[c(49:52)] + (Heterozygosity/5)
+	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + (Heterozygosity/10)
 	
-	BAF_Normal[c(47:53)] <- BAF_Normal[c(47:53)] + 0.05
-	BAF_Normal[c(50:51)] <- BAF_Normal[c(50:51)] + HeteroBAF
 
 	# BAF Del prob
 	BAF_Del <- BAF_Basic
@@ -85,12 +91,12 @@ MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,
 	
 	# BAF Dup prob
 	BAF_Dup <-  BAF_Basic
-	BAF_Dup[1:2] <- BAF_Dup[1:2] + 1
-	BAF_Dup[100:101] <- BAF_Dup[100:101] + 1
-	BAF_Dup[30:35] <- BAF_Dup[30:35] + 0.05 
-	BAF_Dup[32:33] <- BAF_Dup[32:33] + HeteroBAF/2
-	BAF_Dup[65:70] <- BAF_Dup[65:70] + 0.05
-	BAF_Dup[67:68] <- BAF_Dup[67:68] + HeteroBAF/2
+	BAF_Dup[1:2] <- BAF_Dup[1:2] + (Y*9)
+	BAF_Dup[100:101] <- BAF_Dup[100:101] + (Y*9)
+	#BAF_Dup[30:35] <- BAF_Dup[30:35] + 0.05 
+	BAF_Dup[32:33] <- BAF_Dup[32:33] + Heterozygosity/4
+	#BAF_Dup[65:70] <- BAF_Dup[65:70] + 0.05
+	BAF_Dup[67:68] <- BAF_Dup[67:68] + Heterozygosity/4
 
 	# BAF CN=4
 	BAF_CN4 <- BAF_Basic
