@@ -51,10 +51,10 @@ MakeLongMockSample <- function(Heterozygosity=0.2, CNVDistance=1000, Type=c(0,1,
 	LongRoi$Chr <- "1"
 	colnames(LongRoi)[colnames(LongRoi) %in% "Mean"] <- "CNVmean"
 	LongRoi$CN <- LongRoi$Type
-	LongRoi$CN[LongRoi$Type == 4 & LongRoi$CNVmean < 0] <- 2
-	LongRoi$CN[LongRoi$Type == 3 & LongRoi$CNVmean < 0] <- 2
-	LongRoi$CN[LongRoi$Type == 0 & LongRoi$CNVmean > 0] <- 2
-	LongRoi$CN[LongRoi$Type == 1 & LongRoi$CNVmean > 0] <- 2
+	LongRoi$CN[LongRoi$Type == 4 & LongRoi$CNVmean < 0.1] <- 2
+	LongRoi$CN[LongRoi$Type == 3 & LongRoi$CNVmean < 0.1] <- 2
+	LongRoi$CN[LongRoi$Type == 0 & LongRoi$CNVmean > 0.1] <- 2
+	LongRoi$CN[LongRoi$Type == 1 & LongRoi$CNVmean > 0.1] <- 2
 	LongRoi$ID <- "LongMockSample.tab"
 	LongRoi$CNVID <- 1:nrow(LongRoi)
 	LongRoi$Length <- LongRoi$Size
