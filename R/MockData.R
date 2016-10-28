@@ -170,7 +170,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	})
 	
 	CNVs <- MatrixOrList2df(All)
-	save(CNVs, file="CNVs.RData")
+	#save(CNVs, file="CNVs.RData")
 	CNVs$Length <- CNVs$Stop -  CNVs$Start
 	CNVs$CNVID <- 1:nrow(CNVs)
 	CNVs$PositionID <- apply(CNVs, 1, function(X){ gsub(" ", "", paste(X["StartIndx"], X["StopIndx"], sep="_", collapse="")) })
