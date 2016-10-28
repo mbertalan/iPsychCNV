@@ -153,12 +153,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				## Changing GLOBAL VARIABLES ##
 				BAF[IndxV] <<- BAFCNV
 				
-				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
+				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, Heterozygosity=Heterozygosity, stringsAsFactors=FALSE)
 				return(df)
 			})
 			df <- MatrixOrList2df(DF)
 			#save(df, file="df.RData")
-			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF,  Heterozygosity=Heterozygosity, stringsAsFactors=FALSE)
+			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF, stringsAsFactors=FALSE)
 			return(list(LRR=df2, CNVs=df))
 		})
 		
@@ -170,7 +170,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	})
 	
 	CNVs <- MatrixOrList2df(All)
-	#save(CNVs, file="CNVs.RData")
+	save(CNVs, file="CNVs.RData")
 	CNVs$Length <- CNVs$Stop -  CNVs$Start
 	CNVs$CNVID <- 1:nrow(CNVs)
 	CNVs$PositionID <- apply(CNVs, 1, function(X){ gsub(" ", "", paste(X["StartIndx"], X["StopIndx"], sep="_", collapse="")) })
@@ -210,6 +210,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			Df2$ChrMean <- rep(unique(subCNVs$ChrMean), nrow(Df2))
 			Df2$Length <- Df2$Stop - Df2$Start
 			Df2$CNVID <- 1:nrow(Df2)
+			Df2$Heterozygosity <- rep(unique(subCNVs$Heterozygosity), nrow(Df2))
 			Df2 <- Df2[, colnames(subCNVs)]
 			return(Df2)
 		})
