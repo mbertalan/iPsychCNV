@@ -42,12 +42,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	ChrSDProb <- List[["ChrSDProb"]]
 	TelomereNoiseSize <- List[["TelomereNoiseSize"]]
 	TelomereNoiseEffect <- List[["TelomereNoiseEffect"]]
-	BAFs <- List[["BAFs"]]
-	BAF_Normal <- List[["BAF_Normal"]]
-	BAF_Del <- List[["BAF_Del"]]
-	BAF_Dup <- List[["BAF_Dup"]]
-	BAF_CN4 <- List[["BAF_CN4"]]
-	BAF_CN0 <- List[["BAF_CN0"]]
+	
 	BadSNPs <- List[["BadSNPs"]]
 	BadSNPIntensity <- List[["BadSNPIntensity"]]
 	BadSNPIntensityProb <- List[["BadSNPIntensityProb"]]
@@ -72,6 +67,15 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
 			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
 			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
+	
+			Heterozygosity <- sample(seq(from=5, to=30,by=2.5), size=1)
+			BAF_Info <- MakeBAF(Heterozygosity=Heterozygosity)
+			BAFs <- BAF_Info[["BAFs"]]
+			BAF_Normal <- BAF_Info[["BAF_Normal"]]
+			BAF_Del <- BAF_Info[["BAF_Del"]]
+			BAF_Dup <- BAF_Info[["BAF_Dup"]]
+			BAF_CN4 <- BAF_Info[["BAF_CN4"]]
+			BAF_CN0 <- BAF_Info[["BAF_CN0"]]
 			
 			# Telomere noise
 			TelSize1 <- sample(TelomereNoiseSize, 1)
@@ -149,7 +153,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				## Changing GLOBAL VARIABLES ##
 				BAF[IndxV] <<- BAFCNV
 				
-				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, stringsAsFactors=FALSE)
+				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, Heterozygosity=Heterozygosity, stringsAsFactors=FALSE)
 				return(df)
 			})
 			df <- MatrixOrList2df(DF)
