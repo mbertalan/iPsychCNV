@@ -96,7 +96,7 @@ RunPennCNV <- function(PathRawData = "~/CNVs/MockData/PKU/Data", MINNumSNPs=20, 
 		ID <- tail(unlist(strsplit(X, "/")),n=1)
 		
 		# Find CNVs
-		Output <- paste(ID, ".out", sep="", collapse="")
+		Output <- paste(ID, "penncnv.out", sep="", collapse="")
 		Command <- paste(Path2PennCNV, "detect_cnv.pl -test -minsnp ", MINNumSNPs, " --minlength 10 --confidence -hmm ", HMM, " -pfb ", PFB, " ", X, " -log logfile -out ", Output, sep="", collapse="")
 		cat(Command, "\n")
 		system(Command)
