@@ -14,7 +14,7 @@
 ##' @examples Unknown.
 ##'
 
-MultipleMockData <- function(NSamples=10, NLoops=10, Cores=30, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
+MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoScreen/NeSc_home/share/Programs/penncnv/lib/hhall.hmm", Path2PennCNV="/media/NeoScreen/NeSc_home/share/Programs/penncnv/")
 {
 	Res <- sapply(1:NLoops, function(Loops)
 	{
