@@ -26,10 +26,10 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		# iPsychCNV prediction
 		cat("Running iPsychCNV: Loop ", Loops, "\n" )
 		iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=Cores, Pattern="^MockSample", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
-
+		iPsych.Pred <- subset(iPsych.Pred, CN != 2)
+		
 		# iPsychCNV + Hotspots + ReScanCNVs
-		tmp <- subset(iPsych.Pred, CN != 2)
-		#CNVs.Hotspots <- HotspotsCNV(df=tmp, Freq=3, OverlapCutoff=0.8, Cores=Cores)
+		#CNVs.Hotspots <- HotspotsCNV(df=iPsych.Pred, Freq=3, OverlapCutoff=0.8, Cores=Cores)
 		iPsych.rescan <- ReScanCNVs(CNVs=MockHot, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".", IndxPos=TRUE)
 	
 		# PennCNV
@@ -57,9 +57,9 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#Rescan.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.rescan, Cores=Cores)
 		
 		# ROC 
-		iPsychCNV.AUC <- roc(iPsychCNV.Eval$CNV.Predicted, iPsychCNV.Eval$CNV.Present)$auc[1]
-		ReiPsych.AUC <- roc(ReiPsych.Eval$CNV.Predicted, ReiPsych.Eval$CNV.Present)$auc[1]
-		PennCNV.AUC <- roc(PennCNV.Eval$CNV.Predicted, PennCNV.Eval$CNV.Present)$auc[1]
+		iPsychCNV.AUC <- roc(iPsychCNV.Eval$CNV.Predicted, iPsychCNV.Eval$CNV.Present)
+		ReiPsych.AUC <- roc(ReiPsych.Eval$CNV.Predicted, ReiPsych.Eval$CNV.Present)
+		PennCNV.AUC <- roc(PennCNV.Eval$CNV.Predicted, PennCNV.Eval$CNV.Present)
 		#Filter.AUC <- roc(Filter.Eval$CNV.Predicted, Filter.Eval$CNV.Present)$auc[1]
 		#Rescan.AUC <- roc(Rescan.Eval$CNV.Predicted, Rescan.Eval$CNV.Present)$auc[1]
 
@@ -67,6 +67,18 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		iPsychCNV.AUC.coords <- coords(iPsychCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
 		ReiPsych.AUC.coords <- coords(ReiPsych.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
 		PennCNV.AUC.coords <- coords(PennCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		
+		iPsychCNV.AUC.coords <- as.data.frame(t(iPsychCNV.AUC.coords))
+		ReiPsych.AUC.coords <- as.data.frame(t(ReiPsych.AUC.coords))
+		PennCNV.AUC.coords <- as.data.frame(t(PennCNV.AUC.coords))
+		
+		iPsychCNV.AUC.coords$auc <- iPsychCNV.AUC$auc[1]
+		ReiPsych.AUC.coords$auc <- ReiPsych.AUC$auc[1]
+		PennCNV.AUC.coords$auc <-  PennCNV.AUC$auc[1]
+		
+		iPsychCNV.AUC.coords$source <- "iPsychCNV"
+		ReiPsych.AUC.coords$source <- "Re-ScanCNVs"
+		PennCNV.AUC.coords$source <- "PennCNV"
 		
 		# When prediction fail.
 		## PennCNV
