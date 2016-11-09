@@ -21,17 +21,17 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		# Creating Mock data
 		cat("Creating mock data: Loop ", Loops, "\n")
 		MockDataCNVs <- MockData(N=NSamples, Type="PKU", Cores=Cores)
-	
+		MockHot <- subset(MockDataCNVs, ID %in% "MockSample_1.tab" & CN != 2)
+		
 		# iPsychCNV prediction
 		cat("Running iPsychCNV: Loop ", Loops, "\n" )
 		iPsych.Pred <- iPsychCNV(PathRawData=".", MINNumSNPs=20, Cores=Cores, Pattern="^MockSample", MinLength=10, Skip=0, LCR=FALSE, Quantile=FALSE)
 
 		# iPsychCNV + Hotspots + ReScanCNVs
 		tmp <- subset(iPsych.Pred, CN != 2)
-		CNVs.Hotspots <- HotspotsCNV(df=tmp, Freq=3, OverlapCutoff=0.8, Cores=Cores)
-		iPsych.rescan <- ReScanCNVs(CNVs=CNVs.Hotspots, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".", IndxPos=TRUE)
+		#CNVs.Hotspots <- HotspotsCNV(df=tmp, Freq=3, OverlapCutoff=0.8, Cores=Cores)
+		iPsych.rescan <- ReScanCNVs(CNVs=MockHot, Cores=Cores, Pattern="^MockSample_*", Skip=0, hg="hg19", PathRawData=".", IndxPos=TRUE)
 	
-		
 		# PennCNV
 		cat("Running PennCNV: Loop ", Loops, "\n")
 		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="^MockSample.*", Cores=Cores, Skip=0, Normalization=FALSE, PFB="NO", HMM=HMM, Path2PennCNV=Path2PennCNV)
@@ -63,6 +63,11 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#Filter.AUC <- roc(Filter.Eval$CNV.Predicted, Filter.Eval$CNV.Present)$auc[1]
 		#Rescan.AUC <- roc(Rescan.Eval$CNV.Predicted, Rescan.Eval$CNV.Present)$auc[1]
 
+		# Coords
+		iPsychCNV.AUC.coords <- coords(iPsychCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		ReiPsych.AUC.coords <- coords(ReiPsych.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		PennCNV.AUC.coords <- coords(PennCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		
 		# When prediction fail.
 		## PennCNV
 		tmp <- subset(PennCNV.Eval, CN != 2)
