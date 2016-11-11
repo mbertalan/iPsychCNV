@@ -90,11 +90,7 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
         x <- 1 + x
         break
       } else {
-        if(Pattern =="") { # this deals with the challenge if there are similar file-names, i.e. TOP3 & TOP30, default pattern needs to be ""
-          id.file <- Files[grep(paste(IDs[x], "$", sep=""), Files)]
-        } else {
-          id.file <- Files[grep(paste(IDs[x], Pattern, "$", sep=""), Files)]
-        }
+          id.file <- Files[grep(paste("\\b", IDs[x], Pattern, "$", sep=""), Files)] # this should deal with similar filesnames, i.e 10 & 110
       }
 
       # Start to plot
@@ -123,7 +119,7 @@ StackPlot <- function(Pos, IDs, PathRawData, CNVs, Highlight = NULL, SNPList=NUL
           ## Plot Log R ratio and Intensity boxes
           rect(reg.start, topY-(2*box+(space/2)), reg.stop, topY-(box+(space/2)), col="#ffe2e2", border= F)
           rect(reg.start, topY-box, reg.stop, topY, col="#e5e2ff", border= F)
-          
+
 
             ## Draw --Highlight box
           if(length(Highlight) > 0) {

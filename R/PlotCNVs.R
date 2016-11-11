@@ -97,14 +97,7 @@ PlotCNVs <- function(DF, PathRawData=".", Cores=1, Skip=10, PlotPosition=1, Patt
     #     RawFile <- paste(PathRawData, ID, sep="", collapse="")
 #    RawFile <- Files[grep(ID, Files)]
 #    RawFile <- Files[which(Files == paste(PathRawData, ID, Pattern, sep=""))]
-      if(Pattern =="")
-      { # this deals with the challenge if there are similar file-names, i.e. TOP3 & TOP30, default pattern needs to be ""
-        RawFile <- Files[grep(paste(ID, "$", sep=""), Files)]
-      }
-      else
-      {
-        RawFile <- Files[grep(paste(ID, Pattern, "$", sep=""), Files)]
-      }
+        RawFile <- Files[grep(paste("\\b", ID, Pattern, "$", sep = ""), Files)] # this should deal with similar filesnames, i.e 10 & 110
 
         cat("File: ", RawFile,"\n")
 
