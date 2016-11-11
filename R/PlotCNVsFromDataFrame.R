@@ -126,7 +126,9 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL
 
     # Reading sample file
     #RawFile <- paste(PathRawData, ID, sep="", collapse="")
-    RawFile <- Files[grep(ID, Files)]
+    # RawFile <- Files[grep(ID, Files)]
+      RawFile <- Files[grep(paste("\\b", ID, Pattern, "$", sep = ""), Files)] # this should deal with similar filesnames, i.e 10 & 110
+
     cat("File: ", RawFile,"\n")
     sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList, LCR=LCR)
 
