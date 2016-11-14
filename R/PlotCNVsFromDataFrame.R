@@ -17,6 +17,7 @@
 ##' @param OutFolder: Path for saving outputfiles, default is the current folder.
 ##' @return One BAF- and LRR-plot for each CNV.
 ##' @param LCR: List low copy repeat region region, list of SNPs that should be removed.
+##' @param hg: Human genome version, default = hg19. For full range of possibilities, run ucscGenomes()$db {rtracklayer}, default=hg19
 ##' @author Marcelo Bertalan, Ida Elken Sønderby, Louise K. Hoeffding.
 ##' @source \url{http://biopsych.dk/iPsychCNV}
 ##' @export
@@ -27,7 +28,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL, PlotPosition=10, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL, PlotPosition=10, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA, hg="hg19") #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -43,6 +44,16 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL
     stop("You are missing: ", MissingCol, "\n")
   }
 
+  # Load ideogram
+  data(hg19IdeogramCyto)
+  if(hg!="hg19")
+  {
+    IdeogramCyto <- getIdeogram(hg, cytoband = TRUE)
+  }
+  else
+  {
+    IdeogramCyto <- hg19IdeogramCyto
+  }
 
   LocalFolder <- PathRawData
   if(is.na(Files))
@@ -143,9 +154,9 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL
     red2$Mean <- Mean
 
     # Ideogram
-    data(hg19IdeogramCyto,package="biovizBase")
+#    data(hg19IdeogramCyto,package="biovizBase")
     CHR <- paste("chr", chr, collapse="", sep="")
-    p3 <- plotIdeogram(hg19IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3, zoom.region=c(CNVstart, CNVstop)) +
+    p3 <- plotIdeogram(IdeogramCyto,CHR,cytoband=TRUE,xlabel=TRUE, aspect.ratio = 1/85, alpha = 0.3, zoom.region=c(CNVstart, CNVstop)) +
       xlim(GRanges(CHR,IRanges(Start,Stop)))
 
     # Colors
