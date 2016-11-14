@@ -27,7 +27,7 @@
 ##' CNVs.Good <- subset(CNVs, CN != 2) # keep only CNVs with CN = 0, 1, 3, 4.
 ##' PlotCNVsFromDataFrame(DF=CNVs.Good[1,], PathRawData=".", Cores=1, Skip=0, Pattern="^MockSamples*", key=NA, OutFolder="../", XAxisDefine = NULL)
 
-PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL, PlotPosition=10, Pattern="*",recursive=TRUE, dpi=300, Files=NULL, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
+PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL, PlotPosition=10, Pattern="*",recursive=TRUE, dpi=300, Files=NA, SNPList=NULL, key=NA, OutFolder=".", XAxisDefine = NULL, Window=NA) #
 {
   library(ggplot2)
   library(ggbio) # For some reason ggplot2 2.0.2 is not working, probably conflict with other packages. Version 1.0.1 works.
@@ -45,7 +45,7 @@ PlotCNVsFromDataFrame <- function(DF, PathRawData=".", Cores=1, Skip=0, LCR=NULL
 
 
   LocalFolder <- PathRawData
-  if(is.null(Files))
+  if(is.na(Files))
   {
     Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
   }
