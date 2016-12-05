@@ -31,6 +31,10 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, S
   colnames(Sample)[grep("B.Allele.Freq", colnames(Sample))] <- "B.Allele.Freq"
   colnames(Sample)[grep("Chr", colnames(Sample))] <- "Chr"
   colnames(Sample)[grep("Position", colnames(Sample))] <- "Position"
+  
+  # Windows problem
+  Sample$B.Allele.Freq <- as.numeric(gsub("\\r(?!\\n)","", Sample$B.Allele.Freq, perl=T))
+  Sample$Log.R.Ratio <- as.numeric(gsub("\\r(?!\\n)","", Sample$Log.R.Ratio, perl=T))
   #CNV <- CNV[,c("SNP.Name","Chr", "Position", "Log.R.Ratio", "B.Allele.Freq", "Allele1", "Allele2")] # SNP.Name
   
   # Genotype together (deCODE)
