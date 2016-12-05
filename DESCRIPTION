@@ -10,8 +10,5 @@ LazyData: true
 Imports:
     ggplot2,plyr,parallel,pastecs,changepoint,randtests,moments,RColorBrewer,
     stats,ggbio,GenomicRanges,biovizBase,Biostrings,scales,RColorBrewer,mclust,IRanges,data.table,
-    biovizBase,preprocessCore,
-    pROC,
-    igraph,
-    GenomeGraphs
+    biovizBase,preprocessCore,pROC,igraph,GenomeGraphs,depmixS4
 RoxygenNote: 5.0.1
