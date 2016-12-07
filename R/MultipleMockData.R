@@ -50,34 +50,34 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		iPsychCNV.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.Pred, Cores=Cores)
 		cat("PennCNV Evaluting methods: Loop ", Loops, "\n")
 		PennCNV.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.Pred, Cores=Cores)
-		cat("ReiPsychCNV Evaluting methods: Loop ", Loops, "\n")
-		ReiPsych.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.rescan, Cores=Cores)
+		#cat("ReiPsychCNV Evaluting methods: Loop ", Loops, "\n")
+		#ReiPsych.Eval <- EvaluateMockResults(MockDataCNVs, iPsych.rescan, Cores=Cores)
 		cat("Done evaluting methods: Loop ", Loops, "\n")
 		#Filter.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.filter, Cores=Cores)
 		#Rescan.Eval <- EvaluateMockResults(MockDataCNVs, PennCNV.rescan, Cores=Cores)
 		
 		# ROC 
 		iPsychCNV.AUC <- roc(iPsychCNV.Eval$CNV.Predicted, iPsychCNV.Eval$CNV.Present)
-		ReiPsych.AUC <- roc(ReiPsych.Eval$CNV.Predicted, ReiPsych.Eval$CNV.Present)
+		#ReiPsych.AUC <- roc(ReiPsych.Eval$CNV.Predicted, ReiPsych.Eval$CNV.Present)
 		PennCNV.AUC <- roc(PennCNV.Eval$CNV.Predicted, PennCNV.Eval$CNV.Present)
 		#Filter.AUC <- roc(Filter.Eval$CNV.Predicted, Filter.Eval$CNV.Present)$auc[1]
 		#Rescan.AUC <- roc(Rescan.Eval$CNV.Predicted, Rescan.Eval$CNV.Present)$auc[1]
 
 		# Coords
 		iPsychCNV.AUC.coords <- coords(iPsychCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
-		ReiPsych.AUC.coords <- coords(ReiPsych.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		#ReiPsych.AUC.coords <- coords(ReiPsych.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
 		PennCNV.AUC.coords <- coords(PennCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
 		
 		iPsychCNV.AUC.coords <- as.data.frame(t(iPsychCNV.AUC.coords))
-		ReiPsych.AUC.coords <- as.data.frame(t(ReiPsych.AUC.coords))
+		3ReiPsych.AUC.coords <- as.data.frame(t(ReiPsych.AUC.coords))
 		PennCNV.AUC.coords <- as.data.frame(t(PennCNV.AUC.coords))
 		
 		iPsychCNV.AUC.coords$auc <- iPsychCNV.AUC$auc[1]
-		ReiPsych.AUC.coords$auc <- ReiPsych.AUC$auc[1]
+		#ReiPsych.AUC.coords$auc <- ReiPsych.AUC$auc[1]
 		PennCNV.AUC.coords$auc <-  PennCNV.AUC$auc[1]
 		
 		iPsychCNV.AUC.coords$source <- "iPsychCNV"
-		ReiPsych.AUC.coords$source <- "Re-ScanCNVs"
+		#ReiPsych.AUC.coords$source <- "Re-ScanCNVs"
 		PennCNV.AUC.coords$source <- "PennCNV"
 		
 		# When prediction fail.
@@ -103,15 +103,15 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		df2 <- data.frame(AUC=iPsychCNV.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="iPsychCNV", Loop=Loops, stringsAsFactors=F)
 
 		## iPsychCNV + ReScan
-		tmp <- subset(ReiPsych.Eval, CN != 2)
-		tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
-		tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
-		tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
-		tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
-		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
-		tmp6 <- tapply(tmp$True.Positive, as.factor(tmp$Heterozygosity), function(X){ sum(X)/length(X) })
+		#tmp <- subset(ReiPsych.Eval, CN != 2)
+		#tmp$True.Positive <- tmp$CNV.Present == tmp$CNV.Predicted
+		#tmp2 <- tapply(tmp$True.Positive, as.factor(tmp$sd), function(X){ sum(X)/length(X) })
+		#tmp3 <- tapply(tmp$True.Positive, as.factor(tmp$CNVmean), function(X){ sum(X)/length(X) })
+		#tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
+		#tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
+		#tmp6 <- tapply(tmp$True.Positive, as.factor(tmp$Heterozygosity), function(X){ sum(X)/length(X) })
 		#df3 <- data.frame(AUC=ReiPsych.AUC,True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="iPsychCNV + ReScan", Loop=Loops, stringsAsFactors=F)
-		df3 <- data.frame(AUC=ReiPsych.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="iPsychCNV + ReScan", Loop=Loops, stringsAsFactors=F)
+		#df3 <- data.frame(AUC=ReiPsych.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="iPsychCNV + ReScan", Loop=Loops, stringsAsFactors=F)
 
 		## PennCNV + Filter
 		#tmp <- subset(Filter.Eval, CN != 2)
@@ -131,7 +131,8 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
 		#df4 <- data.frame(AUC=Rescan.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="ReScan", Loop=Loops, stringsAsFactors=F)
 		
-		df5 <- rbind(df, df2, df3)
+		df5 <- rbind(df, df2)
+		#df5 <- rbind(df, df2, df3)
 		#df5 <- rbind(df, df2, df3, df4)
 		system("rm -f MockSample_*")
 		return(df5)
