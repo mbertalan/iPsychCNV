@@ -144,7 +144,7 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		return(ValuesDF)
 	})
 	Res <- MatrixOrList2df(Res)
-	Res$Values <- as.numeric(Res$Values)
+	#Res$Values <- as.numeric(Res$Values)
 	return(Res)
 }
 # Res <- MultipleMockData(NSamples=30, NLoops=30)
