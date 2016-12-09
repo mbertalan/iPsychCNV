@@ -81,6 +81,11 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#ReiPsych.AUC.coords$source <- "Re-ScanCNVs"
 		PennCNV.AUC.coords$source <- "PennCNV"
 		
+		iPsychCNV.AUC.coords$Loop <- Loop
+		PennCNV.AUC.coords$Loop <- Loop
+		
+		ValuesDF <- rbind(iPsychCNV.AUC.coords, PennCNV.AUC.coords)
+		
 		# When prediction fail.
 		## PennCNV
 		tmp <- subset(PennCNV.Eval, CN != 2)
@@ -136,7 +141,7 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#df5 <- rbind(df, df2, df3)
 		#df5 <- rbind(df, df2, df3, df4)
 		system("rm -f MockSample_*")
-		return(df5)
+		return(ValuesDF)
 	})
 	Res <- MatrixOrList2df(Res)
 	Res$Values <- as.numeric(Res$Values)
