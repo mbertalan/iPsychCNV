@@ -81,8 +81,8 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#ReiPsych.AUC.coords$source <- "Re-ScanCNVs"
 		PennCNV.AUC.coords$source <- "PennCNV"
 		
-		iPsychCNV.AUC.coords$Loop <- Loop
-		PennCNV.AUC.coords$Loop <- Loop
+		iPsychCNV.AUC.coords$Loop <- Loops
+		PennCNV.AUC.coords$Loop <- Loops
 		
 		ValuesDF <- rbind(iPsychCNV.AUC.coords, PennCNV.AUC.coords)
 		
