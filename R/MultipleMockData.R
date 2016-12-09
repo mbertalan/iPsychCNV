@@ -70,7 +70,7 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		PennCNV.AUC.coords <- coords(PennCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
 		
 		iPsychCNV.AUC.coords <- as.data.frame(t(iPsychCNV.AUC.coords))
-		3ReiPsych.AUC.coords <- as.data.frame(t(ReiPsych.AUC.coords))
+		#ReiPsych.AUC.coords <- as.data.frame(t(ReiPsych.AUC.coords))
 		PennCNV.AUC.coords <- as.data.frame(t(PennCNV.AUC.coords))
 		
 		iPsychCNV.AUC.coords$auc <- iPsychCNV.AUC$auc[1]
@@ -90,7 +90,7 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		tmp4 <- tapply(tmp$True.Positive, as.factor(tmp$NumSNPs), function(X){ sum(X)/length(X) })
 		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
 		tmp6 <- tapply(tmp$True.Positive, as.factor(tmp$Heterozygosity), function(X){ sum(X)/length(X) })
-		df <- data.frame(AUC=PennCNV.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="PennCNV", Loop=Loops, stringsAsFactors=F)
+		df <- data.frame(AUC=PennCNV.AUC$auc[1], True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="PennCNV", Loop=Loops, stringsAsFactors=F)
 
 		## iPsychCNV
 		tmp <- subset(iPsychCNV.Eval, CN != 2)
@@ -101,7 +101,7 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		tmp5 <- tapply(tmp$True.Positive, as.factor(tmp$CN), function(X){ sum(X)/length(X) })
 		tmp6 <- tapply(tmp$True.Positive, as.factor(tmp$Heterozygosity), function(X){ sum(X)/length(X) })
 		#df2 <- data.frame(AUC=iPsychCNV.AUC,True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5)), Source="iPsychCNV", Loop=Loops, stringsAsFactors=F)
-		df2 <- data.frame(AUC=iPsychCNV.AUC, True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="iPsychCNV", Loop=Loops, stringsAsFactors=F)
+		df2 <- data.frame(AUC=iPsychCNV.AUC$auc[1], True.positive=c(as.numeric(tmp2), as.numeric(tmp3), as.numeric(tmp4), as.numeric(tmp5), as.numeric(tmp6)), By=c(rep("sd", length(tmp2)), rep("CNV.mean", length(tmp3)), rep("NumSNPs", length(tmp4)), rep("CN", length(tmp5)),  rep("Heterozygosity", length(tmp6))), Values=c(names(tmp2), names(tmp3), names(tmp4), names(tmp5), names(tmp6)), Source="iPsychCNV", Loop=Loops, stringsAsFactors=F)
 
 		## iPsychCNV + ReScan
 		#tmp <- subset(ReiPsych.Eval, CN != 2)
