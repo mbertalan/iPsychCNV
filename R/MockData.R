@@ -66,8 +66,10 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			ChrLength <- nrow(subCNV)
 			SD=sample(ChrSD, 1, prob=ChrSDProb) # chr sd
 			ChrMEAN <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=1)
-			X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
-	
+			#X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
+			X <- rnorm(n=ChrLength, mean=ChrMEAN, sd=SD)
+			
+			
 			Heterozygosity <- sample(seq(from=5, to=30,by=5), size=1, prob=c(0.05,0.1,0.15,0.07,0.05,0.025))
 			BAF_Info <- MakeBAF(Heterozygosity=Heterozygosity)
 			BAFs <- BAF_Info[["BAFs"]]
