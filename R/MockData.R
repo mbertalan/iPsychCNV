@@ -24,12 +24,12 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 	}
 		
 	# CNV Info: Using always the same position. Rdata from the package.
-	CNVsSize <- c(25, 50, 100, 150, 300, 450, 600)
+	CNVsSize <- c(50, 100, 150, 300, 450, 600)
 	CNVSizeFixed <- sample(CNVsSize, 1000, replace=TRUE)
 	names(CNVSizeFixed) = 1:1000
 	
 	# Always the same CN
-	CNFixed <- sample(c(0,1,1,2,2,3,3,4), 1000, replace=TRUE) # CNV Type
+	CNFixed <- sample(c(0,1,1,2,2,2,3,3,4), 1000, replace=TRUE) # CNV Type
 	names(CNFixed) = 1:1000
 
 	List <- GetMockValues(Type=Type)
@@ -70,7 +70,8 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			X <- rnorm(n=ChrLength, mean=ChrMEAN, sd=SD)
 			
 			
-			Heterozygosity <- sample(seq(from=5, to=30,by=5), size=1, prob=c(0.05,0.1,0.15,0.07,0.05,0.025))
+			#Heterozygosity <- sample(seq(from=6, to=30,by=2), size=1, prob=c(0.05,0.1,0.15,0.07,0.05,0.025))
+			Heterozygosity <- sample(c(7,10,13,16,20,25,30), size=1)
 			BAF_Info <- MakeBAF(Heterozygosity=Heterozygosity)
 			BAFs <- BAF_Info[["BAFs"]]
 			BAF_Normal <- BAF_Info[["BAF_Normal"]]
@@ -128,7 +129,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				}
 				if(CN == 2) # Noise data. BAF can not match with LRR
 				{
-					NoiseLRR <- sample(c(1,3), 1)
+					NoiseLRR <- sample(c(1,1,1,1,3), 1) # More likely to have low DNA resulting in lower signal.
 					if(NoiseLRR == 1){ Impact <- sample(Del, 1) }
 					if(NoiseLRR == 3){ Impact <- sample(Dup, 1) }
 					
