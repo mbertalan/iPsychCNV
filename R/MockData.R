@@ -135,14 +135,14 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 					
 					if(NoiseLRR == 1)
 					{
-						NoiseBAF <- sample(c(2,3,4), 1)
+						NoiseBAF <- sample(c(2,2,2,2,2,2,3,4), 1) # BAF 2 the most common one.
 						if(NoiseBAF == 3){ BAFCNV <- sample(BAFs, prob=BAF_Dup, replace=TRUE, size=(Size+1)) }
 						if(NoiseBAF == 4){ BAFCNV <- sample(BAFs, prob=BAF_CN4, replace=TRUE, size=(Size+1)) }
 						if(NoiseBAF == 2){ BAFCNV <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=(Size+1)) }
 					}
 					else
 					{	
-						NoiseBAF <- sample(c(2,0,1), 1)
+						NoiseBAF <- sample(c(2,2,2,2,1,1,1,0), 1)
 						if(NoiseBAF == 0){ BAFCNV <- sample(BAFs, prob=BAF_CN0, replace=TRUE, size=(Size+1)) }
 						if(NoiseBAF == 1){ BAFCNV <- sample(BAFs, prob=BAF_Del, replace=TRUE, size=(Size+1)) }
 						if(NoiseBAF == 2){ BAFCNV <- sample(BAFs, prob=BAF_Normal, replace=TRUE, size=(Size+1)) }
