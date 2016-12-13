@@ -107,19 +107,21 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 			{
 				if(CNM == CN2 & CNM != 2)
 				{	
-					CNV.Predicted <- OneProb
+					
 					if(OverlapLenghM > MinOverlap & OverlapLenghM < 120)
 					{ 
+						CNV.Predicted <- OneProb 	# CNV predicted in correct position and correct overlap
 						PredictedByOverlap <- OverlapLenghM
 					}
 					else
 					{
+						CNV.Predicted <- 0  # CNV predicted in correct position but not enough overlap.
 						PredictedByOverlap <- 0 	# CNV predicted is far from what it should be
 					}
 				}
 				else						# There is a prediction but is not correct
 				{ 
-					CNV.Predicted <- OneProb
+					CNV.Predicted <- 0  # CNV predicted but incorrect CN
 					PredictedByOverlap <- 0
 				} 
 			}
