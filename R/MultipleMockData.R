@@ -41,10 +41,10 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 
 		# PlotAllCNVs
 		NewName <- paste("iPsych.Pred.", Loops, ".png", sep="", collapse="")		
-		PlotAllCNVs(df=iPsych.Pred, Name=NewName, roi=MockHot)
+		PlotAllCNVs(df=iPsych.Pred, Name=NewName, Roi=MockHot)
 		
 		NewName <- paste("PennCNV.Pred.", Loops, ".png", sep="", collapse="")		
-		PlotAllCNVs(df=PennCNV.Pred, Name=NewName, roi=MockHot)
+		PlotAllCNVs(df=PennCNV.Pred, Name=NewName, Roi=MockHot)
 		
 		
 		# PennCNV Filter
