@@ -23,6 +23,8 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		cat("Creating mock data: Loop ", Loops, "\n")
 		MockDataCNVs <- MockData(N=NSamples, Type="PKU", Cores=Cores)
 		MockHot <- subset(MockDataCNVs, ID %in% "MockSample_1.tab" & CN != 2)
+		MockHot <- as.data.frame(MockHot)
+		MockHot$Class <- "ROI"
 		
 		# iPsychCNV prediction
 		cat("Running iPsychCNV: Loop ", Loops, "\n" )
@@ -37,6 +39,14 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		cat("Running PennCNV: Loop ", Loops, "\n")
 		PennCNV.Pred <- RunPennCNV(PathRawData=".", Pattern="^MockSample.*", Cores=Cores, Skip=0, Normalization=FALSE, PFB="NO", HMM=HMM, Path2PennCNV=Path2PennCNV)
 
+		# PlotAllCNVs
+		NewName <- paste("iPsych.Pred.", Loops, ".png", sep="", collapse="")		
+		PlotAllCNVs(df=iPsych.Pred, Name=NewName, roi=MockHot)
+		
+		NewName <- paste("PennCNV.Pred.", Loops, ".png", sep="", collapse="")		
+		PlotAllCNVs(df=PennCNV.Pred, Name=NewName, roi=MockHot)
+		
+		
 		# PennCNV Filter
 		#PennCNV.filter <- FilterFromCNVs(CNVs=PennCNV.Pred, PathRawData=".", MinNumSNPs=10, Source="PennCNV.Filter", Skip=0, Cores=Cores)	
 
