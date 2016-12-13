@@ -75,9 +75,9 @@ MultipleMockData <- function(NSamples=100, NLoops=10, Cores=28, HMM="/media/NeoS
 		#Rescan.AUC <- roc(Rescan.Eval$CNV.Predicted, Rescan.Eval$CNV.Present)$auc[1]
 
 		# Coords
-		iPsychCNV.AUC.coords <- coords(iPsychCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		iPsychCNV.AUC.coords <- coords(iPsychCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "tp", "fp", "npv", "ppv"))
 		#ReiPsych.AUC.coords <- coords(ReiPsych.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
-		PennCNV.AUC.coords <- coords(PennCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "fp", "npv", "ppv"))
+		PennCNV.AUC.coords <- coords(PennCNV.AUC, "best", ret=c("specificity", "sensitivity", "accuracy", "tn", "fn", "tp", "fp", "npv", "ppv"))
 		
 		iPsychCNV.AUC.coords <- as.data.frame(t(iPsychCNV.AUC.coords))
 		#ReiPsych.AUC.coords <- as.data.frame(t(ReiPsych.AUC.coords))
