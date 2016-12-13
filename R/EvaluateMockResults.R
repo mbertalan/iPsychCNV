@@ -89,7 +89,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 
 			if(CNM == 2)
 			{
-				res2 <- subset(df, Chr == ChrM &  StartM > Stop & StopM > Start & ID %in% IDM) # If is a non-CNV region, any overlap will count.				if(nrow(res2) > 0)
+				res2 <- subset(df, Chr == ChrM &  StartM < Stop & StopM > Start & ID %in% IDM) # If is a non-CNV region, any overlap will count.				if(nrow(res2) > 0)
 				if(nrow(res2) > 0)
 				{
 					CNV.Predicted <- OneProb
@@ -125,7 +125,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 		cat("ChrM:",ChrM, "CNM", CNM, "CN2", CN2, "CNV.Predicted", CNV.Predicted, "OverlapLenghM", OverlapLenghM, "OverlapSNP", OverlapSNP, "CNVID",CNVID, "CNVID2",CNVID2, "CN2", CN2, "NumCNVs", NumCNVs, "PredictedByOverlap", PredictedByOverlap,"\r") 
 		
 		df2 <- data.frame(CNV.Present=CNV.Present, CNV.Predicted=CNV.Predicted, Overlap.Length=OverlapLenghM, Overlap.SNP=OverlapSNP, CNVID.Mock=CNVID, CNVID.Pred=CNVID2, CN.Pred=CN2, NumCNVs = NumCNVs, PredictedByOverlap=PredictedByOverlap, stringsAsFactors=FALSE)
-		save(df2, file="df2.RData")
+		#save(df2, file="df2.RData")
 		return(df2)
 	})
 	#save(Eval, file="Eval.RData")
