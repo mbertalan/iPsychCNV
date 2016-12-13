@@ -90,6 +90,7 @@ EvaluateMockResults <- function(MockCNVs, df, Cores=1, MinOverlap=80, MaxOverlap
 			if(CNM == 2)
 			{
 				res2 <- subset(df, Chr == ChrM &  StartM > Stop & StopM > Start & ID %in% IDM) # If is a non-CNV region, any overlap will count.				if(nrow(res2) > 0)
+				if(nrow(res2) > 0)
 				{
 					CNV.Predicted <- OneProb
 					PredictedByOverlap <- 0		# It doesn't matter the overlap the prediction is in a non-CNV region.
