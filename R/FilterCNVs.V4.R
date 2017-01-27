@@ -17,7 +17,7 @@
 FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose=FALSE) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
 	suppressPackageStartupMessages(library("depmixS4"))
-	library(pfc)
+	library(fpc)
 	
 	CNVID <- rownames(CNVs)
 	CNVs$CNVID <- CNVID
