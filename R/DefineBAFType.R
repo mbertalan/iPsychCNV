@@ -24,6 +24,10 @@ DefineBAFType <- function(SumPeaks)
 	{
 		BAlleleFreq <- 1
 	}
+	else if(SumPeaks == 3) # | ClusterNum == 4
+	{
+		BAlleleFreq <- 2
+	}
 	else
 	{
 		BAlleleFreq <- "Undefined"
