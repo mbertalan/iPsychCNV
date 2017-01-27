@@ -132,7 +132,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		SumPeaks <- sum(tp$peaks == TRUE)
 
 		# Defining BAlleleFreq
-		dfTmp <- 
+		dfTmp <- DefineBAFType(SumPeaks)
 		
 		
 		
