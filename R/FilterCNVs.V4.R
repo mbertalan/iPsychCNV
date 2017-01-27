@@ -17,6 +17,7 @@
 FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose=FALSE) #  PathRawData = "~/IBP/CNV/Data/rawData/pilotBroad/"
 {	
 	suppressPackageStartupMessages(library("depmixS4"))
+	library(pfc)
 	
 	CNVID <- rownames(CNVs)
 	CNVs$CNVID <- CNVID
@@ -96,6 +97,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		Res.tmp <- proc.time() - ptm.tmp
 		if(verbose){ cat("GetDataVariables time: ", Res.tmp["elapsed"], "\n") }
 
+		# BAF classification by Partitioning Around Medoids
+		M <- sapply(tmpRaw$B.Allele.Freq, function(I){ I - tmpRaw$B.Allele.Freq })
+		pamk.best <- pamk(M)
+		PamBAF <- pamk.best$nc
+		
 		# My BAF Classification	
 		ptm.tmp <- proc.time()
 		res <- ClassNumbers(tmpRaw)
@@ -139,6 +145,7 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		res4 <- AddInfo2res(res3, CNV2HighPvalue, CNV2LowPvalue, Class, BAlleleFreq, MyBAF, LogRRatio, SumPeaks, SDChr, MeanChr)
 		res4$Cor.LRR.GC <- Cor.LRR.GC  
 		res4$CNVmeanLowGC <- CNVmeanLowGC
+		res4$PamBAF <- PamBAF
 		
 		# HMM prob for each state
 		#res4$CN1 <- round(MeanStates["S1"], digits=2); 
