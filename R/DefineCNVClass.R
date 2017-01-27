@@ -20,7 +20,7 @@ DefineCNVClass <- function(tmp2)
 			#Class <- GetCNVClass(X["LogRRatio"])
 			Class <- X["LogRRatio"]
 		}
-		else if(X["LogRRatio"] %in% X["MyBAF"] & !X["LogRRatio"] %in% "2" ) # Just to avoid 2 Undefined being good.
+		else if(X["LogRRatio"] %in% X["PamBAF"] & !X["LogRRatio"] %in% "2" ) # Just to avoid 2 Undefined being good.
 		{	
 				
 			#Class <- GetCNVClass(X["LogRRatio"])
