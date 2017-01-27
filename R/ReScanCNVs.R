@@ -96,7 +96,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 			}
 			else
 			{
-				df <- subset(df, !(CN == 2 & abs(CNVmean) < 0.2))
+				df <- subset(df, !(CN == 2 & abs(CNVmean) < CNVSignal))
 			}
 			
 			# Save memory if too many CNVRs to ReScan. Print results or return as an object ?
