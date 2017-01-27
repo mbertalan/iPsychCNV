@@ -101,7 +101,8 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		M <- sapply(tmpRaw$B.Allele.Freq, function(I){ I - tmpRaw$B.Allele.Freq })
 		pamk.best <- pamk(M)
 		PamBAF <- pamk.best$nc
-		PamBAF <- DefineBAFType(PamBAF)
+		PamBAF <- as.numeric(DefineBAFType(PamBAF))
+		if(is.na(PamBAF)){ PamBAF <- 2 }
 		
 		# My BAF Classification	
 		ptm.tmp <- proc.time()
@@ -131,7 +132,11 @@ FilterCNVs.V4 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		SumPeaks <- sum(tp$peaks == TRUE)
 
 		# Defining BAlleleFreq
-		dfTmp <- DefineBAFType(SumPeaks)
+		dfTmp <- 
+		
+		
+		
+		(SumPeaks)
 		BAlleleFreq <- dfTmp$BAlleleFreq
 		Class <- dfTmp$Class
 		Res.tmp <- proc.time() - ptm.tmp
