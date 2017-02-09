@@ -15,11 +15,14 @@
 ##' @examples Unknown.
 ##'
 
-QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Cores=10, Pattern="*_*assed_*", NumFiles="All", Skip=0, Normalization=FALSE) # Files2 OutputPath
+QualityControl <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Cores=1, Pattern="*_*assed_*", NumFiles="All", Skip=0, Normalization=FALSE, Files=NA, recursive=FALSE) # Files2 OutputPath
 {	
 	library(parallel)
 
-	Files <- list.files(PathRawData, pattern=Pattern, recursive=T, full.names=T) #  *_*assed_*
+	suppressWarnings(if(is.na(Files))
+	{
+		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+	})
 
 	if(NumFiles %in% "All"){ NumFiles <- length(Files) }
 
