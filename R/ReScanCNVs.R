@@ -42,7 +42,7 @@
 ##' iPsych.Pred.Rescan$ID <- iPsych.Pred.Rescan$SampleID
 ##' PlotAllCNVs(iPsych.Pred.Rescan, Name="iPsych.Pred.Rescan.png", hg="hg19", Roi=MockDataCNVs.roi)
 
-ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=NULL, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA, OnlyCNVs=TRUE, SNPList=NULL, verbose=F) # Files2 OutputPath
+ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=NULL, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA, OnlyCNVs=TRUE, SNPList=NULL, verbose=FALSE) # Files2 OutputPath
 {	
 	# Start Time
 	ptm <- proc.time()
@@ -77,8 +77,9 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		ID <- tail(unlist(strsplit(RawFile, "/")),n=1)
 	
 		# Read sample file		
-		
-		ReadSample.Time <- sistem.time(Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList))
+		ReadSampleStart <- proc.time() 
+		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
+		ReadSample.Time <-  proc.time() - ReadSampleStart
 		
 		if(nrow(Sample) < 10){ stop("You sample has less than 10 rows, somethings must be wrong, maybe format is not correct.") }
 
@@ -91,8 +92,11 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		if(nrow(CNVs) > 0)
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
-			FilterCNVs.Time <- sistem.time(df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)) 
-
+			FilterCNVStart <- proc.time() 
+			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)) 
+			FilterCNVs.Time <- proc.time() - FilterCNVStart
+			
+			
 			# removing non-CNV results to save memory
 			if(OnlyCNVs)
 			{
@@ -117,8 +121,10 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 	})
 	cat("Done all !\n")
 	#save(tmp, file="tmp.RData")
-	Matrix.Time <- sistem.time(df <- MatrixOrList2df(tmp))
-	
+	Matrix.Start <- proc.time() 	    
+	df <- MatrixOrList2df(tmp)
+	Matrix.Time <- proc.time() - Matrix.Start
+		    
 	if(!is.na(OutputPath))
 	{
 		OutputFile <- paste(OutputPath, "All_CNVs.tab", sep="", collapse="")
