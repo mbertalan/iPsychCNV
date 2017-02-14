@@ -91,7 +91,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		if(nrow(CNVs) > 0)
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
-			FilterCNVs.Time <- sistem.time(df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)) # PathRawData = PathRawData,
+			FilterCNVs.Time <- sistem.time(df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)) 
 
 			# removing non-CNV results to save memory
 			if(OnlyCNVs)
