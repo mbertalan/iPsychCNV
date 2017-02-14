@@ -113,7 +113,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		Res.tmp <- proc.time() - ptm.tmp
 	})
 	cat("Done all !\n")
-	save(tmp, file="tmp.RData")
+	#save(tmp, file="tmp.RData")
 	df <- MatrixOrList2df(tmp)
 	
 	if(!is.na(OutputPath))
