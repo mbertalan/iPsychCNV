@@ -42,26 +42,30 @@
 ##' iPsych.Pred.Rescan$ID <- iPsych.Pred.Rescan$SampleID
 ##' PlotAllCNVs(iPsych.Pred.Rescan, Name="iPsych.Pred.Rescan.png", hg="hg19", Roi=MockDataCNVs.roi)
 
-ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=NULL, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA, OnlyCNVs=TRUE, SNPList=NULL) # Files2 OutputPath
+ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", MINNumSNPs=5, Cores=1, hg="hg19", NumFiles="All", Pattern="*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=NULL, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=10, OutputPath=NA, IndxPos=FALSE, ResPerSample=FALSE, Files=NA, OnlyCNVs=TRUE, SNPList=NULL, verbose=F) # Files2 OutputPath
 {	
+	# Start Time
+	ptm <- proc.time()
+	
+	# Block 1, Get files
+	Block1Start <- proc.time()
 	if(length(CNVs$StartIndx) < 1 & !IndxPos){ stop("Missing StartIndx information. Please use GetIndxPostionFromChips.\n") }
-
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 	suppressPackageStartupMessages(library(parallel))
-	ptm <- proc.time()
 	
 	suppressWarnings(if(is.na(Files))
 	{
 		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
 	})
-	
 	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
 	{
 		Files <- sapply(SelectedFiles, function(X){ Files[grep(X, Files)] })
 	}
-
 	if(NumFiles %in% "All"){ NumFiles <- length(Files) }
-
+	Block1Res <- proc.time() - Block1Start
+	if(verbose){ cat("Block1 Time: ", Block1Res["elapsed"], "\n")
+	
+		    
 	cat("Running ", NumFiles, "files\n")
 	tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(RawFile) 
 	{
@@ -73,8 +77,8 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		ID <- tail(unlist(strsplit(RawFile, "/")),n=1)
 	
 		# Read sample file		
-		ptm.tmp <- proc.time()
-		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
+		
+		ReadSample.Time <- sistem.time(Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList))
 		
 		if(nrow(Sample) < 10){ stop("You sample has less than 10 rows, somethings must be wrong, maybe format is not correct.") }
 
@@ -87,7 +91,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		if(nrow(CNVs) > 0)
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
-			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
+			FilterCNVs.Time <- sistem.time(df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)) # PathRawData = PathRawData,
 
 			# removing non-CNV results to save memory
 			if(OnlyCNVs)
@@ -110,11 +114,10 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 				return(df)
 			}
 		}	
-		Res.tmp <- proc.time() - ptm.tmp
 	})
 	cat("Done all !\n")
 	#save(tmp, file="tmp.RData")
-	df <- MatrixOrList2df(tmp)
+	Matrix.Time <- sistem.time(df <- MatrixOrList2df(tmp))
 	
 	if(!is.na(OutputPath))
 	{
@@ -124,5 +127,13 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		
 	TimeRes <- proc.time() - ptm
 	cat("Total time: ", TimeRes["elapsed"], "\n")
+	if(verbose)
+	{
+		cat("Block1 time: ", Block1Res["elapsed"], "\n")	
+		cat("ReadSample time: ", ReadSample.Time["elapsed"], "\n")
+		cat("Filter CNV time: ", FilterCNVs.Time["elapsed"], "\n")
+		cat("Matrix time: ", Matrix.Time["elapsed"], "\n")
+	}
+		    
 	return(df)
 }
