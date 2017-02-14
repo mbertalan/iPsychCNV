@@ -57,7 +57,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 	
 	if(length(SelectedFiles) > 1 & !is.na(SelectedFiles[1]))
 	{
-		Files <- sapply(SelectedFiles, function(X){ Files[grep(X, Files)] })
+		Files <- sapply(SelectedFiles, function(X){ Files[grepl(X, Files, perl=TRUE)] })
 	}
 
 	if(NumFiles %in% "All"){ NumFiles <- length(Files) }
