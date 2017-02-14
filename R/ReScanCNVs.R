@@ -93,7 +93,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
 			FilterCNVStart <- proc.time() 
-			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)) 
+			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID)
 			FilterCNVs.Time <- proc.time() - FilterCNVStart
 			
 			
