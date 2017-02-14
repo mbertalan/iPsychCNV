@@ -73,8 +73,9 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		ID <- tail(unlist(strsplit(RawFile, "/")),n=1)
 	
 		# Read sample file		
-		ptm.tmp <- proc.time()
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
+		Res.Time <- proc.time() - ptm
+		cat("Read Sample, line 78, time: ", Res.Time["elapsed"], "\n")
 		
 		if(nrow(Sample) < 10){ stop("You sample has less than 10 rows, somethings must be wrong, maybe format is not correct.") }
 
@@ -88,7 +89,9 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
 			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
-
+			Res.Time <- proc.time() - ptm
+			cat("Filter CNV, line 93, time: ", Res.Time["elapsed"], "\n")
+			
 			# removing non-CNV results to save memory
 			if(OnlyCNVs)
 			{
