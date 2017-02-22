@@ -88,7 +88,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		if(nrow(CNVs) > 0)
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
-			df <- FilterCNVs.V4(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
+			df <- FilterCNVs.V5(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
 			Res.Time <- proc.time() - ptm
 			#cat("Filter CNV, line 93, time: ", Res.Time["elapsed"], "\n")
 			
