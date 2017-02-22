@@ -1,4 +1,4 @@
-FilterCNVs.V5.: Function to filter predicted Copy Number Variation (CNVs) and avoid a high number of false positive calls. 
+##' FilterCNVs.V5.: Function to filter predicted Copy Number Variation (CNVs) and avoid a high number of false positive calls. 
 ##'
 ##' The function receives a data frame with CNV information, ex: chr., start position, stop position, and sample ID. 
 ##' @title FilterCNVs.V4.
