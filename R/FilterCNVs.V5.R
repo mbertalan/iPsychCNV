@@ -120,7 +120,7 @@ FilterCNVs.V5 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 	tmp2 <- cbind(CNVs, df) # Combining position variables with filter ones.
 	
 	Class <- DefineCNVClass(tmp2)
-	tmp2$CN <- Class
+	tmp2$CN <- as.numeric(Class)
 	tmp2$Source <- "iPsychCNV"
 	tmp2$ID <- ID
 	
