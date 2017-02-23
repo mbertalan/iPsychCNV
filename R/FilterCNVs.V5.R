@@ -75,21 +75,29 @@ FilterCNVs.V5 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 
 		# BAF classification by Partitioning Around Medoids
 		ptm.tmp <- proc.time()
+		# PAM for large CNVs is very slow. So, only do PAM if LRR is higher than 0.05. 
+		if(abs(res2$CNVmean) > 0.05)
+		{	
 			# removing BAF == 0 and == 1 to increase speed if CNV has more than 200 SNPs
-		if(nrow(tmpRaw) > 200){ BAF <- tmpRaw$B.Allele.Freq[tmpRaw$B.Allele.Freq != 0 & tmpRaw$B.Allele.Freq != 1] }
-		else{ BAF <- tmpRaw$B.Allele.Freq }
+			if(nrow(tmpRaw) > 200){ BAF <- tmpRaw$B.Allele.Freq[tmpRaw$B.Allele.Freq > 0 & tmpRaw$B.Allele.Freq < 1] }
+			else{ BAF <- tmpRaw$B.Allele.Freq }
 
-		M <- sapply(BAF, function(I){ I - BAF })
-		Res.tmp <- proc.time() - ptm.tmp
-		if(verbose){ cat("sapply time: ", Res.tmp["elapsed"], "\n") }
+			M <- sapply(BAF, function(I){ I - BAF })
+			Res.tmp <- proc.time() - ptm.tmp
+			if(verbose){ cat("sapply time: ", Res.tmp["elapsed"], "\n") }
 		
-		ptm.tmp <- proc.time()
-		pamk.best <- pamk(M)
-		PamBAF <- pamk.best$nc
-		BAlleleFreq <- as.numeric(DefineBAFType(PamBAF))
-		if(is.na(BAlleleFreq)){ BAlleleFreq <- 2 }
-		Res.tmp <- proc.time() - ptm.tmp
-		if(verbose){ cat("PAM time: ", Res.tmp["elapsed"], "\n") }
+			ptm.tmp <- proc.time()
+			pamk.best <- pamk(M)
+			PamBAF <- pamk.best$nc
+			BAlleleFreq <- as.numeric(DefineBAFType(PamBAF))
+			if(is.na(BAlleleFreq)){ BAlleleFreq <- 2 }
+			Res.tmp <- proc.time() - ptm.tmp
+			if(verbose){ cat("PAM time: ", Res.tmp["elapsed"], "\n") }
+		}
+		else
+		{
+			BAlleleFreq <- 2
+		}
 		
 		# My BAF Classification	
 		ptm.tmp <- proc.time()
