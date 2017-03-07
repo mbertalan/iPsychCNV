@@ -21,7 +21,7 @@
 ##' See iPsychCNV tutorial for more examples
 ##' http://biopsych.dk/iPsychCNV/tutorial.html
 
-FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=0, Cores=1, IndxPos=FALSE)
+FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Skip=0, Cores=1, IndxPos=FALSE)
 {
 	suppressPackageStartupMessages(library(parallel))
 	suppressPackageStartupMessages(library("depmixS4"))
@@ -35,20 +35,13 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	{
 		subCNVs <- subset(CNVs, ID %in% IDs)
 		RawFile <- paste(PathRawData, "/", IDs, sep="", collapse="")
-		cat(IDs, "\r")
+		cat(RawFile, "\r")
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
-
-		#save(Res, file="Res.RData")
-		df <- MatrixOrList2df(tmp=Res)
-		tmp <- cbind(subCNVs, df)
-		#save(tmp, file="tmp.RData")
-		tmp2 <- FilterCNVs.V5(CNVs=tmp, MinNumSNPs=MinNumSNPs, Sample=Sample, ID=IDs)
-		#save(tmp2, file="tmp2.RData")
+		tmp2 <- FilterCNVs.V5(CNVs=subCNVs, MinNumSNPs=MinNumSNPs, Sample=Sample, ID=IDs)
 		return(tmp2)
 	})
-	#save(tmp, file="tmp.RData")
+	
 	tmp2 <- MatrixOrList2df(tmp)
 	df <- tmp2[, !colnames(tmp2) %in% ".id"]
-	#df$Source <- Source
 	return(df)
 }
