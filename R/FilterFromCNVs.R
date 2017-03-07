@@ -21,7 +21,7 @@
 ##' See iPsychCNV tutorial for more examples
 ##' http://biopsych.dk/iPsychCNV/tutorial.html
 
-FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=0, Cores=1)
+FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV", Skip=0, Cores=1, IndxPos=FALSE)
 {
 	suppressPackageStartupMessages(library(parallel))
 	suppressPackageStartupMessages(library("depmixS4"))
@@ -33,22 +33,10 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 		cat(IDs, "\r")
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
-		Res <- apply(subCNVs, 1, function(X)
+		if(IndxPos)
 		{
-			StartM <- as.numeric(X["Start"])
-			StopM <- as.numeric(X["Stop"])
-			ChrM <- X["Chr"]
-			ChrM <- gsub(" ","", ChrM)
-
-			subSample <- subset(Sample, Chr %in% ChrM)
-			subSample <- subSample[with(subSample, order(Position)),]
-			
-			StartIndx <- which(subSample$Position == StartM)[1] 
-			StopIndx <- which(subSample$Position == StopM)[1]
-			df <- data.frame(StartIndx=StartIndx, StopIndx=StopIndx)
-			cat(ChrM, StartM, StopM, StartIndx, StopIndx, RawFile, "\r")
-			return(df)
-		})
+			CNVs <- GetIndxPositionFromChips(CNVs, Sample)
+		}
 		#save(Res, file="Res.RData")
 		df <- MatrixOrList2df(tmp=Res)
 		tmp <- cbind(subCNVs, df)
@@ -60,6 +48,6 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	#save(tmp, file="tmp.RData")
 	tmp2 <- MatrixOrList2df(tmp)
 	df <- tmp2[, !colnames(tmp2) %in% ".id"]
-	df$Source <- Source
+	#df$Source <- Source
 	return(df)
 }
