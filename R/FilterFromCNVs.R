@@ -26,6 +26,11 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 	suppressPackageStartupMessages(library(parallel))
 	suppressPackageStartupMessages(library("depmixS4"))
 	
+	if(IndxPos)
+	{
+		CNVs <- GetIndxPositionFromChips(CNVs, Sample)
+	}
+	
 	tmp <- mclapply(unique(CNVs$ID), mc.cores=Cores, mc.preschedule = FALSE, function(IDs) 
 	{
 		subCNVs <- subset(CNVs, ID %in% IDs)
@@ -33,10 +38,6 @@ FilterFromCNVs <- function(CNVs, PathRawData, MinNumSNPs=10, Source="iPsychCNV",
 		cat(IDs, "\r")
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=FALSE)
 
-		if(IndxPos)
-		{
-			CNVs <- GetIndxPositionFromChips(CNVs, Sample)
-		}
 		#save(Res, file="Res.RData")
 		df <- MatrixOrList2df(tmp=Res)
 		tmp <- cbind(subCNVs, df)
