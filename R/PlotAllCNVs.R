@@ -13,6 +13,7 @@
 ##' @param Start: The start position of each CNV, default = NA.
 ##' @param Stop: The stop position of each CNV, default = NA.
 ##' @param Order: Should the function order the CNVs ?, default = TRUE.
+##' @param ReturnObject: TRUE/FALSE to return an object called b with the plot information.
 ##' @return Return data in a data frame.
 ##' @author Marcelo Bertalan, Louise K. Hoeffding. 
 ##' @source \url{http://biopsych.dk/iPsychCNV}
@@ -20,7 +21,7 @@
 ##' @examples Unknown.
 ##' 
 
-PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg19", chr=NA, start=NA, stop=NA, Order=TRUE) # TimesLength
+PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, width=16, height=30, hg="hg19", chr=NA, start=NA, stop=NA, Order=TRUE, ReturnObject=FALSE) # TimesLength
 {	
 	library(scales)
 	library(ggplot2)
@@ -103,4 +104,6 @@ PlotAllCNVs <- function(df=CNV.Res, Name="CNV.Res.Test.png", NCOL=2, Roi=roi, wi
 	}
 	
 	ggsave(b, file=Name, width=width, height=height, dpi=300)
+	
+	if(ReturnObject){ return(b) }
 }
