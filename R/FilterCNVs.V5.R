@@ -76,7 +76,7 @@ FilterCNVs.V5 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		# BAF classification by Partitioning Around Medoids
 		ptm.tmp <- proc.time()
 		# PAM for large CNVs is very slow. So, only do PAM if LRR is higher than 0.05. 
-		if(abs(res2$CNVmean) > 0.05)
+		if(abs(res2$CNVmean) > 0.05 & nrow(tmpRaw) < 200)
 		{	
 			# removing BAF == 0 and == 1 to increase speed if CNV has more than 200 SNPs
 			if(nrow(tmpRaw) > 200){ BAF <- tmpRaw$B.Allele.Freq[tmpRaw$B.Allele.Freq > 0 & tmpRaw$B.Allele.Freq < 1] }
