@@ -21,11 +21,12 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	Info <- sapply(1:(length(indx)-1), function(X){ rbind(indx[X],indx[(X+1)]) })
 	Info <- t(Info)
 	DF <- as.data.frame(Info)
+	# Find mean LRR from the CNV region
 	CNVMean <- apply(DF, 1, function(X){ mean(subCNV$LRR[as.numeric(X[1]):as.numeric(X[2])]) } )
 	DF$CNVMean <- CNVMean
 	names(DF) <- c("Start", "Stop", "CNVMean")
 	# removed many of the controls (normalization should take care of it).
-
+	
 	# Adding index SNP chip position.
 	if(sum(DF$Start < 1) > 0){ DF$Start[DF$Start < 1] <- 1 }
 	if(sum(DF$Stop > nrow(subCNV)) > 0){ DF$Stop[DF$Stop > nrow(subCNV)] <- nrow(subCNV)}
@@ -38,5 +39,11 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	DF$NumSNPs <- DF$StopIndx - DF$StartIndx
 	DF$Chr <- rep(unique(subCNV$Chr), nrow(DF))
 	DF$ID <- rep(ID, nrow(DF))
+
+	# Adding %AB
+	B <- subCNV$B.Allele.Freq
+	AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.4 & B[X[1]:X[2]] < 0.6)/length(B))*100
+	DF$Het <- AB
+								    
 	return(DF)
 }
