@@ -41,9 +41,14 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	DF$ID <- rep(ID, nrow(DF))
 
 	# Adding %AB
-	B <- subCNV$B.Allele.Freq
-	AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.4 & B[X[1]:X[2]] < 0.6)/length(B[X[1]:X[2]]))*100 })
-	DF$Het <- AB
+	res <- ClassNumbersV2(tmpRaw=
+	AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ ClassNumbersV2(subCNV[X[1]:X[2],]) })
+	AB <- MatrixOrList2df(AB)
+	DF <- cbind(DF, AB) 
+			      
+	#B <- subCNV$B.Allele.Freq
+	#AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.4 & B[X[1]:X[2]] < 0.6)/length(B[X[1]:X[2]]))*100 })
+	#DF$Het <- AB
 	
 	#ABB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.6 & B[X[1]:X[2]] < 0.8)/length(B[X[1]:X[2]]))*100 })
 	#AAB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.2 & B[X[1]:X[2]] < 0.4)/length(B[X[1]:X[2]]))*100 })
@@ -53,7 +58,7 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	# Giving a preliminary CN for each segment
 	DF$CN <- DF$CNVMean
 	DF$CN[DF$CN > 0] <- 3
-	DF$CN[DF$CN < 0 & DF$Het < 5] <- 1
+	DF$CN[DF$CN < 0 & DF$AB < 5] <- 1
 	DF$CN[DF$CN <= 0] <- 2
 	return(DF)
 }
