@@ -112,6 +112,7 @@ FilterCNVs.V5 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		Res.tmp <- proc.time() - ptm.tmp
 		if(verbose){ cat("Define LRR time: ", Res.tmp["elapsed"], "\n") }
 		
+		res2 <- res2[, !colnames(res2) %in% colnames(res)]
 		res3 <- cbind(res,res2)
 		res3$BAlleleFreq <- BAlleleFreq
 		res3$MyBAF <- MyBAF
