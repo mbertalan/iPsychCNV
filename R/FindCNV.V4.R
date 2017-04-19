@@ -61,7 +61,8 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
 		DF$CN[DF$CN > 0] <- 3
-		DF$CN[DF$CN < 0] <- 1
+		DF$CN[DF$CN < 0 & DF$Het < 5] <- 1
+		DF$CN[DF$CN != c(1,3)] <- 2
 		
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
