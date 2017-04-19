@@ -35,7 +35,7 @@
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Files=NA, MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, OutputPath=NA, OutputFileName="Test", OnlyCNVs=TRUE, SNPList=NULL, minseglength=20, Merge=TRUE) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Files=NA, MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, OutputPath=NA, OutputFileName="Test", OnlyCNVs=TRUE, SNPList=NULL, minseglen=20, Merge=TRUE) # Files2 OutputPath
 {
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -90,7 +90,7 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", F
 
 		### FIND CNVs ###
 		ptm.tmp <- proc.time()
-		CNVs <- FindCNV.V4(ID=ID, Sample=Sample, CPTmethod=CPTmethod, CNVSignal=CNVSignal, penvalue=penvalue, minseglength=minseglength, Merge=Merge)
+		CNVs <- FindCNV.V4(ID=ID, Sample=Sample, CPTmethod=CPTmethod, CNVSignal=CNVSignal, penvalue=penvalue, minseglen=minseglen, Merge=Merge)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Find CNVs time: ", Res.tmp["elapsed"], "\n")
 
