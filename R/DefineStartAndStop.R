@@ -41,7 +41,6 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	DF$ID <- rep(ID, nrow(DF))
 
 	# Adding %AB
-	res <- ClassNumbersV2(tmpRaw=
 	AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ ClassNumbersV2(subCNV[X[1]:X[2],]) })
 	AB <- MatrixOrList2df(AB)
 	DF <- cbind(DF, AB) 
