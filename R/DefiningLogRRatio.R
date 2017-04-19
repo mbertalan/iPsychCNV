@@ -17,46 +17,9 @@ DefiningLogRRatio <- function(res2)
 	{
 		LogRRatio <- 1
 	}
-	else if(res2$CNVmeanByRef > 0.1) # res2$DiffHigh > 0.02 &  res2$DiffLow > 0.02
+	else if(res2$CNVmeanByRef > 0.05) # res2$DiffHigh > 0.02 &  res2$DiffLow > 0.02
 	{
 		LogRRatio <- 3
 	}
 	return(LogRRatio)
 }
-#	if(res2$SDCNV < 0.7)
-#	{
-#		if(res2$CNVmeanByRef < 0) # 1 or 0
-#		{
-#			if(res2$CNVmean < res2$HighMean &  res2$CNVmean < res2$LowMean)
-#			{
-#				if(res2$DiffHigh > 0.7 || res2$DiffLow > 0.7)
-#				{
-#					if(res2$CNVmean < -1){ LogRRatio <- 0 }
-#				}
-#				else if(res2$CNVmeanByRef < -0.2)
-#				{
-#					LogRRatio <- 1
-#				}
-#				else
-#				{
-#					LogRRatio <- 1
-#				}
-#			}
-#		}
-#		else if(res2$CNVmeanByRef > 0)
-#		{
-#			if(res2$CNVmean > res2$HighMean &  res2$CNVmean > res2$LowMean)
-#			{
-#				if(CNVmeanByRef > 0.4)
-#				{
-#					LogRRatio <- 4
-#				}
-#				else
-#				{
-#					LogRRatio <- 3
-#				}
-#			}
-#		}	
-#	}		
-#	return(LogRRatio)
-#}
