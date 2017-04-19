@@ -101,7 +101,7 @@ FilterCNVs.V5 <- function(CNVs = CNVs, MinNumSNPs=20, Sample, ID="Test", verbose
 		
 		# My BAF Classification	
 		ptm.tmp <- proc.time()
-		res <- ClassNumbers(tmpRaw)
+		res <- ClassNumbersV2(tmpRaw)
 		MyBAF <- EvaluateMyBAF(res, res2)
 		Res.tmp <- proc.time() - ptm.tmp
 		if(verbose){ cat("ClassNumbers time: ", Res.tmp["elapsed"], "\n") }
