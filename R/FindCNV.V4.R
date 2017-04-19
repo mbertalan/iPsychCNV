@@ -58,11 +58,11 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		
 		#save(DF, Probs, LRR.probs, file="Probs.RData")
 		# Using meanvar it breaks CNVs, I am trying to merge it again.
-		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		DF$CN <- DF$CNVMean
 		DF$CN[DF$CN > 0] <- 3
 		DF$CN[DF$CN < 0 & DF$Het < 5] <- 1
-		DF$CN[DF$CN != c(1,3)] <- 2
+		DF$CN[DF$CN <= 0] <- 2
+		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
