@@ -55,13 +55,11 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		Probs <- apply(DF, 1, function(X){ res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
 		DF$prob <- Probs
 					 
-		
-		#save(DF, Probs, LRR.probs, file="Probs.RData")
-		# Using meanvar it breaks CNVs, I am trying to merge it again.
+		# Giving a preliminary CN for each segment
 		DF$CN <- DF$CNVMean
-		DF$CN[DF$CN > 0] <- 3
+		DF$CN[DF$AAB > DF$Het || DF$ABB > DF$Het & DF$CN > 0] <- 3
 		DF$CN[DF$CN < 0 & DF$Het < 5] <- 1
-		DF$CN[DF$CN <= 0] <- 2
+		DF$CN[DF$CN != 1 & DF$CN != 3] <- 2
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 		
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
