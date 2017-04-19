@@ -12,7 +12,7 @@
 ##' @export
 ##' @examples Unknown.
 
-FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1, penvalue=16, Merge=TRUE)
+FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1, penvalue=16, Merge=TRUE, minseglength=20)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
@@ -38,12 +38,12 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		}	
 		else if(CPTmethod %in% "meanvar")
 		{
-			CPT.Res <- cpt.meanvar(subSample$Log.R.Ratio, method='PELT', class=TRUE, pen.value=penvalue, penalty="Manual")
+			CPT.Res <- cpt.meanvar(subSample$Log.R.Ratio, method='PELT', class=TRUE, pen.value=penvalue, penalty="Manual", minseglength=minseglength)
 			indx <- cpts(CPT.Res)
 		}
 		else if(CPTmethod %in% "mean")
 		{
-			CPT.Res <- cpt.mean(subSample$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE)
+			CPT.Res <- cpt.mean(subSample$Log.R.Ratio, method='PELT', penalty="AIC", class=TRUE, minseglength=minseglength)
 			indx <- cpts(CPT.Res)
 		}
 		
