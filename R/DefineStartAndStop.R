@@ -43,7 +43,12 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	# Adding %AB
 	B <- subCNV$B.Allele.Freq
 	AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.4 & B[X[1]:X[2]] < 0.6)/length(B[X[1]:X[2]]))*100 })
+	ABB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.6 & B[X[1]:X[2]] < 0.8)/length(B[X[1]:X[2]]))*100 })
+	AAB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.2 & B[X[1]:X[2]] < 0.4)/length(B[X[1]:X[2]]))*100 })
+	
 	DF$Het <- AB
+	DF$ABB <- ABB
+	DF$AAB <- AAB
 								    
 	return(DF)
 }
