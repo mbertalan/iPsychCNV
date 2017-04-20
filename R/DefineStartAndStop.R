@@ -14,7 +14,7 @@
 ##' @examples Unknown.
 ##'
 
-DefineStartAndStop <- function(indx, subCNV, CHR, ID)
+DefineStartAndStop <- function(indx, subCNV, CHR, ID, RemoveBAFInfo=TRUE)
 {
 	suppressPackageStartupMessages(library(pastecs))
 	
@@ -44,20 +44,18 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID)
 	AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ ClassNumbersV2(subCNV[X[1]:X[2],]) })
 	AB <- MatrixOrList2df(AB)
 	DF <- cbind(DF, AB) 
-			      
-	#B <- subCNV$B.Allele.Freq
-	#AB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.4 & B[X[1]:X[2]] < 0.6)/length(B[X[1]:X[2]]))*100 })
-	#DF$Het <- AB
-	
-	#ABB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.6 & B[X[1]:X[2]] < 0.8)/length(B[X[1]:X[2]]))*100 })
-	#AAB <- apply(DF[,c("StartIndx", "StopIndx")], 1, function(X){ (sum(B[X[1]:X[2]] > 0.2 & B[X[1]:X[2]] < 0.4)/length(B[X[1]:X[2]]))*100 })
-	#DF$ABB <- ABB
-	#DF$AAB <- AAB
+			  
 	
 	# Giving a preliminary CN for each segment
 	DF$CN <- DF$CNVMean
 	DF$CN[DF$CN > 0] <- 3
 	DF$CN[DF$CN < 0 & DF$AB < 5] <- 1
 	DF$CN[DF$CN <= 0] <- 2
+	
+	# Remove BAF Info
+	if(RemoveBAFInfo)
+	{	
+		DF <- DF[,!colnames(DF) %in% c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")]
+	}
 	return(DF)
 }
