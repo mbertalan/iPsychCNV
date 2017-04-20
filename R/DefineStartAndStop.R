@@ -52,7 +52,7 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID, RemoveBAFInfo=TRUE)
 	DF$CN[DF$AAB > DF$AB & DF$ABB > DF$AB] <- 3
 	DF$CN[DF$CN < 0 & DF$AB < 5] <- 1
 	#DF$CN[DF$CN <= 0] <- 2
-	DF$CN[DF$CN != 1 || DF$CN != 3] <- 2
+	DF$CN[DF$CN != 1 & DF$CN != 3] <- 2
 	
 	# Remove BAF Info
 	if(RemoveBAFInfo)
