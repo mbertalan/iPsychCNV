@@ -49,7 +49,7 @@ DefineStartAndStop <- function(indx, subCNV, CHR, ID, RemoveBAFInfo=TRUE)
 	# Giving a preliminary CN for each segment
 	DF$CN <- DF$CNVMean
 	#DF$CN[DF$CN > 0] <- 3
-	DF$CN[DF$AAB > DF$AB & DF$ABB > DF$AB] <- 3
+	DF$CN[DF$AAB > DF$AB & DF$ABB > DF$AB & DF$CN > -0.1] <- 3
 	DF$CN[DF$CN < 0 & DF$AB < 5] <- 1
 	#DF$CN[DF$CN <= 0] <- 2
 	DF$CN[DF$CN != 1 & DF$CN != 3] <- 2
