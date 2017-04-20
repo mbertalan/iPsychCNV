@@ -50,12 +50,13 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
 		DF <- DefineStartAndStop(indx, subSample, CHR, ID, RemoveBAFInfo=RemoveBAFInfo)
+		DF <- subset(DF, CN != 2)
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 
 		# Adding mean probability of each state for each CNV
 		Probs <- apply(DF, 1, function(X){ res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
 		DF$prob <- Probs
-					 
+		
 		
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
