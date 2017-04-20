@@ -12,7 +12,7 @@
 ##' @export
 ##' @examples Unknown.
 
-FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1, penvalue=16, Merge=TRUE, minseglen=20)
+FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1, penvalue=16, Merge=TRUE, minseglen=20, RemoveBAFInfo=FALSE, MaxNumSNPs=50)
 {
 	
 	suppressPackageStartupMessages(library("changepoint"))
@@ -49,7 +49,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		
 		indx <- c(1, indx, length(subSample$Log.R.Ratio))
 
-		DF <- DefineStartAndStop(indx, subSample, CHR, ID)
+		DF <- DefineStartAndStop(indx, subSample, CHR, ID, RemoveBAFInfo=RemoveBAFInfo)
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 
 		# Adding mean probability of each state for each CNV
@@ -61,7 +61,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		{
 			if(Merge)
 			{
-				DF2 <- MergeCNVs(DF, MaxNumSNPs=50)
+				DF2 <- MergeCNVs(DF, MaxNumSNPs=MaxNumSNPs)
 				DF <- DF2[,colnames(DF)] # returning to same colname order as if you do not go in MergeCNVs
 			}
 		}
