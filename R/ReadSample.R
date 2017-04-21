@@ -82,7 +82,7 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, S
   # chr specific. Example chr="22"
   if(!is.na(chr)){ Sample <- subset(Sample, Chr %in% chr) }
   
-  if(!is.null(start)){ Sample <- subset(Sample, Start >= start & Stop <= stop) }
+  if(!is.null(start)){ Sample <- subset(Sample, Position >= start & Position <= stop) }
   
   if(!is.null(LCR))
   {
