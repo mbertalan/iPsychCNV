@@ -15,7 +15,7 @@
 ##' @examples Unknown.
 ##'
 
-ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, SNPList=NULL)
+ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, SNPList=NULL, start=NULL, stop=NULL)
 {
   suppressPackageStartupMessages(library(data.table))
   Sample <- fread(RawFile, head=T, sep="\t", skip=skip, verbose=FALSE)
@@ -81,6 +81,8 @@ ReadSample <- function(RawFile="Test.txt", skip=0, LCR=NULL, PFB=NULL, chr=NA, S
   
   # chr specific. Example chr="22"
   if(!is.na(chr)){ Sample <- subset(Sample, Chr %in% chr) }
+  
+  if(!is.null(start)){ Sample <- subset(Sample, Start >= start & Stop <= stop) }
   
   if(!is.null(LCR))
   {
