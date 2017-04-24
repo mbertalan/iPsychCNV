@@ -1,7 +1,5 @@
 ClassNumbersV2 <- function(tmpRaw)
 {
-	
-	UsedBAF <- round((nrow(tmp2)/nrow(tmpRaw))*100, 1)
 	Centers <- c(0, 0.25, 0.33, 0.5, 0.66, 0.75, 1)
 	names(Centers) <- c("AAAA", "AAAB", "AAB", "AB", "ABB", "ABBB", "BBBB")
 	df <- data.frame(AAAA=0, AAAB=0, AAB=0, AB=0, ABB=0, ABBB=0, BBBB=0)
