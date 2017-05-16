@@ -15,13 +15,16 @@
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- CheckAbnChr(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
-CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2", Cores=1, Pattern="*.txt$", skip=10, NumFiles="All")
+CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Version2", Files=NA, Cores=1, Pattern="*.txt$", skip=10, NumFiles="All")
 {
 	library(iPsychCNV)
 	library(parallel)
-	Files <- list.files(Path2RawFiles, pattern=Pattern, recursive=TRUE) 
-	Files <- Files[!is.na(Files)]
-
+	
+	suppressWarnings(if(is.na(Files))
+	{
+		Files <- list.files(path=PathRawData, pattern=Pattern, full.names=TRUE, recursive=recursive)
+	})
+	
 	if(NumFiles %in% "All"){ NumFiles <- length(Files) }
 		
 	Res2 <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(X)
@@ -68,9 +71,9 @@ CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Ve
 		if(df$NumChr[df$Chr %in% "X"] == 1 & df$NumChr[df$Chr %in% "Y"] == 0){ df$ChrEval <- "Turner syndrome" }
 		if(df$NumChr[df$Chr %in% "X"] == 3 & df$NumChr[df$Chr %in% "Y"] == 0){ df$ChrEval <- "Triple-X syndrome" }		
 		if(df$NumChr[df$Chr %in% "X"] == 2 & df$NumChr[df$Chr %in% "Y"] == 1){ df$ChrEval <- "Klinefelter syndrome" }
-		
 		if(df$NumChr[df$Chr %in% "X"] == 1 & df$NumChr[df$Chr %in% "Y"] == 2){ df$ChrEval <- "XYY syndrome" } 
 		if(df$NumChr[df$Chr %in% "X"] == 2 & df$NumChr[df$Chr %in% "Y"] == 2){ df$ChrEval <- "XXYY syndrome" }
+		
 		if(df$NumChr[df$Chr %in% "12"] == 3){ df$ChrEval <- "Trisomia 12" }
 		if(df$NumChr[df$Chr %in% "13"] == 3){ df$ChrEval <- "Trisomia 13" }
 		if(df$NumChr[df$Chr %in% "16"] == 3){ df$ChrEval <- "Trisomia 16" }
