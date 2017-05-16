@@ -29,8 +29,8 @@ CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Ve
 		
 	Res2 <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(X)
 	{
-		SampleID <- X
-		File <- paste(Path2RawFiles, "/", X, sep="", collapse="")
+		File <- X
+		SampleID <- tail(unlist(strsplit(X, "/")),n=1)
 		cat(File, "\n")
 
 		# Reading sample
