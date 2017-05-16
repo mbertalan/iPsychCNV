@@ -49,12 +49,13 @@ CheckAbnChr <- function(Path2RawFiles="/media/NeoScreen/NeSc_home/ILMN/iPSYCH/Ve
 
 			# BAF
 			Class.Y <- ClassNumbers(Sample.Y)
-			LRRmean.Y <- median(Sample.Y$Log.R.Ratio)
+			LRRmean.Y <- mean(Sample.Y$Log.R.Ratio)
 
-			chrY.Perc <- (sum(Sample.Y$B.Allele.Freq > 0.1 & Sample.Y$B.Allele.Freq < 0.9)/nrow(Sample.Y))*100
+			chrY.Perc <- (sum(Sample.Y$B.Allele.Freq > 0.2 & Sample.Y$B.Allele.Freq < 0.8)/nrow(Sample.Y))*100
 
 			# Classification
-			BAF.Y <- MyBAF(Class.Y, LRRmean.Y, chrY.Perc)
+			res2 <- data.frame(CNVmean=LRRmean.Y)
+			BAF.Y <- EvaluateMyBAF(Class.Y, res2)
 		
 			Class.Y[1:7] <- Class.Y[1:7]
 	
