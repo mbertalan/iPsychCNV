@@ -160,7 +160,7 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				BAF[IndxV] <<- BAFCNV
 				
 				## Changing GLOBAL VARIABLES ##
-				CNPosition[IndxV] <- CN
+				CNPosition[IndxV] <<- CN
 				
 				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, Heterozygosity=Heterozygosity, stringsAsFactors=FALSE)
 				return(df)
