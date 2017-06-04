@@ -69,6 +69,9 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 			#X <- sample(ChrMean[,as.numeric(CHR)], prob=ChrMeanProb[,as.numeric(CHR)], replace=TRUE, size=ChrLength)
 			X <- rnorm(n=ChrLength, mean=ChrMEAN, sd=SD)
 			
+			#
+			CNPosition <- rep(2, ChrLength)
+			
 			
 			#Heterozygosity <- sample(seq(from=6, to=30,by=2), size=1, prob=c(0.05,0.1,0.15,0.07,0.05,0.025))
 			Heterozygosity <- sample(c(7,10,13,16,20,25,30), size=1)
@@ -156,12 +159,15 @@ MockData <- function(N=1, Wave1=FALSE, Type="Blood", Cores=1) # Type: Blood or P
 				## Changing GLOBAL VARIABLES ##
 				BAF[IndxV] <<- BAFCNV
 				
+				## Changing GLOBAL VARIABLES ##
+				CNPosition[IndxV] <- CN
+				
 				df <- data.frame(Start=Position[PositionIndx], Stop=Position[(PositionIndx+Size)], StartIndx=PositionIndx, StopIndx=(PositionIndx+Size), NumSNPs=Size, Chr=CHR, CNVmean=Impact, CN=CN, sd=SD, ID=FileName, NumCNVs=NumCNVs, ChrMean=ChrMEAN, Heterozygosity=Heterozygosity, stringsAsFactors=FALSE)
 				return(df)
 			})
 			df <- MatrixOrList2df(DF)
 			#save(df, file="df.RData")
-			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF, stringsAsFactors=FALSE)
+			df2 <- data.frame(SNP.Name=SNP.Name, Chr=rep(CHR, length(X)), Position=Position, Log.R.Ratio=X, B.Allele.Freq=BAF, CN=CNPosition, stringsAsFactors=FALSE)
 			return(list(LRR=df2, CNVs=df))
 		})
 		
