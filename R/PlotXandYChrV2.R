@@ -20,12 +20,11 @@ PlotXandYChrV2 <- function(IDs, Files, Cores=28, Pattern="*.txt", Skip=10)
   
   mclapply(IDs, mc.cores=Cores, function(ID)
   {
-    
-    cat(ID, "\n")
-    RawFile <- Files[grep(ID, Files)] # this should deal with similar filesnames, i.e 10 & 110
+    	  cat(ID, "\n")
+    	  RawFile <- Files[grep(ID, Files)] # this should deal with similar filesnames, i.e 10 & 110
 
-    cat("File: ", RawFile,"\n")
-    sample <- ReadSample(RawFile, skip=Skip)
+    	  cat("File: ", RawFile,"\n")
+    	  Sample <- ReadSample(RawFile, skip=Skip)
 
 	  tmp <- subset(Sample, Chr %in% "X")
 	  tmp2 <- subset(Sample, Chr %in% "Y")
