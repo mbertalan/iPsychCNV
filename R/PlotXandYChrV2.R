@@ -11,24 +11,21 @@
 ##' @examples unknown.
 ##' 
 
-PlotXandYChrV2 <- function(df, Files, Cores=28)
+PlotXandYChrV2 <- function(IDs, Files, Cores=28, Pattern="*.txt", Skip=10)
 {
 	library(iPsychCNV)
 	library(ggplot2)
 	library(ggbio)
 	library(RColorBrewer)
   
-  mclapply(df$ID, mc.cores=Cores, function(ID)
+  mclapply(IDs, mc.cores=Cores, function(ID)
   {
-    X <- subset(DF, ID %in% ID)
-    chr <- X$Chr
-    ID <- X$ID
-
+    
     cat(ID, "\n")
-    RawFile <- Files[grep(paste("\\b", ID, Pattern, "$", sep = ""), Files)] # this should deal with similar filesnames, i.e 10 & 110
+    RawFile <- Files[grep(ID, Files)] # this should deal with similar filesnames, i.e 10 & 110
 
     cat("File: ", RawFile,"\n")
-    sample <- ReadSample(RawFile, skip=Skip, SNPList=SNPList, LCR=LCR)
+    sample <- ReadSample(RawFile, skip=Skip)
 
 	  tmp <- subset(Sample, Chr %in% "X")
 	  tmp2 <- subset(Sample, Chr %in% "Y")
@@ -91,6 +88,7 @@ PlotXandYChrV2 <- function(df, Files, Cores=28)
 	  p6 <- p6 + scale_colour_manual(values = c("B.Allele.Freq"=Colors[2], "Mean"="black", Log.R.Ratio=Colors[1]))
 	
 	  # Sample Name
+	  Name <- paste(ID, "XandY.png", sep="_", collapse="")
 	  ID <- unique(Sample$Sample.ID)[1]
 	  Title <- paste("Sample: ", ID, sep="", collapse="")
 
