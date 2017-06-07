@@ -11,7 +11,7 @@
 ##' @examples Unknown.
 ##'
 
-MergeCNVs <- function(df, MaxNumSNPs=50, Cores=28)
+MergeCNVs <- function(df, MaxNumSNPs=50, Cores=1)
 {
 	library(parallel)
 	tmp2 <- subset(df, CN != 2)
