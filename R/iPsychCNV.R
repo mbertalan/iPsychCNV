@@ -96,33 +96,33 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", F
 
 		#cat("CNVs:", nrow(CNVs), "\n")
 
-		# Remove centromere
-		CNVs <- RemoveCentromere(df=CNVs, HG=hg)
-
-		#cat("CNVs:", nrow(CNVs), "\n")
-
 		if(nrow(CNVs) > 0)
 		{
+		        # Remove centromere
+		        CNVs <- RemoveCentromere(df=CNVs, HG=hg)
+			#cat("CNVs:", nrow(CNVs), "\n")
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
-			ptm.tmp <- proc.time()
-			df <- FilterCNVs.V5(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
-			Res.tmp <- proc.time() - ptm.tmp
+			if(nrow(CNVs) > 0){
+				ptm.tmp <- proc.time()
+				df <- FilterCNVs.V5(CNVs = CNVs, MinNumSNPs=MINNumSNPs, Sample=Sample, ID) # PathRawData = PathRawData,
+				Res.tmp <- proc.time() - ptm.tmp
+				
+				df$Source <- rep("iPsychCNV", nrow(df))
 
-			df$Source <- rep("iPsychCNV", nrow(df))
+				if(OnlyCNVs)
+				{
+					df <- subset(df, CN != 2) # removing non-CNV results to save memory
+				}
+				df <- df[, !colnames(df) %in% "Class"]
 
-			if(OnlyCNVs)
-			{
-				df <- subset(df, CN != 2) # removing non-CNV results to save memory
+				# Check if every sample results should be printed or not.
+				if(!is.na(OutputPath))
+				{
+					OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
+					write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
+				}
+				return(df)
 			}
-			df <- df[, !colnames(df) %in% "Class"]
-
-			# Check if every sample results should be printed or not.
-			if(!is.na(OutputPath))
-			{
-				OutputFile <- paste(OutputPath, ID, ".CNVs", sep="", collapse="")
-				write.table(df, file=OutputFile, sep="\t", quote=FALSE, row.names=FALSE)
-			}
-			return(df)
 		}
 	})
 	cat("Done all !\n")
