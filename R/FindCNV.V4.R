@@ -27,11 +27,14 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		# Getting prob for each SNP using depmix HMM and viterbi. 
 		LRR.mod <- depmix(Log.R.Ratio ~ 1, family = gaussian(), nstates = 3, data = subSample, instart=c(0.1, 0.8, 0.1), respstart=c(-0.45,0,0.3, 0.2,0.2,0.2))
 		MyFit2 <- setpars(LRR.mod, getpars(HMM.LRR.fit))
-		LRR.probs <- viterbi(MyFit2)
+		
+		LRR.probs <- tryCatch(viterbi(MyFit2), error=function(e){print("viterbi function failed! Probs will be set to NA");return(NULL)})
+        	viterbiSucceeded <- !is.null(LRR.probs)
 		
 		# Using changepoint package	
 		if(CPTmethod %in% "HMM")
 		{
+			stopifnot(viterbiSucceeded)
 			State <- LRR.probs$state
 			indx <- sapply(1:(length(State)-1), function(i){ if(State[i] != State[(i+1)]){ return(i) }})
 			indx <- unlist(indx)
@@ -53,23 +56,29 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 		DF <- subset(DF, CN != 2)
 		DF <- subset(DF, abs(CNVMean) > CNVSignal)
 
-		# Adding mean probability of each state for each CNV
-		Probs <- apply(DF, 1, function(X){ res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]), 2:4], 2, mean); sort(res, decreasing=TRUE)[1] }) 
-		DF$prob <- Probs
+        	if(nrow(DF)>0){
 		
-		
+        	if(viterbiSucceeded){
+          		Probs <- apply(DF, 1, function(X) {
+            					res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]),
+						2:4], 2, mean)})
+          		DF$prob <- Probs
+        	}else{
+          		DF$prob <- NA
+        	}
+
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
 			if(Merge)
 			{
-				DF2 <- MergeCNVs(DF, MaxNumSNPs=MaxNumSNPs)
+				DF2 <- data.frame(MergeCNVs(DF, MaxNumSNPs=MaxNumSNPs))
 				DF <- DF2[,colnames(DF)] # returning to same colname order as if you do not go in MergeCNVs
 			}
 		}
 		return(DF)
 	})
 
-	df <- MatrixOrList2df(tmp)
+	df <- data.frame(MatrixOrList2df(tmp))
 	if(nrow(df) > 0)
 	{
 		df <- df[,!colnames(df) %in% ".id"]
