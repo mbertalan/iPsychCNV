@@ -23,6 +23,9 @@ HotspotsCNV <- function(df, Freq=1, OverlapCutoff=0.7, Cores=1, OverlapMin=0.9, 
 	library(plyr)
 	library(parallel)
 
+	df$Length <- df$Stop - df$Start
+	if(sum(df$Length < 1) > 0){ stop("You have negative length. Please check your start and stop position\n") }
+	
 	if(length(unique(df$ID)) < 2){ stop("Need at least two samples or no ID found.") }
 	if(length(df$Source[1]) > 0){ Source <- df$Source[1] }else{ stop("Data frame does not have Source\n") }
 	OriginalDF <- df
