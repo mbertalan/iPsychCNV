@@ -62,14 +62,14 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 			{
           			Probs <- apply(DF, 1, function(X)
 				{
-            				res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]),2:4], 2, mean)})
-          				DF$prob <- Probs
-        			}
-				else
-				{
-          				DF$prob <- NA
-        			}
+            				res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]),2:4], 2, mean)
+        			})
+				DF$prob <- Probs
 			}
+			else
+			{
+          			DF$prob <- NA
+        		}
 		}
 		if(nrow(DF) > 1) # Changed the pen.value for cpt.meanvar and it does not break much. Maybe no need mergeing.
 		{
