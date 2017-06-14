@@ -63,7 +63,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 	if(NumFiles %in% "All"){ NumFiles <- length(Files) }
 
 	cat("Running ", NumFiles, "files\n")
-	tmp <- lapply(Files[1:NumFiles], function(RawFile) #mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(RawFile) 
+	tmp <- mclapply(Files[1:NumFiles], mc.cores=Cores, mc.preschedule = FALSE, function(RawFile) 
 	{
 		write(RawFile,file="Progress.txt",append=TRUE)
 		Count <- length(readLines("Progress.txt"))	
@@ -84,7 +84,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 		{
 			CNVs <- GetIndxPositionFromChips(CNVs, Sample)
 		}
-	        stopifnot(nrow(CNVs)>0)	
+		
 		if(nrow(CNVs) > 0)
 		{
 			CNVs <- subset(CNVs, NumSNPs > MINNumSNPs)
@@ -117,7 +117,7 @@ ReScanCNVs <- function(CNVs=CNVs, PathRawData = "/media/NeoScreen/NeSc_home/ILMN
 	})
 	cat("Done all !\n")
 	#save(tmp, file="tmp.RData")
-	df <- data.frame(MatrixOrList2df(tmp))
+	df <- MatrixOrList2df(tmp)
 	
 	if(!is.na(OutputPath))
 	{
