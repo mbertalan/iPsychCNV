@@ -64,7 +64,7 @@ FindCNV.V4 <- function(ID="Test", Sample=Sample, CPTmethod="HMM", CNVSignal=0.1,
 				{
             				res <- apply(LRR.probs[as.numeric(X["StartIndx"]):as.numeric(X["StopIndx"]),2:4], 2, mean)
         			})
-				DF$prob <- Probs
+				DF$prob <- max(Probs)
 			}
 			else
 			{
