@@ -35,7 +35,7 @@
 ##' mockCNV <- MockData(N=5, Type="Blood", Cores=1)
 ##' cnvs <- iPsychCNV(PathRawData=".", Cores=1, Pattern="^MockSample*", Skip=0)
 
-iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Files=NA, MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, OutputPath=NA, OutputFileName="Test", OnlyCNVs=TRUE, SNPList=NULL, minseglen=20, Merge=TRUE, RemoveBAFInfo=FALSE, MaxNumSNPs=50) # Files2 OutputPath
+iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", Files=NA, MINNumSNPs=20, Cores=1, hg="hg19", NumFiles="All", Pattern="22q11_*", MinLength=10, SelectedFiles=NA, Skip=10, LCR=FALSE, PFB=NULL, chr=NA, penalty=60, Quantile=FALSE, QSpline=FALSE, sd=0.18, recursive=FALSE, CPTmethod="meanvar", CNVSignal=0.1, penvalue=16, OutputPath=NA, OutputFileName="Test", OnlyCNVs=TRUE, SNPList=NULL, minseglen=20, Merge=TRUE, RemoveBAFInfo=FALSE, MaxNumSNPs=50, start=NA, stop=NA) # Files2 OutputPath
 {
 	if(file.exists("Progress.txt")){ file.remove("Progress.txt") }
 
@@ -77,7 +77,13 @@ iPsychCNV <- function(PathRawData = "/media/NeoScreen/NeSc_home/ILMN/iPSYCH/", F
 		Sample <- ReadSample(RawFile, skip=Skip, LCR=LCR, PFB=PFB, chr=chr, SNPList=SNPList)
 		Res.tmp <- proc.time() - ptm.tmp
 		#cat("Read Samples time: ", Res.tmp["elapsed"], "\n")
-
+		
+		# Subset by start and stop
+		if(!is.na(start) & !is.na(stop))
+		{
+			Sample <- subset(Sample, Start > start & Stop < stop)
+		}
+		
 		#cat(nrow(Sample), "\n")
 
 		# Normalize data
